@@ -3,24 +3,392 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex">
-<title>Tito Nicola Drugman</title>
+<title>Tito Nicola Drugman — MSc Computer Science &amp; Engineering</title>
+<meta name="description" content="Tito Nicola Drugman — MSc Computer Science &amp; Engineering at Politecnico di Milano. Machine learning, embedded systems, low-level security.">
+
+<!-- ============================================================
+     COME MODIFICARE QUESTA PAGINA
+     - Cerca i blocchi ⟨COSÌ⟩: sono i dati che DEVI controllare o
+       riempire tu. Non lasciarne nemmeno uno online.
+     - Il resto è testo normale: modifica quello che c'è tra i tag.
+     - Salva, poi: git add . / git commit -m "..." / git push
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
-  body{margin:0;min-height:100vh;display:grid;place-items:center;
-       background:#f4f1ea;color:#1a1a1a;
-       font:400 16px/1.6 Georgia,serif}
-  main{max-width:32rem;padding:2rem}
-  h1{font-size:2rem;margin:0 0 .5rem;letter-spacing:-.02em}
-  p{margin:0;color:#555}
-  a{color:#a4243b}
+  :root{
+    --paper:#fcfcfa;
+    --ink:#16171a;
+    --muted:#6b6f76;
+    --rule:#d9d9d3;
+    --rule-strong:#16171a;
+    --signal:#0b4fa8;
+    --shade:#f2f2ee;
+
+    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+
+  html{-webkit-text-size-adjust:100%}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font:400 15px/1.6 var(--sans);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .sheet{
+    max-width:60rem;
+    margin:0 auto;
+    padding:2rem 1.5rem 5rem;
+  }
+
+  a{color:var(--signal);text-decoration:none;border-bottom:1px solid rgba(11,79,168,.35)}
+  a:hover{border-bottom-color:var(--signal)}
+  a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:1px}
+
+  /* ---------- header bar ---------- */
+  .bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:1rem;
+    font:500 11px/1 var(--mono);
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    padding-bottom:.6rem;
+    border-bottom:2px solid var(--rule-strong);
+  }
+
+  /* ---------- cover ---------- */
+  .cover{padding:2rem 0 1.75rem;border-bottom:1px solid var(--rule)}
+
+  .cover h1{
+    margin:0;
+    font:600 clamp(1.9rem,6vw,3.1rem)/1.05 var(--mono);
+    letter-spacing:-.03em;
+    text-transform:uppercase;
+  }
+
+  .cover .subtitle{
+    margin:.7rem 0 0;
+    font-size:clamp(1rem,2.4vw,1.15rem);
+    color:var(--muted);
+    max-width:44ch;
+  }
+
+  /* ---------- features + specs ---------- */
+  .cols{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:2rem;
+    padding:1.75rem 0;
+    border-bottom:2px solid var(--rule-strong);
+  }
+  @media(min-width:48rem){
+    .cols{grid-template-columns:1fr 17rem;gap:3rem}
+  }
+
+  .eyebrow{
+    font:500 11px/1 var(--mono);
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 .9rem;
+  }
+
+  .features{margin:0;padding:0;list-style:none}
+  .features li{
+    position:relative;
+    padding-left:1.2rem;
+    margin-bottom:.5rem;
+  }
+  .features li::before{
+    content:"—";
+    position:absolute;
+    left:0;
+    color:var(--signal);
+    font-family:var(--mono);
+  }
+
+  .specs{
+    background:var(--shade);
+    border:1px solid var(--rule);
+    padding:1rem 1.1rem;
+    font:400 13px/1.5 var(--mono);
+  }
+  .specs dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.45rem .8rem}
+  .specs dt{color:var(--muted)}
+  .specs dd{margin:0;text-align:right}
+
+  /* ---------- sections ---------- */
+  .sec{padding:2.25rem 0 0}
+
+  .sec h2{
+    display:flex;
+    align-items:baseline;
+    gap:.85rem;
+    margin:0 0 1.25rem;
+    font:600 13px/1 var(--mono);
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    padding-bottom:.55rem;
+    border-bottom:1px solid var(--rule-strong);
+  }
+  .sec h2 .n{color:var(--signal)}
+
+  .entry{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:.2rem 1.5rem;
+    padding:.9rem 0;
+    border-bottom:1px solid var(--rule);
+  }
+  @media(min-width:48rem){
+    .entry{grid-template-columns:9.5rem 1fr}
+  }
+
+  .entry .when{
+    font:400 12px/1.6 var(--mono);
+    color:var(--muted);
+    padding-top:.15rem;
+  }
+  .entry h3{
+    margin:0;
+    font-size:1rem;
+    font-weight:600;
+  }
+  .entry .org{color:var(--muted);font-weight:400}
+  .entry p{margin:.35rem 0 0;color:#3c3f45}
+  .entry .tags{
+    margin:.5rem 0 0;
+    font:400 11px/1.5 var(--mono);
+    color:var(--muted);
+    letter-spacing:.03em;
+  }
+
+  /* ---------- stack table ---------- */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+  }
+  th,td{
+    text-align:left;
+    padding:.6rem .75rem .6rem 0;
+    border-bottom:1px solid var(--rule);
+    vertical-align:top;
+  }
+  th{
+    font:500 11px/1 var(--mono);
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--muted);
+    border-bottom:1px solid var(--rule-strong);
+    white-space:nowrap;
+  }
+  td:first-child{
+    font-family:var(--mono);
+    font-size:13px;
+    white-space:nowrap;
+    padding-right:1.5rem;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:3rem;
+    padding-top:.6rem;
+    border-top:2px solid var(--rule-strong);
+    font:400 11px/1.6 var(--mono);
+    letter-spacing:.05em;
+    color:var(--muted);
+    display:flex;
+    justify-content:space-between;
+    gap:1rem;
+    flex-wrap:wrap;
+  }
 </style>
 </head>
 <body>
-<main>
-  <h1>Tito Nicola Drugman</h1>
-  <p>MSc Computer Science &amp; Engineering, Politecnico di Milano.<br>
-  Portfolio in costruzione — nel frattempo:
-  <a href="https://github.com/TitoNicolaDrugman">GitHub</a>.</p>
+<main class="sheet">
+
+  <div class="bar">
+    <span>TND&#8209;01 / portfolio</span>
+    <span>Rev. ⟨1⟩ — ⟨July 2026⟩</span>
+  </div>
+
+  <header class="cover">
+    <h1>Tito Nicola<br>Drugman</h1>
+    <p class="subtitle">MSc Computer Science &amp; Engineering, Politecnico di Milano.
+    Machine learning on constrained hardware, and the systems underneath it.</p>
+  </header>
+
+  <div class="cols">
+    <div>
+      <p class="eyebrow">Features</p>
+      <ul class="features">
+        <li>MSc Computer Science &amp; Engineering at Politecnico di Milano, Artificial Intelligence track</li>
+        <li>Deployed transformer inference on the STM32N6 NPU during an AI engineering internship at STMicroelectronics</li>
+        <li>Binary exploitation and web security through NECST CTF competitions — ROP, format strings, ret2libc</li>
+        <li>Industrial robotics training delivered on FANUC and Comau platforms</li>
+        <li>Self-hosted LLM workstation: Llama, Mistral, Qwen, DeepSeek, Gemma</li>
+      </ul>
+    </div>
+
+    <aside class="specs">
+      <dl>
+        <dt>Status</dt><dd>MSc, year 2</dd>
+        <dt>Based in</dt><dd>Milan, IT</dd>
+        <dt>Languages</dt><dd>IT · EN</dd>
+        <dt>Focus</dt><dd>ML · embedded</dd>
+        <dt>Available</dt><dd>⟨2027⟩</dd>
+      </dl>
+    </aside>
+  </div>
+
+  <!-- ============ 1. EXPERIENCE ============ -->
+  <section class="sec">
+    <h2><span class="n">1</span> Experience</h2>
+
+    <div class="entry">
+      <div class="when">⟨2025⟩</div>
+      <div>
+        <h3>AI Engineer Intern — <span class="org">STMicroelectronics</span></h3>
+        <p>⟨Una o due righe: cosa hai costruito e con che risultato. Es: "Quantised and deployed a transformer model on the STM32N6 NPU, cutting inference latency from X to Y ms."⟩</p>
+        <p class="tags">PyTorch · quantisation · STM32N6 · embedded inference</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">⟨2024–2025⟩</div>
+      <div>
+        <h3>Robotics Trainer — <span class="org">FANUC, Comau</span></h3>
+        <p>⟨Cosa insegnavi e a chi. Es: "Delivered hands-on training on industrial robot programming and cell setup to technicians and students."⟩</p>
+        <p class="tags">industrial robotics · teaching</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">⟨anni⟩</div>
+      <div>
+        <h3>Museum Guide — <span class="org">⟨nome del museo⟩</span></h3>
+        <p>⟨Una riga. Se non ti sembra rilevante, cancella tutto questo blocco .entry⟩</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. PROJECTS ============ -->
+  <section class="sec">
+    <h2><span class="n">2</span> Selected projects</h2>
+
+    <div class="entry">
+      <div class="when">⟨2025⟩</div>
+      <div>
+        <h3>Transformer on STM32N6 NPU</h3>
+        <p>⟨Una o due righe su cosa fa e perché è difficile.⟩</p>
+        <p class="tags"><a href="⟨https://github.com/TitoNicolaDrugman/...⟩">Source ↗</a></p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">⟨2025⟩</div>
+      <div>
+        <h3>RAG Code Generation</h3>
+        <p>⟨Una o due righe.⟩</p>
+        <p class="tags"><a href="⟨https://github.com/TitoNicolaDrugman/...⟩">Source ↗</a></p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">⟨2025⟩</div>
+      <div>
+        <h3>WebVoyager — LLM web agent</h3>
+        <p>⟨Una o due righe.⟩</p>
+        <p class="tags"><a href="⟨https://github.com/TitoNicolaDrugman/...⟩">Source ↗</a></p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">⟨2025⟩</div>
+      <div>
+        <h3>Urban Heat Islands — GenHack 2025</h3>
+        <p>⟨Una o due righe.⟩</p>
+        <p class="tags"><a href="⟨https://github.com/TitoNicolaDrugman/...⟩">Source ↗</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. EDUCATION ============ -->
+  <section class="sec">
+    <h2><span class="n">3</span> Education</h2>
+
+    <div class="entry">
+      <div class="when">⟨2024–2026⟩</div>
+      <div>
+        <h3>MSc Computer Science &amp; Engineering — <span class="org">Politecnico di Milano</span></h3>
+        <p>Artificial Intelligence track. ⟨Aggiungi la tesi se ce l'hai, o 2–3 corsi che ti rappresentano.⟩</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">⟨2021–2024⟩</div>
+      <div>
+        <h3>BSc Artificial Intelligence — <span class="org">Università di Pavia · Milano Statale · Milano Bicocca</span></h3>
+        <p>Joint degree across three universities.</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">⟨2023⟩</div>
+      <div>
+        <h3>Exchange semester — <span class="org">CUHK Shenzhen</span></h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. STACK ============ -->
+  <section class="sec">
+    <h2><span class="n">4</span> Technical stack</h2>
+    <table>
+      <thead>
+        <tr><th scope="col">Area</th><th scope="col">Tools</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Languages</td><td>Python, MATLAB, SQL, C</td></tr>
+        <tr><td>ML</td><td>PyTorch, TensorFlow, Keras</td></tr>
+        <tr><td>LLMs</td><td>Self-hosted Llama, Mistral, Qwen, DeepSeek, Gemma; RAG pipelines</td></tr>
+        <tr><td>Data</td><td>Graph and NoSQL databases</td></tr>
+        <tr><td>Security</td><td>GDB, pwntools, binary exploitation, web vulnerabilities</td></tr>
+        <tr><td>Robotics</td><td>FANUC, Comau</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ 5. CONTACT ============ -->
+  <section class="sec">
+    <h2><span class="n">5</span> Contact</h2>
+    <table>
+      <tbody>
+        <tr><td>Email</td><td><a href="mailto:tito.drugman.dev@gmail.com">tito.drugman.dev@gmail.com</a></td></tr>
+        <tr><td>GitHub</td><td><a href="https://github.com/TitoNicolaDrugman">github.com/TitoNicolaDrugman</a></td></tr>
+        <tr><td>LinkedIn</td><td><a href="⟨https://linkedin.com/in/TitoNicolaDrugman⟩">⟨linkedin.com/in/...⟩</a></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <span>Tito Nicola Drugman — tito.is-a.dev</span>
+    <span>Rev. ⟨1⟩ / ⟨2026⟩</span>
+  </footer>
+
 </main>
 </body>
 </html>
