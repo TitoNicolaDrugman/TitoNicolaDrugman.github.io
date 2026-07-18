@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Timeline — Tito Nicola Drugman</title>
+<meta name="description" content="The full, detailed record: every role, degree and project behind Tito Nicola Drugman's portfolio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef1f6;
+    --paper:#e2e6ef;
+    --ink:#10121a;
+    --ink-soft:#3b3f4c;
+    --muted:#6a7080;
+    --line:#10121a;
+    --accent:#2b46ff;
+    --accent-2:#0e7d63;
+    --hi:#cfe0ff;
+    --dark:#0d0f16;
+    --dark-fg:#eef1f6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Newsreader', Georgia, serif;
+    font-size:18px;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  a{color:inherit}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;left:0;right:0;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px 40px;z-index:100;
+    background:var(--bg);
+    border-bottom:1px solid var(--line);
+  }
+  nav .logo{
+    font-family:'Fraunces',serif;
+    font-weight:900;font-size:20px;letter-spacing:-.02em;
+    font-style:italic;text-decoration:none;color:var(--ink);
+  }
+  nav .back{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
+    text-decoration:none;display:flex;align-items:center;gap:8px;
+    transition:color .2s;
+  }
+  nav .back:hover{color:var(--accent)}
+
+  /* ---------- HERO ---------- */
+  header{
+    padding:90px 40px 70px;
+    border-bottom:1px solid var(--line);
+    max-width:1400px;margin:0 auto;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;
+    letter-spacing:.2em;color:var(--muted);margin-bottom:20px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .eyebrow::before{content:"";width:40px;height:1px;background:var(--accent);}
+  header h1{
+    font-family:'Fraunces',serif;font-weight:300;
+    font-size:clamp(44px,9vw,120px);line-height:.92;letter-spacing:-.03em;
+    margin-bottom:26px;
+  }
+  header h1 em{font-style:italic;color:var(--accent)}
+  header p.lede{
+    font-size:22px;max-width:640px;color:var(--ink-soft);line-height:1.5;
+  }
+  header p.lede .hi{background:var(--hi);padding:0 6px;color:var(--ink)}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:100px 40px;border-bottom:1px solid var(--line);position:relative}
+  .sec-inner{max-width:1400px;margin:0 auto}
+  .section-label{
+    font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;
+    letter-spacing:.2em;color:var(--muted);margin-bottom:16px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .section-label::before{content:"";width:40px;height:1px;background:var(--accent)}
+  section > .sec-inner > h2{
+    font-family:'Fraunces',serif;font-weight:300;
+    font-size:clamp(36px,5.5vw,72px);line-height:.98;letter-spacing:-.03em;
+    margin-bottom:16px;max-width:900px;
+  }
+  section > .sec-inner > h2 em{font-style:italic;color:var(--accent)}
+  section > .sec-inner > p.sub{
+    font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;
+    text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
+    max-width:460px;margin-bottom:70px;
+  }
+
+  /* ---------- RECORD LIST (education & work) ---------- */
+  .record{border-top:1px solid var(--ink)}
+  .rec-item{
+    display:grid;grid-template-columns:230px 1fr;gap:50px;
+    padding:34px 0;border-bottom:1px solid var(--paper);
+  }
+  .rec-item .when{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);
+    letter-spacing:.05em;padding-top:6px;
+  }
+  .rec-item .when strong{
+    display:block;font-family:'Fraunces',serif;font-size:26px;font-weight:400;
+    color:var(--ink);letter-spacing:-.01em;margin-bottom:2px;
+  }
+  .rec-item.incoming .when strong{color:var(--accent-2)}
+  .rec-item .what h3{
+    font-family:'Fraunces',serif;font-weight:400;font-size:27px;letter-spacing:-.01em;
+    margin-bottom:6px;
+  }
+  .rec-item .what h3 em{font-style:italic;color:var(--accent)}
+  .rec-item .what .place{
+    font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--muted);margin-bottom:10px;
+  }
+  .rec-item .what p{font-size:16px;color:var(--ink-soft);line-height:1.6;max-width:70ch}
+
+  /* ---------- PROJECT CARDS ---------- */
+  .pcard{
+    border:1px solid var(--ink);
+    background:var(--bg);
+    margin-bottom:28px;
+    padding:30px 34px;
+  }
+  .pcard-top{
+    display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .pcard-idx{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
+  .pcard-top h3{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(24px,3vw,34px);
+    letter-spacing:-.01em;
+  }
+  .pcard-top h3 em{font-style:italic;color:var(--accent)}
+  .pcard-date{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted)}
+  .pcard-link{
+    font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;
+    letter-spacing:.1em;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);
+    padding-bottom:2px;display:inline-block;margin:10px 0 18px;
+  }
+  .pcard-link:hover{color:var(--accent-2);border-color:var(--accent-2)}
+  .pcard ul{margin:0 0 16px;padding-left:20px;color:var(--ink-soft);font-size:15.5px;line-height:1.6}
+  .pcard ul li{margin-bottom:6px}
+  .pcard ul li b{color:var(--ink);font-weight:600}
+  .pcard .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .pcard .tag{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.04em;
+    color:var(--ink-soft);border:1px solid var(--paper);padding:3px 9px;background:var(--paper);
+  }
+
+  footer{
+    padding:30px 40px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;text-transform:uppercase;letter-spacing:.15em;
+    color:var(--muted);
+  }
+  footer a{text-decoration:none;color:inherit}
+  footer a:hover{color:var(--accent)}
+
+  @media (max-width:800px){
+    header,section{padding:70px 22px 60px}
+    .rec-item{grid-template-columns:1fr;gap:8px}
+    .pcard{padding:22px 20px}
+    .pcard-date{margin-left:0}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Drugman*</a>
+  <a href="index.html" class="back">← Back to portfolio</a>
+</nav>
+
+<header>
+  <div class="eyebrow">§ Archive</div>
+  <h1>The <em>full</em><br>record.</h1>
+  <p class="lede">Every degree, role and project behind the portfolio — with the <span class="hi">dates, metrics and stack</span> that didn't fit on one page. For the funnier, less accurate version, there's always the <a href="wikipedia/index.html" style="text-decoration:underline">Wikipedia page</a>.</p>
+</header>
+
+<!-- ============ EDUCATION & WORK ============ -->
+<section id="record">
+  <div class="sec-inner">
+    <div class="section-label">§ 01 — Education &amp; Work</div>
+    <h2>Institutions, <em>internships</em><br>&amp; side gigs.</h2>
+    <p class="sub">In chronological order — including the two jobs that have nothing to do with machine learning.</p>
+
+    <div class="record">
+      <div class="rec-item">
+        <div class="when"><strong>2021 → 2024</strong>Bachelor's</div>
+        <div class="what">
+          <h3>BSc in <em>Artificial Intelligence</em></h3>
+          <div class="place">Università di Pavia / Università degli Studi di Milano / Università degli Studi di Milano-Bicocca — Milan, Italy</div>
+          <p>Inter-university programme launched the year I enrolled — I graduated in its inaugural cohort. Core coursework across artificial intelligence, machine learning, statistics, algorithms, programming and databases.</p>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="when"><strong>2022 → Present</strong>Ongoing</div>
+        <div class="what">
+          <h3>Industrial Robotics Trainer &amp; Certification Assessor</h3>
+          <div class="place">Comau × Pearson (2022–2023) → Fanuc × Sanoma (2023–present) — Northern Italy</div>
+          <p>Deliver technical training and administer official industry certifications on industrial communication protocols, robot programming and Industry 4.0 to mixed audiences of engineers, educators and students. Produce course materials and assessment criteria, and lead "Train the Trainer" sessions.</p>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="when"><strong>2023 → Present</strong>Ongoing</div>
+        <div class="what">
+          <h3>Science Museum Guide</h3>
+          <div class="place">Leonardo da Vinci National Museum of Science and Technology — Milan, Italy</div>
+          <p>Communicate complex technical and historical concepts to diverse public audiences across aviation, transport and historical-technology exhibitions.</p>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="when"><strong>Mar → Jul 2024</strong>Bachelor's thesis</div>
+        <div class="what">
+          <h3>AI Engineer Intern — <em>STMicroelectronics</em></h3>
+          <div class="place">Agrate Brianza, Milan, Italy</div>
+          <p>Designed a hyperparameter-optimisation framework extending Keras Tuner for neural networks on microcontroller-class hardware, targeting an industrial audio anomaly-detection use case. Engineered the search to jointly evaluate candidate architectures against accuracy and strict ROM/RAM/MACC budgets, validated against STM32Cube.AI ground truth across three MLPerf Tiny reference models. Diagnosed and patched an upstream Keras Tuner bug that was killing long unattended remote tuning runs. Operated inside STMicroelectronics' confidential VPN-gated environment with fully reproducible, version-controlled Conda experiments.</p>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="when"><strong>2024 → Present</strong>Ongoing</div>
+        <div class="what">
+          <h3>MSc in <em>Computer Science &amp; Engineering</em> (AI)</h3>
+          <div class="place">Politecnico di Milano — Milan, Italy</div>
+          <p>Machine Learning, Deep Learning, Natural Language Processing, Large Language Models, Neural Networks, Distributed Systems, Software Engineering. Chose a project-based track over an exam-heavy one — slower, but it put me in direct collaboration with researchers on real problems.</p>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="when"><strong>Sep 2025 → Jan 2026</strong>Exchange</div>
+        <div class="what">
+          <h3>Exchange Student — <em>CUHK-Shenzhen</em> 🇨🇳</h3>
+          <div class="place">The Chinese University of Hong Kong, Shenzhen — Shenzhen, China</div>
+          <p>A semester of AI research and advanced coursework in machine learning and engineering — and where I ran the WebVoyager replication comparing locally-hosted open-weight VLMs against GPT-4o.</p>
+        </div>
+      </div>
+
+      <div class="rec-item incoming">
+        <div class="when"><strong>Oct 2026</strong>Incoming</div>
+        <div class="what">
+          <h3>AI Traineeship — <em>European Court of Auditors</em></h3>
+          <div class="place">Directorate for Information Technology, Workplace and Innovation (DIWI) — Luxembourg</div>
+          <p>Profile 1: Local AI Model Architecture &amp; Infrastructure. Building on-premises open-source AI under strict data-sovereignty constraints — local LLM deployment, RAG, OCR-driven document ingestion and document classification for the Innovation Atelier.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects" style="background:var(--paper)">
+  <div class="sec-inner">
+    <div class="section-label">§ 02 — Projects</div>
+    <h2>The <em>work</em>,<br>unabridged.</h2>
+    <p class="sub">Six systems, six repos, and the metrics behind each headline number.</p>
+
+    <div class="pcard">
+      <div class="pcard-top">
+        <span class="pcard-idx">P.01</span>
+        <h3>On-Prem <em>RAG</em> for LLM-Based Code Generation</h3>
+        <span class="pcard-date">Sep 2025 – Feb 2026</span>
+      </div>
+      <a class="pcard-link" href="https://github.com/TitoNicolaDrugman/RAG-Code-Generation" target="_blank" rel="noopener">github.com/TitoNicolaDrugman/RAG-Code-Generation ↗</a>
+      <ul>
+        <li>Designed a reproducible ingestion, chunking and indexing pipeline over a <b>7,600+ document</b> knowledge base — corpus-agnostic and transferable to legal/audit domains.</li>
+        <li>Benchmarked three single-hop retrievers (BM25, dense CodeBERT embeddings, hybrid via Reciprocal Rank Fusion) plus two LLM-driven multi-hop pipelines (query decomposition, iterative refinement).</li>
+        <li>Deployed fully on-premises on a dual RTX 5060 Ti workstation, zero external API calls — 4-bit NF4 quantisation (bitsandbytes) to fit CodeLlama-7B-Instruct in available VRAM.</li>
+        <li>Result: <b>+38% relative CodeBLEU</b> (0.1859 → 0.2567) over the no-retrieval baseline; multi-hop decomposition reached 0.2505.</li>
+      </ul>
+      <div class="tags"><span class="tag">RAG</span><span class="tag">CodeLlama-7B</span><span class="tag">bitsandbytes</span><span class="tag">Hybrid Retrieval</span></div>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-top">
+        <span class="pcard-idx">P.02</span>
+        <h3>Replicating &amp; Enhancing <em>WebVoyager</em></h3>
+        <span class="pcard-date">Sep 2025 – Jan 2026</span>
+      </div>
+      <a class="pcard-link" href="https://github.com/TitoNicolaDrugman/LLMsWebAgent" target="_blank" rel="noopener">github.com/TitoNicolaDrugman/LLMsWebAgent ↗</a>
+      <ul>
+        <li>Replaced proprietary GPT-4o with locally-hosted alternatives: Qwen3-VL 8B/30B via Ollama, plus DeepSeek-V3 (685B MoE) via OpenRouter as a comparison point.</li>
+        <li>Built a fully-automated page-classification pipeline with Qwen3-VL:30b, producing a 1,101-image labelled dataset with zero manual annotation.</li>
+        <li>Fine-tuned a ResNet-18 for real-time page-state classification as a visual prior — <b>cut reasoning latency by 17%</b>.</li>
+        <li>Designed a grayscale + colour Set-of-Mark grounding variant (52.4% vs. 51.1% baseline); replicated the GPT-4o reference at <b>62.7% task success</b>, above the original paper's 59.1%.</li>
+      </ul>
+      <div class="tags"><span class="tag">VLM Agents</span><span class="tag">Qwen3-VL</span><span class="tag">Set-of-Mark</span><span class="tag">Ollama</span></div>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-top">
+        <span class="pcard-idx">P.03</span>
+        <h3>Transformer on the <em>NPU</em> of an STM32N6</h3>
+        <span class="pcard-date">Mar – Sep 2025</span>
+      </div>
+      <a class="pcard-link" href="https://github.com/TitoNicolaDrugman/Transformer-NPU-STM32N6" target="_blank" rel="noopener">github.com/TitoNicolaDrugman/Transformer-NPU-STM32N6 ↗</a>
+      <ul>
+        <li>Designed, trained and INT8-quantised a custom <b>4.56M-parameter</b> encoder-only transformer from scratch for autoregressive text generation.</li>
+        <li>Applied per-channel symmetric INT8 quantisation of weights and activations against a held-out calibration set — the same discipline that governs compressing larger LLMs for on-prem inference.</li>
+        <li>Full pipeline: PyTorch model design, training on ~1.4M words from Project Gutenberg, C-code generation via STM32CubeIDE / X-Cube-AI, NPU configuration and on-device validation.</li>
+        <li>On-board results: <b>73.14 ms/token</b>, 13.67 tokens/s, 257/407 ops NPU-accelerated, inside a <b>7.16MB flash</b> footprint. Built with Patrizio Acquadro.</li>
+      </ul>
+      <div class="tags"><span class="tag">TinyML</span><span class="tag">INT8 Quantisation</span><span class="tag">X-Cube-AI</span><span class="tag">STM32N6570-DK</span></div>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-top">
+        <span class="pcard-idx">P.04</span>
+        <h3><em>GenHack 2025</em> — De-biasing ERA5 Urban Heat</h3>
+        <span class="pcard-date">Oct – Nov 2025</span>
+      </div>
+      <a class="pcard-link" href="https://github.com/TitoNicolaDrugman/GENHACK" target="_blank" rel="noopener">github.com/TitoNicolaDrugman/GENHACK ↗</a>
+      <ul>
+        <li>Three-person team hackathon (École Polytechnique × BNP Paribas × Kayrros): corrected systematic Urban Heat Island bias in ERA5-Land climate reanalysis data.</li>
+        <li>Fused four heterogeneous sources — ERA5-Land, Sentinel-2 NDVI, ECA&amp;D ground stations, JRC Global Surface Water — into a unified <b>3M+ row</b> dataset across IT/ES/FR/PT.</li>
+        <li>Compared Random Forest vs. HistGradientBoosting with a station-based split to prevent geographic leakage; the dominant predictors turned out to be elevation and latitude/longitude, not urban fraction.</li>
+        <li>Result: RMSE 3.01°C → 1.94°C (<b>−35.5%</b>), MAE −45%, systematic urban bias corrected by <b>−93%</b> on hold-out stations.</li>
+      </ul>
+      <div class="tags"><span class="tag">Geospatial ML</span><span class="tag">Random Forest</span><span class="tag">Sentinel-2</span><span class="tag">GeoPandas</span></div>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-top">
+        <span class="pcard-idx">P.05</span>
+        <h3>Sen2Fire <em>Wildfire</em> Detection</h3>
+        <span class="pcard-date">2025</span>
+      </div>
+      <a class="pcard-link" href="https://github.com/TitoNicolaDrugman/Sen2Fire-Wildfire-Detection" target="_blank" rel="noopener">github.com/TitoNicolaDrugman/Sen2Fire-Wildfire-Detection ↗</a>
+      <ul>
+        <li>Benchmarked nnU-Net, SegFormer and dual-stream architectures on Sentinel-2 imagery for wildfire segmentation.</li>
+        <li>Added test-time augmentation and spatial-weighting pipelines to push segmentation quality on a class-imbalanced task.</li>
+        <li>Result: <b>F1 0.3675</b>, competitive with state-of-the-art on the Sen2Fire benchmark.</li>
+      </ul>
+      <div class="tags"><span class="tag">Segmentation</span><span class="tag">SegFormer</span><span class="tag">nnU-Net</span><span class="tag">Remote Sensing</span></div>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-top">
+        <span class="pcard-idx">P.06</span>
+        <h3>Tooth Segmentation <em>Transformer</em></h3>
+        <span class="pcard-date">2024 – 2025</span>
+      </div>
+      <a class="pcard-link" href="https://github.com/TitoNicolaDrugman/Tooth-Segmentation-Transformer" target="_blank" rel="noopener">github.com/TitoNicolaDrugman/Tooth-Segmentation-Transformer ↗</a>
+      <ul>
+        <li>Built ToothFormer, a SegFormer-inspired vision transformer for conditional semantic segmentation.</li>
+        <li>Identifies and masks individual teeth in 3D dental scans, conditioned on a given tooth ID rather than segmenting the full arch at once.</li>
+      </ul>
+      <div class="tags"><span class="tag">Vision Transformer</span><span class="tag">Medical Imaging</span><span class="tag">SegFormer</span></div>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-top">
+        <span class="pcard-idx">P.07</span>
+        <h3>Deep Learning From Scratch — <em>CIFAR-10</em></h3>
+        <span class="pcard-date">2025 · CUHK-Shenzhen coursework</span>
+      </div>
+      <a class="pcard-link" href="https://github.com/TitoNicolaDrugman/Deep-Learning-from-Scratch-CIFAR10" target="_blank" rel="noopener">github.com/TitoNicolaDrugman/Deep-Learning-from-Scratch-CIFAR10 ↗</a>
+      <ul>
+        <li>Implemented Batch Normalization, Dropout and CNNs using raw NumPy alongside a PyTorch counterpart, for CUHK-Shenzhen's CIE6006/MCE5918 Data Analysis coursework.</li>
+      </ul>
+      <div class="tags"><span class="tag">NumPy</span><span class="tag">CNNs</span><span class="tag">From Scratch</span></div>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-top">
+        <span class="pcard-idx">P.08</span>
+        <h3>TV Show <em>Recommender</em></h3>
+        <span class="pcard-date">Polimi coursework</span>
+      </div>
+      <a class="pcard-link" href="https://github.com/TitoNicolaDrugman/TV-Show-Recommender" target="_blank" rel="noopener">github.com/TitoNicolaDrugman/TV-Show-Recommender ↗</a>
+      <ul>
+        <li>Recommendation system using user-user and item-item collaborative filtering over viewing-pattern data.</li>
+        <li>Computed similarity matrices and built an interactive 3D visualisation of the recommendation space.</li>
+      </ul>
+      <div class="tags"><span class="tag">Collaborative Filtering</span><span class="tag">Recommender Systems</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Tito Nicola Drugman — <a href="index.html">Portfolio</a> · <a href="wikipedia/index.html">Wikipedia</a></span>
+  <span>Milan ⇄ Luxembourg</span>
+</footer>
+
+</body>
+</html>
