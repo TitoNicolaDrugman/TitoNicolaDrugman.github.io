@@ -1,394 +1,553 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tito Nicola Drugman — MSc Computer Science &amp; Engineering</title>
-<meta name="description" content="Tito Nicola Drugman — MSc Computer Science &amp; Engineering at Politecnico di Milano. Machine learning, embedded systems, low-level security.">
-
-<!-- ============================================================
-     COME MODIFICARE QUESTA PAGINA
-     - Cerca i blocchi  COSÌ : sono i dati che DEVI controllare o
-       riempire tu. Non lasciarne nemmeno uno online.
-     - Il resto è testo normale: modifica quello che c'è tra i tag.
-     - Salva, poi: git add . / git commit -m "..." / git push
-     ============================================================ -->
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tito Nicola Drugman — AI / ML Engineer</title>
+<meta name="description" content="AI/ML engineer building constrained, working systems: quantised transformers on microcontrollers, local LLM + RAG stacks, and vision-language web agents.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#fcfcfa;
-    --ink:#16171a;
-    --muted:#6b6f76;
-    --rule:#d9d9d3;
-    --rule-strong:#16171a;
-    --signal:#0b4fa8;
-    --shade:#f2f2ee;
-
-    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-    --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --paper:#E7EAEE;
+    --panel:#FCFCFD;
+    --panel-2:#F1F3F6;
+    --ink:#0B0D11;
+    --muted:#565D68;
+    --faint:#8A909B;
+    --line:#CDD2DA;
+    --line-soft:#DDE1E7;
+    --grid:#D4D8DF;
+    --accent:#1E34FF;
+    --accent-deep:#0E1E9E;
+    --accent-soft:#E1E4FF;
+    --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+    --cond:"IBM Plex Sans Condensed",var(--sans);
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
   }
 
-  *,*::before,*::after{box-sizing:border-box}
-
-  html{-webkit-text-size-adjust:100%}
-
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{
     margin:0;
-    background:var(--paper);
+    font-family:var(--sans);
     color:var(--ink);
-    font:400 15px/1.6 var(--sans);
+    background-color:var(--paper);
+    background-image:
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size:34px 34px;
     -webkit-font-smoothing:antialiased;
+    line-height:1.55;
   }
+  a{color:inherit;text-decoration:none;}
 
-  .sheet{
-    max-width:60rem;
-    margin:0 auto;
-    padding:2rem 1.5rem 5rem;
-  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
 
-  a{color:var(--signal);text-decoration:none;border-bottom:1px solid rgba(11,79,168,.35)}
-  a:hover{border-bottom-color:var(--signal)}
-  a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:1px}
-
-  /* ---------- header bar ---------- */
-  .bar{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    gap:1rem;
-    font:500 11px/1 var(--mono);
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:var(--muted);
-    padding-bottom:.6rem;
-    border-bottom:2px solid var(--rule-strong);
-  }
-
-  /* ---------- cover ---------- */
-  .cover{padding:2rem 0 1.75rem;border-bottom:1px solid var(--rule)}
-
-  .cover h1{
-    margin:0;
-    font:600 clamp(1.9rem,6vw,3.1rem)/1.05 var(--mono);
-    letter-spacing:-.03em;
-    text-transform:uppercase;
-  }
-
-  .cover .subtitle{
-    margin:.7rem 0 0;
-    font-size:clamp(1rem,2.4vw,1.15rem);
-    color:var(--muted);
-    max-width:44ch;
-  }
-
-  /* ---------- features + specs ---------- */
-  .cols{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:2rem;
-    padding:1.75rem 0;
-    border-bottom:2px solid var(--rule-strong);
-  }
-  @media(min-width:48rem){
-    .cols{grid-template-columns:1fr 17rem;gap:3rem}
-  }
-
+  /* eyebrows / mono labels */
+  .mono{font-family:var(--mono);}
   .eyebrow{
-    font:500 11px/1 var(--mono);
-    letter-spacing:.1em;
+    font-family:var(--mono);
+    font-size:11.5px;
+    letter-spacing:.14em;
     text-transform:uppercase;
-    color:var(--muted);
-    margin:0 0 .9rem;
+    color:var(--faint);
   }
 
-  .features{margin:0;padding:0;list-style:none}
-  .features li{
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(231,234,238,.82);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:52px;
+  }
+  .brand{
+    font-family:var(--mono);font-weight:600;font-size:13px;
+    letter-spacing:.06em;
+  }
+  .brand b{color:var(--accent);}
+  .nav{display:flex;gap:22px;align-items:center;}
+  .nav a{
+    font-family:var(--mono);font-size:12.5px;color:var(--muted);
+    letter-spacing:.02em;transition:color .15s;
+  }
+  .nav a:hover{color:var(--accent);}
+  .nav a.ext::after{content:" ↗";color:var(--faint);}
+  .nav-toggle{display:none;}
+
+  /* ---------- hero ---------- */
+  .hero{padding:74px 0 40px;}
+  .hero-tag{
+    display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+    margin-bottom:26px;
+  }
+  .chip{
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);border:1px solid var(--line);background:var(--panel);
+    padding:4px 9px;border-radius:2px;
+  }
+  .chip.live{color:var(--accent-deep);border-color:var(--accent);background:var(--accent-soft);}
+  .chip.live::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:7px;vertical-align:1px;}
+
+  h1.name{
+    font-family:var(--cond);font-weight:700;
+    font-size:clamp(46px,9vw,104px);
+    line-height:.94;letter-spacing:-.01em;margin:0 0 22px;
+    text-transform:uppercase;
+  }
+  .thesis{
+    font-size:clamp(18px,2.4vw,23px);
+    max-width:42ch;color:var(--ink);font-weight:400;margin:0 0 8px;
+  }
+  .thesis .hl{color:var(--accent-deep);font-weight:500;}
+
+  /* spec panel */
+  .spec-panel{
+    margin-top:44px;
+    border:1px solid var(--line);
+    background:var(--panel);
+    border-radius:3px;
+    overflow:hidden;
+  }
+  .spec-panel-head{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 16px;border-bottom:1px solid var(--line);
+    background:var(--panel-2);
+  }
+  .spec-panel-head .l{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+  .spec-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);
+  }
+  .spec-cell{
+    padding:16px;border-right:1px solid var(--line-soft);
+  }
+  .spec-cell:last-child{border-right:none;}
+  .spec-cell .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:7px;}
+  .spec-cell .v{font-family:var(--cond);font-weight:600;font-size:18px;line-height:1.15;letter-spacing:.01em;}
+  .spec-cell .v.sm{font-size:15px;font-family:var(--sans);font-weight:500;}
+  .spec-cell a.v{color:var(--accent-deep);}
+  .spec-cell a.v:hover{text-decoration:underline;}
+
+  /* ---------- section frame ---------- */
+  section{padding:64px 0;}
+  .sec-head{
+    display:flex;align-items:baseline;gap:16px;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:12px;margin-bottom:38px;
+  }
+  .sec-head .num{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.1em;}
+  .sec-head h2{
+    font-family:var(--cond);font-weight:700;text-transform:uppercase;
+    font-size:clamp(22px,3vw,30px);margin:0;letter-spacing:.005em;
+  }
+  .sec-head .aside{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.06em;}
+
+  /* ---------- projects ---------- */
+  .proj{
+    border:1px solid var(--line);
+    background:var(--panel);
+    border-radius:3px;
+    margin-bottom:20px;
+    transition:border-color .18s, transform .18s;
     position:relative;
-    padding-left:1.2rem;
-    margin-bottom:.5rem;
   }
-  .features li::before{
-    content:"—";
-    position:absolute;
-    left:0;
-    color:var(--signal);
-    font-family:var(--mono);
+  .proj::before{
+    content:"";position:absolute;left:-1px;top:-1px;bottom:-1px;width:3px;
+    background:var(--accent);transform:scaleY(0);transform-origin:top;
+    transition:transform .22s ease;
   }
+  .proj:hover{border-color:var(--line);transform:translateY(-2px);}
+  .proj:hover::before{transform:scaleY(1);}
+  .proj-top{
+    display:flex;align-items:baseline;gap:14px;
+    padding:18px 22px 0;
+  }
+  .proj-idx{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.05em;}
+  .proj-title{font-family:var(--cond);font-weight:700;font-size:clamp(20px,2.6vw,26px);margin:0;line-height:1.05;}
+  .proj-year{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);}
 
-  .specs{
-    background:var(--shade);
-    border:1px solid var(--rule);
-    padding:1rem 1.1rem;
-    font:400 13px/1.5 var(--mono);
+  .strip{
+    display:flex;flex-wrap:wrap;gap:0;
+    padding:14px 22px 2px;
+    font-family:var(--mono);font-size:11.5px;color:var(--muted);
   }
-  .specs dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.45rem .8rem}
-  .specs dt{color:var(--muted)}
-  .specs dd{margin:0;text-align:right}
+  .strip span{
+    padding:2px 12px 2px 0;margin-right:12px;
+    border-right:1px solid var(--line-soft);
+    white-space:nowrap;letter-spacing:.01em;
+  }
+  .strip span:last-child{border-right:none;}
+  .strip b{color:var(--accent-deep);font-weight:600;}
 
-  /* ---------- sections ---------- */
-  .sec{padding:2.25rem 0 0}
+  .proj-body{padding:12px 22px 20px;color:var(--muted);font-size:15.5px;max-width:70ch;}
+  .proj-body strong{color:var(--ink);font-weight:600;}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;padding:0 22px 20px;}
+  .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line-soft);padding:3px 8px;border-radius:2px;background:var(--panel-2);}
 
-  .sec h2{
-    display:flex;
-    align-items:baseline;
-    gap:.85rem;
-    margin:0 0 1.25rem;
-    font:600 13px/1 var(--mono);
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    padding-bottom:.55rem;
-    border-bottom:1px solid var(--rule-strong);
-  }
-  .sec h2 .n{color:var(--signal)}
+  /* budget bars */
+  .budget{padding:2px 22px 20px;display:flex;gap:26px;flex-wrap:wrap;}
+  .budget .b{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+  .budget .b .lbl{text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}
+  .budget .b .ticks{letter-spacing:2px;color:var(--accent);font-size:12px;}
+  .budget .b .ticks i{color:var(--line);font-style:normal;}
+  .budget .b .val{color:var(--ink);margin-top:4px;}
 
-  .entry{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:.2rem 1.5rem;
-    padding:.9rem 0;
-    border-bottom:1px solid var(--rule);
-  }
-  @media(min-width:48rem){
-    .entry{grid-template-columns:9.5rem 1fr}
-  }
+  /* ---------- stack ---------- */
+  .stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  .stack-col{border-top:1px solid var(--ink);padding-top:14px;}
+  .stack-col h3{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:600;}
+  .stack-col ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px;}
+  .stack-col li{font-family:var(--mono);font-size:12px;color:var(--ink);border:1px solid var(--line-soft);background:var(--panel);padding:4px 9px;border-radius:2px;}
 
-  .entry .when{
-    font:400 12px/1.6 var(--mono);
-    color:var(--muted);
-    padding-top:.15rem;
+  /* ---------- background ---------- */
+  .bg-list{border-top:1px solid var(--line);}
+  .bg-row{
+    display:grid;grid-template-columns:150px 1fr;gap:20px;
+    padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline;
   }
-  .entry h3{
-    margin:0;
-    font-size:1rem;
-    font-weight:600;
-  }
-  .entry .org{color:var(--muted);font-weight:400}
-  .entry p{margin:.35rem 0 0;color:#3c3f45}
-  .entry .tags{
-    margin:.5rem 0 0;
-    font:400 11px/1.5 var(--mono);
-    color:var(--muted);
-    letter-spacing:.03em;
-  }
-
-  /* ---------- stack table ---------- */
-  table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:14px;
-  }
-  th,td{
-    text-align:left;
-    padding:.6rem .75rem .6rem 0;
-    border-bottom:1px solid var(--rule);
-    vertical-align:top;
-  }
-  th{
-    font:500 11px/1 var(--mono);
-    letter-spacing:.09em;
-    text-transform:uppercase;
-    color:var(--muted);
-    border-bottom:1px solid var(--rule-strong);
-    white-space:nowrap;
-  }
-  td:first-child{
-    font-family:var(--mono);
-    font-size:13px;
-    white-space:nowrap;
-    padding-right:1.5rem;
-  }
+  .bg-row .when{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.02em;}
+  .bg-row .what h4{font-family:var(--cond);font-weight:600;font-size:19px;margin:0 0 3px;}
+  .bg-row .what p{margin:0;color:var(--muted);font-size:14.5px;}
+  .bg-row.incoming .what h4{color:var(--accent-deep);}
 
   /* ---------- footer ---------- */
-  footer{
-    margin-top:3rem;
-    padding-top:.6rem;
-    border-top:2px solid var(--rule-strong);
-    font:400 11px/1.6 var(--mono);
-    letter-spacing:.05em;
-    color:var(--muted);
-    display:flex;
-    justify-content:space-between;
-    gap:1rem;
-    flex-wrap:wrap;
+  footer{padding:56px 0 40px;border-top:1px solid var(--ink);}
+  .foot-grid{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;}
+  .foot-links{display:flex;flex-direction:column;gap:10px;}
+  .foot-links a{font-family:var(--cond);font-weight:600;font-size:clamp(20px,3vw,30px);letter-spacing:.005em;transition:color .15s;}
+  .foot-links a:hover{color:var(--accent);}
+  .foot-links a span{font-family:var(--mono);font-weight:400;font-size:12px;color:var(--faint);letter-spacing:.05em;margin-left:10px;}
+  .foot-meta{font-family:var(--mono);font-size:11px;color:var(--faint);text-align:right;line-height:1.8;letter-spacing:.03em;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media (max-width:820px){
+    .spec-grid{grid-template-columns:repeat(2,1fr);}
+    .spec-cell:nth-child(2){border-right:none;}
+    .spec-cell:nth-child(1),.spec-cell:nth-child(2){border-bottom:1px solid var(--line-soft);}
+    .stack-grid{grid-template-columns:1fr;}
+    .nav{display:none;}
+  }
+  @media (max-width:560px){
+    .hero{padding:52px 0 30px;}
+    .bg-row{grid-template-columns:1fr;gap:4px;}
+    .strip span{border-right:none;}
+    .foot-grid{align-items:flex-start;}
+    .foot-meta{text-align:left;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .proj::before{transition:none;}
   }
 </style>
 </head>
 <body>
-<main class="sheet">
 
-  <div class="bar">
-    <span>TND&#8209;01 / portfolio</span>
-    <span>Rev.  1  —  July 2026 </span>
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="#top" class="brand">T.N.<b>DRUGMAN</b></a>
+    <nav class="nav">
+      <a href="#work">Work</a>
+      <a href="#stack">Stack</a>
+      <a href="#background">Background</a>
+      <a class="ext" href="https://github.com/TitoNicolaDrugman">GitHub</a>
+    </nav>
   </div>
+</div>
 
-  <header class="cover">
-    <h1>Tito Nicola<br>Drugman</h1>
-    <p class="subtitle">MSc Computer Science &amp; Engineering, Politecnico di Milano.
-    Machine learning on constrained hardware, and the systems underneath it.</p>
-  </header>
-
-  <div class="cols">
-    <div>
-      <p class="eyebrow">Features</p>
-      <ul class="features">
-        <li>MSc Computer Science &amp; Engineering at Politecnico di Milano, Artificial Intelligence track</li>
-        <li>Deployed transformer inference on the STM32N6 NPU during an AI engineering internship at STMicroelectronics</li>
-        <li>Binary exploitation and web security through NECST CTF competitions — ROP, format strings, ret2libc</li>
-        <li>Industrial robotics training delivered on FANUC and Comau platforms</li>
-        <li>Self-hosted LLM workstation: Llama, Mistral, Qwen, DeepSeek, Gemma</li>
-      </ul>
+<a id="top"></a>
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-tag">
+      <span class="chip live">Incoming AI Trainee · European Court of Auditors</span>
+      <span class="chip">MSc CS&amp;E (AI) · Politecnico di Milano</span>
+      <span class="chip">Milan → Luxembourg · Oct 2026</span>
     </div>
 
-    <aside class="specs">
-      <dl>
-        <dt>Status</dt><dd>MSc, year 2</dd>
-        <dt>Based in</dt><dd>Milan, IT</dd>
-        <dt>Languages</dt><dd>IT · EN</dd>
-        <dt>Focus</dt><dd>ML · embedded</dd>
-        <dt>Available</dt><dd> 2027 </dd>
-      </dl>
-    </aside>
+    <h1 class="name">Tito&nbsp;Nicola<br>Drugman</h1>
+
+    <p class="thesis">I build AI systems that have to run under <span class="hl">real constraints</span> — quantised transformers on microcontrollers, local LLM&nbsp;+&nbsp;RAG stacks on self-hosted GPUs, and web agents judged on whether they actually finish the task.</p>
+
+    <div class="spec-panel reveal">
+      <div class="spec-panel-head">
+        <span class="l">Operating parameters</span>
+        <span class="l">rev · 2026.07</span>
+      </div>
+      <div class="spec-grid">
+        <div class="spec-cell">
+          <div class="k">Discipline</div>
+          <div class="v">Applied ML &amp;<br>Edge AI</div>
+        </div>
+        <div class="spec-cell">
+          <div class="k">Focus</div>
+          <div class="v sm">On-prem LLMs · RAG · quantisation · NPU deployment</div>
+        </div>
+        <div class="spec-cell">
+          <div class="k">Runs on</div>
+          <div class="v sm">Self-hosted Linux · dual RTX&nbsp;5060&nbsp;Ti · Ollama</div>
+        </div>
+        <div class="spec-cell">
+          <div class="k">Repository</div>
+          <a class="v sm" href="https://github.com/TitoNicolaDrugman">github.com/<br>TitoNicolaDrugman ↗</a>
+        </div>
+      </div>
+    </div>
   </div>
+</header>
 
-  <!-- ============ 1. EXPERIENCE ============ -->
-  <section class="sec">
-    <h2><span class="n">1</span> Experience</h2>
-
-    <div class="entry">
-      <div class="when"> 2025 </div>
-      <div>
-        <h3>AI Engineer Intern — <span class="org">STMicroelectronics</span></h3>
-        <p> Una o due righe: cosa hai costruito e con che risultato. Es: "Quantised and deployed a transformer model on the STM32N6 NPU, cutting inference latency from X to Y ms." </p>
-        <p class="tags">PyTorch · quantisation · STM32N6 · embedded inference</p>
-      </div>
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">§01</span>
+      <h2>Selected work</h2>
+      <span class="aside">5 systems · shipped &amp; measured</span>
     </div>
 
-    <div class="entry">
-      <div class="when"> 2024–2025 </div>
-      <div>
-        <h3>Robotics Trainer — <span class="org">FANUC, Comau</span></h3>
-        <p> Cosa insegnavi e a chi. Es: "Delivered hands-on training on industrial robot programming and cell setup to technicians and students." </p>
-        <p class="tags">industrial robotics · teaching</p>
+    <!-- 01 -->
+    <article class="proj reveal">
+      <div class="proj-top">
+        <span class="proj-idx">P.01</span>
+        <h3 class="proj-title">On-prem RAG for code generation</h3>
+        <span class="proj-year">MSc project</span>
+      </div>
+      <div class="strip">
+        <span>CodeLlama-7B-Instruct</span>
+        <span>NF4 · 4-bit</span>
+        <span>CodeBERT embeddings</span>
+        <span>BM25 + Dense + <b>RRF</b></span>
+        <span>KB ≈ 7,600</span>
+        <span>CodeBLEU <b>0.186 → 0.257 (+38%)</b></span>
+      </div>
+      <div class="proj-body">
+        A retrieval-augmented generation pipeline for code, built to run entirely locally. Hybrid retrieval — sparse BM25 fused with dense CodeBERT embeddings via reciprocal-rank fusion — draws from a ~7,600-snippet knowledge base and conditions a 4-bit-quantised CodeLlama-7B-Instruct. Measured with CodeBLEU: <strong>0.186 → 0.257, a 38% relative gain</strong> over the no-retrieval baseline.
+      </div>
+      <div class="tags">
+        <span class="tag">RAG</span><span class="tag">hybrid retrieval</span><span class="tag">bitsandbytes</span><span class="tag">quantisation</span><span class="tag">evaluation</span>
+      </div>
+    </article>
+
+    <!-- 02 -->
+    <article class="proj reveal">
+      <div class="proj-top">
+        <span class="proj-idx">P.02</span>
+        <h3 class="proj-title">Encoder-only transformer on an STM32N6 NPU</h3>
+        <span class="proj-year">MSc project</span>
+      </div>
+      <div class="strip">
+        <span>~<b>4.56M</b> params</span>
+        <span>INT8 per-channel</span>
+        <span><b>73 ms</b>/token (cold)</span>
+        <span><b>7.16 MB</b> flash</span>
+        <span>STM32N6570-DK</span>
+      </div>
+      <div class="proj-body">
+        Deploying a transformer where there is barely room for one. An encoder-only ~4.56M-parameter model, quantised INT8 per-channel and compiled for the Neural-ART NPU on the STM32N6, running at <strong>73&nbsp;ms/token cold-start inside a 7.16&nbsp;MB flash footprint</strong>. Built with Patrizio Acquadro.
+      </div>
+      <div class="budget">
+        <div class="b">
+          <div class="lbl">Flash budget</div>
+          <div class="ticks">▮▮▮▮<i>▯▯▯▯</i></div>
+          <div class="val">7.16 MB used</div>
+        </div>
+        <div class="b">
+          <div class="lbl">Precision</div>
+          <div class="ticks">▮▮<i>▯▯▯▯▯▯</i></div>
+          <div class="val">INT8 · per-channel</div>
+        </div>
+        <div class="b">
+          <div class="lbl">Latency / token</div>
+          <div class="ticks">▮▮▮<i>▯▯▯▯▯</i></div>
+          <div class="val">73 ms (cold-start)</div>
+        </div>
+      </div>
+      <div class="tags">
+        <span class="tag">TinyML</span><span class="tag">X-Cube-AI</span><span class="tag">TFLite INT8</span><span class="tag">on-device inference</span>
+      </div>
+    </article>
+
+    <!-- 03 -->
+    <article class="proj reveal">
+      <div class="proj-top">
+        <span class="proj-idx">P.03</span>
+        <h3 class="proj-title">Vision-language web agent (WebVoyager)</h3>
+        <span class="proj-year">MSc project</span>
+      </div>
+      <div class="strip">
+        <span>Qwen3-VL 8B/30B <b>(local · Ollama)</b></span>
+        <span>DeepSeek-V3 <b>(API)</b></span>
+        <span>grayscale Set-of-Mark</span>
+        <span>ResNet-18 router</span>
+        <span>GPT-4o baseline 62.7%</span>
+      </div>
+      <div class="proj-body">
+        A vision-language browsing agent benchmarked on WebVoyager. Ran Qwen3-VL (8B and 30B) locally through Ollama and DeepSeek-V3 via OpenRouter, against a GPT-4o baseline at <strong>62.7% task success</strong>. Co-developed a grayscale Set-of-Mark prompting variant (with Montico) and added a ResNet-18 page-type classifier that <strong>cut agent latency by 17%</strong>.
+      </div>
+      <div class="tags">
+        <span class="tag">LLM agents</span><span class="tag">VLM</span><span class="tag">Set-of-Mark</span><span class="tag">benchmarking</span><span class="tag">Ollama</span>
+      </div>
+    </article>
+
+    <!-- 04 -->
+    <article class="proj reveal">
+      <div class="proj-top">
+        <span class="proj-idx">P.04</span>
+        <h3 class="proj-title">Constraint-aware HPO for TinyML</h3>
+        <span class="proj-year">BSc thesis · STMicroelectronics</span>
+      </div>
+      <div class="strip">
+        <span>Keras Tuner (extended)</span>
+        <span><b>ROM / RAM / MACC</b> budgets</span>
+        <span>MLPerf Tiny</span>
+        <span>X-Cube-AI</span>
+      </div>
+      <div class="proj-body">
+        Bachelor's thesis at STMicroelectronics: a hyperparameter-optimisation layer extending Keras Tuner to respect hard <strong>ROM, RAM and MACC budgets</strong> on STM32 targets — so the search only ever proposes models that will actually fit and run. Cost estimators validated on three MLPerf Tiny tasks; end-to-end HPO demonstrated on two. Supervised by Davide Denaro.
+      </div>
+      <div class="tags">
+        <span class="tag">AutoML</span><span class="tag">hardware-aware search</span><span class="tag">embedded</span><span class="tag">MLPerf Tiny</span>
+      </div>
+    </article>
+
+    <!-- 05 -->
+    <article class="proj reveal">
+      <div class="proj-top">
+        <span class="proj-idx">P.05</span>
+        <h3 class="proj-title">De-biasing ERA5 urban heat</h3>
+        <span class="proj-year">GenHack 2025</span>
+      </div>
+      <div class="strip">
+        <span>Random Forest</span>
+        <span>ERA5 · UHI bias</span>
+        <span>bias <b>−93%</b></span>
+        <span>RMSE <b>−35%</b></span>
+      </div>
+      <div class="proj-body">
+        GenHack 2025 (École Polytechnique · BNP&nbsp;Paribas · Kayrros). A Random Forest correcting ERA5's urban-heat-island temperature bias — roughly <strong>93% reduction in systematic bias and 35% in RMSE</strong>. The dominant predictors turned out to be elevation, latitude and longitude rather than urban fraction, which reframed how the team read the error.
+      </div>
+      <div class="tags">
+        <span class="tag">applied ML</span><span class="tag">climate data</span><span class="tag">feature analysis</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">§02</span>
+      <h2>Stack</h2>
+      <span class="aside">tools in regular use</span>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-col">
+        <h3>Serving &amp; LLMs</h3>
+        <ul>
+          <li>Ollama</li><li>PyTorch</li><li>Hugging Face</li><li>LangChain</li><li>bitsandbytes / NF4</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h3>Retrieval</h3>
+        <ul>
+          <li>BM25</li><li>dense retrieval</li><li>RRF</li><li>CodeBERT</li><li>Qdrant</li><li>ChromaDB</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h3>Edge AI</h3>
+        <ul>
+          <li>TensorFlow / Keras</li><li>TFLite INT8</li><li>ST X-Cube-AI</li><li>STM32N6570-DK</li><li>MLPerf Tiny</li><li>OpenCV</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h3>Infrastructure</h3>
+        <ul>
+          <li>Ubuntu / Linux</li><li>dual RTX 5060 Ti</li><li>Docker / Compose</li><li>Git</li><li>SSH</li>
+        </ul>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="entry">
-      <div class="when"> anni </div>
-      <div>
-        <h3>Museum Guide — <span class="org"> nome del museo </span></h3>
-        <p> Una riga. Se non ti sembra rilevante, cancella tutto questo blocco .entry </p>
+<section id="background">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">§03</span>
+      <h2>Background</h2>
+      <span class="aside">education &amp; trajectory</span>
+    </div>
+    <div class="bg-list">
+      <div class="bg-row incoming reveal">
+        <div class="when">Oct 2026 – Mar 2027</div>
+        <div class="what">
+          <h4>AI Traineeship — European Court of Auditors</h4>
+          <p>DIWI, Luxembourg. On-premises open-source AI infrastructure: local LLM deployment, RAG, OCR and document classification under data-sovereignty constraints.</p>
+        </div>
+      </div>
+      <div class="bg-row reveal">
+        <div class="when">In progress</div>
+        <div class="what">
+          <h4>MSc Computer Science &amp; Engineering (AI)</h4>
+          <p>Politecnico di Milano.</p>
+        </div>
+      </div>
+      <div class="bg-row reveal">
+        <div class="when">Exchange</div>
+        <div class="what">
+          <h4>Semester at CUHK-Shenzhen</h4>
+          <p>Chinese University of Hong Kong, Shenzhen.</p>
+        </div>
+      </div>
+      <div class="bg-row reveal">
+        <div class="when">Completed</div>
+        <div class="what">
+          <h4>BSc Artificial Intelligence</h4>
+          <p>Joint programme across three Milan universities.</p>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ============ 2. PROJECTS ============ -->
-  <section class="sec">
-    <h2><span class="n">2</span> Selected projects</h2>
-
-    <div class="entry">
-      <div class="when"> 2025 </div>
-      <div>
-        <h3>Transformer on STM32N6 NPU</h3>
-        <p> Una o due righe su cosa fa e perché è difficile. </p>
-        <p class="tags"><a href=" https://github.com/TitoNicolaDrugman/... ">Source ↗</a></p>
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-links">
+        <a href="https://github.com/TitoNicolaDrugman">GitHub <span>github.com/TitoNicolaDrugman ↗</span></a>
+        <!-- TODO: replace with your real address / profile before publishing -->
+        <a href="mailto:hello@example.com">Email <span>hello@example.com — replace me</span></a>
+        <a href="#">LinkedIn <span>add your URL</span></a>
+      </div>
+      <div class="foot-meta">
+        Tito Nicola Drugman<br>
+        AI / ML Engineer · Milan, IT<br>
+        Built with plain HTML · hosted on GitHub Pages
       </div>
     </div>
+  </div>
+</footer>
 
-    <div class="entry">
-      <div class="when"> 2025 </div>
-      <div>
-        <h3>RAG Code Generation</h3>
-        <p> Una o due righe. </p>
-        <p class="tags"><a href=" https://github.com/TitoNicolaDrugman/... ">Source ↗</a></p>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="when"> 2025 </div>
-      <div>
-        <h3>WebVoyager — LLM web agent</h3>
-        <p> Una o due righe. </p>
-        <p class="tags"><a href=" https://github.com/TitoNicolaDrugman/... ">Source ↗</a></p>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="when"> 2025 </div>
-      <div>
-        <h3>Urban Heat Islands — GenHack 2025</h3>
-        <p> Una o due righe. </p>
-        <p class="tags"><a href=" https://github.com/TitoNicolaDrugman/... ">Source ↗</a></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 3. EDUCATION ============ -->
-  <section class="sec">
-    <h2><span class="n">3</span> Education</h2>
-
-    <div class="entry">
-      <div class="when"> 2024–2026 </div>
-      <div>
-        <h3>MSc Computer Science &amp; Engineering — <span class="org">Politecnico di Milano</span></h3>
-        <p>Artificial Intelligence track.  Aggiungi la tesi se ce l'hai, o 2–3 corsi che ti rappresentano. </p>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="when"> 2021–2024 </div>
-      <div>
-        <h3>BSc Artificial Intelligence — <span class="org">Università di Pavia · Milano Statale · Milano Bicocca</span></h3>
-        <p>Joint degree across three universities.</p>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="when"> 2023 </div>
-      <div>
-        <h3>Exchange semester — <span class="org">CUHK Shenzhen</span></h3>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 4. STACK ============ -->
-  <section class="sec">
-    <h2><span class="n">4</span> Technical stack</h2>
-    <table>
-      <thead>
-        <tr><th scope="col">Area</th><th scope="col">Tools</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Languages</td><td>Python, MATLAB, SQL, C</td></tr>
-        <tr><td>ML</td><td>PyTorch, TensorFlow, Keras</td></tr>
-        <tr><td>LLMs</td><td>Self-hosted Llama, Mistral, Qwen, DeepSeek, Gemma; RAG pipelines</td></tr>
-        <tr><td>Data</td><td>Graph and NoSQL databases</td></tr>
-        <tr><td>Security</td><td>GDB, pwntools, binary exploitation, web vulnerabilities</td></tr>
-        <tr><td>Robotics</td><td>FANUC, Comau</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- ============ 5. CONTACT ============ -->
-  <section class="sec">
-    <h2><span class="n">5</span> Contact</h2>
-    <table>
-      <tbody>
-        <tr><td>Email</td><td><a href="mailto:tito.drugman.dev@gmail.com">tito.drugman.dev@gmail.com</a></td></tr>
-        <tr><td>GitHub</td><td><a href="https://github.com/TitoNicolaDrugman">github.com/TitoNicolaDrugman</a></td></tr>
-        <tr><td>LinkedIn</td><td><a href=" https://linkedin.com/in/TitoNicolaDrugman "> linkedin.com/in/... </a></td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <footer>
-    <span>Tito Nicola Drugman — tito.is-a.dev</span>
-    <span>Rev.  1  /  2026 </span>
-  </footer>
-
-</main>
+<script>
+  // scroll reveal (respects reduced-motion via CSS)
+  (function(){
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+</script>
 </body>
 </html>

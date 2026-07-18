@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- keep this page out of search engines -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Tito Nicola Drugman - Wikipedia (parody)</title>
+<style>
+  /* ---- Wikipedia (Vector-legacy) styling, approximated for parody ---- */
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:sans-serif;
+    font-size:14px;
+    line-height:1.6;
+    color:#202122;
+    background:#f6f6f6;
+  }
+  a{color:#0645ad;text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  a.new{color:#ba0000;}        /* red link */
+  a.ext{color:#3366bb;}
+  a.ext::after{content:" \1f855";font-size:10px;}
+
+  /* top personal bar */
+  .p-personal{
+    background:#fff;border-bottom:1px solid #a7d7f9;
+    font-size:12px;text-align:right;padding:4px 12px;color:#54595d;
+  }
+  .p-personal a{margin-left:10px;}
+
+  /* header: logo + search */
+  .head{
+    background:#fff;border-bottom:1px solid #a7d7f9;
+    display:flex;align-items:center;gap:16px;padding:8px 12px;
+  }
+  .logo{display:flex;align-items:center;gap:10px;min-width:170px;}
+  .globe{
+    width:42px;height:42px;border-radius:50%;
+    background:radial-gradient(circle at 32% 30%, #fff 0 8%, #dcdcdc 9% 40%, #c8c8c8 41% 100%);
+    border:1px solid #b7b7b7;position:relative;flex:none;
+  }
+  .globe::before,.globe::after{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:
+      repeating-linear-gradient(90deg,transparent 0 5px,#9aa0a6 5px 6px),
+      repeating-linear-gradient(0deg,transparent 0 6px,#b0b4b8 6px 7px);
+    opacity:.5;
+  }
+  .globe span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:serif;font-size:15px;color:#54595d;transform:rotate(-8deg);}
+  .wordmark{font-family:"Linux Libertine",Georgia,serif;line-height:1.05;}
+  .wordmark b{font-size:19px;font-weight:400;letter-spacing:.2px;}
+  .wordmark small{display:block;font-size:8.5px;color:#54595d;font-family:sans-serif;letter-spacing:1px;}
+  .search{margin-left:auto;display:flex;}
+  .search input{border:1px solid #a2a9b1;border-right:none;height:26px;width:min(360px,42vw);padding:0 8px;font-size:13px;}
+  .search button{border:1px solid #a2a9b1;background:#f8f9fa;height:28px;padding:0 12px;cursor:pointer;}
+
+  /* layout */
+  .container{display:flex;align-items:flex-start;}
+  .sidebar{width:160px;flex:none;padding:12px 8px 40px 12px;font-size:12.5px;background:#f6f6f6;}
+  .sidebar .portlet{margin-bottom:16px;}
+  .sidebar h3{font-size:11px;color:#54595d;font-weight:normal;border-bottom:1px solid #c8ccd1;padding-bottom:2px;margin:0 0 4px;text-transform:none;}
+  .sidebar ul{list-style:none;margin:0;padding:0;}
+  .sidebar li{padding:2px 0 2px 6px;}
+
+  .content{
+    flex:1;background:#fff;border:1px solid #a7d7f9;border-top:none;
+    padding:0 18px 28px;min-width:0;
+  }
+
+  /* article tabs */
+  .tabs{display:flex;font-size:12.5px;border-bottom:1px solid #a7d7f9;margin:0 -18px 0;padding:0 12px;background:#fff;}
+  .tabs .left,.tabs .right{display:flex;}
+  .tabs .right{margin-left:auto;}
+  .tabs a{padding:8px 12px 6px;color:#0645ad;border:1px solid transparent;border-bottom:none;}
+  .tabs a.sel{background:#fff;color:#202122;border-color:#a7d7f9;position:relative;top:1px;}
+
+  h1.firstHeading{
+    font-family:"Linux Libertine",Georgia,serif;font-weight:normal;
+    font-size:28px;border-bottom:1px solid #a2a9b1;padding:14px 0 4px;margin:6px 0 0;
+  }
+  .subtitle{font-size:12.5px;color:#54595d;font-style:italic;margin:2px 0 12px;}
+
+  h2,h3{font-family:"Linux Libertine",Georgia,serif;font-weight:normal;}
+  h2{font-size:22px;border-bottom:1px solid #a2a9b1;margin:22px 0 8px;padding-bottom:3px;}
+  h3{font-size:17px;margin:16px 0 6px;}
+  .mw-editsection{font-family:sans-serif;font-size:11px;color:#54595d;font-style:normal;}
+  .mw-editsection a{color:#0645ad;}
+
+  p{margin:0 0 12px;}
+  sup{font-size:10px;}
+
+  /* hatnotes / banners */
+  .hatnote{font-style:italic;color:#54595d;padding:2px 0 6px 22px;margin:4px 0;font-size:13px;}
+  .parody-banner{
+    border:1px solid #c8ccd1;background:#fef6e7;padding:8px 12px;margin:12px 0;font-size:12.5px;
+    display:flex;gap:10px;align-items:flex-start;
+  }
+  .parody-banner .icon{font-size:18px;line-height:1;}
+  .ambox{
+    border:1px solid #c8ccd1;border-left:4px solid #f4c430;background:#fbfbfb;
+    padding:8px 12px;margin:12px 0;font-size:12.5px;display:flex;gap:10px;align-items:flex-start;
+  }
+  .ambox .icon{font-size:18px;}
+
+  /* contents box */
+  .toc{
+    display:inline-block;border:1px solid #a2a9b1;background:#f8f9fa;
+    padding:8px 16px 10px;margin:8px 0 16px;font-size:13px;
+  }
+  .toc .toctitle{text-align:center;font-weight:bold;margin-bottom:4px;}
+  .toc ol{margin:0;padding-left:22px;}
+  .toc ol ol{padding-left:20px;}
+  .toc a{display:block;}
+  .toc .tocnumber{color:#202122;padding-right:6px;}
+
+  /* infobox */
+  .infobox{
+    float:right;clear:right;width:270px;margin:0 0 14px 18px;
+    border:1px solid #a2a9b1;background:#f8f9fa;font-size:12.5px;line-height:1.5;
+  }
+  .infobox .ib-title{background:#ccccff;text-align:center;font-weight:bold;padding:6px 8px;font-size:14px;}
+  .infobox .ib-img{text-align:center;padding:10px 8px 4px;}
+  .infobox .ib-face{
+    width:150px;height:170px;margin:0 auto;background:#e6e6e6;border:1px solid #c8ccd1;
+    display:flex;align-items:center;justify-content:center;font-size:52px;color:#9aa0a6;
+  }
+  .infobox .ib-cap{font-size:11px;color:#54595d;padding:4px 8px;text-align:center;}
+  .infobox table{width:100%;border-collapse:collapse;}
+  .infobox th{text-align:left;vertical-align:top;padding:5px 8px;width:38%;background:transparent;}
+  .infobox td{vertical-align:top;padding:5px 8px;}
+  .infobox tr{border-top:1px solid #e3e5e8;}
+  .infobox .ib-section{background:#ccccff;text-align:center;font-weight:bold;padding:4px 8px;}
+
+  .citneeded{font-size:10px;color:#54595d;vertical-align:super;}
+  .refs{font-size:12px;}
+  .refs ol{padding-left:26px;}
+  .refs li{margin-bottom:3px;}
+  blockquote{margin:0 0 12px 20px;color:#202122;border-left:2px solid #eaecf0;padding-left:12px;font-style:italic;}
+
+  /* footer */
+  .footer{
+    font-size:11.5px;color:#54595d;padding:16px 18px 40px;border-top:1px solid #c8ccd1;
+    background:#f6f6f6;
+  }
+  .footer p{margin:0 0 8px;}
+  .footer a{color:#0645ad;}
+
+  @media (max-width:640px){
+    .sidebar{display:none;}
+    .infobox{float:none;width:auto;margin:0 0 14px;}
+    .search input{width:44vw;}
+    .tabs .left a:nth-child(n+2){display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="p-personal">
+  Not logged in
+  <a href="#">Talk</a>
+  <a href="#">Contributions</a>
+  <a href="#">Create account</a>
+  <a href="#">Log in</a>
+</div>
+
+<div class="head">
+  <div class="logo">
+    <div class="globe" aria-hidden="true"><span>W?</span></div>
+    <div class="wordmark">
+      <b>WIKIPEDIA</b>
+      <small>THE FREE-ISH ENCYCLOPEDIA</small>
+    </div>
+  </div>
+  <form class="search" onsubmit="return false;">
+    <input type="text" placeholder="Search Wikipedia" aria-label="Search">
+    <button type="submit">Search</button>
+  </form>
+</div>
+
+<div class="container">
+
+  <nav class="sidebar">
+    <div class="portlet">
+      <ul>
+        <li><a href="#">Main page</a></li>
+        <li><a href="#">Contents</a></li>
+        <li><a href="#">Current events</a></li>
+        <li><a href="#">Random article</a></li>
+        <li><a href="#">About Wikipedia</a></li>
+      </ul>
+    </div>
+    <div class="portlet">
+      <h3>Contribute</h3>
+      <ul>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">Recent changes</a></li>
+        <li><a href="#">Upload file</a></li>
+      </ul>
+    </div>
+    <div class="portlet">
+      <h3>Tools</h3>
+      <ul>
+        <li><a href="#">What links here</a></li>
+        <li><a href="#">Related changes</a></li>
+        <li><a href="#">Permanent link</a></li>
+        <li><a href="#">Page information</a></li>
+        <li><a href="#">Cite this page</a></li>
+      </ul>
+    </div>
+    <div class="portlet">
+      <h3>Print/export</h3>
+      <ul>
+        <li><a href="#">Download as PDF</a></li>
+        <li><a href="#">Printable version</a></li>
+      </ul>
+    </div>
+    <div class="portlet">
+      <h3>In other projects</h3>
+      <ul>
+        <li><a href="../index.html">Actual portfolio</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="content">
+    <div class="tabs">
+      <div class="left">
+        <a class="sel" href="#">Article</a>
+        <a href="#">Talk</a>
+      </div>
+      <div class="right">
+        <a href="#">Read</a>
+        <a href="#">Edit</a>
+        <a href="#">View history</a>
+      </div>
+    </div>
+
+    <h1 class="firstHeading">Tito Nicola Drugman</h1>
+    <p class="subtitle">From Wikipedia, the free encyclopedia</p>
+
+    <div class="parody-banner">
+      <span class="icon">🃏</span>
+      <span><b>This is a parody.</b> This page is not affiliated with, endorsed by, or connected to Wikipedia or the Wikimedia Foundation. Every "fact" below is fictional and written by the subject about himself, in good fun. No globes were harmed.</span>
+    </div>
+
+    <p class="hatnote">Not to be confused with <a class="new" href="#">Tito the Historical Yugoslav One</a> or <a class="new" href="#">a drug, man</a>.</p>
+
+    <div class="ambox">
+      <span class="icon">📚</span>
+      <span>This article <b>relies excessively on sources too closely associated with the subject</b>, namely the subject. Please help improve it by adding sources written by literally anyone else. <i>(This tag will never be removed.)</i></span>
+    </div>
+
+    <!-- INFOBOX -->
+    <aside class="infobox">
+      <div class="ib-title">Tito Nicola Drugman</div>
+      <div class="ib-img">
+        <div class="ib-face" aria-hidden="true">👤</div>
+        <div class="ib-cap">Drugman, allegedly, circa a Tuesday.<sup class="citneeded">[<a class="new" href="#">citation needed</a>]</sup></div>
+      </div>
+      <table>
+        <tr><th>Born</th><td>Sometime · Milan, Italy<br><span style="color:#54595d;font-size:11px;">(has been "finishing his Master's" ever since)</span></td></tr>
+        <tr><th>Nationality</th><td>Italian</td></tr>
+        <tr><th>Occupation</th><td>Alleged AI engineer</td></tr>
+        <tr><th>Known for</th><td>Running LLMs locally so nobody has to pay for an API; owning two GPUs and mentioning it</td></tr>
+        <tr><th>Education</th><td>Politecnico di Milano (<a class="new" href="#">still</a>)</td></tr>
+        <tr><td class="ib-section" colspan="2">Technical career</td></tr>
+        <tr><th>Fields</th><td>RAG, edge AI, quantisation, procrastination</td></tr>
+        <tr><th>Employer</th><td>European Court of Auditors <i>(pending, dramatically)</i></td></tr>
+        <tr><th>GPUs</th><td>2 × RTX 5060 Ti<br><span style="font-size:11px;color:#54595d;">(will tell you the VRAM unprompted)</span></td></tr>
+        <tr><td class="ib-section" colspan="2">Metrics</td></tr>
+        <tr><th>CodeBLEU</th><td>0.186 → 0.257<br><span style="font-size:11px;color:#54595d;">(relative, as he is legally obligated to specify)</span></td></tr>
+        <tr><th>Sleep schedule</th><td>Deprecated</td></tr>
+      </table>
+    </aside>
+
+    <p><b>Tito Nicola Drugman</b> (<i>fl.</i> the present tense) is an Italian artificial-intelligence engineer, alleged Master's student, and self-described "guy who runs the model locally to save on the API bill."<sup>[1]</sup> He is best known for deploying transformers onto microcontrollers so small they can barely hold their own opinions, and for a portfolio website on which this article is, inexplicably, a second page.<sup>[2]</sup></p>
+
+    <p>Drugman rose to modest prominence within a knowledge base of approximately 7,600 code snippets, none of which have thanked him.<sup class="citneeded">[<a class="new" href="#">citation needed</a>]</sup> He is not to be confused with a controlled substance, a Yugoslav statesman, or the recurring temptation to name a variable <code>temp2</code>.</p>
+
+    <!-- TOC -->
+    <div class="toc" role="navigation">
+      <div class="toctitle">Contents <span style="font-weight:normal;font-size:11px;">[<a href="#">hide</a>]</span></div>
+      <ol>
+        <li><a href="#life"><span class="tocnumber">1</span> Life</a>
+          <ol>
+            <li><a href="#early"><span class="tocnumber">1.1</span> Early life and dual-boot</a></li>
+            <li><a href="#career"><span class="tocnumber">1.2</span> Alleged career</a></li>
+          </ol>
+        </li>
+        <li><a href="#horn"><span class="tocnumber">2</span> Hornofecinty</a></li>
+        <li><a href="#controversy"><span class="tocnumber">3</span> Controversy</a></li>
+        <li><a href="#personal"><span class="tocnumber">4</span> Personal life</a></li>
+        <li><a href="#death"><span class="tocnumber">5</span> Death</a></li>
+        <li><a href="#see"><span class="tocnumber">6</span> See also</a></li>
+        <li><a href="#refs"><span class="tocnumber">7</span> References</a></li>
+      </ol>
+    </div>
+
+    <!-- LIFE -->
+    <h2 id="life">Life <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
+
+    <h3 id="early">Early life and dual-boot</h3>
+    <p>Drugman was born in Milan, where he lived with his parents and, later, with a Linux partition he insists is "basically stable now."<sup>[3]</sup> Sources close to the subject report that he first achieved consciousness the moment a training run finished successfully overnight, and has been chasing that feeling ever since. He spent a formative semester at CUHK-Shenzhen, an experience he describes as "life-changing" and which appears on his CV in a slightly larger font than everything else.<sup class="citneeded">[<a class="new" href="#">dubious – discuss</a>]</sup></p>
+
+    <h3 id="career">Alleged career</h3>
+    <p>Drugman's body of work spans retrieval-augmented generation, hardware-aware AutoML, and vision-language web agents that browse the internet approximately as well as a tired human. Notable achievements include a transformer running at 73&nbsp;ms per token inside a 7.16&nbsp;MB flash footprint, a figure he can produce faster than his own phone number.<sup>[4]</sup></p>
+    <p>He was selected for an AI traineeship at the European Court of Auditors, a fact he has now foregrounded in emails to landlords, doctors, professors, universities, and — per this article — an encyclopedia.<sup>[5]</sup> Colleagues describe him as "honest to a fault," particularly regarding whether a given model was self-hosted or accessed via API, a distinction he will clarify whether or not you asked.<sup>[6]</sup></p>
+
+    <!-- HORNOFECINTY -->
+    <h2 id="horn">Hornofecinty <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
+    <div class="ambox">
+      <span class="icon">🔬</span>
+      <span>The <b>neutrality</b> of this section is disputed, mainly because nobody else can define the word. Relevant discussion may be found on the <a class="new" href="#">talk page</a>.</span>
+    </div>
+    <p><b>Hornofecinty</b> (<span style="font-style:italic;">from the Drugmanian <span lang="drug">hornofek</span>, "to over-engineer," + <span lang="drug">-inty</span>, a suffix of no fixed meaning) is a proposed field of study, a personality trait, and — according to its sole practitioner — "a whole vibe."<sup>[7]</sup> It is generally understood to describe the compulsion to solve a fifteen-minute problem with a six-week pipeline, three quantisation formats, and a benchmark.</p>
+    <p>Symptoms of acute hornofecinty include: buying a second GPU "for the thesis"; replacing a working `if` statement with a Random Forest; and answering "how are you?" with a latency figure. The condition is chronic, incurable, and, by most accounts, load-bearing to his entire personality.<sup class="citneeded">[<a class="new" href="#">weasel words</a>]</sup></p>
+    <blockquote>"It could have been a script. He made it a system."<br>— peer review, allegedly<sup>[8]</sup></blockquote>
+
+    <!-- CONTROVERSY -->
+    <h2 id="controversy">Controversy <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
+    <p>Drugman has been embroiled in several disputes, all of them with himself:</p>
+    <ul>
+      <li>In a widely uncirculated incident, he described a metric as "+38%" without immediately stating the absolute baseline. He has since apologised, added the 0.186, and now includes it preemptively in casual conversation.<sup>[9]</sup></li>
+      <li>Critics allege he refers to "my dual RTX 5060 Ti workstation" the way other people refer to their pets.</li>
+      <li>He is said to prefer that emails "not sound AI-written," a stance considered ironic given his profession, his workstation, and this article.<sup>[10]</sup></li>
+    </ul>
+    <p>Despite repeated requests, Drugman has declined to confirm whether Docker Compose is "basically DevOps," citing an ongoing internal investigation.</p>
+
+    <!-- PERSONAL LIFE -->
+    <h2 id="personal">Personal life <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
+    <p>Drugman resides in Milan with his parents and an increasingly ambitious to-do list.<sup>[11]</sup> His interests include terminals, dual-booting, and telling people that the local model is "honestly pretty close to GPT-4o" before quietly adding "on some tasks."</p>
+    <p>He is fluent in Italian, English, and passive-aggressive commit messages. He does not, contrary to popular belief, live inside the STM32N6570-DK, though he has considered it for the low latency.</p>
+
+    <!-- DEATH -->
+    <h2 id="death">Death <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
+    <div class="ambox">
+      <span class="icon">⚠️</span>
+      <span>This section is written like a <b>prophecy</b>. Please help improve it by waiting.</span>
+    </div>
+    <p>Drugman is, at the time of writing, alive and behind on a deadline. Nevertheless, this section exists because he insisted the article be "complete."<sup>[12]</sup></p>
+    <p>According to the most widely circulated projection, he will not die so much as <i>fail to be freed</i> — his consciousness having long since been quantised INT8 and flashed to a microcontroller that draws 3&nbsp;mW and never sleeps. Historians will note that his final words were reportedly "let me just re-run it once more to be sure," and that the run, tragically, succeeded.<sup>[13]</sup> A memorial `README.md` is planned.</p>
+
+    <!-- SEE ALSO -->
+    <h2 id="see">See also <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
+    <ul>
+      <li><a href="../index.html">The actual portfolio</a> (recommended)</li>
+      <li><a class="new" href="#">List of people who own two GPUs</a></li>
+      <li><a class="new" href="#">Reciprocal rank fusion</a> (he loves this one)</li>
+      <li><a class="new" href="#">"It works on my machine" (phenomenon)</a></li>
+    </ul>
+
+    <!-- REFERENCES -->
+    <h2 id="refs">References <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
+    <div class="refs">
+      <ol>
+        <li id="cite1">^ Drugman, T. N. (2026). <i>Trust Me, It's Running Locally</i>. Self-published, obviously.</li>
+        <li>^ "Why is there a Wikipedia page on this portfolio?" <i>Journal of Questionable Decisions</i>. p. 404.</li>
+        <li>^ "The Partition Is Stable Now." <i>Annals of Dual-Booting</i>, Vol. 12.</li>
+        <li>^ Acquadro, P.; Drugman, T. N. "73 ms and Proud." <i>Proceedings of a Very Small Chip</i>.</li>
+        <li>^ ECA-STAGE inbox, subject line: "Re: Re: Re: pending documents."</li>
+        <li>^ "API vs. Self-Hosted: A Distinction He Will Make." <i>Honesty Quarterly</i>.</li>
+        <li>^ Montico, ed. <i>Field Notes on Hornofecinty</i>. Unpublished, thankfully.</li>
+        <li>^ Peer, A. Anonymous. Overheard, probably.</li>
+        <li>^ "The Baseline Was 0.1859, We Get It." <i>Statistically Literate Audiences Weekly</i>.</li>
+        <li>^ "Emails That Don't Sound Like AI (And The People Who Draft Them With AI)."</li>
+        <li>^ Census of Milanese To-Do Lists, 2026 ed.</li>
+        <li>^ "Completeness and Other Anxieties." <i>Deadline Studies</i>.</li>
+        <li>^ Denaro, D. <i>The Run Succeeded: A Cautionary Tale</i>.</li>
+      </ol>
+    </div>
+
+  </main>
+</div>
+
+<div class="footer">
+  <p>This page is a <b>parody</b> and is not associated with Wikipedia® or the Wikimedia Foundation, which own their respective trademarks. It exists purely for amusement.</p>
+  <p>This page was last edited when the subject should have been studying. Text is available under a <a class="new" href="#">Creative Commons Definitely-Made-Up License</a>; additional terms may apply and probably won't.</p>
+  <p><a class="new" href="#">Privacy policy</a> · <a class="new" href="#">About</a> · <a class="new" href="#">Disclaimers</a> · <a href="../index.html">Return to the real site</a></p>
+</div>
+
+</body>
+</html>
