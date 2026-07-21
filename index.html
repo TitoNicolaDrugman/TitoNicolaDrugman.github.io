@@ -366,56 +366,142 @@
   .projects h2 em{font-style:italic;color:var(--hi)}
   .projects>.lead{
     font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
-    color:rgba(238,241,246,.55);margin-bottom:60px;
-  }
-  .project{
-    display:grid;
-    grid-template-columns:80px 1fr 130px;
-    gap:40px;align-items:center;
-    padding:36px 0;
-    border-top:1px solid rgba(238,241,246,.2);
-    cursor:none;
-    transition:padding .4s ease;
-    text-decoration:none;color:inherit;
-  }
-  .project:last-child{border-bottom:1px solid rgba(238,241,246,.2)}
-  .project:hover,.project:active{padding:46px 0}
-  .project .num{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;color:rgba(238,241,246,.5);
-  }
-  .project .title{
-    font-family:'Fraunces',serif;
-    font-size:36px;font-weight:300;letter-spacing:-.02em;
-    transition:transform .4s ease, color .4s ease;
-  }
-  .project:hover .title,.project:active .title{transform:translateX(20px);color:var(--hi);font-style:italic}
-  .project .desc{
-    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
-    overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
-  }
-  .project .tag{
-    font-family:'JetBrains Mono',monospace;
-    font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--hi);text-align:right;
+    color:rgba(238,241,246,.55);margin-bottom:70px;
   }
 
-  /* ---------- HOVER CARD (project preview) ---------- */
-  .hover-card{
-    position:fixed;top:0;left:0;z-index:9998;
-    max-width:250px;
-    background:var(--dark-fg);color:var(--dark);
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px;line-height:1.55;letter-spacing:.01em;
-    padding:14px 16px;
-    pointer-events:none;
-    opacity:0;
-    transform:scale(.92);
-    transform-origin:0 0;
-    transition:opacity .22s ease, transform .22s cubic-bezier(.2,.8,.2,1);
+  /* ---------- PROJECT FLIP CARDS ---------- */
+  .pgrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+    gap:48px 32px;
+    perspective:2000px;
   }
-  .hover-card.show{opacity:1;transform:scale(1)}
-  @media (max-width:900px){ .hover-card{display:none} }
+  .pcard{
+    position:relative;
+    height:300px;
+    opacity:0;
+    transform:
+      translate(var(--fx,0), var(--fy,0))
+      rotate(var(--frot,0deg))
+      scale(.82);
+    transition:transform 1.1s cubic-bezier(.16,.84,.44,1), opacity .7s ease;
+    will-change:transform;
+  }
+  .pcard.extra{display:none}
+  .pcard.dealt{
+    opacity:1;
+    transform:rotate(var(--tilt,0deg)) translateY(var(--shift,0px));
+  }
+  .pcard.dealt:hover{transform:rotate(0deg) translateY(calc(var(--shift,0px) - 6px))}
+  .pcard-inner{
+    position:relative;width:100%;height:100%;
+    cursor:pointer;
+    transform-style:preserve-3d;
+    transition:transform .7s cubic-bezier(.2,.8,.2,1);
+    outline:none;
+  }
+  .pcard.flipped .pcard-inner{transform:rotateY(180deg)}
+  .pcard-inner:focus-visible{box-shadow:0 0 0 2px var(--hi)}
+  .pcard-face{
+    position:absolute;inset:0;
+    backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border:1px solid rgba(238,241,246,.18);
+    border-radius:3px;
+    padding:28px 26px;
+    display:flex;flex-direction:column;
+  }
+  .pcard-front{background:rgba(238,241,246,.03)}
+  .pcard-front .num{
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:rgba(238,241,246,.45);
+  }
+  .pcard-front .title{
+    font-family:'Fraunces',serif;font-size:27px;font-weight:300;
+    letter-spacing:-.02em;line-height:1.1;margin:14px 0 12px;
+  }
+  .pcard-front .hook{
+    font-family:'Newsreader',serif;font-size:15px;color:rgba(238,241,246,.68);
+    line-height:1.4;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .pcard-front .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .pcard-front .tag{
+    font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--hi);border:1px solid rgba(207,224,255,.3);
+    padding:4px 9px;border-radius:20px;
+  }
+  .pcard-front .flip-hint{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(238,241,246,.35);margin-top:14px;
+  }
+  .pcard-back{
+    transform:rotateY(180deg);
+    background:var(--dark-fg);color:var(--dark);
+    justify-content:space-between;
+  }
+  .pcard-back .title{
+    font-family:'Fraunces',serif;font-size:19px;font-weight:500;
+    letter-spacing:-.01em;margin-bottom:10px;line-height:1.2;
+  }
+  .pcard-back p{font-size:14px;line-height:1.5;color:var(--ink-soft);flex:1;overflow-y:auto}
+  .pcard-back .tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+  .pcard-back .tag{
+    font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);border:1px solid rgba(16,18,26,.2);
+    padding:3px 8px;border-radius:20px;
+  }
+  .pcard-back .gh-link{
+    display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+    font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.1em;
+    color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);
+    padding-bottom:4px;
+    transition:color .2s,border-color .2s;
+  }
+  .pcard-back .gh-link:hover{color:var(--accent);border-color:var(--accent)}
+  .pcard-back .gh-link .arrow{transition:transform .2s;display:inline-block}
+  .pcard-back .gh-link:hover .arrow{transform:translateX(4px)}
+
+  @media (max-width:900px){
+    .pgrid{grid-template-columns:1fr;gap:26px}
+    .pcard.dealt,.pcard.dealt:hover{transform:none}
+  }
+
+  /* ---------- DECK ---------- */
+  .deck-wrap{
+    display:flex;flex-direction:column;align-items:center;gap:16px;
+    margin-top:64px;
+  }
+  .deck{
+    position:relative;width:150px;height:200px;
+    cursor:pointer;
+  }
+  .deck-card{
+    position:absolute;inset:0;
+    border:1px solid rgba(238,241,246,.32);
+    border-radius:6px;
+    background:
+      repeating-linear-gradient(135deg, rgba(207,224,255,.07) 0 8px, transparent 8px 16px),
+      #14161f;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease;
+  }
+  .deck-card::after{
+    content:'✳';
+    font-family:'Fraunces',serif;font-size:34px;font-style:italic;
+    color:rgba(238,241,246,.22);
+  }
+  .deck-card:nth-child(1){transform:rotate(-7deg) translateY(2px)}
+  .deck-card:nth-child(2){transform:rotate(4deg) translateY(-3px)}
+  .deck-card:nth-child(3){transform:rotate(-2deg) translateY(-7px)}
+  .deck:hover .deck-card:nth-child(3){transform:rotate(-2deg) translateY(-14px)}
+  .deck-card.used{opacity:0;transform:scale(.6) rotate(0deg) !important}
+  .deck.empty{cursor:default}
+  .deck-label{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(238,241,246,.6);text-align:center;
+  }
+  .deck-label .count{display:block;margin-top:5px;font-size:10px;color:var(--hi)}
+  .deck-label .count.empty{color:rgba(238,241,246,.4)}
 
   /* ---------- CONTACT ---------- */
   .contact{
@@ -506,8 +592,6 @@
     .tl-item:nth-child(odd) .tl-date{grid-column:1;text-align:left;padding:0 0 0 40px}
     .skills-grid{grid-template-columns:1fr}
     .skill-cat{border-right:none}
-    .project{grid-template-columns:40px 1fr;gap:20px}
-    .project .tag{display:none}
     .marquee-track{font-size:30px}
     .scroll-hint{display:none}
   }
@@ -516,7 +600,6 @@
 <body>
 
 <div class="cursor" id="cursor"></div>
-<div class="hover-card" id="hoverCard"><p id="hoverCardText"></p></div>
 
 <nav>
   <a href="#top" class="logo">Drugman*</a>
@@ -740,49 +823,180 @@
 <section id="work" class="projects">
   <div class="section-label reveal">§ 04 — Selected Work</div>
   <h2 class="reveal d1">Selected systems,<br>actually <em>shipped</em>.</h2>
-  <div class="lead reveal d2">All repos public on GitHub — click through for code &amp; write-ups</div>
+  <div class="lead reveal d2">Six cards, shuffled. Click one to flip it — full write-up &amp; GitHub link on the back.</div>
 
-  <a class="project reveal" href="https://github.com/TitoNicolaDrugman/RAG-Code-Generation" target="_blank" rel="noopener">
-    <div class="num">— 001</div>
-    <div class="title">On-Prem RAG for Code Generation</div>
-    <div class="desc">Hybrid retrieval (BM25 + dense CodeBERT + RRF) over a 7,600-snippet knowledge base, feeding a 4-bit-quantised CodeLlama-7B. CodeBLEU 0.186 → 0.257, +38% relative.</div>
-    <div class="tag">RAG · LLM</div>
-  </a>
+  <div class="pgrid">
 
-  <a class="project reveal" href="https://github.com/TitoNicolaDrugman/LLMsWebAgent" target="_blank" rel="noopener">
-    <div class="num">— 002</div>
-    <div class="title">Vision-Language Web Agent</div>
-    <div class="desc">WebVoyager replication running Qwen3-VL locally via Ollama against a GPT-4o baseline. A ResNet-18 page-type router cut agent latency by 17%.</div>
-    <div class="tag">VLM · Agents</div>
-  </a>
+    <div class="pcard" style="--tilt:-3deg;--shift:10px;--fx:-75vw;--fy:-10vh;--frot:-26deg">
+      <div class="pcard-inner" tabindex="0" role="button" aria-pressed="false" aria-label="On-Prem RAG for Code Generation — click to flip for details">
+        <div class="pcard-face pcard-front">
+          <div class="num">— 001</div>
+          <div class="title">On-Prem RAG for Code Generation</div>
+          <div class="hook">Hybrid retrieval feeding a 4-bit-quantised CodeLlama-7B, fully offline.</div>
+          <div class="tags"><span class="tag">RAG</span><span class="tag">LLM</span></div>
+          <div class="flip-hint">Click to flip ↻</div>
+        </div>
+        <div class="pcard-face pcard-back">
+          <div>
+            <div class="title">On-Prem RAG for Code Generation</div>
+            <p>Hybrid retrieval (BM25 + dense CodeBERT + RRF) over a 7,600-snippet knowledge base, feeding a 4-bit-quantised CodeLlama-7B. CodeBLEU 0.186 → 0.257, +38% relative.</p>
+            <div class="tags"><span class="tag">RAG</span><span class="tag">LLM</span><span class="tag">CodeLlama-7B</span></div>
+          </div>
+          <a class="gh-link" href="https://github.com/TitoNicolaDrugman/RAG-Code-Generation" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
 
-  <a class="project reveal" href="https://github.com/TitoNicolaDrugman/Transformer-NPU-STM32N6" target="_blank" rel="noopener">
-    <div class="num">— 003</div>
-    <div class="title">Transformer on an STM32N6 NPU</div>
-    <div class="desc">A 4.56M-parameter encoder, INT8-quantised per-channel, compiled for the Neural-ART NPU — 73ms/token cold-start inside a 7.16MB flash footprint.</div>
-    <div class="tag">TinyML</div>
-  </a>
+    <div class="pcard" style="--tilt:2deg;--shift:-6px;--fx:5vw;--fy:-65vh;--frot:19deg">
+      <div class="pcard-inner" tabindex="0" role="button" aria-pressed="false" aria-label="Vision-Language Web Agent — click to flip for details">
+        <div class="pcard-face pcard-front">
+          <div class="num">— 002</div>
+          <div class="title">Vision-Language Web Agent</div>
+          <div class="hook">A local VLM that browses the web like GPT-4o — 17% faster.</div>
+          <div class="tags"><span class="tag">VLM</span><span class="tag">Agents</span></div>
+          <div class="flip-hint">Click to flip ↻</div>
+        </div>
+        <div class="pcard-face pcard-back">
+          <div>
+            <div class="title">Vision-Language Web Agent</div>
+            <p>WebVoyager replication running Qwen3-VL locally via Ollama against a GPT-4o baseline. A ResNet-18 page-type router cut agent latency by 17%.</p>
+            <div class="tags"><span class="tag">VLM</span><span class="tag">Agents</span><span class="tag">Ollama</span></div>
+          </div>
+          <a class="gh-link" href="https://github.com/TitoNicolaDrugman/LLMsWebAgent" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
 
-  <a class="project reveal" href="https://github.com/TitoNicolaDrugman/GENHACK" target="_blank" rel="noopener">
-    <div class="num">— 004</div>
-    <div class="title">De-biasing ERA5 Urban Heat</div>
-    <div class="desc">GenHack 2025 (École Polytechnique × BNP Paribas × Kayrros). Random Forest correcting satellite temperature bias — −93% bias, −35% RMSE.</div>
-    <div class="tag">Climate ML</div>
-  </a>
+    <div class="pcard" style="--tilt:-1.5deg;--shift:14px;--fx:78vw;--fy:0vh;--frot:24deg">
+      <div class="pcard-inner" tabindex="0" role="button" aria-pressed="false" aria-label="Transformer on an STM32N6 NPU — click to flip for details">
+        <div class="pcard-face pcard-front">
+          <div class="num">— 003</div>
+          <div class="title">Transformer on an STM32N6 NPU</div>
+          <div class="hook">A transformer squeezed onto a microcontroller's NPU.</div>
+          <div class="tags"><span class="tag">TinyML</span></div>
+          <div class="flip-hint">Click to flip ↻</div>
+        </div>
+        <div class="pcard-face pcard-back">
+          <div>
+            <div class="title">Transformer on an STM32N6 NPU</div>
+            <p>A 4.56M-parameter encoder, INT8-quantised per-channel, compiled for the Neural-ART NPU — 73ms/token cold-start inside a 7.16MB flash footprint.</p>
+            <div class="tags"><span class="tag">TinyML</span><span class="tag">Edge AI</span><span class="tag">INT8</span></div>
+          </div>
+          <a class="gh-link" href="https://github.com/TitoNicolaDrugman/Transformer-NPU-STM32N6" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
 
-  <a class="project reveal" href="https://github.com/TitoNicolaDrugman/Sen2Fire-Wildfire-Detection" target="_blank" rel="noopener">
-    <div class="num">— 005</div>
-    <div class="title">Sen2Fire Wildfire Detection</div>
-    <div class="desc">SOTA-chasing benchmark of nnU-Net, SegFormer and dual-stream architectures on satellite imagery — F1 0.3675 with test-time augmentation.</div>
-    <div class="tag">Segmentation</div>
-  </a>
+    <div class="pcard" style="--tilt:3deg;--shift:-4px;--fx:0vw;--fy:70vh;--frot:-22deg">
+      <div class="pcard-inner" tabindex="0" role="button" aria-pressed="false" aria-label="De-biasing ERA5 Urban Heat — click to flip for details">
+        <div class="pcard-face pcard-front">
+          <div class="num">— 004</div>
+          <div class="title">De-biasing ERA5 Urban Heat</div>
+          <div class="hook">Hackathon win correcting satellite temperature bias.</div>
+          <div class="tags"><span class="tag">Climate ML</span></div>
+          <div class="flip-hint">Click to flip ↻</div>
+        </div>
+        <div class="pcard-face pcard-back">
+          <div>
+            <div class="title">De-biasing ERA5 Urban Heat</div>
+            <p>GenHack 2025 (École Polytechnique × BNP Paribas × Kayrros). Random Forest correcting satellite temperature bias — −93% bias, −35% RMSE.</p>
+            <div class="tags"><span class="tag">Climate ML</span><span class="tag">Random Forest</span><span class="tag">Hackathon</span></div>
+          </div>
+          <a class="gh-link" href="https://github.com/TitoNicolaDrugman/GENHACK" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
 
-  <a class="project reveal" href="https://github.com/TitoNicolaDrugman/Tooth-Segmentation-Transformer" target="_blank" rel="noopener">
-    <div class="num">— 006</div>
-    <div class="title">Tooth Segmentation Transformer</div>
-    <div class="desc">A SegFormer-inspired vision transformer that identifies and masks individual teeth in 3D dental scans, conditioned on a given tooth ID.</div>
-    <div class="tag">Vision Transformer</div>
-  </a>
+    <div class="pcard" style="--tilt:-2deg;--shift:8px;--fx:-60vw;--fy:55vh;--frot:-30deg">
+      <div class="pcard-inner" tabindex="0" role="button" aria-pressed="false" aria-label="Sen2Fire Wildfire Detection — click to flip for details">
+        <div class="pcard-face pcard-front">
+          <div class="num">— 005</div>
+          <div class="title">Sen2Fire Wildfire Detection</div>
+          <div class="hook">Benchmarking segmentation models against real wildfires.</div>
+          <div class="tags"><span class="tag">Segmentation</span></div>
+          <div class="flip-hint">Click to flip ↻</div>
+        </div>
+        <div class="pcard-face pcard-back">
+          <div>
+            <div class="title">Sen2Fire Wildfire Detection</div>
+            <p>SOTA-chasing benchmark of nnU-Net, SegFormer and dual-stream architectures on satellite imagery — F1 0.3675 with test-time augmentation.</p>
+            <div class="tags"><span class="tag">Segmentation</span><span class="tag">SegFormer</span><span class="tag">nnU-Net</span></div>
+          </div>
+          <a class="gh-link" href="https://github.com/TitoNicolaDrugman/Sen2Fire-Wildfire-Detection" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard" style="--tilt:1.5deg;--shift:-10px;--fx:65vw;--fy:60vh;--frot:30deg">
+      <div class="pcard-inner" tabindex="0" role="button" aria-pressed="false" aria-label="Tooth Segmentation Transformer — click to flip for details">
+        <div class="pcard-face pcard-front">
+          <div class="num">— 006</div>
+          <div class="title">Tooth Segmentation Transformer</div>
+          <div class="hook">SegFormer, reworked to mask individual teeth in 3D scans.</div>
+          <div class="tags"><span class="tag">Vision Transformer</span></div>
+          <div class="flip-hint">Click to flip ↻</div>
+        </div>
+        <div class="pcard-face pcard-back">
+          <div>
+            <div class="title">Tooth Segmentation Transformer</div>
+            <p>A SegFormer-inspired vision transformer that identifies and masks individual teeth in 3D dental scans, conditioned on a given tooth ID.</p>
+            <div class="tags"><span class="tag">Vision Transformer</span><span class="tag">3D</span><span class="tag">Segmentation</span></div>
+          </div>
+          <a class="gh-link" href="https://github.com/TitoNicolaDrugman/Tooth-Segmentation-Transformer" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard extra" style="--tilt:-2.5deg;--shift:6px;--fx:70vw;--fy:-30vh;--frot:-16deg">
+      <div class="pcard-inner" tabindex="0" role="button" aria-pressed="false" aria-label="TV Show Recommender — click to flip for details">
+        <div class="pcard-face pcard-front">
+          <div class="num">— 007</div>
+          <div class="title">TV Show Recommender</div>
+          <div class="hook">Collaborative filtering with an interactive 3D similarity map.</div>
+          <div class="tags"><span class="tag">Recsys</span></div>
+          <div class="flip-hint">Click to flip ↻</div>
+        </div>
+        <div class="pcard-face pcard-back">
+          <div>
+            <div class="title">TV Show Recommender</div>
+            <p>A recommendation system for TV shows using user-user and item-item collaborative filtering — analysing viewing patterns, computing similarity matrices, and featuring an interactive 3D visualisation of the results.</p>
+            <div class="tags"><span class="tag">Recsys</span><span class="tag">Collaborative Filtering</span><span class="tag">3D Viz</span></div>
+          </div>
+          <a class="gh-link" href="https://github.com/TitoNicolaDrugman/TV-Show-Recommender" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard extra" style="--tilt:2.5deg;--shift:-8px;--fx:-70vw;--fy:35vh;--frot:20deg">
+      <div class="pcard-inner" tabindex="0" role="button" aria-pressed="false" aria-label="Deep Learning from Scratch on CIFAR-10 — click to flip for details">
+        <div class="pcard-face pcard-front">
+          <div class="num">— 008</div>
+          <div class="title">Deep Learning from Scratch — CIFAR-10</div>
+          <div class="hook">Batch norm, dropout and CNNs, hand-rolled in NumPy.</div>
+          <div class="tags"><span class="tag">CNN</span></div>
+          <div class="flip-hint">Click to flip ↻</div>
+        </div>
+        <div class="pcard-face pcard-back">
+          <div>
+            <div class="title">Deep Learning from Scratch — CIFAR-10</div>
+            <p>Implementation of Batch Normalisation, Dropout, and Convolutional Neural Networks from first principles in NumPy, then in PyTorch, on CIFAR-10 — a data-analytics assignment from CUHK-Shenzhen's CIE6006/MCE5918.</p>
+            <div class="tags"><span class="tag">CNN</span><span class="tag">NumPy</span><span class="tag">PyTorch</span></div>
+          </div>
+          <a class="gh-link" href="https://github.com/TitoNicolaDrugman/Deep-Learning-from-Scratch-CIFAR10" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="deck-wrap reveal">
+    <div class="deck" id="deck" role="button" tabindex="0" aria-label="Draw another project from the deck">
+      <div class="deck-card"></div>
+      <div class="deck-card"></div>
+      <div class="deck-card"></div>
+    </div>
+    <div class="deck-label">Draw another project<span class="count" id="deckCount">2 cards left</span></div>
+  </div>
 </section>
 
 <!-- ============ CONTACT ============ -->
@@ -809,7 +1023,7 @@
     cur.style.left = e.clientX + 'px';
     cur.style.top = e.clientY + 'px';
   });
-  document.querySelectorAll('a, .project, .skill-cat li').forEach(el => {
+  document.querySelectorAll('a, .pcard-inner, .skill-cat li, #deck').forEach(el => {
     el.addEventListener('mouseenter', () => cur.classList.add('hover'));
     el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
   });
@@ -828,34 +1042,82 @@
     document.querySelectorAll('header .reveal').forEach(el => el.classList.add('in'));
   });
 
-  /* ---------- PROJECT HOVER-CARD ---------- */
-  const hoverCard = document.getElementById('hoverCard');
-  const hoverCardText = document.getElementById('hoverCardText');
-  let hcTargetX = 0, hcTargetY = 0, hcX = 0, hcY = 0;
-  document.addEventListener('mousemove', e => {
-    hcTargetX = e.clientX;
-    hcTargetY = e.clientY;
-  });
-  (function hcLoop(){
-    hcX += (hcTargetX - hcX) * 0.2;
-    hcY += (hcTargetY - hcY) * 0.2;
-    let left = hcX + 26, top = hcY + 26;
-    const cardW = hoverCard.offsetWidth || 250, cardH = hoverCard.offsetHeight || 60;
-    if (left + cardW > window.innerWidth - 20) left = hcX - cardW - 26;
-    if (top + cardH > window.innerHeight - 20) top = hcY - cardH - 26;
-    hoverCard.style.left = left + 'px';
-    hoverCard.style.top = top + 'px';
-    requestAnimationFrame(hcLoop);
-  })();
-  document.querySelectorAll('.project').forEach(p => {
-    const descEl = p.querySelector('.desc');
-    const text = (descEl && descEl.textContent.trim()) || 'hey — add text here!';
-    p.addEventListener('mouseenter', () => {
-      hoverCardText.textContent = text;
-      hoverCard.classList.add('show');
+  /* ---------- PROJECT FLIP CARDS ---------- */
+  document.querySelectorAll('.pcard-inner').forEach(card => {
+    const parent = card.closest('.pcard');
+    function toggleFlip(){
+      const flipped = parent.classList.toggle('flipped');
+      card.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+    }
+    card.addEventListener('click', toggleFlip);
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleFlip();
+      }
     });
-    p.addEventListener('mouseleave', () => hoverCard.classList.remove('show'));
   });
+  document.querySelectorAll('.pcard .gh-link').forEach(link => {
+    link.addEventListener('click', e => e.stopPropagation());
+  });
+
+  /* ---------- DEAL-IN ENTRANCE (initial six, shuffled from all sides) ---------- */
+  function dealCard(card, delay){
+    setTimeout(() => card.classList.add('dealt'), delay);
+  }
+  const pgrid = document.querySelector('.pgrid');
+  if (pgrid) {
+    const initialCards = Array.from(pgrid.querySelectorAll('.pcard:not(.extra)'));
+    const dealOrder = initialCards.slice().sort(() => Math.random() - 0.5);
+    const dealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          dealOrder.forEach((card, i) => dealCard(card, i * 130));
+          dealObserver.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    dealObserver.observe(pgrid);
+  }
+
+  /* ---------- DECK — DRAW ANOTHER PROJECT ---------- */
+  const deck = document.getElementById('deck');
+  const deckCount = document.getElementById('deckCount');
+  if (deck) {
+    const extraCards = Array.from(document.querySelectorAll('.pcard.extra'));
+    const deckLayers = Array.from(deck.querySelectorAll('.deck-card')).reverse(); // topmost first
+    let drawn = 0;
+
+    function updateDeckUI(){
+      const remaining = extraCards.length - drawn;
+      deckCount.textContent = remaining > 0
+        ? remaining + (remaining === 1 ? ' card left' : ' cards left')
+        : 'Deck empty';
+      deckCount.classList.toggle('empty', remaining === 0);
+      deck.classList.toggle('empty', remaining === 0);
+    }
+
+    function drawCard(){
+      if (drawn >= extraCards.length) return;
+      const card = extraCards[drawn];
+      const layer = deckLayers[drawn];
+      if (layer) layer.classList.add('used');
+      drawn++;
+      card.style.display = 'block';
+      void card.offsetWidth; // force reflow so the fly-in transition triggers
+      requestAnimationFrame(() => card.classList.add('dealt'));
+      updateDeckUI();
+    }
+
+    deck.addEventListener('click', drawCard);
+    deck.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        drawCard();
+      }
+    });
+    updateDeckUI();
+  }
 
   /* ---------- JOURNEY TIMELINE — SCROLL-FOLLOWING DOT ---------- */
   const tlWrap = document.querySelector('.timeline');
