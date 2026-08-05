@@ -1,0 +1,549 @@
+/* ==========================================================================
+   Design tokens — light & dark
+   ========================================================================== */
+:root{
+  color-scheme: light dark;
+
+  --font-sans: system-ui, -apple-system, sans-serif;
+
+  /* Fluid type scale — clamp(min, preferred, max) */
+  --text-display: clamp(2.75rem, 1.4rem + 6vw, 6.5rem);
+  --text-h2:      clamp(1.85rem, 1.2rem + 2.6vw, 3.25rem);
+  --text-h3:      clamp(1.25rem, 1rem + 1vw, 1.625rem);
+  --text-lede:    clamp(1.0625rem, 1rem + 0.4vw, 1.375rem);
+  --text-small:   0.8125rem;
+
+  /* Motion */
+  --ease-fluid: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-quick: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-reveal: 900ms;
+  --dur-quick:  250ms;
+
+  /* Light palette — soft tones, never pure black/white */
+  --bg: #f5f5f7;
+  --bg-elevated: #ffffff;
+  --ink: #1d1d1f;
+  --ink-secondary: #6e6e73;
+  --ink-tertiary: #86868b;
+  --accent: #0071e3;
+  --accent-soft: rgba(0, 113, 227, 0.12);
+  --separator: rgba(60, 60, 67, 0.13);
+
+  --material-bg: rgba(255, 255, 255, 0.62);
+  --material-border-top: rgba(255, 255, 255, 0.55);
+  --material-shadow:
+    0 1px 1px rgba(31, 38, 66, 0.03),
+    0 20px 45px -20px rgba(31, 38, 66, 0.28);
+
+  --cat-education: #0071e3;
+  --cat-work: #ff9500;
+  --cat-exchange: #af52de;
+  --cat-project: #2fa84f;
+
+  /* Ambient mesh-gradient blobs — soft, desaturated pastels */
+  --mesh-1: #bcd7ff;
+  --mesh-2: #ffd8c2;
+  --mesh-3: #dcc9ff;
+  --mesh-4: #c8f3e2;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: #121214;
+    --bg-elevated: #1c1c1e;
+    --ink: #f5f5f7;
+    --ink-secondary: #a1a1a6;
+    --ink-tertiary: #8e8e93;
+    --accent: #2f9bff;
+    --accent-soft: rgba(47, 155, 255, 0.18);
+    --separator: rgba(255, 255, 255, 0.12);
+
+    --material-bg: rgba(44, 44, 48, 0.58);
+    --material-border-top: rgba(255, 255, 255, 0.16);
+    --material-shadow:
+      0 1px 1px rgba(0, 0, 0, 0.3),
+      0 25px 50px -20px rgba(0, 0, 0, 0.65);
+
+    --cat-education: #409cff;
+    --cat-work: #ff9f0a;
+    --cat-exchange: #bf5af2;
+    --cat-project: #30d158;
+
+    /* Ambient mesh-gradient blobs — elegant, deep tones */
+    --mesh-1: #17335c;
+    --mesh-2: #4a2452;
+    --mesh-3: #123f3a;
+    --mesh-4: #2b2c58;
+  }
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{
+  font: 400 100%/1.5 var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+body{
+  margin: 0;
+  background: transparent; /* the fixed .mesh-bg layer paints behind everything */
+  color: var(--ink);
+  letter-spacing: 0; /* neutral tracking — body copy */
+  transition: color 0.4s ease;
+}
+img, svg{ display: block; max-width: 100%; }
+a{ color: inherit; text-decoration: none; }
+ul, ol{ margin: 0; padding: 0; list-style: none; }
+h1, h2, h3, p{ margin: 0; }
+
+a:focus-visible, button:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   Ambient background — animated mesh gradient
+   ========================================================================== */
+.mesh-bg{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--bg);
+}
+.mesh-blob{
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.55;
+  will-change: transform;
+}
+.mesh-blob--1{ top: -18%; left: -12%; background: var(--mesh-1); animation: mesh-drift-1 60s ease-in-out infinite; }
+.mesh-blob--2{ top: 6%; right: -18%; background: var(--mesh-2); animation: mesh-drift-2 68s ease-in-out infinite; }
+.mesh-blob--3{ bottom: -22%; left: 12%; background: var(--mesh-3); animation: mesh-drift-3 74s ease-in-out infinite; }
+.mesh-blob--4{ bottom: -14%; right: 8%; background: var(--mesh-4); animation: mesh-drift-4 64s ease-in-out infinite; }
+
+@keyframes mesh-drift-1{
+  0%, 100%{ transform: translate(0, 0) scale(1); }
+  50%{ transform: translate(6%, 8%) scale(1.12); }
+}
+@keyframes mesh-drift-2{
+  0%, 100%{ transform: translate(0, 0) scale(1); }
+  50%{ transform: translate(-8%, 6%) scale(1.08); }
+}
+@keyframes mesh-drift-3{
+  0%, 100%{ transform: translate(0, 0) scale(1); }
+  50%{ transform: translate(5%, -7%) scale(1.1); }
+}
+@keyframes mesh-drift-4{
+  0%, 100%{ transform: translate(0, 0) scale(1); }
+  50%{ transform: translate(-6%, -5%) scale(1.06); }
+}
+
+.skip-link{
+  position: absolute;
+  left: 1rem; top: -3rem;
+  background: var(--accent); color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 0.6rem;
+  font-size: var(--text-small); font-weight: 600;
+  transition: top var(--dur-quick) var(--ease-quick);
+  z-index: 200;
+}
+.skip-link:focus{ top: 1rem; }
+
+/* ==========================================================================
+   Typography utilities — optical tracking & leading
+   ========================================================================== */
+.eyebrow{
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.02em; /* small text: slightly positive tracking */
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+.type-display{
+  font-size: var(--text-display);
+  font-weight: 700;
+  line-height: 1.05;       /* tight leading, large text */
+  letter-spacing: -0.02em; /* negative tracking, large text */
+}
+.type-h2{
+  font-size: var(--text-h2);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+}
+.type-lede{
+  font-size: var(--text-lede);
+  line-height: 1.5;
+  letter-spacing: 0; /* neutral tracking — body-scale copy */
+  color: var(--ink-secondary);
+  font-weight: 400;
+}
+
+/* ==========================================================================
+   Materials — translucency & depth
+   ========================================================================== */
+.material{
+  background: var(--material-bg);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 1.5rem;
+  border-top: 1px solid var(--material-border-top);
+  box-shadow: var(--material-shadow);
+}
+@media (prefers-reduced-transparency: reduce){
+  .material{
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg-elevated);
+  }
+}
+
+/* ==========================================================================
+   Reveal-on-scroll — interruptible, translate+opacity only
+   ========================================================================== */
+.reveal{
+  opacity: 0;
+  translate: 0 28px; /* standalone property — leaves `transform` free for scroll-depth (see Timeline) */
+  transition:
+    opacity var(--dur-reveal) var(--ease-fluid),
+    translate var(--dur-reveal) var(--ease-fluid);
+  transition-delay: calc(var(--i, 0) * 70ms);
+  will-change: opacity, translate;
+}
+.reveal.is-visible{
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ==========================================================================
+   Nav
+   ========================================================================== */
+.nav{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 0;
+  border-top: none;
+  box-shadow: none;
+}
+.nav::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--separator) 15%, var(--separator) 85%, transparent);
+}
+.nav__logo{
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+.nav__links{
+  display: flex;
+  gap: 1.75rem;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--ink-secondary);
+}
+.nav__links a{ transition: color var(--dur-quick) var(--ease-fluid); }
+.nav__links a:hover, .nav__links a:focus-visible{ color: var(--ink); }
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.hero{
+  min-height: calc(100vh - 3.6rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.75rem;
+  padding: 6rem 1.75rem 5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  scroll-margin-top: 3.6rem;
+}
+.hero__title span{ display: block; }
+.hero__lede{ max-width: 46ch; }
+.hero__meta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  font-size: var(--text-small);
+  color: var(--ink-tertiary);
+  font-weight: 500;
+}
+.hero__meta .live{ color: var(--accent); font-weight: 600; }
+.hero__meta .live::before{
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 0.5rem;
+  vertical-align: 1px;
+}
+
+/* ==========================================================================
+   Timeline
+   ========================================================================== */
+.section-timeline{
+  padding: 6rem 1.5rem 8rem;
+  max-width: 980px;
+  margin: 0 auto;
+  scroll-margin-top: 4.5rem;
+}
+/* Two distinct timelines, not one continuous list — give the seam real weight. */
+.section-timeline + .section-timeline{
+  margin-top: 6rem;
+  border-top: 1px solid var(--separator);
+}
+.section-timeline__head{ margin-bottom: 3.5rem; max-width: 640px; }
+.section-timeline__head .type-h2{ margin: 0.6rem 0 0.9rem; }
+.section-timeline__lede{
+  font-size: var(--text-lede);
+  color: var(--ink-secondary);
+  line-height: 1.5;
+}
+
+.timeline{
+  position: relative;
+  padding-left: 2.25rem;
+}
+.timeline::before{
+  content: "";
+  position: absolute;
+  left: 0.4rem; top: 0.6rem; bottom: 0.6rem;
+  width: 2px;
+  border-radius: 2px;
+  /* Hard-stop gradient: filled (accent) up to --progress, faint below,
+     fading out at the very end — one pseudo-element, JS just moves the stop. */
+  background: linear-gradient(to bottom,
+    var(--accent) 0%,
+    var(--accent) var(--progress, 0%),
+    var(--separator) var(--progress, 0%),
+    var(--separator) 96%,
+    transparent 100%
+  );
+}
+.timeline--projects::before{
+  background: linear-gradient(to bottom,
+    var(--cat-project) 0%,
+    var(--cat-project) var(--progress, 0%),
+    var(--separator) var(--progress, 0%),
+    var(--separator) 96%,
+    transparent 100%
+  );
+}
+
+.tl-card{
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding: 1.75rem 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  scale: 1; /* standalone property — hover lives here, independent of translate/transform */
+  transition:
+    opacity var(--dur-reveal) var(--ease-fluid),
+    translate var(--dur-reveal) var(--ease-fluid),
+    scale 120ms ease-out; /* fast hover response — kill latency */
+  transition-delay:
+    calc(var(--i, 0) * 70ms),
+    calc(var(--i, 0) * 70ms),
+    0s;
+}
+.tl-card:hover, .tl-card:focus-within{
+  scale: 1.01;
+}
+.tl-card::before{
+  content: "";
+  position: absolute;
+  left: -2.1rem; top: 2.1rem;
+  width: 0.7rem; height: 0.7rem;
+  border-radius: 50%;
+  background: var(--cat-project);
+  box-shadow: 0 0 0 4px var(--bg);
+}
+.tl-card[data-category="education"]::before{ background: var(--cat-education); }
+.tl-card[data-category="work"]::before{ background: var(--cat-work); }
+.tl-card[data-category="exchange"]::before{ background: var(--cat-exchange); }
+
+/* Mouse-spotlight: a soft light following the cursor across the glass surface. */
+.tl-card::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(320px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.3), transparent 60%);
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+  pointer-events: none;
+}
+.tl-card:hover::after, .tl-card:focus-within::after{
+  opacity: 1;
+}
+@media (prefers-color-scheme: dark){
+  .tl-card::after{
+    background: radial-gradient(320px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.14), transparent 60%);
+  }
+}
+
+.tl-card__logo{
+  flex-shrink: 0;
+  width: 3.25rem;
+  aspect-ratio: 1;
+  border-radius: 0.85rem; /* smaller radius than the card — proportionate to its size */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--material-border-top);
+  box-shadow: none; /* a chip this small reads as thinner material than the card itself */
+}
+.tl-card__logo img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.4rem;
+}
+.tl-card__logo-fallback{
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--ink-secondary);
+}
+
+.tl-card__body{
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+.tl-card__row{ display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.tl-card__date{
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--ink-tertiary);
+  letter-spacing: 0.01em;
+}
+.tl-card__badge{
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.tl-card__badge--upcoming{
+  background: rgba(255, 149, 0, 0.16);
+  color: var(--cat-work);
+}
+.tl-card__title{
+  font-size: var(--text-h3);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+}
+.tl-card__org{
+  font-size: 0.875rem;
+  color: var(--ink-secondary);
+}
+.tl-card__summary{
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+}
+.tl-card__tags{ display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
+.tl-card__tags li{
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(120, 120, 128, 0.12);
+  color: var(--ink-secondary);
+}
+.tl-card__link{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 0.4rem;
+  transition: gap var(--dur-quick) var(--ease-fluid);
+}
+.tl-card__link:hover, .tl-card__link:focus-visible{ gap: 0.65rem; }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.site-footer{
+  border-top: 1px solid var(--separator);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+  color: var(--ink-tertiary);
+}
+.site-footer a{ color: var(--ink-secondary); transition: color var(--dur-quick) var(--ease-fluid); }
+.site-footer a:hover, .site-footer a:focus-visible{ color: var(--accent); }
+.site-footer__links{ display: flex; gap: 1.25rem; flex-wrap: wrap; }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 720px){
+  .nav{ padding: 0.75rem 1.25rem; }
+  .nav__links{ gap: 1rem; font-size: 0.8rem; }
+  .hero{ padding: 5rem 1.25rem 3.5rem; min-height: auto; }
+  .section-timeline{ padding: 4rem 1.25rem 6rem; }
+  .section-timeline + .section-timeline{ margin-top: 3rem; }
+  .timeline{ padding-left: 1.75rem; }
+  .tl-card{ padding: 1.4rem 1.5rem; gap: 0.85rem; }
+  .tl-card::before{ left: -1.6rem; }
+  .tl-card__logo{ width: 2.5rem; border-radius: 0.65rem; }
+}
+
+@media (max-width: 480px){
+  .nav{ flex-wrap: nowrap; }
+  .nav__logo{ font-size: 0.875rem; white-space: nowrap; }
+  /* Secondary nav links collapse to the footer at this width — keep only Timeline. */
+  .nav__links a:not(:first-child){ display: none; }
+}
+
+/* ==========================================================================
+   Reduced motion — consolidated here so it wins the cascade by being last
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+
+  .reveal, .tl-card{
+    translate: none;
+    scale: 1;
+    transition: opacity var(--dur-quick) ease-out;
+    transition-delay: 0s;
+  }
+  .tl-card:hover, .tl-card:focus-within{ scale: 1; }
+
+  .mesh-blob{ animation: none; }
+}
