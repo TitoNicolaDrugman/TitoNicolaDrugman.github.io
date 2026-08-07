@@ -2,87 +2,3147 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Tito Nicola Drugman — AI Engineer</title>
 <meta name="description" content="Tito Nicola Drugman — AI/ML engineer building on-premises, constrained AI systems: quantised transformers on microcontrollers, local LLM + RAG stacks, and vision-language web agents.">
-<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121214" media="(prefers-color-scheme: dark)">
-<link rel="stylesheet" href="styles/global.css">
-<noscript><style>.reveal{opacity:1 !important; translate:0 0 !important;}</style></noscript>
+<meta name="theme-color" content="#12121a">
+<style>
+:root{
+  --taskbar-h: 48px;
+  --chrome-bg: #1c1c24;
+  --chrome-border: rgba(255,255,255,0.09);
+  --text: #f2f2f5;
+  --text-dim: rgba(242,242,245,0.62);
+  --accent: #4cc2ff;
+  --dur: 160ms;
+  --ease: cubic-bezier(.2,.8,.2,1);
+}
+*, *::before, *::after{ box-sizing: border-box; }
+html, body{ height: 100%; }
+body{
+  margin: 0;
+  font: 400 100%/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--text);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a{ color: inherit; }
+button{ font: inherit; }
+
+/* ---------------------------------------------------------------- wallpaper */
+.wallpaper{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(60,110,200,0.55) 0%, transparent 42%),
+    radial-gradient(circle at 82% 78%, rgba(130,70,190,0.5) 0%, transparent 48%),
+    linear-gradient(165deg, #0c0e1c 0%, #161a35 45%, #10192a 100%);
+}
+
+/* ---------------------------------------------------------------- desktop / icons */
+.desktop{
+  position: fixed;
+  inset: 0 0 var(--taskbar-h) 0;
+  padding: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.desktop__tagline{
+  max-width: 30rem;
+  margin: 0 0 1.75rem 4px;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+.desktop__eyebrow{
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+.desktop__title{
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.4rem, 1rem + 1.8vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-shadow: 0 2px 10px rgba(0,0,0,.55);
+}
+.desktop__lede{
+  margin: 0;
+  max-width: 36ch;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+
+#desktop-icons{ position: relative; flex: 1; min-height: 0; }
+.icon{
+  position: absolute;
+  top: 0; left: 0;
+  width: 82px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 4px 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.icon:hover, .icon:focus-visible{
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.16);
+  outline: none;
+}
+.icon:active{ background: rgba(255,255,255,0.22); }
+.icon.is-dragging{ opacity: 0.82; z-index: 5; }
+.icon.is-drop-target{ outline: 2px dashed var(--accent); background: rgba(76,194,255,0.18); border-radius: 8px; }
+.icon__glyph{ width: 38px; height: 38px; pointer-events: none; }
+.icon__glyph svg{ width: 38px; height: 38px; display: block; filter: drop-shadow(0 1px 3px rgba(0,0,0,.55)); }
+.icon__label{
+  font-size: 11.5px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.25;
+  text-shadow: 0 1px 3px rgba(0,0,0,.85);
+  word-break: break-word;
+  pointer-events: none;
+}
+.icon__rename-input{
+  width: 100%;
+  font-size: 11.5px;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--accent);
+  padding: 1px 2px;
+  background: #fff;
+  color: #1b1b1f;
+}
+
+/* ---------------------------------------------------------------- folder windows */
+.folder-toolbar{ position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: #f0f0f3; border-bottom: 1px solid #e3e3e8; font-family: system-ui, sans-serif; flex-wrap: wrap; }
+.folder-toolbar__views{ display: flex; gap: 2px; background: #fff; border: 1px solid #d6d6dc; border-radius: 6px; padding: 2px; }
+.folder-toolbar__view-btn{ border: none; background: none; padding: 4px 9px; font-size: 11.5px; border-radius: 4px; cursor: pointer; color: #44464d; }
+.folder-toolbar__view-btn:hover{ background: #f0f0f3; }
+.folder-toolbar__view-btn.is-active{ background: #232326; color: #fff; }
+.folder-toolbar__sort{ height: 26px; padding: 0 6px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; font-size: 11.5px; cursor: pointer; }
+.folder-toolbar__tags{ display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding: 8px 12px; border-bottom: 1px solid #e3e3e8; background: #f7f7f9; }
+.folder-tag{ flex-shrink: 0; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; border: 1px solid #d6d6dc; background: #fff; color: #44464d; cursor: pointer; }
+.folder-tag:hover{ background: #f0f0f3; }
+.folder-tag.is-active{ background: #0067c0; border-color: #0067c0; color: #fff; }
+.folder-tag--clear{ color: #c0392b; border-color: #f0c4c0; }
+.folder-body{ flex: 1; min-height: 0; overflow: auto; background: #f4f4f7; }
+.folder-empty{ padding: 2rem; text-align: center; font-size: 0.82rem; color: #8a8a92; font-family: system-ui, sans-serif; }
+
+.folder-grid{ padding: 14px; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px; }
+.folder-grid .icon{ position: static; color: #1b1b1f; width: 84px; height: auto; min-height: 88px; }
+.folder-grid .icon .icon__label{ text-shadow: none; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.folder-grid .icon:hover{ background: rgba(0,0,0,0.06); }
+
+.folder-list{ padding: 6px; }
+.folder-list__row{ display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.82rem; color: #1b1b1f; }
+.folder-list__row:hover{ background: rgba(0,0,0,0.06); }
+.folder-list__icon{ width: 20px; height: 20px; flex-shrink: 0; display: flex; }
+.folder-list__icon svg{ width: 20px; height: 20px; display: block; }
+
+.folder-table{ width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.folder-table th{ text-align: left; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.03em; color: #8a8a92; padding: 8px 12px; border-bottom: 1px solid #e3e3e8; position: sticky; top: 0; background: #f4f4f7; }
+.folder-table td{ padding: 7px 12px; border-bottom: 1px solid #ebebef; color: #1b1b1f; vertical-align: middle; }
+.folder-table tr{ cursor: pointer; }
+.folder-table tr:hover{ background: rgba(0,0,0,0.045); }
+.folder-table__name{ display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.folder-table__icon{ width: 16px; height: 16px; display: flex; flex-shrink: 0; }
+.folder-table__icon svg{ width: 16px; height: 16px; display: block; }
+.folder-tag-pill{ display: inline-block; font-size: 0.65rem; font-weight: 600; padding: 0.1rem 0.45rem; border-radius: 999px; background: #eef0f5; color: #44464d; margin: 0 3px 3px 0; }
+
+/* ---------------------------------------------------------------- context menu / properties / personalize */
+.context-menu{
+  position: fixed;
+  z-index: 1001;
+  min-width: 190px;
+  background: rgba(28,28,36,0.97);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--chrome-border);
+  border-radius: 8px;
+  box-shadow: 0 20px 55px rgba(0,0,0,.55);
+  padding: 6px;
+}
+.context-menu__item{
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 7px 10px;
+  border: none;
+  background: none;
+  color: #fff;
+  font-size: 12.5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.context-menu__item:hover{ background: rgba(255,255,255,0.1); }
+.context-menu__item.is-danger{ color: #ff8a8a; }
+.context-menu__sep{ height: 1px; background: var(--chrome-border); margin: 5px 4px; }
+.personalize-swatches{ display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; padding: 8px 4px 4px; }
+.personalize-swatch{ width: 78px; height: 46px; border-radius: 6px; border: 1px solid rgba(255,255,255,.2); cursor: pointer; padding: 0; }
+.personalize-swatch:hover{ outline: 2px solid var(--accent); }
+
+.properties-overlay{ position: fixed; inset: 0; z-index: 1500; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; }
+.properties-panel{ background: #242430; border: 1px solid var(--chrome-border); border-radius: 10px; padding: 18px 20px; width: 260px; color: #fff; box-shadow: 0 30px 60px rgba(0,0,0,.5); }
+.properties-panel__title{ font-weight: 700; margin: 0 0 10px; font-size: 14px; }
+.properties-panel dl{ display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-size: 12px; margin: 0 0 14px; }
+.properties-panel dt{ color: var(--text-dim); }
+.properties-panel__close{ width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--chrome-border); background: rgba(255,255,255,.08); color: #fff; cursor: pointer; }
+.properties-panel__close:hover{ background: rgba(255,255,255,.14); }
+
+/* ---------------------------------------------------------------- taskbar search */
+.taskbar__search{ display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.08); border-radius: 16px; padding: 0 10px; margin: 8px 4px; height: 32px; width: 170px; flex-shrink: 0; transition: width var(--dur) var(--ease), background var(--dur) var(--ease); }
+.taskbar__search:focus-within{ width: 230px; background: rgba(255,255,255,0.14); }
+.taskbar__search-btn{ background: none; border: none; color: var(--text-dim); display: flex; padding: 0; cursor: pointer; }
+.taskbar__search-btn svg{ width: 15px; height: 15px; }
+.taskbar__search-input{ flex: 1; min-width: 0; background: none; border: none; outline: none; color: #fff; font-size: 12px; }
+.taskbar__search-input::placeholder{ color: var(--text-dim); }
+.search-results{ position: fixed; z-index: 1001; max-height: 300px; overflow: auto; background: rgba(28,28,36,0.97); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid var(--chrome-border); border-radius: 8px; padding: 6px; box-shadow: 0 20px 50px rgba(0,0,0,.5); }
+.search-results__item{ display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 8px; border: none; background: none; color: #fff; border-radius: 5px; cursor: pointer; font-size: 13px; }
+.search-results__item:hover{ background: rgba(255,255,255,.1); }
+.search-results__item svg{ width: 16px; height: 16px; flex-shrink: 0; }
+.search-results__empty{ padding: 10px; font-size: 12px; color: var(--text-dim); margin: 0; }
+
+/* ---------------------------------------------------------------- cv-doc toolbar (editable) */
+.cv-doc-toolbar{ position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 6px; padding: 6px 10px; background: #f0f0f3; border-bottom: 1px solid #e3e3e8; font-family: system-ui, sans-serif; }
+.cv-doc-toolbar button{ min-width: 28px; height: 26px; padding: 0 8px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; font-size: 12px; }
+.cv-doc-toolbar button:hover{ background: #f4f4f7; }
+.cv-doc-toolbar__select{ height: 26px; padding: 0 4px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; font-size: 12px; max-width: 108px; }
+.cv-doc-toolbar__color{ width: 26px; height: 26px; padding: 2px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; }
+.cv-doc-toolbar__spacer{ flex: 1; }
+.cv-doc-toolbar__reset{ color: #c0392b !important; }
+.cv-doc__editable{ outline: none; }
+.cv-doc__editable:focus{ box-shadow: inset 0 0 0 2px rgba(76,194,255,.35); border-radius: 4px; }
+
+.recycle-bin__section-title{ font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #8a8a92; margin: 0 0 0.5rem; }
+.recycle-bin__list--real li{ flex-direction: row !important; align-items: center; justify-content: space-between; }
+.recycle-bin__restore{ font-size: 0.72rem; font-weight: 600; padding: 0.3rem 0.6rem; border-radius: 5px; border: 1px solid #d6d6dc; background: #fff; cursor: pointer; }
+.recycle-bin__restore:hover{ background: #f0f0f3; }
+
+/* ---------------------------------------------------------------- project document / calendar / browser / terminal */
+.project-doc{ padding: 1.75rem 2rem 2.5rem; font-family: Georgia, "Times New Roman", serif; color: #232326; max-width: 620px; }
+.project-doc h1{ font-size: 1.35rem; margin: 0 0 0.3rem; }
+.project-doc__meta{ font-family: system-ui, sans-serif; font-size: 0.78rem; color: #6b6b72; margin: 0 0 0.75rem; }
+.project-doc__tags{ display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1rem; }
+.project-doc__tags span{ font-family: system-ui, sans-serif; font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 999px; background: #eef0f5; color: #44464d; }
+.project-doc p{ font-size: 0.9rem; line-height: 1.6; margin: 0 0 0.75rem; }
+.project-doc ul{ margin: 0.3rem 0 1rem; padding-left: 1.2rem; }
+.project-doc li{ font-size: 0.87rem; line-height: 1.55; margin-bottom: 0.3rem; }
+.project-doc__link a{ font-family: system-ui, sans-serif; font-size: 0.8rem; font-weight: 600; color: #0067c0; }
+
+.calendar-app{ padding: 1.25rem 1.5rem 2rem; font-family: system-ui, sans-serif; }
+.calendar-app__legend{ position: sticky; top: -1.25rem; z-index: 3; display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin: -1.25rem -1.5rem 1rem; padding: 1.25rem 1.5rem 0.75rem; background: #fff; border-bottom: 1px solid #ebebef; font-size: 0.75rem; color: #55555c; }
+.calendar-app__legend-item{ display: flex; align-items: center; gap: 0.4rem; border: none; background: none; font: inherit; color: inherit; padding: 3px 6px; border-radius: 5px; cursor: pointer; }
+.calendar-app__legend-item:hover{ background: rgba(0,0,0,0.06); }
+.calendar-app__legend-item.is-hidden{ opacity: 0.4; text-decoration: line-through; }
+.calendar-app__legend-item--static{ cursor: default; }
+.calendar-app__legend-item--static:hover{ background: none; }
+.calendar-app__legend-item i{ width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.cn-flag-icon{ display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 11px; border-radius: 2px; background: #de2910; color: #ffde00; font-size: 8px; line-height: 1; flex-shrink: 0; }
+.calendar-year{ margin-bottom: 1.75rem; opacity: 0; transform: translateY(10px); transition: opacity 420ms ease, transform 420ms ease; transition-delay: calc(var(--stagger,0) * 70ms); }
+.calendar-app.is-visible .calendar-year{ opacity: 1; transform: translateY(0); }
+.calendar-year__label{ font-size: 1.1rem; font-weight: 800; margin: 0 0 0.6rem; color: #1b1b1f; }
+.calendar-year__months{ display: grid; grid-template-columns: repeat(auto-fill,minmax(84px,1fr)); gap: 0.5rem; }
+.calendar-month{ position: relative; background: #f4f4f7; border-radius: 8px; padding: 0.5rem 0.5rem 0.6rem; min-height: 56px; }
+.calendar-month__label{ display: flex; align-items: center; margin: 0 0 0.35rem; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: #8a8a92; }
+.calendar-month--today{ outline: 2px solid var(--accent); box-shadow: 0 0 0 3px rgba(76,194,255,.15); }
+.calendar-month__today-badge{ position: absolute; top: 4px; right: 6px; font-size: 0.55rem; font-weight: 800; letter-spacing: 0.03em; text-transform: uppercase; color: #0067c0; background: rgba(76,194,255,.16); padding: 1px 5px; border-radius: 999px; }
+.calendar-month--china{ background: linear-gradient(180deg, rgba(222,41,16,.09), rgba(255,222,0,.07)); }
+.calendar-month__flag{ margin-left: 4px; display: inline-flex; }
+.calendar-chip{ display: inline-block; width: 16px; height: 16px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); margin: 0 3px 3px 0; cursor: pointer; padding: 0; transition: transform 120ms ease; }
+.calendar-chip:hover{ transform: scale(1.25); }
+.calendar-detail{ position: sticky; bottom: 0; margin-top: 1rem; background: #fff; border: 1px solid #e3e3e8; border-radius: 10px; padding: 1rem 1.1rem; box-shadow: 0 -8px 20px rgba(0,0,0,.06); }
+.calendar-detail__close{ float: right; background: none; border: none; font-size: 16px; cursor: pointer; color: #8a8a92; }
+.calendar-detail__badge{ display: inline-block; font-size: 0.65rem; font-weight: 700; color: #fff; padding: 0.15rem 0.5rem; border-radius: 999px; margin: 0 0 0.5rem; }
+.calendar-detail h3{ margin: 0 0 0.2rem; font-size: 1rem; }
+.calendar-detail__meta{ font-size: 0.75rem; color: #6b6b72; margin: 0 0 0.5rem; }
+.calendar-detail p:not(.calendar-detail__meta){ font-size: 0.85rem; line-height: 1.55; margin: 0 0 0.6rem; }
+.calendar-detail__edit{ display: flex; flex-wrap: wrap; gap: 0.6rem 0.9rem; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #ebebef; }
+.calendar-detail__field{ display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.68rem; font-weight: 600; color: #6b6b72; text-transform: uppercase; letter-spacing: 0.03em; }
+.calendar-detail__select, .calendar-detail__month{ font: 500 0.8rem system-ui, sans-serif; text-transform: none; letter-spacing: normal; color: #232326; padding: 4px 6px; border: 1px solid #d6d6dc; border-radius: 5px; background: #fff; }
+.calendar-detail__color{ width: 32px; height: 26px; padding: 2px; border: 1px solid #d6d6dc; border-radius: 5px; background: #fff; cursor: pointer; }
+.calendar-detail__checkbox{ display: flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; color: #55555c; text-transform: none; letter-spacing: normal; font-weight: 500; align-self: flex-end; padding-bottom: 4px; }
+.calendar-detail__actions{ display: flex; gap: 0.5rem; align-self: flex-end; margin-left: auto; }
+.calendar-detail__action{ font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.7rem; border-radius: 5px; border: 1px solid #d6d6dc; background: #fff; cursor: pointer; }
+.calendar-detail__action:hover{ background: #f0f0f3; }
+.calendar-detail__action--danger{ color: #c0392b; border-color: #f0c4c0; }
+
+.browser-app{ height: 100%; display: flex; flex-direction: column; }
+.browser-app__bar{ display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: #f0f0f3; border-bottom: 1px solid #e3e3e8; flex-shrink: 0; }
+.browser-app__nav{ width: 26px; height: 26px; border-radius: 6px; border: 1px solid #d6d6dc; background: #fff; cursor: pointer; font-size: 13px; }
+.browser-app__nav:hover{ background: #f4f4f7; }
+.browser-app__address{ flex: 1; background: #fff; border: 1px solid #d6d6dc; border-radius: 14px; padding: 5px 12px; font-size: 12px; color: #55555c; font-family: ui-monospace, monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.browser-app__body{ flex: 1; min-height: 0; overflow: auto; background: #fff; }
+.browser-app__newtab{ padding: 2rem 1.5rem; }
+.browser-app__newtab-title{ font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #8a8a92; margin: 0 0 1rem; font-family: system-ui, sans-serif; }
+.browser-app__bookmarks{ display: grid; grid-template-columns: repeat(auto-fill,minmax(140px,1fr)); gap: 0.75rem; }
+.browser-app__bookmark{ display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #e3e3e8; background: #f9f9fb; cursor: pointer; font-size: 0.82rem; font-weight: 600; color: #232326; text-align: left; }
+.browser-app__bookmark:hover{ background: #f0f0f3; }
+.browser-app__bookmark svg{ width: 20px; height: 20px; flex-shrink: 0; }
+.browser-app__bookmark small{ font-weight: 400; color: #8a8a92; margin-left: auto; }
+.browser-app__iframe{ width: 100%; height: 100%; border: none; display: block; }
+
+.terminal-app{ flex: 1; min-height: 0; height: 100%; display: flex; flex-direction: column; background: #0c0c10; color: #d8d8de; font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, monospace; font-size: 12.5px; }
+.terminal-app__output{ flex: 1; overflow: auto; padding: 10px 12px; white-space: pre-wrap; word-break: break-word; }
+.terminal-app__line{ line-height: 1.5; }
+.terminal-app__neofetch{ margin: 4px 0; line-height: 1.4; font-family: inherit; }
+.terminal-app__inputline{ display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-top: 1px solid rgba(255,255,255,.08); flex-shrink: 0; }
+.terminal-app__prompt{ color: #5fd786; white-space: nowrap; }
+.terminal-app__input{ flex: 1; background: none; border: none; outline: none; color: #f2f2f5; font: inherit; }
+
+/* ---------------------------------------------------------------- task manager */
+.taskmgr{ padding: 1rem 1.25rem 1.5rem; font-family: system-ui, sans-serif; height: 100%; overflow: auto; }
+.taskmgr__metrics{ display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.25rem; }
+.taskmgr__metric-head{ display: flex; justify-content: space-between; font-size: 0.78rem; font-weight: 600; color: #44464d; margin-bottom: 0.25rem; }
+.taskmgr__metric-value{ font-variant-numeric: tabular-nums; color: #8a8a92; font-weight: 700; }
+.taskmgr__bar{ height: 8px; border-radius: 4px; background: #eef0f5; overflow: hidden; }
+.taskmgr__bar-fill{ height: 100%; border-radius: 4px; transition: width 700ms ease; }
+.taskmgr__section-title{ font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #8a8a92; margin: 0 0 0.6rem; }
+.taskmgr__processes{ display: flex; flex-direction: column; gap: 2px; }
+.taskmgr__process{ display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; font-size: 0.78rem; }
+.taskmgr__process:hover{ background: #f4f4f7; }
+.taskmgr__process-icon{ width: 16px; height: 16px; display: flex; flex-shrink: 0; }
+.taskmgr__process-icon svg{ width: 16px; height: 16px; display: block; }
+.taskmgr__process-name{ flex: 1; font-weight: 600; color: #232326; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.taskmgr__process-stat{ width: 70px; text-align: right; color: #8a8a92; font-variant-numeric: tabular-nums; }
+.taskmgr__empty{ font-size: 0.78rem; color: #8a8a92; padding: 0.5rem; }
+
+/* ---------------------------------------------------------------- settings app */
+.settings-app{ display: flex; height: 100%; font-family: system-ui, sans-serif; }
+.settings-app__nav{ width: 160px; flex-shrink: 0; background: #f4f4f7; border-right: 1px solid #e3e3e8; padding: 10px; display: flex; flex-direction: column; gap: 2px; }
+.settings-app__nav-btn{ text-align: left; padding: 8px 10px; border: none; background: none; border-radius: 6px; font-size: 0.8rem; font-weight: 600; color: #44464d; cursor: pointer; }
+.settings-app__nav-btn:hover{ background: rgba(0,0,0,.05); }
+.settings-app__nav-btn.is-active{ background: #232326; color: #fff; }
+.settings-app__pane{ flex: 1; min-width: 0; overflow: auto; padding: 1.25rem 1.5rem; }
+.settings-app__pane h2{ font-size: 1rem; margin: 0 0 1rem; }
+.settings-row{ display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid #ebebef; font-size: 0.85rem; }
+.settings-row .settings-range{ flex: 0 0 140px; accent-color: var(--accent); }
+.settings-switch{ appearance: none; -webkit-appearance: none; width: 36px; height: 20px; border-radius: 999px; background: #d6d6dc; position: relative; cursor: pointer; flex-shrink: 0; }
+.settings-switch::after{ content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: left 150ms ease; }
+.settings-switch:checked{ background: var(--accent); }
+.settings-switch:checked::after{ left: 18px; }
+.settings-wallpapers{ display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.settings-wallpaper-swatch{ height: 60px; border-radius: 8px; border: 2px solid transparent; cursor: pointer; padding: 0; }
+.settings-wallpaper-swatch:hover{ border-color: var(--accent); }
+.settings-specs{ display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 0.82rem; margin: 0 0 1.25rem; }
+.settings-specs dt{ color: #8a8a92; }
+.settings-specs dd{ margin: 0; color: #232326; font-weight: 600; }
+.settings-credits{ font-size: 0.8rem; color: #6b6b72; }
+.settings-credits a{ color: #0067c0; font-weight: 600; }
+
+/* ---------------------------------------------------------------- mail app */
+.mail-app{ display: flex; height: 100%; font-family: system-ui, sans-serif; font-size: 0.82rem; }
+.mail-app__sidebar{ width: 110px; flex-shrink: 0; background: #f4f4f7; border-right: 1px solid #e3e3e8; padding: 10px 6px; display: flex; flex-direction: column; gap: 2px; }
+.mail-app__folder{ display: flex; justify-content: space-between; align-items: center; text-align: left; padding: 7px 9px; border: none; background: none; border-radius: 6px; font-size: 0.78rem; font-weight: 600; color: #44464d; cursor: pointer; }
+.mail-app__folder:hover{ background: rgba(0,0,0,.05); }
+.mail-app__folder.is-active{ background: #232326; color: #fff; }
+.mail-app__count{ font-size: 0.65rem; background: rgba(0,0,0,.08); padding: 1px 5px; border-radius: 999px; }
+.mail-app__folder.is-active .mail-app__count{ background: rgba(255,255,255,.2); }
+.mail-app__list{ width: 220px; flex-shrink: 0; overflow: auto; border-right: 1px solid #e3e3e8; }
+.mail-app__item{ display: flex; flex-direction: column; gap: 2px; width: 100%; text-align: left; padding: 9px 12px; border: none; border-bottom: 1px solid #ebebef; background: #fff; cursor: pointer; }
+.mail-app__item:hover{ background: #f7f7f9; }
+.mail-app__item.is-active{ background: #eef4fb; }
+.mail-app__item-from{ font-size: 0.72rem; font-weight: 700; color: #232326; }
+.mail-app__item-subject{ font-size: 0.76rem; font-weight: 600; color: #44464d; }
+.mail-app__item-preview{ font-size: 0.7rem; color: #8a8a92; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mail-app__item-time{ font-size: 0.65rem; color: #a5a5ac; }
+.mail-app__reading{ flex: 1; min-width: 0; overflow: auto; padding: 1.25rem 1.5rem; }
+.mail-app__reading h3{ margin: 0 0 0.4rem; font-size: 1rem; }
+.mail-app__meta{ font-size: 0.75rem; color: #8a8a92; margin: 0 0 1rem; }
+.mail-app__body{ font-size: 0.85rem; line-height: 1.6; color: #232326; }
+
+/* ---------------------------------------------------------------- boot splash */
+.boot-splash{ position: fixed; inset: 0; z-index: 3000; background: #0c0e1c; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; transition: opacity 400ms ease; }
+.boot-splash.is-leaving{ opacity: 0; }
+.boot-splash__logo svg{ width: 44px; height: 44px; }
+.boot-splash__bar{ width: 160px; height: 3px; background: rgba(255,255,255,.15); border-radius: 2px; overflow: hidden; }
+.boot-splash__bar-fill{ width: 40%; height: 100%; background: #4cc2ff; border-radius: 2px; animation: boot-bar 1.1s ease-in-out infinite; }
+@keyframes boot-bar{ 0%{ transform: translateX(-100%); } 100%{ transform: translateX(350%); } }
+.boot-splash__label{ font-size: 12px; color: rgba(255,255,255,.6); letter-spacing: 0.04em; }
+
+/* ---------------------------------------------------------------- windows */
+#window-host{ position: absolute; inset: 0; pointer-events: none; }
+#window-host > .window{ pointer-events: auto; }
+
+.window{
+  position: absolute;
+  top: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 7px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 22px 60px rgba(0,0,0,.5), 0 2px 10px rgba(0,0,0,.35);
+  border: 1px solid rgba(0,0,0,.4);
+}
+.window.is-minimized{ display: none; }
+.window.is-maximized{ border-radius: 0; }
+
+.window__titlebar{
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding-left: 10px;
+  background: var(--chrome-bg);
+  color: #fff;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+.window__titlebar:active{ cursor: grabbing; }
+.window__icon{ width: 16px; height: 16px; margin-right: 8px; flex-shrink: 0; display: flex; }
+.window__icon svg{ width: 16px; height: 16px; display: block; }
+.window__title{
+  flex: 1;
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.window__controls{ display: flex; align-items: stretch; height: 100%; }
+.window__btn{
+  width: 44px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+}
+.window__btn:hover{ background: rgba(255,255,255,0.12); }
+.window__btn--close:hover{ background: #e81123; }
+
+.window__body{
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  background: #fff;
+  color: #1b1b1f;
+}
+.window__iframe{ flex: 1; min-height: 0; width: 100%; border: none; display: block; background: #fff; }
+.window__actions{
+  display: flex;
+  gap: 0.9rem;
+  padding: 0.4rem 0.85rem;
+  border-bottom: 1px solid #e3e3e8;
+  flex-shrink: 0;
+  background: #f7f7f9;
+}
+.window__action{ font-size: 0.75rem; font-weight: 600; color: #0067c0; text-decoration: none; }
+.window__action:hover{ text-decoration: underline; }
+
+.window__resize-handle{
+  position: absolute;
+  right: 0; bottom: 0;
+  width: 20px; height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: nwse-resize;
+  touch-action: none;
+}
+.window__resize-handle::after{
+  content: "";
+  position: absolute;
+  right: 5px; bottom: 5px;
+  width: 8px; height: 8px;
+  border-right: 2px solid #9a9aa2;
+  border-bottom: 2px solid #9a9aa2;
+}
+.window.is-maximized .window__resize-handle{ display: none; }
+
+/* ---------------------------------------------------------------- taskbar */
+.taskbar{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: var(--taskbar-h);
+  z-index: 1000;
+  display: flex;
+  align-items: stretch;
+  background: rgba(20,20,26,0.86);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  border-top: 1px solid var(--chrome-border);
+}
+.taskbar__start{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+.taskbar__start svg{ width: 18px; height: 18px; }
+.taskbar__start:hover, .taskbar__start.is-open{ background: rgba(255,255,255,0.1); }
+
+.taskbar__apps{ display: flex; align-items: stretch; gap: 2px; padding: 0 4px; min-width: 0; overflow: hidden; }
+.taskbar__btn{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  margin: 6px 0;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12.5px;
+  cursor: pointer;
+  max-width: 170px;
+}
+.taskbar__btn svg{ width: 16px; height: 16px; flex-shrink: 0; }
+.taskbar__btn-label{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.taskbar__btn:hover{ background: rgba(255,255,255,0.1); }
+.taskbar__btn.is-active{ background: rgba(255,255,255,0.16); box-shadow: inset 0 -2px 0 var(--accent); }
+.taskbar__btn.is-minimized{ opacity: 0.55; }
+.taskbar__btn.is-dragging{ opacity: 0.4; }
+
+.taskbar-preview{ position: fixed; bottom: calc(var(--taskbar-h) + 8px); z-index: 1001; width: 200px; background: rgba(28,28,36,0.97); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid var(--chrome-border); border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,.5); overflow: hidden; }
+.taskbar-preview__head{ display: flex; align-items: center; gap: 6px; padding: 6px 6px 6px 10px; background: rgba(255,255,255,.05); }
+.taskbar-preview__icon{ width: 14px; height: 14px; display: flex; flex-shrink: 0; }
+.taskbar-preview__icon svg{ width: 14px; height: 14px; display: block; }
+.taskbar-preview__title{ flex: 1; font-size: 11.5px; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.taskbar-preview__close{ width: 20px; height: 20px; border: none; border-radius: 4px; background: none; color: var(--text-dim); cursor: pointer; font-size: 13px; flex-shrink: 0; line-height: 1; }
+.taskbar-preview__close:hover{ background: #e81123; color: #fff; }
+.taskbar-preview__body{ height: 90px; display: flex; align-items: center; justify-content: center; background: #f4f4f7; cursor: pointer; }
+.taskbar-preview__body svg{ width: 36px; height: 36px; opacity: .7; }
+
+.taskbar__spacer{ flex: 1; }
+.taskbar__tray{ display: flex; align-items: center; gap: 2px; padding: 0 8px; color: var(--text-dim); }
+.taskbar__tray-btn{ display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: none; border-radius: 5px; background: transparent; color: var(--text-dim); cursor: pointer; }
+.taskbar__tray-btn:hover, .taskbar__tray-btn.is-open{ background: rgba(255,255,255,0.1); color: #fff; }
+.taskbar__tray-btn.is-off{ color: rgba(242,242,245,0.32); }
+.taskbar__tray svg{ width: 15px; height: 15px; display: block; }
+.taskbar__lang-btn{ display: flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 6px; border: none; border-radius: 5px; background: transparent; color: var(--text-dim); font-size: 11px; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; }
+.taskbar__lang-btn:hover{ background: rgba(255,255,255,0.1); color: #fff; }
+.taskbar__clock{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 14px;
+  font-size: 11px;
+  color: #fff;
+  line-height: 1.3;
+  white-space: nowrap;
+  border-left: 1px solid var(--chrome-border);
+}
+
+/* ---------------------------------------------------------------- start menu */
+.start-menu{
+  position: fixed;
+  left: 8px;
+  bottom: calc(var(--taskbar-h) + 8px);
+  width: 250px;
+  background: rgba(28,28,36,0.97);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--chrome-border);
+  border-radius: 8px;
+  box-shadow: 0 20px 55px rgba(0,0,0,.55);
+  padding: 8px;
+  z-index: 1001;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.start-menu.is-open{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+.start-menu__title{
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  padding: 6px 8px 4px;
+}
+.start-menu a{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+}
+.start-menu a:hover{ background: rgba(255,255,255,0.1); }
+.start-menu a svg{ width: 16px; height: 16px; flex-shrink: 0; }
+.start-menu__power-row{ display: flex; justify-content: flex-end; gap: 6px; margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--chrome-border); }
+.start-menu__power-btn{ width: 34px; height: 34px; border-radius: 6px; border: none; background: rgba(255,255,255,.06); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.start-menu__power-btn:hover{ background: rgba(255,255,255,.16); }
+.start-menu__power-btn svg{ width: 16px; height: 16px; }
+
+.power-screen{ position: fixed; inset: 0; z-index: 3000; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #fff; cursor: pointer; text-align: center; }
+.power-screen__clock{ font-size: 56px; font-weight: 200; margin: 0; cursor: default; }
+.power-screen__date{ font-size: 14px; color: rgba(255,255,255,.6); margin: 0 0 26px; cursor: default; }
+.power-screen__label{ font-size: 13px; color: rgba(255,255,255,.75); margin: 0; }
+.power-screen__hint{ font-size: 11px; color: rgba(255,255,255,.4); margin: 8px 0 0; }
+
+/* ---------------------------------------------------------------- quick settings / brightness */
+.brightness-overlay{ position: fixed; inset: 0; z-index: 2500; background: #000; opacity: 0; pointer-events: none; transition: opacity 160ms ease; }
+.quick-settings{
+  position: fixed;
+  right: 8px;
+  bottom: calc(var(--taskbar-h) + 8px);
+  width: 230px;
+  background: rgba(28,28,36,0.97);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--chrome-border);
+  border-radius: 8px;
+  box-shadow: 0 20px 55px rgba(0,0,0,.55);
+  padding: 12px;
+  z-index: 1001;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.quick-settings.is-open{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+.quick-settings__toggles{ display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 12px; }
+.qs-toggle{ display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 4px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; background: rgba(255,255,255,.05); color: var(--text-dim); cursor: pointer; }
+.qs-toggle svg{ width: 17px; height: 17px; }
+.qs-toggle span{ font-size: 9.5px; font-weight: 600; text-align: center; line-height: 1.2; }
+.qs-toggle:hover{ background: rgba(255,255,255,.09); }
+.qs-toggle.is-active{ background: var(--accent); border-color: var(--accent); color: #0c1420; }
+.quick-settings__slider{ display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 11px; color: var(--text-dim); }
+.quick-settings__slider span{ width: 66px; flex-shrink: 0; }
+.quick-settings__slider input[type="range"]{ flex: 1; accent-color: var(--accent); }
+.quick-settings__battery{ text-align: right; font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+/* ---------------------------------------------------------------- toast notification */
+.toast{
+  position: fixed;
+  right: 14px;
+  bottom: calc(var(--taskbar-h) + 14px);
+  width: 300px;
+  background: rgba(28,28,36,0.97);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--chrome-border);
+  border-radius: 8px;
+  padding: 12px 30px 12px 14px;
+  color: #fff;
+  box-shadow: 0 20px 50px rgba(0,0,0,.5);
+  transform: translateY(10px);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  z-index: 1002;
+  cursor: pointer;
+}
+.toast.is-visible{ opacity: 1; transform: translateY(0); }
+.toast__dismiss{
+  position: absolute; top: 6px; right: 6px;
+  width: 22px; height: 22px;
+  background: none; border: none; color: var(--text-dim);
+  font-size: 14px; cursor: pointer; border-radius: 4px;
+}
+.toast__dismiss:hover{ background: rgba(255,255,255,0.1); color: #fff; }
+.toast__title{ font-size: 12.5px; font-weight: 700; margin: 0 0 4px; }
+.toast__body{ font-size: 12px; color: var(--text-dim); margin: 0; line-height: 1.4; word-break: break-all; }
+
+/* ---------------------------------------------------------------- component app content */
+.cv-doc{ background: #fff; padding: 2.25rem 2.5rem 3rem; font-family: Georgia, "Times New Roman", serif; color: #232326; max-width: 680px; margin: 0 auto; }
+.cv-doc__notice{ font-family: system-ui, sans-serif; font-size: 0.72rem; color: #7a7a82; background: #f4f4f7; border: 1px solid #e3e3e8; border-radius: 6px; padding: 0.5rem 0.75rem; margin: 0 0 1.5rem; }
+.cv-doc__notice a{ color: #0067c0; font-weight: 600; text-decoration: none; }
+.cv-doc__notice a:hover{ text-decoration: underline; }
+.cv-doc h1{ font-size: 1.7rem; margin: 0 0 0.15rem; font-weight: 700; }
+.cv-doc__role{ font-family: system-ui, sans-serif; font-size: 0.85rem; color: #55555c; margin: 0 0 1.5rem; }
+.cv-doc h2{ font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1.5px solid #232326; padding-bottom: 0.25rem; margin: 1.8rem 0 0.75rem; font-weight: 700; }
+.cv-doc p{ margin: 0 0 0.75rem; font-size: 0.92rem; line-height: 1.6; }
+.cv-doc .entry{ margin-bottom: 1rem; }
+.cv-doc .entry__head{ display: flex; justify-content: space-between; gap: 1rem; font-weight: 700; font-size: 0.92rem; }
+.cv-doc .entry__meta{ font-family: system-ui, sans-serif; font-size: 0.75rem; color: #6b6b72; margin: 0.1rem 0 0.35rem; }
+.cv-doc ul{ margin: 0.3rem 0 0; padding-left: 1.2rem; }
+.cv-doc li{ font-size: 0.88rem; line-height: 1.55; margin-bottom: 0.25rem; }
+.cv-doc .skills-row{ font-size: 0.85rem; margin-bottom: 0.4rem; }
+.cv-doc .skills-row b{ font-weight: 700; }
+
+.recycle-bin{ padding: 1.25rem 1.4rem 1.5rem; font-size: 0.85rem; }
+.recycle-bin__count{ margin: 0 0 0.9rem; color: #6b6b72; font-size: 0.78rem; }
+.recycle-bin__list{ list-style: none; margin: 0 0 1.1rem; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.recycle-bin__list li{ display: flex; flex-direction: column; gap: 0.1rem; padding: 0.5rem 0.6rem; background: #f4f4f7; border-radius: 6px; }
+.recycle-bin__name{ font-weight: 700; font-size: 0.82rem; }
+.recycle-bin__note{ color: #6b6b72; font-size: 0.78rem; }
+.recycle-bin__empty{ font-size: 0.78rem; font-weight: 600; padding: 0.5rem 0.9rem; border-radius: 6px; border: 1px solid #d6d6dc; background: #fff; cursor: pointer; }
+.recycle-bin__empty:hover{ background: #f4f4f7; }
+.recycle-bin__joke{ margin-top: 0.7rem; font-size: 0.78rem; color: #6b6b72; font-style: italic; }
+
+/* ---------------------------------------------------------------- noscript / reduced motion */
+.noscript-fallback{ max-width: 640px; margin: 4rem auto; padding: 0 1.5rem; font: 16px/1.5 system-ui, sans-serif; color: #f2f2f5; }
+.noscript-fallback a{ color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce){
+  .start-menu, .toast, .taskbar__search{ transition: none; }
+  .calendar-year{ transition: none; }
+  .boot-splash{ transition: none; }
+  .boot-splash__bar-fill{ animation: none; }
+}
+
+@media (max-width: 480px){
+  .desktop__tagline{ display: none; }
+  .taskbar__btn-label{ display: none; }
+  .taskbar__btn{ max-width: 40px; }
+  .taskbar__search{ width: 90px; }
+  .taskbar__search:focus-within{ width: 140px; }
+}
+</style>
 </head>
 <body>
 
-<div class="mesh-bg" aria-hidden="true">
-  <span class="mesh-blob mesh-blob--1"></span>
-  <span class="mesh-blob mesh-blob--2"></span>
-  <span class="mesh-blob mesh-blob--3"></span>
-  <span class="mesh-blob mesh-blob--4"></span>
+<div class="wallpaper" aria-hidden="true"></div>
+
+<noscript>
+  <div class="noscript-fallback">
+    <h1>Tito Nicola Drugman — AI Engineer</h1>
+    <p>This homepage is an interactive desktop and needs JavaScript to run. Here are direct links instead:</p>
+    <ul>
+      <li><a href="classic.html">Classic portfolio (no JS required)</a></li>
+      <li><a href="timeline.html">Full timeline</a></li>
+      <li><a href="assets/cv/cv_TitoNicolaDrugman.pdf">Download CV (PDF)</a></li>
+      <li><a href="wikipedia/index.html">Wikipedia (allegedly)</a></li>
+      <li><a href="https://github.com/TitoNicolaDrugman">GitHub</a></li>
+      <li><a href="mailto:drugmantito@gmail.com">drugmantito@gmail.com</a></li>
+    </ul>
+  </div>
+</noscript>
+
+<main class="desktop" id="main">
+  <div class="desktop__tagline">
+    <p class="desktop__eyebrow" data-i18n="hero.eyebrow">AI Engineer · On-Premises Systems</p>
+    <h1 class="desktop__title" data-i18n="hero.title">Building on-premises intelligence.</h1>
+    <p class="desktop__lede" data-i18n="hero.lede">I build AI that runs where the data lives — quantised transformers on microcontrollers, self-hosted LLM and RAG stacks, and vision-language agents that never touch a third-party API.</p>
+  </div>
+  <div id="desktop-icons"></div>
+</main>
+<div id="window-host"></div>
+
+<footer class="taskbar" id="taskbar">
+  <button type="button" class="taskbar__start" id="start-btn" aria-haspopup="true" aria-expanded="false">
+    <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="1" width="8" height="8" fill="#4cc2ff"/><rect x="11" y="1" width="8" height="8" fill="#4cc2ff"/><rect x="1" y="11" width="8" height="8" fill="#4cc2ff"/><rect x="11" y="11" width="8" height="8" fill="#4cc2ff"/></svg>
+    Tito
+  </button>
+  <div class="taskbar__search" id="taskbar-search">
+    <button type="button" class="taskbar__search-btn" id="search-btn" aria-label="Search" tabindex="-1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg>
+    </button>
+    <input type="text" class="taskbar__search-input" id="search-input" data-i18n-placeholder="taskbar.search" placeholder="Type here to search" autocomplete="off" />
+  </div>
+  <div id="search-results" class="search-results" hidden></div>
+  <div class="taskbar__apps" id="taskbar-apps"></div>
+  <div class="taskbar__spacer"></div>
+  <div class="taskbar__tray" id="taskbar-tray">
+    <button type="button" class="taskbar__lang-btn" id="lang-toggle-btn" data-i18n-title="qs.language" title="Keyboard language">EN</button>
+    <button type="button" class="taskbar__tray-btn" id="tray-wifi-btn" data-i18n-aria="qs.wifi" aria-label="Wi-Fi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8.5a15 15 0 0 1 20 0M5.5 12a10 10 0 0 1 13 0M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1.1" fill="currentColor" stroke="none"/></svg>
+    </button>
+    <button type="button" class="taskbar__tray-btn" id="tray-volume-btn" data-i18n-aria="qs.volume" aria-label="Volume">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10v4h4l5 4V6L7 10H3Z"/><path d="M16 9a5 5 0 0 1 0 6"/></svg>
+    </button>
+    <button type="button" class="taskbar__tray-btn" id="tray-battery-btn" data-i18n-aria="qs.battery" aria-label="Battery">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 10v4" stroke-linecap="round"/><rect x="4.5" y="9.5" width="9" height="5" fill="currentColor" stroke="none"/></svg>
+    </button>
+  </div>
+  <div class="taskbar__clock" id="taskbar-clock"></div>
+</footer>
+
+<div class="quick-settings" id="quick-settings">
+  <div class="quick-settings__toggles">
+    <button type="button" class="qs-toggle" id="qs-wifi" data-key="qsWifi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8.5a15 15 0 0 1 20 0M5.5 12a10 10 0 0 1 13 0M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1.1" fill="currentColor" stroke="none"/></svg>
+      <span data-i18n="qs.wifi">Wi-Fi</span>
+    </button>
+    <button type="button" class="qs-toggle" id="qs-bluetooth" data-key="qsBluetooth">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6.5 8 17.5 16 12 21V3l5.5 5L6.5 16"/></svg>
+      <span data-i18n="qs.bluetooth">Bluetooth</span>
+    </button>
+    <button type="button" class="qs-toggle" id="qs-airplane" data-key="qsAirplane">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m2 16 20-7-2 8-6 2v-4l-4 1.3V20l-3-1v-5L2 16Z"/></svg>
+      <span data-i18n="qs.airplane">Airplane mode</span>
+    </button>
+  </div>
+  <div class="quick-settings__slider">
+    <span data-i18n="qs.brightness">Brightness</span>
+    <input type="range" id="qs-brightness-range" min="20" max="100" value="100" />
+  </div>
+  <div class="quick-settings__slider">
+    <span data-i18n="qs.volume">Volume</span>
+    <input type="range" id="qs-volume-range" min="0" max="100" value="70" />
+  </div>
+  <div class="quick-settings__battery" id="qs-battery-label">🔋 87%</div>
 </div>
+<div class="brightness-overlay" id="brightness-overlay" aria-hidden="true"></div>
 
-<a class="skip-link" href="#main">Skip to content</a>
-
-<nav class="nav material">
-  <a href="#top" class="nav__logo">Tito Nicola Drugman</a>
-  <div class="nav__links">
-    <a href="#career">Timeline</a>
-    <a href="timeline.html">Full record ↗</a>
-    <a href="mailto:drugmantito@gmail.com">Contact</a>
+<nav class="start-menu" id="start-menu" aria-label="Quick links">
+  <p class="start-menu__title" data-i18n="start.quickLinks">Quick links</p>
+  <a href="assets/cv/cv_TitoNicolaDrugman.pdf" download>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+    <span data-i18n="start.downloadCv">Download CV (PDF)</span>
+  </a>
+  <a href="classic.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>
+    <span data-i18n="start.classic">Classic (text) version</span>
+  </a>
+  <a href="timeline.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3v18M5 6h14M5 12h10M5 18h14"/></svg>
+    <span data-i18n="start.timeline">Full timeline</span>
+  </a>
+  <a href="https://github.com/TitoNicolaDrugman" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.36 1.08 2.93.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.55 9.55 0 0 1 5 0c1.9-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.83-2.34 4.68-4.57 4.92.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+    <span data-i18n="start.github">GitHub</span>
+  </a>
+  <a href="mailto:drugmantito@gmail.com">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+    <span data-i18n="start.email">Email</span>
+  </a>
+  <div class="start-menu__power-row">
+    <button type="button" class="start-menu__power-btn" data-power="sleep" data-i18n-title="power.sleep" title="Sleep">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+    </button>
+    <button type="button" class="start-menu__power-btn" data-power="restart" data-i18n-title="power.restart" title="Restart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+    </button>
+    <button type="button" class="start-menu__power-btn" data-power="shutdown" data-i18n-title="power.shutdown" title="Shut down">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v10"/><path d="M7 5.5a8 8 0 1 0 10 0"/></svg>
+    </button>
   </div>
 </nav>
 
-<main id="main">
+<script type="module">
+import { experiences } from './data/experiences.js';
+(function(){
+  "use strict";
 
-  <!-- ============ HERO ============ -->
-  <header class="hero" id="top">
-    <p class="eyebrow reveal">AI Engineer · On-Premises Systems</p>
-    <h1 class="hero__title type-display">
-      <span class="reveal" style="--i:1">Building</span>
-      <span class="reveal" style="--i:2">on-premises</span>
-      <span class="reveal" style="--i:3">intelligence.</span>
-    </h1>
-    <p class="hero__lede type-lede reveal" style="--i:4">
-      I build AI that runs where the data lives — quantised transformers on microcontrollers, self-hosted LLM and RAG stacks, and vision-language agents that never touch a third-party API.
-    </p>
-    <div class="hero__meta reveal" style="--i:5">
-      <span class="live">Incoming — AI Traineeship, European Court of Auditors · Oct 2026</span>
-      <span>Milano ⇄ Luxembourg</span>
-    </div>
-  </header>
+  var TASKBAR_HEIGHT = 48;
+  var SPAWN_MARGIN = 24;
+  var MIN_VISIBLE = 48;
+  var STORE_PREFIX = "titoos:";
 
-  <!-- ============ CAREER & EDUCATION ============ -->
-  <section class="section-timeline" id="career">
-    <div class="section-timeline__head">
-      <p class="eyebrow reveal">The record</p>
-      <h2 class="type-h2 reveal">Career &amp; education.</h2>
-      <p class="section-timeline__lede reveal">Seven stops in order — degrees, day jobs and the exchange semester in between.</p>
-    </div>
-    <ol class="timeline" id="career-list" role="list" aria-label="Chronological timeline of education, work and exchange experience"></ol>
-  </section>
+  function clampNum(v, min, max){ return Math.min(Math.max(v, min), Math.max(min, max)); }
 
-  <!-- ============ PROJECTS & RESEARCH ============ -->
-  <section class="section-timeline" id="projects">
-    <div class="section-timeline__head">
-      <p class="eyebrow reveal">Selected work</p>
-      <h2 class="type-h2 reveal">Projects &amp; research.</h2>
-      <p class="section-timeline__lede reveal">Nine systems, benchmarked and shipped — from course research to hackathon wins.</p>
-    </div>
-    <ol class="timeline timeline--projects" id="projects-list" role="list" aria-label="Chronological list of projects and research work"></ol>
-  </section>
+  function storeGet(key, fallback){
+    try{
+      var raw = sessionStorage.getItem(STORE_PREFIX + key);
+      return raw === null ? fallback : JSON.parse(raw);
+    }catch(e){ return fallback; }
+  }
+  function storeSet(key, value){
+    try{ sessionStorage.setItem(STORE_PREFIX + key, JSON.stringify(value)); }catch(e){}
+  }
+  function storeRemove(key){
+    try{ sessionStorage.removeItem(STORE_PREFIX + key); }catch(e){}
+  }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function hashCode(s){
+    var h = 0;
+    for (var i = 0; i < s.length; i++){ h = (h << 5) - h + s.charCodeAt(i); h |= 0; }
+    return h;
+  }
 
-</main>
+  /* ============================================================ i18n (chrome-only; CV/project/terminal content stays English) */
+  var STRINGS = {
+    "app.recycleBin": { en: "Recycle Bin", it: "Cestino" },
+    "app.projects": { en: "Projects", it: "Progetti" },
+    "app.skills": { en: "Skills", it: "Competenze" },
+    "app.calendar": { en: "Calendar", it: "Calendario" },
+    "app.settings": { en: "Settings", it: "Impostazioni" },
+    "app.taskManager": { en: "Task Manager", it: "Gestione attività" },
+    "app.mail": { en: "Mail", it: "Posta" },
+    "app.tetris": { en: "Tetris", it: "Tetris" },
 
-<footer class="site-footer">
-  <span>© 2026 Tito Nicola Drugman</span>
-  <div class="site-footer__links">
-    <a href="https://github.com/TitoNicolaDrugman" target="_blank" rel="noopener">GitHub</a>
-    <a href="timeline.html">Full Timeline</a>
-    <a href="wikipedia/index.html">Wikipedia (allegedly)</a>
-    <a href="mailto:drugmantito@gmail.com">drugmantito@gmail.com</a>
-  </div>
-</footer>
+    "hero.eyebrow": { en: "AI Engineer · On-Premises Systems", it: "AI Engineer · Sistemi On-Premises" },
+    "hero.title": { en: "Building on-premises intelligence.", it: "Costruisco intelligenza on-premises." },
+    "hero.lede": { en: "I build AI that runs where the data lives — quantised transformers on microcontrollers, self-hosted LLM and RAG stacks, and vision-language agents that never touch a third-party API.", it: "Costruisco AI che gira dove vivono i dati — transformer quantizzati su microcontrollori, stack LLM e RAG self-hosted, e agenti vision-language che non toccano mai un'API di terze parti." },
 
-<script type="module" src="js/main.js"></script>
-<script type="module" src="js/interactions.js"></script>
-<script type="module" src="js/animations.js"></script>
+    "taskbar.search": { en: "Type here to search", it: "Digita qui per cercare" },
+    "taskbar.searchAria": { en: "Search", it: "Cerca" },
+
+    "start.quickLinks": { en: "Quick links", it: "Link rapidi" },
+    "start.downloadCv": { en: "Download CV (PDF)", it: "Scarica CV (PDF)" },
+    "start.classic": { en: "Classic (text) version", it: "Versione classica (testo)" },
+    "start.timeline": { en: "Full timeline", it: "Timeline completa" },
+    "start.github": { en: "GitHub", it: "GitHub" },
+    "start.email": { en: "Email", it: "Email" },
+
+    "power.sleep": { en: "Sleep", it: "Sospendi" },
+    "power.restart": { en: "Restart", it: "Riavvia" },
+    "power.shutdown": { en: "Shut down", it: "Arresta" },
+    "power.wakeHint": { en: "Click anywhere to wake up", it: "Clicca ovunque per riattivare" },
+    "power.shutdownLabel": { en: "TitoOS has shut down.", it: "TitoOS si è arrestato." },
+    "power.shutdownHint": { en: "It's now safe to close this tab — or click to turn back on.", it: "Ora puoi chiudere questa scheda, oppure clicca per riaccendere." },
+    "power.restarting": { en: "Restarting…", it: "Riavvio in corso…" },
+    "boot.starting": { en: "Starting TitoOS…", it: "Avvio di TitoOS…" },
+
+    "ctx.open": { en: "Open", it: "Apri" },
+    "ctx.rename": { en: "Rename", it: "Rinomina" },
+    "ctx.delete": { en: "Delete", it: "Elimina" },
+    "ctx.properties": { en: "Properties", it: "Proprietà" },
+    "ctx.sortReset": { en: "Sort icons / Reset layout", it: "Ordina icone / Reimposta layout" },
+    "ctx.personalize": { en: "Personalize…", it: "Personalizza…" },
+    "ctx.wallpaper": { en: "Wallpaper", it: "Sfondo" },
+    "ctx.copyGithub": { en: "Copy GitHub link", it: "Copia link GitHub" },
+    "ctx.refresh": { en: "Refresh", it: "Aggiorna" },
+    "ctx.clearTagFilter": { en: "Clear tag filter", it: "Rimuovi filtro tag" },
+    "ctx.largeIcons": { en: "Large icons", it: "Icone grandi" },
+    "ctx.list": { en: "List", it: "Elenco" },
+    "ctx.details": { en: "Details", it: "Dettagli" },
+    "ctx.sortByName": { en: "Sort by name", it: "Ordina per nome" },
+    "ctx.sortByDate": { en: "Sort by date", it: "Ordina per data" },
+
+    "folder.sortName": { en: "Sort: Name", it: "Ordina: Nome" },
+    "folder.sortDate": { en: "Sort: Date", it: "Ordina: Data" },
+    "folder.clearFilter": { en: "Clear filter", it: "Rimuovi filtro" },
+    "folder.empty": { en: "No files match the current filter.", it: "Nessun file corrisponde al filtro attuale." },
+
+    "properties.type": { en: "Type", it: "Tipo" },
+    "properties.size": { en: "Size", it: "Dimensione" },
+    "properties.modified": { en: "Modified", it: "Modificato" },
+    "properties.location": { en: "Location", it: "Percorso" },
+    "properties.close": { en: "Close", it: "Chiudi" },
+    "properties.folder": { en: "File folder", it: "Cartella" },
+    "properties.app": { en: "Application", it: "Applicazione" },
+    "properties.doc": { en: "Document", it: "Documento" },
+
+    "notif.title": { en: "New notification", it: "Nuova notifica" },
+    "notif.body": { en: "Local model finished “thinking.” Recommended reading: the Wikipedia article about whoever trained it.", it: "Il modello locale ha finito di “pensare”. Lettura consigliata: la pagina Wikipedia di chi lo ha addestrato." },
+
+    "recycle.empty": { en: "Empty Recycle Bin", it: "Svuota cestino" },
+    "recycle.emptyState": { en: "Nothing deleted yet — drag a desktop icon here.", it: "Ancora nulla di eliminato — trascina un'icona del desktop qui." },
+    "recycle.restore": { en: "Restore", it: "Ripristina" },
+    "recycle.recent": { en: "Recently deleted (restorable)", it: "Eliminati di recente (ripristinabili)" },
+    "recycle.system": { en: "System", it: "Sistema" },
+    "recycle.joke": { en: "Nice try. Some things are forever — like 2am commit messages.", it: "Bel tentativo. Alcune cose sono per sempre — come i commit delle 2 di notte." },
+
+    "cal.category": { en: "Category", it: "Categoria" },
+    "cal.color": { en: "Color", it: "Colore" },
+    "cal.start": { en: "Start", it: "Inizio" },
+    "cal.end": { en: "End", it: "Fine" },
+    "cal.ongoing": { en: "Ongoing (no end date)", it: "In corso (nessuna data di fine)" },
+    "cal.duplicate": { en: "Duplicate", it: "Duplica" },
+    "cal.delete": { en: "Delete", it: "Elimina" },
+    "cal.china": { en: "Exchange in China", it: "Scambio in Cina" },
+    "cal.noEvents": { en: "No events match the current filters.", it: "Nessun evento corrisponde ai filtri attuali." },
+    "cal.education": { en: "Education", it: "Istruzione" },
+    "cal.work": { en: "Work", it: "Lavoro" },
+    "cal.exchange": { en: "Exchange", it: "Scambio" },
+    "cal.project": { en: "Project", it: "Progetto" },
+    "cal.bachelor": { en: "Bachelor's", it: "Laurea triennale" },
+    "cal.master": { en: "Master's", it: "Laurea magistrale" },
+
+    "win.minimize": { en: "Minimize", it: "Riduci a icona" },
+    "win.maximize": { en: "Maximize", it: "Ingrandisci" },
+    "win.close": { en: "Close", it: "Chiudi" },
+
+    "search.noResults": { en: "No results for", it: "Nessun risultato per" },
+
+    "qs.wifi": { en: "Wi-Fi", it: "Wi-Fi" },
+    "qs.bluetooth": { en: "Bluetooth", it: "Bluetooth" },
+    "qs.airplane": { en: "Airplane mode", it: "Modalità aereo" },
+    "qs.brightness": { en: "Brightness", it: "Luminosità" },
+    "qs.volume": { en: "Volume", it: "Volume" },
+    "qs.battery": { en: "Battery", it: "Batteria" },
+    "qs.language": { en: "Keyboard language", it: "Lingua tastiera" }
+  };
+  function getLang(){ return storeGet("lang", "en"); }
+  function t(key){
+    var entry = STRINGS[key];
+    if (!entry) return key;
+    return entry[getLang()] || entry.en;
+  }
+  function appTitle(app){
+    if (!app) return "";
+    return app.titleKey ? t(app.titleKey) : app.title;
+  }
+  function applyStaticI18n(){
+    document.documentElement.lang = getLang();
+    document.querySelectorAll("[data-i18n]").forEach(function(el){ el.textContent = t(el.getAttribute("data-i18n")); });
+    document.querySelectorAll("[data-i18n-title]").forEach(function(el){ el.title = t(el.getAttribute("data-i18n-title")); });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el){ el.placeholder = t(el.getAttribute("data-i18n-placeholder")); });
+    document.querySelectorAll("[data-i18n-aria]").forEach(function(el){ el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria"))); });
+  }
+
+  /* ============================================================ icons */
+  var ICONS = {
+    pdf: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path d="M10 4h18l10 10v30a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="#fff" stroke="#d1453b" stroke-width="2"/>' +
+      '<path d="M28 4v8a2 2 0 0 0 2 2h8" fill="none" stroke="#d1453b" stroke-width="2" stroke-linejoin="round"/>' +
+      '<text x="24" y="34" text-anchor="middle" font-size="10" font-weight="700" fill="#d1453b" font-family="system-ui, sans-serif">PDF</text></svg>',
+    doc: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path d="M10 4h18l10 10v30a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="#fff" stroke="#2b579a" stroke-width="2"/>' +
+      '<path d="M28 4v8a2 2 0 0 0 2 2h8" fill="none" stroke="#2b579a" stroke-width="2" stroke-linejoin="round"/>' +
+      '<text x="24" y="34" text-anchor="middle" font-size="10" font-weight="700" fill="#2b579a" font-family="system-ui, sans-serif">DOC</text></svg>',
+    wiki: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<circle cx="24" cy="24" r="19" fill="#fff" stroke="#54595d" stroke-width="2"/>' +
+      '<path d="M5 24h38M24 5v38" stroke="#c8ccd1" stroke-width="1"/>' +
+      '<text x="24" y="29" text-anchor="middle" font-size="17" font-weight="700" fill="#202122" font-family="Georgia, serif">W</text></svg>',
+    trash: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path d="M14 12h20l-1.6 27.2a3 3 0 0 1-3 2.8H18.6a3 3 0 0 1-3-2.8L14 12Z" fill="#e4e4ea" stroke="#8e8e93" stroke-width="2"/>' +
+      '<path d="M10 12h28M19 12V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4" fill="none" stroke="#8e8e93" stroke-width="2" stroke-linecap="round"/>' +
+      '<path d="M20 19v16M28 19v16" stroke="#8e8e93" stroke-width="2" stroke-linecap="round"/></svg>',
+    folder: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path d="M6 14a2 2 0 0 1 2-2h10l4 4h18a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V14Z" fill="#ffca6b" stroke="#e0993a" stroke-width="2"/></svg>',
+    calendar: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<rect x="6" y="9" width="36" height="33" rx="3" fill="#fff" stroke="#54595d" stroke-width="2"/>' +
+      '<path d="M6 18h36" stroke="#54595d" stroke-width="2"/>' +
+      '<path d="M14 5v8M34 5v8" stroke="#54595d" stroke-width="2" stroke-linecap="round"/>' +
+      '<rect x="12" y="23" width="6" height="6" fill="#4cc2ff"/><rect x="21" y="23" width="6" height="6" fill="#ff9f43"/><rect x="30" y="23" width="6" height="6" fill="#c792ea"/>' +
+      '<rect x="12" y="31" width="6" height="6" fill="#5fd786"/><rect x="21" y="31" width="6" height="6" fill="#ff5f7e"/></svg>',
+    browser: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<circle cx="24" cy="24" r="18" fill="#fff" stroke="#2b8aef" stroke-width="2"/>' +
+      '<path d="M6 24h36M24 6a27 27 0 0 1 0 36 27 27 0 0 1 0-36Z" stroke="#2b8aef" stroke-width="1.5" fill="none"/></svg>',
+    terminal: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<rect x="4" y="8" width="40" height="32" rx="3" fill="#1c1c24" stroke="#54595d" stroke-width="2"/>' +
+      '<path d="M11 18l7 6-7 6" stroke="#5fd786" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="M23 30h12" stroke="#5fd786" stroke-width="2.4" stroke-linecap="round"/></svg>',
+    projectFile: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path d="M10 4h18l10 10v30a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="#fff" stroke="#2f9e52" stroke-width="2"/>' +
+      '<path d="M28 4v8a2 2 0 0 0 2 2h8" fill="none" stroke="#2f9e52" stroke-width="2" stroke-linejoin="round"/>' +
+      '<text x="24" y="34" text-anchor="middle" font-size="9" font-weight="700" fill="#2f9e52" font-family="system-ui, sans-serif">MD</text></svg>',
+    timeline: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<rect x="6" y="6" width="36" height="36" rx="4" fill="#fff" stroke="#54595d" stroke-width="2"/>' +
+      '<path d="M14 34V20M24 34V14M34 34V24" stroke="#4cc2ff" stroke-width="4" stroke-linecap="round"/></svg>',
+    github: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.36 1.08 2.93.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.55 9.55 0 0 1 5 0c1.9-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.83-2.34 4.68-4.57 4.92.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>',
+    skillsFolder: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<rect x="6" y="6" width="36" height="36" rx="7" fill="#fff" stroke="#54595d" stroke-width="2"/>' +
+      '<rect x="12" y="12" width="9" height="9" rx="2" fill="#4cc2ff"/>' +
+      '<rect x="27" y="12" width="9" height="9" rx="2" fill="#5fd786"/>' +
+      '<rect x="12" y="27" width="9" height="9" rx="2" fill="#ff9f43"/>' +
+      '<rect x="27" y="27" width="9" height="9" rx="2" fill="#c792ea"/></svg>',
+    skillFile: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<rect x="8" y="8" width="32" height="32" rx="7" fill="#fff" stroke="#0067c0" stroke-width="2"/>' +
+      '<rect x="15" y="15" width="8" height="8" rx="1.5" fill="#0067c0"/>' +
+      '<rect x="25" y="15" width="8" height="8" rx="1.5" fill="#0067c0" opacity="0.55"/>' +
+      '<rect x="15" y="25" width="8" height="8" rx="1.5" fill="#0067c0" opacity="0.55"/>' +
+      '<rect x="25" y="25" width="8" height="8" rx="1.5" fill="#0067c0"/></svg>',
+    mail: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<rect x="5" y="10" width="38" height="28" rx="4" fill="#fff" stroke="#2b8aef" stroke-width="2"/>' +
+      '<path d="M7 13l17 13 17-13" fill="none" stroke="#2b8aef" stroke-width="2" stroke-linejoin="round"/></svg>',
+    settings: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<circle cx="24" cy="24" r="7" fill="#fff" stroke="#54595d" stroke-width="2"/>' +
+      '<path d="M24 6v6M24 36v6M6 24h6M36 24h6M11 11l4.2 4.2M32.8 32.8 37 37M37 11l-4.2 4.2M15.2 32.8 11 37" stroke="#8a8a92" stroke-width="2.4" stroke-linecap="round"/></svg>',
+    taskManager: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<rect x="6" y="6" width="36" height="36" rx="6" fill="#fff" stroke="#54595d" stroke-width="2"/>' +
+      '<rect x="13" y="24" width="6" height="12" fill="#4cc2ff"/>' +
+      '<rect x="21" y="16" width="6" height="20" fill="#5fd786"/>' +
+      '<rect x="29" y="20" width="6" height="16" fill="#ffb454"/></svg>',
+    tetris: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<rect x="6" y="6" width="36" height="36" rx="6" fill="#1c1c24" stroke="#54595d" stroke-width="2"/>' +
+      '<rect x="12" y="12" width="7" height="7" fill="#4cc2ff"/><rect x="19" y="12" width="7" height="7" fill="#4cc2ff"/>' +
+      '<rect x="19" y="19" width="7" height="7" fill="#4cc2ff"/><rect x="26" y="19" width="7" height="7" fill="#4cc2ff"/>' +
+      '<rect x="12" y="27" width="7" height="7" fill="#ff9f43"/><rect x="19" y="27" width="7" height="7" fill="#ff9f43"/></svg>'
+  };
+
+  /* ============================================================ WindowManager */
+  var uidCounter = 0;
+  function nextId(prefix){ uidCounter += 1; return prefix + "-" + uidCounter; }
+
+  function WindowManager(){
+    this.windows = new Map();
+    this.zCounter = 10;
+    this.focusedId = null;
+    this._subscribers = new Set();
+  }
+  WindowManager.prototype.subscribe = function(fn){
+    this._subscribers.add(fn);
+    var self = this;
+    return function(){ self._subscribers.delete(fn); };
+  };
+  WindowManager.prototype._emit = function(){
+    var snapshot = this.getState();
+    this._subscribers.forEach(function(fn){ fn(snapshot); });
+  };
+  WindowManager.prototype.getState = function(){
+    var windows = [];
+    this.windows.forEach(function(w){ windows.push(Object.assign({}, w)); });
+    return { windows: windows, focusedId: this.focusedId };
+  };
+  WindowManager.prototype.openApp = function(app){
+    if (app.singleInstance){
+      var existing = null;
+      this.windows.forEach(function(w){ if (w.appId === app.id) existing = w; });
+      if (existing){ this.focus(existing.id); return existing.id; }
+    }
+    var bounds = this._computeSpawnBounds(app);
+    var id = nextId(app.id);
+    var smallViewport = window.innerWidth < 700;
+    var startMaximized = Boolean(app.maximizeOnSmallViewport) && smallViewport;
+    var win = {
+      id: id, appId: app.id, title: app.title,
+      x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height,
+      prevBounds: null, restoreState: "open",
+      zIndex: ++this.zCounter,
+      state: "open",
+      resizable: app.window && app.window.resizable !== false,
+      maximizable: app.window && app.window.maximizable !== false,
+      minWidth: (app.window && app.window.minWidth) || 260,
+      minHeight: (app.window && app.window.minHeight) || 180
+    };
+    if (startMaximized){
+      win.prevBounds = { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height };
+      win.x = 0; win.y = 0;
+      win.width = window.innerWidth;
+      win.height = window.innerHeight - TASKBAR_HEIGHT;
+      win.state = "maximized";
+    }
+    this.windows.set(id, win);
+    this.focusedId = id;
+    this._emit();
+    return id;
+  };
+  WindowManager.prototype._computeSpawnBounds = function(app){
+    var vw = window.innerWidth;
+    var vh = window.innerHeight - TASKBAR_HEIGHT;
+    var minW = (app.window && app.window.minWidth) || 260;
+    var minH = (app.window && app.window.minHeight) || 180;
+    var availW = Math.max(vw - SPAWN_MARGIN * 2, minW);
+    var availH = Math.max(vh - SPAWN_MARGIN * 2, minH);
+    var width = Math.min((app.window && app.window.width) || 640, availW);
+    var height = Math.min((app.window && app.window.height) || 480, availH);
+    var cascade = (this.windows.size % 6) * 24;
+    var x = clampNum(Math.round((vw - width) / 2) + cascade - 60, SPAWN_MARGIN, Math.max(vw - width - SPAWN_MARGIN, SPAWN_MARGIN));
+    var y = clampNum(Math.round((vh - height) / 2) + cascade - 60, SPAWN_MARGIN, Math.max(vh - height - SPAWN_MARGIN, SPAWN_MARGIN));
+    return { x: x, y: y, width: width, height: height };
+  };
+  WindowManager.prototype.closeWindow = function(id){
+    if (!this.windows.has(id)) return;
+    this.windows.delete(id);
+    if (this.focusedId === id) this._focusTopmost();
+    this._emit();
+  };
+  WindowManager.prototype.minimize = function(id){
+    var win = this.windows.get(id);
+    if (!win) return;
+    win.restoreState = win.state === "maximized" ? "maximized" : "open";
+    win.state = "minimized";
+    if (this.focusedId === id) this._focusTopmost(id);
+    this._emit();
+  };
+  WindowManager.prototype.restore = function(id){
+    var win = this.windows.get(id);
+    if (!win || win.state !== "minimized") return;
+    win.state = win.restoreState || "open";
+    this.focus(id);
+  };
+  WindowManager.prototype.maximize = function(id){
+    var win = this.windows.get(id);
+    if (!win || !win.maximizable) return;
+    if (win.state === "maximized"){
+      if (win.prevBounds) Object.assign(win, win.prevBounds);
+      win.state = "open";
+      win.prevBounds = null;
+    } else {
+      win.prevBounds = { x: win.x, y: win.y, width: win.width, height: win.height };
+      win.x = 0; win.y = 0;
+      win.width = window.innerWidth;
+      win.height = window.innerHeight - TASKBAR_HEIGHT;
+      win.state = "maximized";
+    }
+    this.focus(id);
+  };
+  WindowManager.prototype.refreshMaximized = function(){
+    var changed = false;
+    this.windows.forEach(function(win){
+      if (win.state !== "maximized") return;
+      win.x = 0; win.y = 0;
+      win.width = window.innerWidth;
+      win.height = window.innerHeight - TASKBAR_HEIGHT;
+      changed = true;
+    });
+    if (changed) this._emit();
+  };
+  WindowManager.prototype.focus = function(id){
+    var win = this.windows.get(id);
+    if (!win) return;
+    if (win.state === "minimized") win.state = win.restoreState || "open";
+    win.zIndex = ++this.zCounter;
+    this.focusedId = id;
+    this._emit();
+  };
+  WindowManager.prototype.moveWindow = function(id, x, y){
+    var win = this.windows.get(id);
+    if (!win) return;
+    win.x = x; win.y = y;
+    this._emit();
+  };
+  WindowManager.prototype.resizeWindow = function(id, width, height){
+    var win = this.windows.get(id);
+    if (!win) return;
+    win.width = width; win.height = height;
+    this._emit();
+  };
+  WindowManager.prototype.reclampAll = function(clampFn){
+    var changed = false;
+    this.windows.forEach(function(win){
+      if (win.state === "maximized") return;
+      var next = clampFn(win);
+      if (next.x !== win.x || next.y !== win.y || next.width !== win.width || next.height !== win.height){
+        win.x = next.x; win.y = next.y; win.width = next.width; win.height = next.height;
+        changed = true;
+      }
+    });
+    if (changed) this._emit();
+  };
+  WindowManager.prototype._focusTopmost = function(excludeId){
+    var candidates = [];
+    this.windows.forEach(function(w){ if (w.id !== excludeId && w.state !== "minimized") candidates.push(w); });
+    candidates.sort(function(a, b){ return b.zIndex - a.zIndex; });
+    this.focusedId = candidates[0] ? candidates[0].id : null;
+  };
+
+  /* ============================================================ drag / resize */
+  function clampPosition(x, y, width, height){
+    var vw = window.innerWidth;
+    var vh = window.innerHeight - TASKBAR_HEIGHT;
+    var minX = -(width - MIN_VISIBLE);
+    var maxX = vw - MIN_VISIBLE;
+    var minY = 0;
+    var maxY = Math.max(vh - MIN_VISIBLE, 0);
+    return { x: clampNum(x, minX, maxX), y: clampNum(y, minY, maxY) };
+  }
+
+  function attachDrag(windowEl, titlebarEl, config, wm){
+    var dragging = null;
+    titlebarEl.addEventListener("pointerdown", function(e){
+      if (e.target.closest("[data-win-control]")) return;
+      titlebarEl.setPointerCapture(e.pointerId);
+      wm.focus(config.id);
+      var rect = windowEl.getBoundingClientRect();
+      dragging = { pointerId: e.pointerId, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, width: rect.width, height: rect.height };
+    });
+    titlebarEl.addEventListener("pointermove", function(e){
+      if (!dragging || e.pointerId !== dragging.pointerId) return;
+      var pos = clampPosition(e.clientX - dragging.offsetX, e.clientY - dragging.offsetY, dragging.width, dragging.height);
+      windowEl.style.transform = "translate(" + pos.x + "px, " + pos.y + "px)";
+      dragging.lastX = pos.x; dragging.lastY = pos.y;
+    });
+    function commit(e){
+      if (!dragging || e.pointerId !== dragging.pointerId) return;
+      var lastX = dragging.lastX, lastY = dragging.lastY;
+      dragging = null;
+      if (lastX !== undefined) wm.moveWindow(config.id, lastX, lastY);
+    }
+    titlebarEl.addEventListener("pointerup", commit);
+    titlebarEl.addEventListener("pointercancel", commit);
+  }
+
+  function attachResize(windowEl, handleEl, config, wm){
+    var resizing = null;
+    handleEl.addEventListener("pointerdown", function(e){
+      e.stopPropagation();
+      handleEl.setPointerCapture(e.pointerId);
+      wm.focus(config.id);
+      var rect = windowEl.getBoundingClientRect();
+      resizing = { pointerId: e.pointerId, startX: e.clientX, startY: e.clientY, startWidth: rect.width, startHeight: rect.height, left: rect.left, top: rect.top };
+    });
+    handleEl.addEventListener("pointermove", function(e){
+      if (!resizing || e.pointerId !== resizing.pointerId) return;
+      var dx = e.clientX - resizing.startX;
+      var dy = e.clientY - resizing.startY;
+      var maxWidth = window.innerWidth - resizing.left - 8;
+      var maxHeight = window.innerHeight - TASKBAR_HEIGHT - resizing.top - 8;
+      var width = clampNum(resizing.startWidth + dx, config.minWidth, Math.max(maxWidth, config.minWidth));
+      var height = clampNum(resizing.startHeight + dy, config.minHeight, Math.max(maxHeight, config.minHeight));
+      windowEl.style.width = width + "px";
+      windowEl.style.height = height + "px";
+      resizing.lastWidth = width; resizing.lastHeight = height;
+    });
+    function commit(e){
+      if (!resizing || e.pointerId !== resizing.pointerId) return;
+      var lastWidth = resizing.lastWidth, lastHeight = resizing.lastHeight;
+      resizing = null;
+      if (lastWidth !== undefined) wm.resizeWindow(config.id, lastWidth, lastHeight);
+    }
+    handleEl.addEventListener("pointerup", commit);
+    handleEl.addEventListener("pointercancel", commit);
+  }
+
+  function clampAllToViewport(wm){
+    wm.reclampAll(function(win){
+      var vw = window.innerWidth;
+      var vh = window.innerHeight - TASKBAR_HEIGHT;
+      var availW = Math.max(vw - SPAWN_MARGIN * 2, win.minWidth);
+      var availH = Math.max(vh - SPAWN_MARGIN * 2, win.minHeight);
+      var width = Math.min(win.width, availW);
+      var height = Math.min(win.height, availH);
+      var pos = clampPosition(win.x, win.y, width, height);
+      return { x: pos.x, y: pos.y, width: width, height: height };
+    });
+  }
+
+  /* ============================================================ context menu / properties / personalize */
+  function closeContextMenu(){
+    var existing = document.getElementById("context-menu");
+    if (existing) existing.remove();
+  }
+  function openContextMenu(x, y, items){
+    closeContextMenu();
+    var menu = document.createElement("div");
+    menu.id = "context-menu";
+    menu.className = "context-menu";
+    items.forEach(function(item){
+      if (item.separator){
+        var sep = document.createElement("div");
+        sep.className = "context-menu__sep";
+        menu.appendChild(sep);
+        return;
+      }
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "context-menu__item" + (item.danger ? " is-danger" : "");
+      btn.textContent = item.label;
+      btn.addEventListener("click", function(){
+        closeContextMenu();
+        item.action();
+      });
+      menu.appendChild(btn);
+    });
+    document.body.appendChild(menu);
+    var rect = menu.getBoundingClientRect();
+    var left = Math.min(x, window.innerWidth - rect.width - 8);
+    var top = Math.min(y, window.innerHeight - TASKBAR_HEIGHT - rect.height - 8);
+    menu.style.left = Math.max(8, left) + "px";
+    menu.style.top = Math.max(8, top) + "px";
+    setTimeout(function(){
+      document.addEventListener("click", onDocClick);
+      document.addEventListener("contextmenu", onDocClick);
+      document.addEventListener("keydown", onKeydown);
+    }, 0);
+    function onDocClick(e){ if (!menu.contains(e.target)) cleanup(); }
+    function onKeydown(e){ if (e.key === "Escape") cleanup(); }
+    function cleanup(){
+      closeContextMenu();
+      document.removeEventListener("click", onDocClick);
+      document.removeEventListener("contextmenu", onDocClick);
+      document.removeEventListener("keydown", onKeydown);
+    }
+  }
+
+  function showProperties(app){
+    var fakeSize = (Math.abs(hashCode(app.id)) % 900 + 40) + " KB";
+    var typeLabel = app.kind === "folder" ? t("properties.folder") : app.kind === "iframe" ? t("properties.app") : t("properties.doc");
+    var el = document.createElement("div");
+    el.className = "properties-overlay";
+    el.innerHTML =
+      '<div class="properties-panel">' +
+        '<p class="properties-panel__title">' + escapeHtml(appTitle(app)) + "</p>" +
+        "<dl>" +
+          "<dt>" + t("properties.type") + "</dt><dd>" + typeLabel + "</dd>" +
+          "<dt>" + t("properties.size") + "</dt><dd>" + fakeSize + "</dd>" +
+          "<dt>" + t("properties.modified") + "</dt><dd>" + new Date().toLocaleDateString() + "</dd>" +
+          "<dt>" + t("properties.location") + "</dt><dd>C:\\Desktop\\</dd>" +
+        "</dl>" +
+        '<button type="button" class="properties-panel__close">' + t("properties.close") + "</button>" +
+      "</div>";
+    document.body.appendChild(el);
+    el.querySelector(".properties-panel__close").addEventListener("click", function(){ el.remove(); });
+    el.addEventListener("click", function(e){ if (e.target === el) el.remove(); });
+  }
+
+  var WALLPAPERS = [
+    { id: "default", css: "radial-gradient(circle at 18% 18%, rgba(60,110,200,0.55) 0%, transparent 42%), radial-gradient(circle at 82% 78%, rgba(130,70,190,0.5) 0%, transparent 48%), linear-gradient(165deg, #0c0e1c 0%, #161a35 45%, #10192a 100%)" },
+    { id: "sunset", css: "radial-gradient(circle at 20% 20%, rgba(255,140,90,.5) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(255,70,110,.45) 0%, transparent 50%), linear-gradient(165deg, #1a0e12 0%, #3a1420 45%, #1c0d10 100%)" },
+    { id: "forest", css: "radial-gradient(circle at 20% 20%, rgba(60,200,140,.45) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(40,120,200,.4) 0%, transparent 50%), linear-gradient(165deg, #08140f 0%, #123524 45%, #0a1a1e 100%)" },
+    { id: "mono", css: "radial-gradient(circle at 30% 30%, rgba(255,255,255,.08) 0%, transparent 50%), linear-gradient(165deg, #0a0a0d 0%, #17171d 50%, #0a0a0d 100%)" }
+  ];
+  function applyWallpaper(id){
+    var wp = WALLPAPERS.filter(function(w){ return w.id === id; })[0] || WALLPAPERS[0];
+    var el = document.querySelector(".wallpaper");
+    if (el) el.style.background = wp.css;
+  }
+  function openPersonalizeMenu(x, y){
+    closeContextMenu();
+    var panel = document.createElement("div");
+    panel.className = "context-menu";
+    panel.innerHTML = '<p class="start-menu__title">Wallpaper</p><div class="personalize-swatches">' +
+      WALLPAPERS.map(function(w){ return '<button type="button" class="personalize-swatch" data-wp="' + w.id + '" style="background:' + w.css + '"></button>'; }).join("") +
+      "</div>";
+    document.body.appendChild(panel);
+    var rect = panel.getBoundingClientRect();
+    var left = Math.min(x, window.innerWidth - rect.width - 8);
+    var top = Math.min(y, window.innerHeight - TASKBAR_HEIGHT - rect.height - 8);
+    panel.style.left = Math.max(8, left) + "px";
+    panel.style.top = Math.max(8, top) + "px";
+    panel.querySelectorAll(".personalize-swatch").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        storeSet("wallpaper", btn.dataset.wp);
+        applyWallpaper(btn.dataset.wp);
+        panel.remove();
+      });
+    });
+    setTimeout(function(){ document.addEventListener("click", onDoc); }, 0);
+    function onDoc(e){ if (!panel.contains(e.target)){ panel.remove(); document.removeEventListener("click", onDoc); } }
+  }
+
+  /* ============================================================ folder window (view modes / sort / tag filter) */
+  function folderStateKey(app){ return "folderView:" + app.id; }
+  function getFolderState(app){
+    var saved = storeGet(folderStateKey(app), {});
+    return {
+      view: saved.view || "large",
+      sort: saved.sort || "name",
+      tags: saved.tags || []
+    };
+  }
+  function setFolderState(app, patch){
+    var state = getFolderState(app);
+    Object.assign(state, patch);
+    storeSet(folderStateKey(app), state);
+    return state;
+  }
+  function sortFolderItems(items, sort){
+    var sorted = items.slice();
+    if (sort === "date") sorted.sort(function(a, b){ return (b.sortDate || "").localeCompare(a.sortDate || ""); });
+    else sorted.sort(function(a, b){ return a.title.localeCompare(b.title); });
+    return sorted;
+  }
+  function showFileContextMenu(x, y, fileApp, wm){
+    var items = [{ label: t("ctx.open"), action: function(){ wm.openApp(fileApp); } }];
+    if (fileApp.link){
+      items.push({ label: t("ctx.copyGithub"), action: function(){
+        if (navigator.clipboard) navigator.clipboard.writeText(fileApp.link).catch(function(){});
+        showToast("Copied", fileApp.link, { duration: 3000 });
+      } });
+    }
+    items.push({ separator: true });
+    items.push({ label: t("ctx.properties"), action: function(){ showProperties(fileApp); } });
+    openContextMenu(x, y, items);
+  }
+  function showFolderBackgroundMenu(x, y, app, rerender){
+    var state = getFolderState(app);
+    function mark(label, active){ return (active ? "✓ " : "") + label; }
+    var items = [
+      { label: mark(t("ctx.largeIcons"), state.view === "large"), action: function(){ setFolderState(app, { view: "large" }); rerender(); } },
+      { label: mark(t("ctx.list"), state.view === "list"), action: function(){ setFolderState(app, { view: "list" }); rerender(); } },
+      { label: mark(t("ctx.details"), state.view === "details"), action: function(){ setFolderState(app, { view: "details" }); rerender(); } },
+      { separator: true },
+      { label: mark(t("ctx.sortByName"), state.sort === "name"), action: function(){ setFolderState(app, { sort: "name" }); rerender(); } },
+      { label: mark(t("ctx.sortByDate"), state.sort === "date"), action: function(){ setFolderState(app, { sort: "date" }); rerender(); } },
+      { separator: true }
+    ];
+    if (state.tags.length) items.push({ label: t("ctx.clearTagFilter"), action: function(){ setFolderState(app, { tags: [] }); rerender(); } });
+    items.push({ label: t("ctx.refresh"), action: rerender });
+    openContextMenu(x, y, items);
+  }
+  function renderFolderWindow(body, app, wm){
+    var items = app.items || [];
+    var allTags = [];
+    items.forEach(function(it){ (it.tags || []).forEach(function(t){ if (allTags.indexOf(t) === -1) allTags.push(t); }); });
+    allTags.sort();
+
+    function render(){
+      var state = getFolderState(app);
+      var filtered = state.tags.length
+        ? items.filter(function(it){ return (it.tags || []).some(function(t){ return state.tags.indexOf(t) !== -1; }); })
+        : items;
+      var sorted = sortFolderItems(filtered, state.sort);
+      var viewLabels = { large: t("ctx.largeIcons"), list: t("ctx.list"), details: t("ctx.details") };
+
+      var toolbarHtml =
+        '<div class="folder-toolbar">' +
+          '<div class="folder-toolbar__views" role="group" aria-label="View">' +
+            ["large", "list", "details"].map(function(v){
+              return '<button type="button" class="folder-toolbar__view-btn' + (state.view === v ? " is-active" : "") + '" data-view="' + v + '">' + viewLabels[v] + "</button>";
+            }).join("") +
+          "</div>" +
+          '<select class="folder-toolbar__sort" id="folder-sort" aria-label="Sort by">' +
+            '<option value="name"' + (state.sort === "name" ? " selected" : "") + '>' + t("folder.sortName") + "</option>" +
+            '<option value="date"' + (state.sort === "date" ? " selected" : "") + '>' + t("folder.sortDate") + "</option>" +
+          "</select>" +
+        "</div>" +
+        (allTags.length ?
+          ('<div class="folder-toolbar__tags">' +
+            allTags.map(function(tag){
+              return '<button type="button" class="folder-tag' + (state.tags.indexOf(tag) !== -1 ? " is-active" : "") + '" data-tag="' + escapeHtml(tag) + '">' + escapeHtml(tag) + "</button>";
+            }).join("") +
+            (state.tags.length ? '<button type="button" class="folder-tag folder-tag--clear" data-tag-clear>' + t("folder.clearFilter") + "</button>" : "") +
+          "</div>")
+          : "");
+
+      var bodyHtml;
+      if (!sorted.length){
+        bodyHtml = '<p class="folder-empty">' + t("folder.empty") + "</p>";
+      } else if (state.view === "details"){
+        bodyHtml = '<table class="folder-table"><thead><tr><th>Name</th><th>Tags</th><th>Date</th></tr></thead><tbody>' +
+          sorted.map(function(it){
+            return '<tr data-file-id="' + it.id + '">' +
+              '<td class="folder-table__name"><span class="folder-table__icon" aria-hidden="true">' + (it.icon || "") + "</span>" + escapeHtml(it.title) + "</td>" +
+              "<td>" + (it.tags || []).map(function(t){ return '<span class="folder-tag-pill">' + escapeHtml(t) + "</span>"; }).join("") + "</td>" +
+              "<td>" + escapeHtml(it.dateLabel || "") + "</td>" +
+            "</tr>";
+          }).join("") +
+        "</tbody></table>";
+      } else if (state.view === "list"){
+        bodyHtml = '<div class="folder-list">' +
+          sorted.map(function(it){
+            return '<div class="folder-list__row" data-file-id="' + it.id + '" tabindex="0">' +
+              '<span class="folder-list__icon" aria-hidden="true">' + (it.icon || "") + "</span>" +
+              '<span class="folder-list__name">' + escapeHtml(it.title) + "</span>" +
+            "</div>";
+          }).join("") +
+        "</div>";
+      } else {
+        bodyHtml = '<div class="folder-grid">' +
+          sorted.map(function(it){
+            return '<button type="button" class="icon" data-file-id="' + it.id + '" title="' + escapeHtml(it.title) + '">' +
+              '<span class="icon__glyph" aria-hidden="true">' + (it.icon || "") + "</span>" +
+              '<span class="icon__label">' + escapeHtml(it.title) + "</span>" +
+            "</button>";
+          }).join("") +
+        "</div>";
+      }
+
+      body.innerHTML = toolbarHtml + '<div class="folder-body">' + bodyHtml + "</div>";
+
+      body.querySelectorAll(".folder-toolbar__view-btn").forEach(function(btn){
+        btn.addEventListener("click", function(){ setFolderState(app, { view: btn.dataset.view }); render(); });
+      });
+      var sortSel = body.querySelector("#folder-sort");
+      if (sortSel) sortSel.addEventListener("change", function(){ setFolderState(app, { sort: sortSel.value }); render(); });
+      body.querySelectorAll(".folder-tag").forEach(function(btn){
+        if (btn.hasAttribute("data-tag-clear")){
+          btn.addEventListener("click", function(){ setFolderState(app, { tags: [] }); render(); });
+          return;
+        }
+        btn.addEventListener("click", function(){
+          var current = getFolderState(app).tags;
+          var tag = btn.dataset.tag;
+          var next = current.indexOf(tag) !== -1 ? current.filter(function(t){ return t !== tag; }) : current.concat([tag]);
+          setFolderState(app, { tags: next });
+          render();
+        });
+      });
+
+      function findItem(el){
+        var row = el.closest("[data-file-id]");
+        if (!row) return null;
+        return items.filter(function(it){ return it.id === row.dataset.fileId; })[0] || null;
+      }
+      var folderBody = body.querySelector(".folder-body");
+      folderBody.querySelectorAll("[data-file-id]").forEach(function(el){
+        el.addEventListener("click", function(){ var it = findItem(el); if (it) wm.openApp(it); });
+        el.addEventListener("contextmenu", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          var it = findItem(el);
+          if (it) showFileContextMenu(e.clientX, e.clientY, it, wm);
+        });
+      });
+      folderBody.addEventListener("contextmenu", function(e){
+        if (e.target.closest("[data-file-id]")) return;
+        e.preventDefault();
+        showFolderBackgroundMenu(e.clientX, e.clientY, app, render);
+      });
+    }
+
+    render();
+  }
+
+  /* ============================================================ window chrome */
+  function mountWindow(win, app, wm, hostEl){
+    var el = document.createElement("section");
+    el.className = "window";
+    el.dataset.appId = app.id;
+    el.setAttribute("role", "dialog");
+    el.setAttribute("aria-label", win.title);
+    el.innerHTML =
+      '<header class="window__titlebar">' +
+        '<span class="window__icon" aria-hidden="true">' + (app.icon || "") + "</span>" +
+        '<h2 class="window__title"></h2>' +
+        '<div class="window__controls">' +
+          '<button type="button" class="window__btn window__btn--min" data-win-control="minimize" aria-label="' + t("win.minimize") + '">–</button>' +
+          '<button type="button" class="window__btn window__btn--max" data-win-control="maximize" aria-label="' + t("win.maximize") + '"' + (app.window && app.window.maximizable === false ? " hidden" : "") + ">&#9723;</button>" +
+          '<button type="button" class="window__btn window__btn--close" data-win-control="close" aria-label="' + t("win.close") + '">&times;</button>' +
+        "</div>" +
+      "</header>" +
+      '<div class="window__body"></div>' +
+      '<button type="button" class="window__resize-handle" data-win-control="resize" aria-hidden="true" tabindex="-1"' + (win.resizable === false ? " hidden" : "") + "></button>";
+
+    var titlebar = el.querySelector(".window__titlebar");
+    var titleEl = el.querySelector(".window__title");
+    var body = el.querySelector(".window__body");
+    var resizeHandle = el.querySelector(".window__resize-handle");
+    titleEl.textContent = appTitle(app);
+
+    if (app.kind === "iframe"){
+      var actions = document.createElement("div");
+      actions.className = "window__actions";
+      actions.innerHTML =
+        '<a href="' + app.src + '" target="_blank" rel="noopener" class="window__action">Open in new tab ↗</a>' +
+        (app.downloadable ? '<a href="' + app.src + '" download class="window__action">Download ↓</a>' : "");
+      body.appendChild(actions);
+      var iframe = document.createElement("iframe");
+      iframe.src = app.src;
+      iframe.title = appTitle(app);
+      iframe.className = "window__iframe";
+      body.appendChild(iframe);
+    } else if (app.kind === "folder"){
+      renderFolderWindow(body, app, wm);
+    } else if (typeof app.render === "function"){
+      app.render(body, { windowId: win.id, setTitle: function(txt){ titleEl.textContent = txt; }, close: function(){ wm.closeWindow(win.id); } });
+    }
+
+    el.querySelector('[data-win-control="minimize"]').addEventListener("click", function(){ wm.minimize(win.id); });
+    el.querySelector('[data-win-control="maximize"]').addEventListener("click", function(){ wm.maximize(win.id); });
+    el.querySelector('[data-win-control="close"]').addEventListener("click", function(){ wm.closeWindow(win.id); });
+    el.addEventListener("pointerdown", function(){ wm.focus(win.id); });
+    titlebar.addEventListener("dblclick", function(){ if (!app.window || app.window.maximizable !== false) wm.maximize(win.id); });
+
+    attachDrag(el, titlebar, { id: win.id }, wm);
+    if (win.resizable !== false) attachResize(el, resizeHandle, { id: win.id, minWidth: win.minWidth, minHeight: win.minHeight }, wm);
+
+    hostEl.appendChild(el);
+
+    function applyState(nextWin){
+      el.style.transform = "translate(" + nextWin.x + "px, " + nextWin.y + "px)";
+      el.style.width = nextWin.width + "px";
+      el.style.height = nextWin.height + "px";
+      el.style.zIndex = String(nextWin.zIndex);
+      el.classList.toggle("is-minimized", nextWin.state === "minimized");
+      el.classList.toggle("is-maximized", nextWin.state === "maximized");
+    }
+    applyState(win);
+    return { update: applyState, destroy: function(){ el.remove(); } };
+  }
+
+  function createWindowHost(container, wm, appsById){
+    var controllers = new Map();
+    wm.subscribe(function(snapshot){
+      var seen = new Set();
+      snapshot.windows.forEach(function(win){
+        seen.add(win.id);
+        var app = appsById.get(win.appId);
+        if (!app) return;
+        var controller = controllers.get(win.id);
+        if (!controller){ controllers.set(win.id, mountWindow(win, app, wm, container)); }
+        else { controller.update(win); }
+      });
+      controllers.forEach(function(controller, id){
+        if (!seen.has(id)){ controller.destroy(); controllers.delete(id); }
+      });
+    });
+  }
+
+  /* ============================================================ desktop icons + taskbar */
+  function refreshComponentWindow(appId){
+    var el = document.querySelector('.window[data-app-id="' + appId + '"] .window__body');
+    if (!el) return;
+    var app = appsById.get(appId);
+    if (!app) return;
+    if (app.kind === "folder"){ renderFolderWindow(el, app, wm); return; }
+    if (typeof app.render !== "function") return;
+    var win = null;
+    wm.getState().windows.forEach(function(w){ if (w.appId === appId) win = w; });
+    var titleEl = el.parentElement.querySelector(".window__title");
+    el.innerHTML = "";
+    app.render(el, { windowId: win ? win.id : null, setTitle: function(txt){ if (titleEl) titleEl.textContent = txt; }, close: function(){ if (win) wm.closeWindow(win.id); } });
+  }
+
+  function isOverTrash(clientX, clientY){
+    var trashIcon = document.querySelector('.icon[data-app-id="recycle-bin"]');
+    if (!trashIcon) return false;
+    var r = trashIcon.getBoundingClientRect();
+    return clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom;
+  }
+
+  function deleteIconToTrash(app){
+    var deleted = storeGet("deletedIcons", []);
+    var labels = storeGet("iconLabels", {});
+    deleted.push({ appId: app.id, title: labels[app.id] || app.title, deletedAt: Date.now() });
+    storeSet("deletedIcons", deleted);
+    renderDesktopIcons();
+    refreshComponentWindow("recycle-bin");
+  }
+
+  function defaultPositions(appIds, container){
+    var rowH = 92, colW = 92;
+    var h = container.clientHeight || (window.innerHeight - TASKBAR_HEIGHT - 190);
+    var maxRows = Math.max(1, Math.floor(h / rowH));
+    var positions = {};
+    appIds.forEach(function(id, i){
+      var col = Math.floor(i / maxRows);
+      var row = i % maxRows;
+      positions[id] = { x: col * colW, y: row * rowH };
+    });
+    return positions;
+  }
+
+  function attachIconDrag(iconEl, app){
+    var dragging = null;
+    iconEl.addEventListener("pointerdown", function(e){
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      iconEl.setPointerCapture(e.pointerId);
+      var rect = iconEl.getBoundingClientRect();
+      dragging = { pointerId: e.pointerId, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, moved: false };
+    });
+    iconEl.addEventListener("pointermove", function(e){
+      if (!dragging || e.pointerId !== dragging.pointerId) return;
+      var container = document.getElementById("desktop-icons");
+      var cRect = container.getBoundingClientRect();
+      var x = clampNum(e.clientX - cRect.left - dragging.offsetX, 0, Math.max(0, cRect.width - 82));
+      var y = clampNum(e.clientY - cRect.top - dragging.offsetY, 0, Math.max(0, cRect.height - 90));
+      iconEl.style.transform = "translate(" + x + "px, " + y + "px)";
+      iconEl.classList.add("is-dragging");
+      dragging.lastX = x; dragging.lastY = y; dragging.moved = true;
+      iconEl.dataset.justDragged = "1";
+      var trashIcon = document.querySelector('.icon[data-app-id="recycle-bin"]');
+      if (trashIcon) trashIcon.classList.toggle("is-drop-target", app.id !== "recycle-bin" && isOverTrash(e.clientX, e.clientY));
+    });
+    function commit(e){
+      if (!dragging || e.pointerId !== dragging.pointerId) return;
+      iconEl.classList.remove("is-dragging");
+      var trashIcon = document.querySelector('.icon[data-app-id="recycle-bin"]');
+      if (trashIcon) trashIcon.classList.remove("is-drop-target");
+      var moved = dragging.moved, lastX = dragging.lastX, lastY = dragging.lastY;
+      dragging = null;
+      if (!moved) return;
+      if (app.id !== "recycle-bin" && isOverTrash(e.clientX, e.clientY)){
+        deleteIconToTrash(app);
+        return;
+      }
+      var positions = storeGet("iconPositions", {});
+      positions[app.id] = { x: lastX, y: lastY };
+      storeSet("iconPositions", positions);
+    }
+    iconEl.addEventListener("pointerup", commit);
+    iconEl.addEventListener("pointercancel", commit);
+  }
+
+  function startRenameIcon(app, iconEl){
+    var labelEl = iconEl.querySelector("[data-label]");
+    if (!labelEl) return;
+    var current = labelEl.textContent;
+    var input = document.createElement("input");
+    input.type = "text";
+    input.className = "icon__rename-input";
+    input.value = current;
+    labelEl.replaceWith(input);
+    input.focus();
+    input.select();
+    var done = false;
+    function commit(){
+      if (done) return;
+      done = true;
+      var val = input.value.trim() || app.title;
+      var labels = storeGet("iconLabels", {});
+      labels[app.id] = val;
+      storeSet("iconLabels", labels);
+      renderDesktopIcons();
+    }
+    function cancel(){
+      if (done) return;
+      done = true;
+      renderDesktopIcons();
+    }
+    input.addEventListener("keydown", function(e){
+      e.stopPropagation();
+      if (e.key === "Enter") input.blur();
+      if (e.key === "Escape") cancel();
+    });
+    input.addEventListener("blur", commit);
+    input.addEventListener("pointerdown", function(e){ e.stopPropagation(); });
+  }
+
+  function showIconContextMenu(x, y, app, iconEl){
+    var items = [
+      { label: t("ctx.open"), action: function(){ wm.openApp(app); } },
+      { label: t("ctx.rename"), action: function(){ startRenameIcon(app, iconEl); } }
+    ];
+    if (app.id !== "recycle-bin"){
+      items.push({ label: t("ctx.delete"), danger: true, action: function(){ deleteIconToTrash(app); } });
+    }
+    items.push({ separator: true });
+    items.push({ label: t("ctx.properties"), action: function(){ showProperties(app); } });
+    openContextMenu(x, y, items);
+  }
+
+  function renderDesktopIcons(){
+    var container = document.getElementById("desktop-icons");
+    container.innerHTML = "";
+    var deleted = storeGet("deletedIcons", []);
+    var deletedIds = {};
+    deleted.forEach(function(d){ deletedIds[d.appId] = true; });
+    var labels = storeGet("iconLabels", {});
+    var visibleApps = apps.filter(function(a){ return a.desktopIcon && !deletedIds[a.id]; });
+    var savedPositions = storeGet("iconPositions", {});
+    var defaults = defaultPositions(visibleApps.map(function(a){ return a.id; }), container);
+
+    visibleApps.forEach(function(app){
+      var pos = savedPositions[app.id] || defaults[app.id] || { x: 0, y: 0 };
+      var icon = document.createElement("button");
+      icon.type = "button";
+      icon.className = "icon";
+      icon.setAttribute("role", "listitem");
+      icon.dataset.appId = app.id;
+      icon.style.transform = "translate(" + pos.x + "px, " + pos.y + "px)";
+      var label = labels[app.id] || appTitle(app);
+      icon.innerHTML = '<span class="icon__glyph" aria-hidden="true">' + (app.icon || "") + '</span><span class="icon__label" data-label>' + escapeHtml(label) + "</span>";
+      icon.addEventListener("click", function(){
+        if (icon.dataset.justDragged === "1"){ icon.dataset.justDragged = ""; return; }
+        wm.openApp(app);
+      });
+      icon.addEventListener("contextmenu", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        showIconContextMenu(e.clientX, e.clientY, app, icon);
+      });
+      attachIconDrag(icon, app);
+      container.appendChild(icon);
+    });
+  }
+
+  function createTaskbarApps(container, wm, appsById){
+    var order = [];
+    var previewEl = null;
+    var previewTimer = null;
+
+    function ensurePreviewEl(){
+      if (previewEl) return previewEl;
+      previewEl = document.createElement("div");
+      previewEl.className = "taskbar-preview";
+      previewEl.hidden = true;
+      document.body.appendChild(previewEl);
+      return previewEl;
+    }
+    function hidePreview(){ if (previewEl) previewEl.hidden = true; }
+    function showPreview(btn, win, app){
+      var el = ensurePreviewEl();
+      el.innerHTML =
+        '<div class="taskbar-preview__head">' +
+          '<span class="taskbar-preview__icon" aria-hidden="true">' + (app && app.icon ? app.icon : "") + "</span>" +
+          '<span class="taskbar-preview__title">' + escapeHtml(appTitle(app)) + "</span>" +
+          '<button type="button" class="taskbar-preview__close" aria-label="' + t("win.close") + '">&times;</button>' +
+        "</div>" +
+        '<div class="taskbar-preview__body" aria-hidden="true">' + (app && app.icon ? app.icon : "") + "</div>";
+      el.hidden = false;
+      var rect = btn.getBoundingClientRect();
+      var pw = el.offsetWidth || 200;
+      el.style.left = Math.max(6, Math.min(rect.left + rect.width / 2 - pw / 2, window.innerWidth - pw - 6)) + "px";
+      el.onmouseenter = function(){ clearTimeout(previewTimer); };
+      el.onmouseleave = function(){ previewTimer = setTimeout(hidePreview, 200); };
+      el.querySelector(".taskbar-preview__close").onclick = function(e){ e.stopPropagation(); wm.closeWindow(win.id); hidePreview(); };
+      el.querySelector(".taskbar-preview__body").onclick = function(){ wm.focus(win.id); hidePreview(); };
+    }
+    function attachTaskbarPreview(btn, win, app){
+      btn.addEventListener("mouseenter", function(){
+        clearTimeout(previewTimer);
+        previewTimer = setTimeout(function(){ showPreview(btn, win, app); }, 350);
+      });
+      btn.addEventListener("mouseleave", function(){
+        clearTimeout(previewTimer);
+        previewTimer = setTimeout(hidePreview, 250);
+      });
+    }
+
+    function wireTaskbarButton(btn, win, app, isActive){
+      var startX = 0, dragging = false, moved = false;
+      btn.addEventListener("pointerdown", function(e){
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+        startX = e.clientX; dragging = true; moved = false;
+        btn.setPointerCapture(e.pointerId);
+      });
+      btn.addEventListener("pointermove", function(e){
+        if (!dragging) return;
+        if (Math.abs(e.clientX - startX) > 6){ moved = true; btn.classList.add("is-dragging"); hidePreview(); }
+      });
+      function commitDrag(e){
+        if (!dragging) return;
+        dragging = false;
+        btn.classList.remove("is-dragging");
+        if (!moved) return;
+        var siblings = Array.prototype.slice.call(container.children);
+        var targetIdx = siblings.length - 1;
+        for (var i = 0; i < siblings.length; i++){
+          var r = siblings[i].getBoundingClientRect();
+          if (e.clientX < r.left + r.width / 2){ targetIdx = i; break; }
+        }
+        var curIdx = order.indexOf(win.id);
+        if (curIdx !== -1){ order.splice(curIdx, 1); order.splice(targetIdx, 0, win.id); }
+        render(wm.getState());
+      }
+      btn.addEventListener("pointerup", commitDrag);
+      btn.addEventListener("pointercancel", function(){ dragging = false; btn.classList.remove("is-dragging"); });
+      btn.addEventListener("click", function(){
+        if (moved){ moved = false; return; }
+        hidePreview();
+        if (win.state === "minimized") wm.restore(win.id);
+        else if (isActive) wm.minimize(win.id);
+        else wm.focus(win.id);
+      });
+      attachTaskbarPreview(btn, win, app);
+    }
+
+    function render(snapshot){
+      var ids = snapshot.windows.map(function(w){ return w.id; });
+      order = order.filter(function(id){ return ids.indexOf(id) !== -1; });
+      ids.forEach(function(id){ if (order.indexOf(id) === -1) order.push(id); });
+
+      container.innerHTML = "";
+      var byId = {};
+      snapshot.windows.forEach(function(w){ byId[w.id] = w; });
+      order.forEach(function(winId){
+        var win = byId[winId];
+        if (!win) return;
+        var app = appsById.get(win.appId);
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "taskbar__btn";
+        var isActive = win.id === snapshot.focusedId && win.state !== "minimized";
+        btn.classList.toggle("is-active", isActive);
+        btn.classList.toggle("is-minimized", win.state === "minimized");
+        var label = appTitle(app);
+        btn.setAttribute("aria-label", label);
+        btn.innerHTML = '<span aria-hidden="true">' + (app && app.icon ? app.icon : "") + '</span><span class="taskbar__btn-label">' + escapeHtml(label) + "</span>";
+        wireTaskbarButton(btn, win, app, isActive);
+        container.appendChild(btn);
+      });
+    }
+    wm.subscribe(render);
+    render(wm.getState());
+    return render;
+  }
+
+  function startClock(el){
+    function tick(){ el.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }); }
+    tick();
+    setInterval(tick, 30000);
+  }
+
+  function setupStartMenu(btn, menu){
+    function close(){ menu.classList.remove("is-open"); btn.classList.remove("is-open"); btn.setAttribute("aria-expanded", "false"); }
+    function toggle(e){
+      e.stopPropagation();
+      var open = menu.classList.toggle("is-open");
+      btn.classList.toggle("is-open", open);
+      btn.setAttribute("aria-expanded", String(open));
+    }
+    btn.addEventListener("click", toggle);
+    document.addEventListener("click", function(e){ if (!menu.contains(e.target) && e.target !== btn) close(); });
+    document.addEventListener("keydown", function(e){ if (e.key === "Escape") close(); });
+  }
+
+  /* ============================================================ search */
+  function positionSearchResults(){
+    var box = document.getElementById("taskbar-search").getBoundingClientRect();
+    var results = document.getElementById("search-results");
+    results.style.left = box.left + "px";
+    results.style.width = Math.max(box.width, 220) + "px";
+  }
+  function buildSearchIndex(){
+    var labels = storeGet("iconLabels", {});
+    return apps.filter(function(a){ return a.searchable !== false; }).map(function(a){
+      return { title: labels[a.id] || appTitle(a), app: a };
+    });
+  }
+  function openSearchResult(item){
+    wm.openApp(item.app);
+    var input = document.getElementById("search-input");
+    input.value = "";
+    document.getElementById("search-results").hidden = true;
+    input.blur();
+  }
+  function setupSearch(){
+    var input = document.getElementById("search-input");
+    var results = document.getElementById("search-results");
+    function matchesFor(query){
+      var q = query.trim().toLowerCase();
+      if (!q) return [];
+      return buildSearchIndex().filter(function(item){ return item.title.toLowerCase().indexOf(q) !== -1; }).slice(0, 8);
+    }
+    function renderResults(query){
+      var matches = matchesFor(query);
+      if (!query.trim()){ results.hidden = true; results.innerHTML = ""; return; }
+      positionSearchResults();
+      if (!matches.length){
+        results.innerHTML = '<p class="search-results__empty">' + t("search.noResults") + ' “' + escapeHtml(query) + '”</p>';
+        results.hidden = false;
+        return;
+      }
+      results.innerHTML = matches.map(function(item, i){
+        return '<button type="button" class="search-results__item" data-index="' + i + '">' +
+          '<span aria-hidden="true">' + (item.app.icon || "") + "</span>" + escapeHtml(item.title) + "</button>";
+      }).join("");
+      results.hidden = false;
+      results.querySelectorAll(".search-results__item").forEach(function(btn, i){
+        btn.addEventListener("click", function(){ openSearchResult(matches[i]); });
+      });
+    }
+    input.addEventListener("input", function(){ renderResults(input.value); });
+    input.addEventListener("focus", function(){ if (input.value.trim()) renderResults(input.value); });
+    input.addEventListener("keydown", function(e){
+      if (e.key === "Enter"){
+        var top = matchesFor(input.value)[0];
+        if (top) openSearchResult(top);
+      }
+      if (e.key === "Escape"){ input.value = ""; results.hidden = true; input.blur(); }
+    });
+    document.addEventListener("click", function(e){
+      if (!document.getElementById("taskbar-search").contains(e.target) && !results.contains(e.target)) results.hidden = true;
+    });
+  }
+
+  /* ============================================================ boot splash */
+  function showBootSplash(){
+    var KEY = "bootSplashShown";
+    if (sessionStorage.getItem(KEY)) return;
+    sessionStorage.setItem(KEY, "1");
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var splash = document.createElement("div");
+    splash.className = "boot-splash";
+    splash.innerHTML =
+      '<div class="boot-splash__logo"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="1" width="8" height="8" fill="#4cc2ff"/><rect x="11" y="1" width="8" height="8" fill="#4cc2ff"/><rect x="1" y="11" width="8" height="8" fill="#4cc2ff"/><rect x="11" y="11" width="8" height="8" fill="#4cc2ff"/></svg></div>' +
+      '<div class="boot-splash__bar"><div class="boot-splash__bar-fill"></div></div>' +
+      '<p class="boot-splash__label">' + t("boot.starting") + "</p>";
+    document.body.appendChild(splash);
+    var holdTime = reduced ? 0 : 1100;
+    setTimeout(function(){
+      splash.classList.add("is-leaving");
+      setTimeout(function(){ splash.remove(); }, reduced ? 0 : 400);
+    }, holdTime);
+  }
+
+  function showLockScreen(){
+    var now = new Date();
+    var el = document.createElement("div");
+    el.className = "power-screen";
+    el.innerHTML =
+      '<p class="power-screen__clock">' + now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + "</p>" +
+      '<p class="power-screen__date">' + now.toLocaleDateString([], { weekday: "long", month: "long", day: "numeric" }) + "</p>" +
+      '<p class="power-screen__hint">' + t("power.wakeHint") + "</p>";
+    document.body.appendChild(el);
+    el.addEventListener("click", function(){ el.remove(); });
+  }
+
+  function doShutdown(){
+    var el = document.createElement("div");
+    el.className = "power-screen";
+    el.innerHTML =
+      '<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"><path d="M12 2v10"/><path d="M7 5.5a8 8 0 1 0 10 0"/></svg>' +
+      '<p class="power-screen__label">' + t("power.shutdownLabel") + "</p>" +
+      '<p class="power-screen__hint">' + t("power.shutdownHint") + "</p>";
+    document.body.appendChild(el);
+    el.addEventListener("click", function(){ el.remove(); });
+  }
+
+  function doRestart(){
+    var el = document.createElement("div");
+    el.className = "power-screen";
+    el.style.cursor = "default";
+    el.innerHTML =
+      '<div class="boot-splash__logo"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="1" width="8" height="8" fill="#4cc2ff"/><rect x="11" y="1" width="8" height="8" fill="#4cc2ff"/><rect x="1" y="11" width="8" height="8" fill="#4cc2ff"/><rect x="11" y="11" width="8" height="8" fill="#4cc2ff"/></svg></div>' +
+      '<div class="boot-splash__bar"><div class="boot-splash__bar-fill"></div></div>' +
+      '<p class="boot-splash__label">' + t("power.restarting") + "</p>";
+    document.body.appendChild(el);
+    setTimeout(function(){
+      sessionStorage.clear();
+      location.reload();
+    }, 900);
+  }
+
+  function setupPowerButtons(){
+    document.querySelectorAll("[data-power]").forEach(function(btn){
+      btn.addEventListener("click", function(e){
+        e.stopPropagation();
+        var action = btn.dataset.power;
+        document.getElementById("start-menu").classList.remove("is-open");
+        document.getElementById("start-btn").classList.remove("is-open");
+        if (action === "sleep") showLockScreen();
+        else if (action === "restart") doRestart();
+        else if (action === "shutdown") doShutdown();
+      });
+    });
+  }
+
+  function setupDesktopContextMenu(){
+    document.getElementById("desktop-icons").addEventListener("contextmenu", function(e){
+      if (e.target.closest(".icon")) return;
+      e.preventDefault();
+      openContextMenu(e.clientX, e.clientY, [
+        { label: t("ctx.sortReset"), action: function(){ storeRemove("iconPositions"); renderDesktopIcons(); } },
+        { separator: true },
+        { label: t("ctx.personalize"), action: function(){ openPersonalizeMenu(e.clientX, e.clientY); } }
+      ]);
+    });
+  }
+
+  /* ============================================================ quick settings / brightness / language */
+  function applyBrightness(value){
+    var overlay = document.getElementById("brightness-overlay");
+    if (!overlay) return;
+    var v = clampNum(Number(value), 20, 100);
+    overlay.style.opacity = String((100 - v) / 100 * 0.75);
+  }
+
+  function setupQuickSettings(){
+    var panel = document.getElementById("quick-settings");
+    var trayBtns = ["tray-wifi-btn", "tray-volume-btn", "tray-battery-btn"].map(function(id){ return document.getElementById(id); });
+    function close(){
+      panel.classList.remove("is-open");
+      trayBtns.forEach(function(b){ if (b) b.classList.remove("is-open"); });
+    }
+    function toggle(e){
+      e.stopPropagation();
+      var open = panel.classList.toggle("is-open");
+      trayBtns.forEach(function(b){ if (b) b.classList.toggle("is-open", open); });
+    }
+    trayBtns.forEach(function(b){ if (b) b.addEventListener("click", toggle); });
+    document.addEventListener("click", function(e){
+      var insideTrigger = trayBtns.some(function(b){ return b && b.contains(e.target); });
+      if (!panel.contains(e.target) && !insideTrigger) close();
+    });
+    document.addEventListener("keydown", function(e){ if (e.key === "Escape") close(); });
+
+    var TOGGLE_IDS = { qsWifi: "qs-wifi", qsBluetooth: "qs-bluetooth", qsAirplane: "qs-airplane" };
+    function isToggleOn(key){ return storeGet(key, key === "qsAirplane" ? false : true); }
+    function refreshToggles(){
+      Object.keys(TOGGLE_IDS).forEach(function(key){
+        var btn = document.getElementById(TOGGLE_IDS[key]);
+        if (btn) btn.classList.toggle("is-active", isToggleOn(key));
+      });
+      var wifiTrayBtn = document.getElementById("tray-wifi-btn");
+      if (wifiTrayBtn) wifiTrayBtn.classList.toggle("is-off", !isToggleOn("qsWifi") || isToggleOn("qsAirplane"));
+    }
+    Object.keys(TOGGLE_IDS).forEach(function(key){
+      var btn = document.getElementById(TOGGLE_IDS[key]);
+      if (!btn) return;
+      btn.addEventListener("click", function(){
+        var next = !isToggleOn(key);
+        storeSet(key, next);
+        if (key === "qsAirplane" && next){ storeSet("qsWifi", false); storeSet("qsBluetooth", false); }
+        refreshToggles();
+      });
+    });
+    refreshToggles();
+
+    var brightnessRange = document.getElementById("qs-brightness-range");
+    var savedBrightness = storeGet("brightness", 100);
+    brightnessRange.value = savedBrightness;
+    applyBrightness(savedBrightness);
+    brightnessRange.addEventListener("input", function(){ storeSet("brightness", Number(this.value)); applyBrightness(this.value); });
+
+    var volumeRange = document.getElementById("qs-volume-range");
+    volumeRange.value = storeGet("volume", 70);
+    volumeRange.addEventListener("input", function(){ storeSet("volume", Number(this.value)); });
+
+    var batteryLabel = document.getElementById("qs-battery-label");
+    if (batteryLabel) batteryLabel.textContent = "🔋 " + storeGet("batteryLevel", 87) + "%";
+  }
+
+  function setupLanguageToggle(){
+    var btn = document.getElementById("lang-toggle-btn");
+    if (!btn) return;
+    function refreshLabel(){ btn.textContent = getLang() === "it" ? "ITA" : "ENG"; }
+    refreshLabel();
+    btn.addEventListener("click", function(e){
+      e.stopPropagation();
+      storeSet("lang", getLang() === "it" ? "en" : "it");
+      refreshLabel();
+      refreshChrome();
+    });
+  }
+
+  function refreshChrome(){
+    applyStaticI18n();
+    renderDesktopIcons();
+    if (typeof refreshTaskbarApps === "function") refreshTaskbarApps(wm.getState());
+    document.querySelectorAll(".window").forEach(function(winEl){
+      var appId = winEl.dataset.appId;
+      var app = appsById.get(appId);
+      if (!app) return;
+      var titleEl = winEl.querySelector(".window__title");
+      if (titleEl) titleEl.textContent = appTitle(app);
+      var minBtn = winEl.querySelector('[data-win-control="minimize"]');
+      var maxBtn = winEl.querySelector('[data-win-control="maximize"]');
+      var closeBtn = winEl.querySelector('[data-win-control="close"]');
+      if (minBtn) minBtn.setAttribute("aria-label", t("win.minimize"));
+      if (maxBtn) maxBtn.setAttribute("aria-label", t("win.maximize"));
+      if (closeBtn) closeBtn.setAttribute("aria-label", t("win.close"));
+      if (app.kind === "component" || app.kind === "folder") refreshComponentWindow(appId);
+    });
+  }
+
+  /* ============================================================ toast / notification */
+  function showToast(title, body, opts){
+    opts = opts || {};
+    var el = document.createElement("div");
+    el.className = "toast";
+    el.setAttribute("role", "status");
+    el.innerHTML =
+      '<button type="button" class="toast__dismiss" aria-label="Dismiss">&times;</button>' +
+      '<p class="toast__title">' + escapeHtml(title) + "</p>" +
+      '<p class="toast__body">' + escapeHtml(body) + "</p>";
+    document.body.appendChild(el);
+    requestAnimationFrame(function(){ el.classList.add("is-visible"); });
+    function dismiss(){ el.classList.remove("is-visible"); setTimeout(function(){ el.remove(); }, 200); }
+    el.querySelector(".toast__dismiss").addEventListener("click", function(e){ e.stopPropagation(); dismiss(); });
+    if (opts.onClick){
+      el.addEventListener("click", function(){ opts.onClick(); dismiss(); });
+    }
+    setTimeout(dismiss, opts.duration || 4000);
+    return dismiss;
+  }
+
+  function scheduleNotification(wm, appsById){
+    var KEY = "os-notification-shown";
+    if (sessionStorage.getItem(KEY)) return;
+    setTimeout(function(){
+      sessionStorage.setItem(KEY, "1");
+      showToast(
+        t("notif.title"),
+        t("notif.body"),
+        { duration: 9000, onClick: function(){ var app = appsById.get("wikipedia"); if (app) wm.openApp(app); } }
+      );
+    }, 1800);
+  }
+
+  /* ============================================================ apps registry */
+  var recycleItems = [
+    { name: "rejected_variable_names.txt", note: "temp2, temp3, final_FINAL_v2, actually_final.py" },
+    { name: "job_applications_batch_47.zip", note: "Status: seen · ghosted · seen again" },
+    { name: "README_i_will_write_later.md", note: "0 bytes. Still empty. It’s fine." },
+    { name: "excuses_for_not_sleeping.docx", note: "“one more training run” · “the loss is still decreasing”" },
+    { name: "side_project_ideas_march.txt", note: "14 ideas, 0 shipped" },
+    { name: "thesis_draft_v1.pdf", note: "superseded by v2, v3, FINAL, FINAL_FINAL" }
+  ];
+
+  var apps = [
+    {
+      id: "cv-pdf", title: "CV.pdf", icon: ICONS.pdf,
+      kind: "iframe", src: "assets/cv/cv_TitoNicolaDrugman.pdf", downloadable: true,
+      singleInstance: true, desktopIcon: true,
+      window: { width: 760, height: 820, minWidth: 340, minHeight: 400, resizable: true, maximizable: true }
+    },
+    {
+      id: "cv-docx", title: "CV.docx", icon: ICONS.doc,
+      kind: "component", singleInstance: true, desktopIcon: true,
+      window: { width: 760, height: 820, minWidth: 380, minHeight: 400, resizable: true, maximizable: true },
+      render: function(container){
+        var body =
+            "<h1>Tito Nicola Drugman</h1>" +
+            '<p class="cv-doc__role">AI Engineer · Milan, Italy · drugmantito@gmail.com · github.com/TitoNicolaDrugman</p>' +
+
+            "<h2>About</h2>" +
+            "<p>M.Sc. Computer Science &amp; Engineering student (AI track) at Politecnico di Milano, deploying open-source AI on local Linux infrastructure under strict data-sovereignty and hardware constraints — from Transformers running on STM32 NPUs to RAG pipelines over 7,600+ document knowledge bases and vision-language document classification, all on local hardware with minimal third-party API dependence.</p>" +
+
+            "<h2>Education</h2>" +
+            '<div class="entry"><div class="entry__head"><span>MSc Computer Science &amp; Engineering (AI)</span><span>2024 – present</span></div><div class="entry__meta">Politecnico di Milano</div></div>' +
+            '<div class="entry"><div class="entry__head"><span>Exchange — Computer Science &amp; Engineering</span><span>2025 – 2026</span></div><div class="entry__meta">CUHK-Shenzhen, China</div></div>' +
+            '<div class="entry"><div class="entry__head"><span>BSc Artificial Intelligence</span><span>2021 – 2024</span></div><div class="entry__meta">Università di Pavia / Milano / Milano-Bicocca</div></div>' +
+
+            "<h2>Experience</h2>" +
+            '<div class="entry"><div class="entry__head"><span>AI Engineer Intern — Bachelor’s Thesis</span><span>Mar–Jul 2024</span></div><div class="entry__meta">STMicroelectronics, Agrate Brianza</div>' +
+              "<ul><li>Built an automated hyperparameter-optimisation framework (Python, Keras Tuner) for neural networks on microcontroller-class hardware.</li>" +
+              "<li>Validated ROM/RAM/MACC estimators against STM32Cube.AI ground truth across three MLPerf Tiny reference models.</li>" +
+              "<li>Maintained full reproducibility via version-controlled Conda environments and systematic experiment logs.</li></ul></div>" +
+            '<div class="entry"><div class="entry__head"><span>Industrial Robotics Trainer &amp; Certification Assessor</span><span>2022 – present</span></div><div class="entry__meta">Comau × Pearson → Fanuc × Sanoma</div>' +
+              "<ul><li>Delivers technical training and administers certifications on robot programming and Industry 4.0 across Northern Italy.</li></ul></div>" +
+            '<div class="entry"><div class="entry__head"><span>Science Museum Guide</span><span>2023 – present</span></div><div class="entry__meta">Leonardo da Vinci National Museum of Science and Technology</div></div>' +
+
+            "<h2>Selected Projects</h2>" +
+            '<div class="entry"><div class="entry__head"><span>RAG for LLM-Based Code Generation</span></div><div class="entry__meta">Fully on-premises, dual-RTX-5060-Ti, zero external API calls</div>' +
+              "<ul><li>+38% relative CodeBLEU improvement over the no-retrieval baseline (0.1859 → 0.2567).</li></ul></div>" +
+            '<div class="entry"><div class="entry__head"><span>Replicating &amp; Enhancing WebVoyager</span></div><div class="entry__meta">Locally-hosted Qwen3-VL web agents replacing GPT-4o</div>' +
+              "<ul><li>62.7% task success, above the original paper’s GPT-4o reference of 59.1%.</li></ul></div>" +
+            '<div class="entry"><div class="entry__head"><span>Transformer on the NPU of an STM32N6</span></div><div class="entry__meta">Custom 4.56M-parameter Transformer, INT8-quantised</div>' +
+              "<ul><li>73.14 ms/token on-device, 257 of 407 ops accelerated on the NPU.</li></ul></div>" +
+
+            "<h2>Skills</h2>" +
+            '<p class="skills-row"><b>Local AI:</b> Ollama, llama.cpp, Hugging Face Transformers, bitsandbytes 4-bit quantisation</p>' +
+            '<p class="skills-row"><b>Systems:</b> Ubuntu Linux, Docker/Podman, SSH, Bash</p>' +
+            '<p class="skills-row"><b>ML/AI:</b> PyTorch, TensorFlow, scikit-learn, Computer Vision, RAG</p>' +
+            '<p class="skills-row"><b>Languages:</b> Python, C, Java, SQL</p>' +
+
+            "<h2>Languages</h2>" +
+            "<p>Italian (native) · English (C1/C2)</p>";
+
+        var saved = storeGet("cvDocContent", null);
+        container.innerHTML =
+          '<div class="cv-doc-toolbar">' +
+            '<button type="button" data-cmd="bold" title="Bold"><b>B</b></button>' +
+            '<button type="button" data-cmd="italic" title="Italic"><i>I</i></button>' +
+            '<button type="button" data-cmd="underline" title="Underline"><u>U</u></button>' +
+            '<select class="cv-doc-toolbar__select" id="cv-font-select" title="Font">' +
+              '<option value="Georgia, \'Times New Roman\', serif">Georgia</option>' +
+              '<option value="\'Times New Roman\', Times, serif">Times New Roman</option>' +
+              '<option value="Arial, Helvetica, sans-serif">Arial</option>' +
+              '<option value="\'Segoe UI\', system-ui, sans-serif">Calibri-ish</option>' +
+              '<option value="\'Courier New\', Courier, monospace">Courier New</option>' +
+            "</select>" +
+            '<select class="cv-doc-toolbar__select" id="cv-size-select" title="Size">' +
+              '<option value="2">Small</option>' +
+              '<option value="3" selected>Normal</option>' +
+              '<option value="4">Medium</option>' +
+              '<option value="5">Large</option>' +
+              '<option value="6">Huge</option>' +
+            "</select>" +
+            '<input type="color" class="cv-doc-toolbar__color" id="cv-color-input" title="Text color" value="#232326" />' +
+            '<button type="button" data-cmd="undo" title="Undo">↶</button>' +
+            '<span class="cv-doc-toolbar__spacer"></span>' +
+            '<button type="button" class="cv-doc-toolbar__reset">Reset to original</button>' +
+          "</div>" +
+          '<div class="cv-doc">' +
+            '<p class="cv-doc__notice">Live preview, editable — <a href="assets/cv/cv_TitoNicolaDrugman.pdf" download>download the PDF</a> for the certified version.</p>' +
+            '<div class="cv-doc__editable" contenteditable="true" spellcheck="false">' + (saved || body) + "</div>" +
+          "</div>";
+
+        var editable = container.querySelector(".cv-doc__editable");
+        editable.addEventListener("input", function(){ storeSet("cvDocContent", editable.innerHTML); });
+
+        var savedRange = null;
+        editable.addEventListener("keyup", captureSelection);
+        editable.addEventListener("mouseup", captureSelection);
+        function captureSelection(){
+          var sel = window.getSelection();
+          if (sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange();
+        }
+        function restoreSelection(){
+          if (!savedRange) return;
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(savedRange);
+        }
+
+        container.querySelectorAll("[data-cmd]").forEach(function(btn){
+          btn.addEventListener("mousedown", function(e){ e.preventDefault(); });
+          btn.addEventListener("click", function(){
+            editable.focus();
+            document.execCommand(btn.dataset.cmd);
+            storeSet("cvDocContent", editable.innerHTML);
+          });
+        });
+        container.querySelector("#cv-font-select").addEventListener("change", function(){
+          restoreSelection();
+          editable.focus();
+          document.execCommand("fontName", false, this.value);
+          storeSet("cvDocContent", editable.innerHTML);
+        });
+        container.querySelector("#cv-size-select").addEventListener("change", function(){
+          restoreSelection();
+          editable.focus();
+          document.execCommand("fontSize", false, this.value);
+          storeSet("cvDocContent", editable.innerHTML);
+        });
+        container.querySelector("#cv-color-input").addEventListener("input", function(){
+          restoreSelection();
+          editable.focus();
+          document.execCommand("foreColor", false, this.value);
+          storeSet("cvDocContent", editable.innerHTML);
+        });
+        container.querySelector(".cv-doc-toolbar__reset").addEventListener("click", function(){
+          storeRemove("cvDocContent");
+          editable.innerHTML = body;
+        });
+      }
+    },
+    {
+      id: "wikipedia", title: "Wikipedia.exe", icon: ICONS.wiki,
+      kind: "iframe", src: "wikipedia/index.html",
+      singleInstance: true, desktopIcon: true, maximizeOnSmallViewport: true,
+      window: { width: 900, height: 680, minWidth: 320, minHeight: 400, resizable: true, maximizable: true }
+    },
+    {
+      id: "recycle-bin", title: "Recycle Bin", titleKey: "app.recycleBin", icon: ICONS.trash,
+      kind: "component", singleInstance: true, desktopIcon: true,
+      window: { width: 460, height: 460, minWidth: 320, minHeight: 260, resizable: true, maximizable: false },
+      render: function(container){
+        var deleted = storeGet("deletedIcons", []);
+        container.innerHTML =
+          '<div class="recycle-bin">' +
+            (deleted.length ?
+              ('<p class="recycle-bin__section-title">' + t("recycle.recent") + "</p>" +
+              '<ul class="recycle-bin__list recycle-bin__list--real">' +
+                deleted.map(function(d, i){
+                  return '<li data-index="' + i + '"><span class="recycle-bin__name">' + escapeHtml(d.title) + '</span>' +
+                    '<button type="button" class="recycle-bin__restore" data-restore-index="' + i + '">' + t("recycle.restore") + "</button></li>";
+                }).join("") +
+              "</ul>")
+              : '<p class="recycle-bin__count">' + t("recycle.emptyState") + "</p>") +
+            '<p class="recycle-bin__section-title">' + t("recycle.system") + "</p>" +
+            '<ul class="recycle-bin__list">' +
+              recycleItems.map(function(item){
+                return "<li><span class=\"recycle-bin__name\">" + item.name + "</span><span class=\"recycle-bin__note\">" + item.note + "</span></li>";
+              }).join("") +
+            "</ul>" +
+            '<button type="button" class="recycle-bin__empty">' + t("recycle.empty") + "</button>" +
+            '<p class="recycle-bin__joke" hidden>' + t("recycle.joke") + "</p>" +
+          "</div>";
+        container.querySelectorAll("[data-restore-index]").forEach(function(btn){
+          btn.addEventListener("click", function(){
+            var idx = Number(btn.dataset.restoreIndex);
+            var list = storeGet("deletedIcons", []);
+            list.splice(idx, 1);
+            storeSet("deletedIcons", list);
+            renderDesktopIcons();
+            refreshComponentWindow("recycle-bin");
+          });
+        });
+        var emptyBtn = container.querySelector(".recycle-bin__empty");
+        var joke = container.querySelector(".recycle-bin__joke");
+        emptyBtn.addEventListener("click", function(){ joke.hidden = false; emptyBtn.disabled = true; });
+      }
+    }
+  ];
+
+  /* ============================================================ Progetti folder (generated) */
+  function makeProjectApp(proj){
+    var linkHtml = proj.link ? '<p class="project-doc__link"><a href="' + proj.link + '" target="_blank" rel="noopener">View on GitHub ↗</a></p>' : "";
+    var highlightsHtml = (proj.highlights && proj.highlights.length) ? ("<ul>" + proj.highlights.map(function(h){ return "<li>" + escapeHtml(h) + "</li>"; }).join("") + "</ul>") : "";
+    var tagsHtml = (proj.tags && proj.tags.length) ? ('<p class="project-doc__tags">' + proj.tags.map(function(t){ return "<span>" + escapeHtml(t) + "</span>"; }).join("") + "</p>") : "";
+    return {
+      id: "project-" + proj.id,
+      title: proj.title + ".md",
+      icon: ICONS.projectFile,
+      kind: "component",
+      singleInstance: true,
+      desktopIcon: false,
+      tags: proj.tags || [],
+      dateLabel: proj.dateLabel || "",
+      sortDate: proj.startDate || "",
+      link: proj.link || null,
+      window: { width: 560, height: 520, minWidth: 340, minHeight: 320, resizable: true, maximizable: true },
+      render: function(container){
+        container.innerHTML =
+          '<div class="project-doc">' +
+            "<h1>" + escapeHtml(proj.title) + "</h1>" +
+            '<p class="project-doc__meta">' + escapeHtml(proj.organization || "") + " · " + escapeHtml(proj.dateLabel || "") + "</p>" +
+            tagsHtml +
+            "<p>" + escapeHtml(proj.summary || "") + "</p>" +
+            highlightsHtml +
+            linkHtml +
+          "</div>";
+      }
+    };
+  }
+  var projectApps = experiences.filter(function(e){ return e.category === "project"; }).map(makeProjectApp);
+  projectApps.forEach(function(p){ apps.push(p); });
+
+  var progettiApp = {
+    id: "progetti", title: "Projects", titleKey: "app.projects", icon: ICONS.folder, desktopIcon: true,
+    kind: "folder", singleInstance: true,
+    window: { width: 620, height: 460, minWidth: 380, minHeight: 300, resizable: true, maximizable: true },
+    items: projectApps
+  };
+  apps.push(progettiApp);
+
+  /* ============================================================ Skills (generated, "installed apps" style) */
+  var SKILLS = [
+    { id: "python", name: "Python", category: "Languages", sinceYear: 2021, blurb: "Primary language across every project — PyTorch training loops, RAG pipelines, embedded tooling." },
+    { id: "c", name: "C", category: "Languages", sinceYear: 2021, blurb: "Low-level work for microcontroller-class targets during the STMicroelectronics internship." },
+    { id: "java", name: "Java", category: "Languages", sinceYear: 2021, blurb: "Core coursework language during the BSc in Artificial Intelligence." },
+    { id: "sql", name: "SQL", category: "Languages", sinceYear: 2022, blurb: "Querying and shaping structured data for coursework and applied projects." },
+    { id: "pytorch", name: "PyTorch", category: "ML & AI", sinceYear: 2022, blurb: "Main deep learning framework — CNNs from scratch through a custom Transformer quantised for an STM32 NPU." },
+    { id: "tensorflow", name: "TensorFlow", category: "ML & AI", sinceYear: 2023, blurb: "Keras Tuner-based hyperparameter search for embedded neural networks at STMicroelectronics." },
+    { id: "sklearn", name: "scikit-learn", category: "ML & AI", sinceYear: 2022, blurb: "Classical ML baselines — Random Forest / HistGradientBoosting for the GenHack 2025 climate-bias project." },
+    { id: "cv", name: "Computer Vision", category: "ML & AI", sinceYear: 2023, blurb: "Vision Transformers, segmentation (SegFormer / nnU-Net) and remote-sensing imagery classification." },
+    { id: "rag", name: "RAG", category: "ML & AI", sinceYear: 2025, blurb: "Retrieval-augmented generation over 7,600+ code snippets — lexical, dense and hybrid retrieval." },
+    { id: "ollama", name: "Ollama", category: "Local AI", sinceYear: 2025, blurb: "Self-hosts Llama, Qwen and DeepSeek models on a dual-RTX workstation instead of calling third-party APIs." },
+    { id: "llamacpp", name: "llama.cpp", category: "Local AI", sinceYear: 2025, blurb: "Lightweight local inference for quantised open-weight models." },
+    { id: "hf-transformers", name: "Hugging Face Transformers", category: "Local AI", sinceYear: 2024, blurb: "Model loading, fine-tuning and evaluation across most local-AI projects." },
+    { id: "bitsandbytes", name: "bitsandbytes", category: "Local AI", sinceYear: 2025, blurb: "4-bit / NF4 quantisation to fit 7B-class LLMs in available VRAM, fully on-premises." },
+    { id: "linux", name: "Ubuntu Linux", category: "Systems", sinceYear: 2024, blurb: "Daily-driver OS for training workstations and self-hosted infrastructure." },
+    { id: "docker", name: "Docker / Podman", category: "Systems", sinceYear: 2024, blurb: "Containerises local AI stacks for reproducibility — next up: the ECA traineeship's Ollama + RAG stack." },
+    { id: "ssh", name: "SSH", category: "Systems", sinceYear: 2024, blurb: "Remote access to internal workstations and personal infrastructure alike." },
+    { id: "bash", name: "Bash", category: "Systems", sinceYear: 2024, blurb: "Glue scripting for training runs, environment setup and automation." }
+  ];
+  function makeSkillApp(skill){
+    return {
+      id: "skill-" + skill.id,
+      title: skill.name,
+      icon: ICONS.skillFile,
+      kind: "component",
+      singleInstance: true,
+      desktopIcon: false,
+      tags: [skill.category],
+      dateLabel: "Since " + skill.sinceYear,
+      sortDate: String(skill.sinceYear),
+      window: { width: 420, height: 300, minWidth: 300, minHeight: 220, resizable: true, maximizable: true },
+      render: function(container){
+        container.innerHTML =
+          '<div class="project-doc">' +
+            "<h1>" + escapeHtml(skill.name) + "</h1>" +
+            '<p class="project-doc__meta">' + escapeHtml(skill.category) + " · Since " + skill.sinceYear + "</p>" +
+            "<p>" + escapeHtml(skill.blurb) + "</p>" +
+          "</div>";
+      }
+    };
+  }
+  var skillApps = SKILLS.map(makeSkillApp);
+  skillApps.forEach(function(a){ apps.push(a); });
+
+  var skillsApp = {
+    id: "skills", title: "Skills", titleKey: "app.skills", icon: ICONS.skillsFolder, desktopIcon: true,
+    kind: "folder", singleInstance: true,
+    window: { width: 640, height: 480, minWidth: 380, minHeight: 320, resizable: true, maximizable: true },
+    items: skillApps
+  };
+  apps.push(skillsApp);
+
+  /* ============================================================ Calendario */
+  var CATEGORY_COLORS = { "education-bsc": "#4cc2ff", "education-msc": "#2f6fed", work: "#ffb454", exchange: "#c792ea", project: "#5fd786" };
+  var CATEGORY_LABEL_KEYS = { "education-bsc": "cal.bachelor", "education-msc": "cal.master", work: "cal.work", exchange: "cal.exchange", project: "cal.project" };
+  var CATEGORY_ORDER = ["education-bsc", "education-msc", "work", "exchange", "project"];
+  var MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  function calendarType(entry){
+    if (entry.category === "education") return /master|msc/i.test(entry.title) ? "education-msc" : "education-bsc";
+    return entry.category;
+  }
+  function calendarColor(entry){ return entry.color || CATEGORY_COLORS[calendarType(entry)] || "#8a8a92"; }
+  function calendarLabel(entry){ var key = CATEGORY_LABEL_KEYS[calendarType(entry)]; return key ? t(key) : entry.category; }
+
+  function getCalendarEntries(){
+    var overrides = storeGet("calendarOverrides", {});
+    var extra = storeGet("calendarExtra", []);
+    var base = experiences.map(function(e){
+      var o = overrides[e.id];
+      if (!o) return e;
+      if (o.deleted) return null;
+      return Object.assign({}, e, o);
+    }).filter(Boolean);
+    return base.concat(extra);
+  }
+  function saveCalendarEntryPatch(id, patch){
+    if (id.indexOf("extra-") === 0){
+      var extra = storeGet("calendarExtra", []).map(function(e){ return e.id === id ? Object.assign({}, e, patch) : e; });
+      storeSet("calendarExtra", extra);
+    } else {
+      var overrides = storeGet("calendarOverrides", {});
+      overrides[id] = Object.assign({}, overrides[id], patch);
+      storeSet("calendarOverrides", overrides);
+    }
+  }
+  function deleteCalendarEntry(id){
+    if (id.indexOf("extra-") === 0){
+      storeSet("calendarExtra", storeGet("calendarExtra", []).filter(function(e){ return e.id !== id; }));
+    } else {
+      var overrides = storeGet("calendarOverrides", {});
+      overrides[id] = Object.assign({}, overrides[id], { deleted: true });
+      storeSet("calendarOverrides", overrides);
+    }
+  }
+  function duplicateCalendarEntry(entry){
+    var clone = Object.assign({}, entry, {
+      id: "extra-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
+      title: entry.title.replace(/\s*\(copy\)$/, "") + " (copy)"
+    });
+    var extra = storeGet("calendarExtra", []);
+    extra.push(clone);
+    storeSet("calendarExtra", extra);
+    return clone;
+  }
+  function getHiddenCalendarCategories(){ return storeGet("calendarHiddenCategories", []); }
+  function toggleHiddenCalendarCategory(cat){
+    var hidden = getHiddenCalendarCategories();
+    var next = hidden.indexOf(cat) !== -1 ? hidden.filter(function(c){ return c !== cat; }) : hidden.concat([cat]);
+    storeSet("calendarHiddenCategories", next);
+  }
+
+  function buildCalendarData(entries){
+    var now = new Date();
+    var byYear = {};
+    entries.forEach(function(e){
+      if (!e.startDate) return;
+      var start = e.startDate.split("-").map(Number);
+      var startY = start[0], startM = start[1] - 1;
+      var end = e.endDate ? e.endDate.split("-").map(Number) : [now.getFullYear(), now.getMonth() + 1];
+      var endY = end[0], endM = end[1] - 1;
+      var y = startY, m = startM;
+      var guard = 0;
+      while ((y < endY || (y === endY && m <= endM)) && guard < 400){
+        byYear[y] = byYear[y] || {};
+        byYear[y][m] = byYear[y][m] || [];
+        byYear[y][m].push(e);
+        m++;
+        if (m > 11){ m = 0; y++; }
+        guard++;
+      }
+    });
+    return byYear;
+  }
+
+  function buildChinaMonths(entries){
+    var now = new Date();
+    var months = {};
+    entries.forEach(function(e){
+      if (e.category !== "exchange" || !e.location || e.location.indexOf("China") === -1 || !e.startDate) return;
+      var start = e.startDate.split("-").map(Number);
+      var y = start[0], m = start[1] - 1;
+      var end = e.endDate ? e.endDate.split("-").map(Number) : [now.getFullYear(), now.getMonth() + 1];
+      var endY = end[0], endM = end[1] - 1;
+      var guard = 0;
+      while ((y < endY || (y === endY && m <= endM)) && guard < 400){
+        months[y + "-" + m] = true;
+        m++;
+        if (m > 11){ m = 0; y++; }
+        guard++;
+      }
+    });
+    return months;
+  }
+
+  var calendarApp = {
+    id: "calendario", title: "Calendar", titleKey: "app.calendar", icon: ICONS.calendar, desktopIcon: true,
+    kind: "component", singleInstance: true,
+    window: { width: 660, height: 600, minWidth: 400, minHeight: 380, resizable: true, maximizable: true },
+    render: function(container){
+      var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var openDetailId = null;
+
+      function renderAll(){
+        var entries = getCalendarEntries();
+        var hidden = getHiddenCalendarCategories();
+        var visible = entries.filter(function(e){ return hidden.indexOf(calendarType(e)) === -1; });
+        var byYear = buildCalendarData(visible);
+        var chinaMonths = buildChinaMonths(entries);
+        var years = Object.keys(byYear).map(Number).sort(function(a, b){ return a - b; });
+        var now = new Date();
+
+        var legendHtml = '<div class="calendar-app__legend" id="calendar-legend">' +
+          CATEGORY_ORDER.map(function(cat){
+            var isHidden = hidden.indexOf(cat) !== -1;
+            return '<button type="button" class="calendar-app__legend-item' + (isHidden ? " is-hidden" : "") + '" data-cat="' + cat + '"><i style="background:' + CATEGORY_COLORS[cat] + '"></i>' + t(CATEGORY_LABEL_KEYS[cat]) + "</button>";
+          }).join("") +
+          '<span class="calendar-app__legend-item calendar-app__legend-item--static"><span class="cn-flag-icon" aria-hidden="true">★</span>' + t("cal.china") + "</span>" +
+        "</div>";
+
+        var yearsHtml = years.length ? years.map(function(y, yi){
+          return '<section class="calendar-year" style="--stagger:' + yi + '">' +
+            '<h2 class="calendar-year__label">' + y + "</h2>" +
+            '<div class="calendar-year__months">' +
+              MONTH_NAMES.map(function(mn, mi){
+                var monthEntries = (byYear[y][mi] || []);
+                var isToday = (y === now.getFullYear() && mi === now.getMonth());
+                var isChina = Boolean(chinaMonths[y + "-" + mi]);
+                var cls = "calendar-month" + (isToday ? " calendar-month--today" : "") + (isChina ? " calendar-month--china" : "");
+                return '<div class="' + cls + '">' +
+                  (isToday ? '<span class="calendar-month__today-badge">Today</span>' : "") +
+                  '<p class="calendar-month__label">' + mn + (isChina ? ' <span class="calendar-month__flag" title="' + t("cal.china") + '"><span class="cn-flag-icon" aria-hidden="true">★</span></span>' : "") + "</p>" +
+                  monthEntries.map(function(e){
+                    return '<button type="button" class="calendar-chip" style="background:' + calendarColor(e) + '" data-id="' + e.id + '" title="' + escapeHtml(e.title) + '"></button>';
+                  }).join("") +
+                "</div>";
+              }).join("") +
+            "</div>" +
+          "</section>";
+        }).join("") : '<p class="folder-empty">' + t("cal.noEvents") + "</p>";
+
+        container.innerHTML =
+          '<div class="calendar-app">' +
+            legendHtml +
+            '<div class="calendar-app__years">' + yearsHtml + "</div>" +
+            '<div class="calendar-detail" id="calendar-detail" hidden></div>' +
+          "</div>";
+
+        container.querySelectorAll(".calendar-app__legend-item[data-cat]").forEach(function(btn){
+          btn.addEventListener("click", function(){ toggleHiddenCalendarCategory(btn.dataset.cat); renderAll(); });
+        });
+        container.querySelectorAll(".calendar-chip").forEach(function(chip){
+          chip.addEventListener("click", function(){ openDetailId = chip.dataset.id; renderDetail(); });
+        });
+
+        requestAnimationFrame(function(){ var el = container.querySelector(".calendar-app"); if (el) el.classList.add("is-visible"); });
+        if (openDetailId) renderDetail();
+
+        var todayEl = container.querySelector(".calendar-month--today");
+        if (todayEl && !openDetailId){
+          setTimeout(function(){ todayEl.scrollIntoView({ block: "center", behavior: reduced ? "auto" : "smooth" }); }, reduced ? 0 : 500);
+        }
+      }
+
+      function renderDetail(){
+        var detail = container.querySelector("#calendar-detail");
+        if (!detail) return;
+        var entry = getCalendarEntries().filter(function(e){ return e.id === openDetailId; })[0];
+        if (!entry){ detail.hidden = true; return; }
+        var tagsHtml = (entry.tags && entry.tags.length) ? ('<p class="project-doc__tags">' + entry.tags.map(function(t){ return "<span>" + escapeHtml(t) + "</span>"; }).join("") + "</p>") : "";
+        var linkHtml = entry.link ? ('<p class="project-doc__link"><a href="' + entry.link + '" target="_blank" rel="noopener">View on GitHub ↗</a></p>') : "";
+        detail.innerHTML =
+          '<button type="button" class="calendar-detail__close" aria-label="' + t("win.close") + '">&times;</button>' +
+          '<p class="calendar-detail__badge" style="background:' + calendarColor(entry) + '">' + calendarLabel(entry) + "</p>" +
+          "<h3>" + escapeHtml(entry.title) + "</h3>" +
+          '<p class="calendar-detail__meta">' + escapeHtml(entry.organization || "") + " · " + escapeHtml(entry.dateLabel || "") + "</p>" +
+          "<p>" + escapeHtml(entry.summary || "") + "</p>" +
+          tagsHtml + linkHtml +
+          '<div class="calendar-detail__edit">' +
+            '<label class="calendar-detail__field">' + t("cal.category") +
+              '<select class="calendar-detail__select" data-field="category">' +
+                ["education", "work", "exchange", "project"].map(function(c){
+                  return '<option value="' + c + '"' + (entry.category === c ? " selected" : "") + '>' + t("cal." + c) + "</option>";
+                }).join("") +
+              "</select>" +
+            "</label>" +
+            '<label class="calendar-detail__field">' + t("cal.color") + ' <input type="color" class="calendar-detail__color" data-field="color" value="' + calendarColor(entry) + '" /></label>' +
+            '<label class="calendar-detail__field">' + t("cal.start") + ' <input type="month" class="calendar-detail__month" data-field="startDate" value="' + (entry.startDate || "") + '" /></label>' +
+            '<label class="calendar-detail__field">' + t("cal.end") + ' <input type="month" class="calendar-detail__month" data-field="endDate" value="' + (entry.endDate || "") + '"' + (!entry.endDate ? " disabled" : "") + ' /></label>' +
+            '<label class="calendar-detail__checkbox"><input type="checkbox" data-field="ongoing"' + (!entry.endDate ? " checked" : "") + ' /> ' + t("cal.ongoing") + "</label>" +
+            '<div class="calendar-detail__actions">' +
+              '<button type="button" class="calendar-detail__action" data-action="duplicate">' + t("cal.duplicate") + "</button>" +
+              '<button type="button" class="calendar-detail__action calendar-detail__action--danger" data-action="delete">' + t("cal.delete") + "</button>" +
+            "</div>" +
+          "</div>";
+        detail.hidden = false;
+
+        detail.querySelector(".calendar-detail__close").addEventListener("click", function(){ openDetailId = null; detail.hidden = true; });
+        detail.querySelector('[data-field="category"]').addEventListener("change", function(){ saveCalendarEntryPatch(entry.id, { category: this.value }); renderAll(); });
+        detail.querySelector('[data-field="color"]').addEventListener("change", function(){ saveCalendarEntryPatch(entry.id, { color: this.value }); renderAll(); });
+        detail.querySelector('[data-field="startDate"]').addEventListener("change", function(){ if (this.value) saveCalendarEntryPatch(entry.id, { startDate: this.value }); renderAll(); });
+        detail.querySelector('[data-field="endDate"]').addEventListener("change", function(){ saveCalendarEntryPatch(entry.id, { endDate: this.value || null }); renderAll(); });
+        detail.querySelector('[data-field="ongoing"]').addEventListener("change", function(){
+          if (this.checked) saveCalendarEntryPatch(entry.id, { endDate: null });
+          else saveCalendarEntryPatch(entry.id, { endDate: entry.startDate });
+          renderAll();
+        });
+        detail.querySelector('[data-action="duplicate"]').addEventListener("click", function(){
+          var clone = duplicateCalendarEntry(entry);
+          openDetailId = clone.id;
+          renderAll();
+        });
+        detail.querySelector('[data-action="delete"]').addEventListener("click", function(){
+          deleteCalendarEntry(entry.id);
+          openDetailId = null;
+          renderAll();
+        });
+      }
+
+      renderAll();
+    }
+  };
+  apps.push(calendarApp);
+
+  /* ============================================================ Browser.exe */
+  var BOOKMARKS = [
+    { title: "Wikipedia", icon: ICONS.wiki, kind: "internal", src: "wikipedia/index.html" },
+    { title: "Timeline", icon: ICONS.timeline, kind: "internal", src: "timeline.html" },
+    { title: "CV (PDF)", icon: ICONS.pdf, kind: "internal", src: "assets/cv/cv_TitoNicolaDrugman.pdf" },
+    { title: "GitHub", icon: ICONS.github, kind: "external", src: "https://github.com/TitoNicolaDrugman" },
+    { title: "Email", icon: null, kind: "external", src: "mailto:drugmantito@gmail.com" }
+  ];
+  var browserApp = {
+    id: "browser", title: "Browser.exe", icon: ICONS.browser, desktopIcon: true,
+    kind: "component", singleInstance: true,
+    window: { width: 760, height: 600, minWidth: 380, minHeight: 360, resizable: true, maximizable: true },
+    render: function(container){
+      function bookmarksHtml(){
+        return '<div class="browser-app__newtab">' +
+          '<p class="browser-app__newtab-title">Bookmarks</p>' +
+          '<div class="browser-app__bookmarks">' +
+            BOOKMARKS.map(function(b, i){
+              return '<button type="button" class="browser-app__bookmark" data-bm="' + i + '">' +
+                '<span aria-hidden="true">' + (b.icon || ICONS.doc) + "</span>" + escapeHtml(b.title) +
+                (b.kind === "external" ? " <small>↗ new tab</small>" : "") +
+                "</button>";
+            }).join("") +
+          "</div>" +
+        "</div>";
+      }
+      container.innerHTML =
+        '<div class="browser-app">' +
+          '<div class="browser-app__bar">' +
+            '<button type="button" class="browser-app__nav" data-nav="back" aria-label="Back">&larr;</button>' +
+            '<button type="button" class="browser-app__nav" data-nav="forward" aria-label="Forward">&rarr;</button>' +
+            '<button type="button" class="browser-app__nav" data-nav="home" aria-label="Home">&#8962;</button>' +
+            '<div class="browser-app__address" id="browser-address">tito-os://new-tab</div>' +
+          "</div>" +
+          '<div class="browser-app__body" id="browser-body">' + bookmarksHtml() + "</div>" +
+        "</div>";
+
+      var body = container.querySelector("#browser-body");
+      var address = container.querySelector("#browser-address");
+      var history = [];
+      var histIndex = -1;
+
+      function wireBookmarks(){
+        container.querySelectorAll("[data-bm]").forEach(function(btn){
+          btn.addEventListener("click", function(){ navigateTo(BOOKMARKS[Number(btn.dataset.bm)]); });
+        });
+      }
+      function renderNewTab(){
+        body.innerHTML = bookmarksHtml();
+        wireBookmarks();
+      }
+      function navigateTo(bm, push){
+        if (bm.kind === "external"){
+          window.open(bm.src, "_blank", "noopener");
+          return;
+        }
+        body.innerHTML = '<iframe class="browser-app__iframe" src="' + bm.src + '" title="' + escapeHtml(bm.title) + '"></iframe>';
+        address.textContent = "tito-os://" + bm.title.toLowerCase().replace(/\s+/g, "-");
+        if (push !== false){
+          history = history.slice(0, histIndex + 1);
+          history.push(bm);
+          histIndex = history.length - 1;
+        }
+      }
+      wireBookmarks();
+      container.querySelector('[data-nav="home"]').addEventListener("click", function(){ histIndex = -1; renderNewTab(); address.textContent = "tito-os://new-tab"; });
+      container.querySelector('[data-nav="back"]').addEventListener("click", function(){
+        if (histIndex > 0){ histIndex--; navigateTo(history[histIndex], false); }
+        else if (histIndex === 0){ histIndex = -1; renderNewTab(); address.textContent = "tito-os://new-tab"; }
+      });
+      container.querySelector('[data-nav="forward"]').addEventListener("click", function(){
+        if (histIndex < history.length - 1){ histIndex++; navigateTo(history[histIndex], false); }
+      });
+    }
+  };
+  apps.push(browserApp);
+
+  /* ============================================================ Terminal.exe */
+  var TERMINAL_MOTD = ["TitoOS [Version 1.0.0]", "(c) Tito Nicola Drugman. Uptime: guaranteed to increase.", "Type 'help' to see available commands.", ""];
+  var terminalApp = {
+    id: "terminal", title: "Terminal.exe", icon: ICONS.terminal, desktopIcon: true,
+    kind: "component", singleInstance: true,
+    window: { width: 560, height: 380, minWidth: 320, minHeight: 220, resizable: true, maximizable: true },
+    render: function(container, windowApi){
+      container.innerHTML =
+        '<div class="terminal-app">' +
+          '<div class="terminal-app__output" id="terminal-output"></div>' +
+          '<div class="terminal-app__inputline">' +
+            '<span class="terminal-app__prompt">tito@titoOS:~$</span>' +
+            '<input type="text" class="terminal-app__input" id="terminal-input" autocomplete="off" spellcheck="false" />' +
+          "</div>" +
+        "</div>";
+      var output = container.querySelector("#terminal-output");
+      var input = container.querySelector("#terminal-input");
+      var bootTime = Date.now();
+
+      function print(text){
+        var line = document.createElement("div");
+        line.className = "terminal-app__line";
+        line.textContent = text;
+        output.appendChild(line);
+        output.scrollTop = output.scrollHeight;
+      }
+      function printHtml(html){
+        var line = document.createElement("div");
+        line.className = "terminal-app__line";
+        line.innerHTML = html;
+        output.appendChild(line);
+        output.scrollTop = output.scrollHeight;
+      }
+      TERMINAL_MOTD.forEach(print);
+
+      var COMMANDS = {
+        help: function(){ print("Available commands: help, whoami, ls, cat about.txt, neofetch, open <app>, sudo give me a raise, clear, exit"); },
+        whoami: function(){ print("tito — AI engineer, professional local-LLM host, occasional Mario Kart victim."); },
+        ls: function(){ print(apps.filter(function(a){ return a.desktopIcon; }).map(function(a){ return appTitle(a); }).join("   ")); },
+        "cat about.txt": function(){ print("M.Sc. AI @ Politecnico di Milano. Runs models locally so nobody has to pay for the API bill."); },
+        neofetch: function(){
+          var uptimeSec = Math.floor((Date.now() - bootTime) / 1000);
+          printHtml(
+            '<pre class="terminal-app__neofetch">' +
+            '<span style="color:#4cc2ff">tito</span>@<span style="color:#4cc2ff">titoOS</span>\n' +
+            "-----------------\n" +
+            "OS: TitoOS x86_64\n" +
+            "Host: Portfolio Desktop\n" +
+            "Uptime: " + uptimeSec + "s\n" +
+            "Shell: fake-bash 5.0\n" +
+            "GPU: 2x NVIDIA RTX 5060 Ti\n" +
+            "CPU: whatever renders this fast enough\n" +
+            '<span style="color:#ff5f7e">■</span><span style="color:#ffb454">■</span><span style="color:#f4d35e">■</span><span style="color:#5fd786">■</span><span style="color:#4cc2ff">■</span><span style="color:#c792ea">■</span>' +
+            "</pre>"
+          );
+        },
+        clear: function(){ output.innerHTML = ""; },
+        exit: function(){ if (windowApi && windowApi.close) windowApi.close(); }
+      };
+
+      function runCommand(raw){
+        var cmd = raw.trim();
+        if (!cmd) return;
+        print("tito@titoOS:~$ " + cmd);
+        if (cmd === "sudo give me a raise"){ print("Approved. (Simulated — HR was not actually consulted.)"); return; }
+        if (cmd === "give me a raise"){ print("Permission denied. Try again after the next funding round."); return; }
+        if (COMMANDS[cmd]){ COMMANDS[cmd](); return; }
+        var target = cmd.indexOf("open ") === 0 ? cmd.slice(5).trim().toLowerCase() : cmd.toLowerCase();
+        var found = apps.filter(function(a){ return a.desktopIcon && (a.id === target || a.title.toLowerCase().indexOf(target) !== -1); })[0];
+        if (found){ wm.openApp(found); print("Opening " + found.title + "…"); return; }
+        print(cmd.split(" ")[0] + ": command not found. Type 'help'.");
+      }
+
+      input.addEventListener("keydown", function(e){ if (e.key === "Enter"){ runCommand(input.value); input.value = ""; } });
+      container.addEventListener("click", function(){ input.focus(); });
+      setTimeout(function(){ input.focus(); }, 50);
+    }
+  };
+  apps.push(terminalApp);
+
+  /* ============================================================ Task Manager */
+  var taskManagerApp = {
+    id: "task-manager", title: "Task Manager", titleKey: "app.taskManager", icon: ICONS.taskManager, desktopIcon: true,
+    kind: "component", singleInstance: true,
+    window: { width: 480, height: 540, minWidth: 360, minHeight: 380, resizable: true, maximizable: true },
+    render: function(container){
+      var METRICS = [
+        { id: "cpu", label: "CPU", color: "#4cc2ff", base: 18 },
+        { id: "mem", label: "Memory", color: "#5fd786", base: 42 },
+        { id: "gpu", label: "GPU", color: "#c792ea", base: 12 },
+        { id: "disk", label: "Disk", color: "#ffb454", base: 6 },
+        { id: "net", label: "Network", color: "#ff5f7e", base: 3 }
+      ];
+      container.innerHTML =
+        '<div class="taskmgr">' +
+          '<div class="taskmgr__metrics">' +
+            METRICS.map(function(m){
+              return '<div class="taskmgr__metric">' +
+                '<div class="taskmgr__metric-head"><span>' + m.label + '</span><span class="taskmgr__metric-value" data-metric="' + m.id + '">' + m.base + '%</span></div>' +
+                '<div class="taskmgr__bar"><div class="taskmgr__bar-fill" data-metric-bar="' + m.id + '" style="width:' + m.base + '%;background:' + m.color + '"></div></div>' +
+              "</div>";
+            }).join("") +
+          "</div>" +
+          '<p class="taskmgr__section-title">Processes</p>' +
+          '<div class="taskmgr__processes" id="taskmgr-processes"></div>' +
+        "</div>";
+
+      function tick(){
+        if (!document.body.contains(container)){ clearInterval(timer); return; }
+        METRICS.forEach(function(m){
+          var jitter = (Math.abs(hashCode(m.id + Math.floor(Date.now() / 1200))) % 21) - 10;
+          var val = clampNum(m.base + jitter, 1, 99);
+          var valueEl = container.querySelector('[data-metric="' + m.id + '"]');
+          var barEl = container.querySelector('[data-metric-bar="' + m.id + '"]');
+          if (valueEl) valueEl.textContent = val + "%";
+          if (barEl) barEl.style.width = val + "%";
+        });
+      }
+      var timer = setInterval(tick, 1200);
+
+      function renderProcesses(){
+        if (!document.body.contains(container)){ unsubscribe(); return; }
+        var list = container.querySelector("#taskmgr-processes");
+        if (!list) return;
+        var windows = wm.getState().windows;
+        if (!windows.length){
+          list.innerHTML = '<p class="taskmgr__empty">No apps running.</p>';
+          return;
+        }
+        list.innerHTML = windows.map(function(w){
+          var app = appsById.get(w.appId);
+          var cpu = (Math.abs(hashCode(w.id)) % 12) + 1;
+          var mem = (Math.abs(hashCode(w.id + "m")) % 180) + 20;
+          return '<div class="taskmgr__process">' +
+            '<span class="taskmgr__process-icon" aria-hidden="true">' + (app && app.icon ? app.icon : "") + "</span>" +
+            '<span class="taskmgr__process-name">' + escapeHtml(appTitle(app)) + "</span>" +
+            '<span class="taskmgr__process-stat">' + cpu + "% CPU</span>" +
+            '<span class="taskmgr__process-stat">' + mem + " MB</span>" +
+          "</div>";
+        }).join("");
+      }
+      var unsubscribe = wm.subscribe(renderProcesses);
+      renderProcesses();
+    }
+  };
+  apps.push(taskManagerApp);
+
+  /* ============================================================ Settings */
+  var SETTINGS_SECTIONS = [
+    { id: "network", label: "Network & Internet" },
+    { id: "system", label: "System" },
+    { id: "personalization", label: "Personalization" },
+    { id: "about", label: "About" }
+  ];
+  var settingsApp = {
+    id: "settings", title: "Settings", titleKey: "app.settings", icon: ICONS.settings, desktopIcon: true,
+    kind: "component", singleInstance: true,
+    window: { width: 640, height: 500, minWidth: 480, minHeight: 380, resizable: true, maximizable: true },
+    render: function(container){
+      var active = "network";
+
+      function render(){
+        container.innerHTML =
+          '<div class="settings-app">' +
+            '<nav class="settings-app__nav">' +
+              SETTINGS_SECTIONS.map(function(s){
+                return '<button type="button" class="settings-app__nav-btn' + (active === s.id ? " is-active" : "") + '" data-section="' + s.id + '">' + s.label + "</button>";
+              }).join("") +
+            "</nav>" +
+            '<div class="settings-app__pane" id="settings-pane"></div>' +
+          "</div>";
+        container.querySelectorAll("[data-section]").forEach(function(btn){
+          btn.addEventListener("click", function(){ active = btn.dataset.section; render(); });
+        });
+        renderPane();
+      }
+
+      function toggleRow(key, label){
+        var checked = storeGet(key, key === "qsAirplane" ? false : true);
+        return '<label class="settings-row"><span>' + label + '</span><input type="checkbox" class="settings-switch" data-key="' + key + '"' + (checked ? " checked" : "") + " /></label>";
+      }
+
+      function renderPane(){
+        var pane = container.querySelector("#settings-pane");
+        if (active === "network"){
+          pane.innerHTML = "<h2>Network &amp; Internet</h2>" + toggleRow("qsWifi", "Wi-Fi") + toggleRow("qsBluetooth", "Bluetooth") + toggleRow("qsAirplane", "Airplane mode");
+          pane.querySelectorAll("[data-key]").forEach(function(input){
+            input.addEventListener("change", function(){
+              storeSet(input.dataset.key, input.checked);
+              if (input.dataset.key === "qsAirplane" && input.checked){ storeSet("qsWifi", false); storeSet("qsBluetooth", false); renderPane(); }
+            });
+          });
+        } else if (active === "system"){
+          var brightness = storeGet("brightness", 100);
+          var volume = storeGet("volume", 70);
+          pane.innerHTML =
+            "<h2>System</h2>" +
+            '<label class="settings-row"><span>Brightness</span><input type="range" class="settings-range" id="settings-brightness" min="20" max="100" value="' + brightness + '" /></label>' +
+            '<label class="settings-row"><span>Volume</span><input type="range" class="settings-range" id="settings-volume" min="0" max="100" value="' + volume + '" /></label>';
+          pane.querySelector("#settings-brightness").addEventListener("input", function(){ storeSet("brightness", Number(this.value)); applyBrightness(this.value); });
+          pane.querySelector("#settings-volume").addEventListener("input", function(){ storeSet("volume", Number(this.value)); });
+        } else if (active === "personalization"){
+          pane.innerHTML =
+            "<h2>Personalization</h2>" +
+            '<div class="settings-wallpapers">' +
+              WALLPAPERS.map(function(w){ return '<button type="button" class="settings-wallpaper-swatch" data-wp="' + w.id + '" style="background:' + w.css + '"></button>'; }).join("") +
+            "</div>";
+          pane.querySelectorAll("[data-wp]").forEach(function(btn){
+            btn.addEventListener("click", function(){ storeSet("wallpaper", btn.dataset.wp); applyWallpaper(btn.dataset.wp); });
+          });
+        } else {
+          pane.innerHTML =
+            "<h2>About</h2>" +
+            '<dl class="settings-specs">' +
+              "<dt>Device name</dt><dd>TITO-WORKSTATION</dd>" +
+              "<dt>Processor</dt><dd>12-core workstation CPU (simulated)</dd>" +
+              "<dt>Installed RAM</dt><dd>64 GB</dd>" +
+              "<dt>GPU</dt><dd>2× NVIDIA GeForce RTX 5060 Ti</dd>" +
+              "<dt>Host OS</dt><dd>Ubuntu Linux</dd>" +
+              "<dt>This OS</dt><dd>TitoOS — single self-contained HTML file, no build step</dd>" +
+            "</dl>" +
+            '<p class="settings-credits">Designed &amp; built by <a href="https://github.com/TitoNicolaDrugman" target="_blank" rel="noopener">Tito Nicola Drugman</a>, inspired by <a href="https://dustinbrett.com/" target="_blank" rel="noopener">dustinbrett.com</a>.</p>';
+        }
+      }
+
+      render();
+    }
+  };
+  apps.push(settingsApp);
+
+  /* ============================================================ Mail */
+  var MAIL_INBOX = [
+    { from: "GitHub Actions", subject: "✅ Build passed (eventually)", preview: "3 retries, 2 cache clears, 1 existential crisis.", body: "Your workflow \u2018run-tests\u2019 completed successfully after 3 retries.\n\nNo further action needed. Please stop refreshing the Actions tab.", time: "09:14" },
+    { from: "Recruiter @ BigTech", subject: "Your profile really stood out to us!", preview: "This is an automated message sent to 4,000 candidates.", body: "Hi there,\n\nWe were incredibly impressed by your profile and would love to chat about opportunities.\n\n(This message was sent to 4,000 people. Please do not reply.)", time: "Yesterday" },
+    { from: "Overleaf", subject: "Compile failed", preview: "Undefined control sequence on line 412.", body: "! Undefined control sequence.\nl.412 \\text\n\nCompilation stopped 4 hours before the deadline.", time: "Yesterday" },
+    { from: "Politecnico di Milano", subject: "Exam registration closes in 2 hours", preview: "This is your only reminder.", body: "Gentile studente,\n\nLe iscrizioni all'appello chiudono tra 2 ore. Il portale sar\u00e0 lentissimo esattamente negli ultimi 10 minuti.", time: "Mon" },
+    { from: "STMicroelectronics IT", subject: "VPN certificate expiring soon", preview: "Renew before Friday or lose remote access.", body: "Your VPN certificate expires in 3 days. Please renew it before Friday \u2014 ideally not at 23:58 on Thursday.", time: "Mon" },
+    { from: "Mamma", subject: "Hai mangiato oggi?", preview: "Rispondi quando puoi \u2764\ufe0f", body: "Ciao amore,\n\nHai mangiato oggi? Fammi sapere quando torni per Natale.\n\nBaci,\nMamma", time: "Sun" }
+  ];
+  var MAIL_SENT = [
+    { to: "prof.cusano@polimi.it", subject: "Re: Late thesis draft submission", preview: "Apologies for the delay, my training run\u2026", body: "Dear Professor,\n\nApologies for the delay \u2014 my training run finished at 4am and I wanted to include the final numbers.\n\nBest,\nTito", time: "2 weeks ago" },
+    { to: "me@myself.com", subject: "IMPORTANT DO NOT DELETE \u2014 final_v3.py", preview: "(empty body, just the attachment)", body: "(No message body. The subject line was the entire plan.)", time: "1 month ago" },
+    { to: "team-rag-project", subject: "pushed a fix, should work now", preview: "(narrator: it did not work now)", body: "Pushed a fix for the retrieval bug, should work now.\n\nUPDATE: it did not work now.", time: "1 month ago" }
+  ];
+  var mailApp = {
+    id: "mail", title: "Mail", titleKey: "app.mail", icon: ICONS.mail, desktopIcon: true,
+    kind: "component", singleInstance: true,
+    window: { width: 720, height: 540, minWidth: 480, minHeight: 360, resizable: true, maximizable: true },
+    render: function(container){
+      var folder = "inbox";
+      var openIndex = 0;
+
+      function render(){
+        var list = folder === "inbox" ? MAIL_INBOX : MAIL_SENT;
+        container.innerHTML =
+          '<div class="mail-app">' +
+            '<nav class="mail-app__sidebar">' +
+              '<button type="button" class="mail-app__folder' + (folder === "inbox" ? " is-active" : "") + '" data-folder="inbox">Inbox <span class="mail-app__count">' + MAIL_INBOX.length + "</span></button>" +
+              '<button type="button" class="mail-app__folder' + (folder === "sent" ? " is-active" : "") + '" data-folder="sent">Sent</button>' +
+            "</nav>" +
+            '<div class="mail-app__list">' +
+              list.map(function(m, i){
+                return '<button type="button" class="mail-app__item' + (i === openIndex ? " is-active" : "") + '" data-idx="' + i + '">' +
+                  '<span class="mail-app__item-from">' + escapeHtml(m.from || m.to) + "</span>" +
+                  '<span class="mail-app__item-subject">' + escapeHtml(m.subject) + "</span>" +
+                  '<span class="mail-app__item-preview">' + escapeHtml(m.preview) + "</span>" +
+                  '<span class="mail-app__item-time">' + m.time + "</span>" +
+                "</button>";
+              }).join("") +
+            "</div>" +
+            '<div class="mail-app__reading" id="mail-reading"></div>' +
+          "</div>";
+        container.querySelectorAll("[data-folder]").forEach(function(btn){
+          btn.addEventListener("click", function(){ folder = btn.dataset.folder; openIndex = 0; render(); });
+        });
+        container.querySelectorAll("[data-idx]").forEach(function(btn){
+          btn.addEventListener("click", function(){ openIndex = Number(btn.dataset.idx); render(); });
+        });
+        renderReading();
+      }
+
+      function renderReading(){
+        var list = folder === "inbox" ? MAIL_INBOX : MAIL_SENT;
+        var m = list[openIndex];
+        var pane = container.querySelector("#mail-reading");
+        if (!m || !pane) return;
+        pane.innerHTML =
+          "<h3>" + escapeHtml(m.subject) + "</h3>" +
+          '<p class="mail-app__meta">' + (folder === "inbox" ? "From: " + escapeHtml(m.from) : "To: " + escapeHtml(m.to)) + " · " + m.time + "</p>" +
+          '<p class="mail-app__body">' + escapeHtml(m.body).replace(/\n/g, "<br>") + "</p>";
+      }
+
+      render();
+    }
+  };
+  apps.push(mailApp);
+
+  var appsById = new Map(apps.map(function(app){ return [app.id, app]; }));
+
+  /* ============================================================ boot */
+  var wm = new WindowManager();
+  applyStaticI18n();
+  applyWallpaper(storeGet("wallpaper", "default"));
+  renderDesktopIcons();
+  setupDesktopContextMenu();
+  createWindowHost(document.getElementById("window-host"), wm, appsById);
+  var refreshTaskbarApps = createTaskbarApps(document.getElementById("taskbar-apps"), wm, appsById);
+  startClock(document.getElementById("taskbar-clock"));
+  setupStartMenu(document.getElementById("start-btn"), document.getElementById("start-menu"));
+  setupPowerButtons();
+  setupQuickSettings();
+  setupLanguageToggle();
+  setupSearch();
+  scheduleNotification(wm, appsById);
+  showBootSplash();
+
+  var resizeTimer = null;
+  window.addEventListener("resize", function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){ clampAllToViewport(wm); wm.refreshMaximized(); }, 120);
+  });
+  window.addEventListener("orientationchange", function(){ clampAllToViewport(wm); wm.refreshMaximized(); });
+})();
+</script>
 </body>
 </html>
