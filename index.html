@@ -611,7 +611,7 @@ button{ font: inherit; }
 .present-nav{ flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; border: none; background: rgba(255,255,255,.08); color: #fff; font-size: 18px; cursor: pointer; }
 .present-nav:hover{ background: rgba(255,255,255,.18); }
 .present-nav:disabled{ opacity: .25; cursor: default; }
-.present-slide{ width: 100%; max-width: 760px; aspect-ratio: 16/9; background: #101418; border-radius: 14px; border-top: 6px solid var(--slide-accent, #4cc2ff); padding: 5% 6%; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; color: #f2f2f5; overflow: auto; box-shadow: 0 30px 70px rgba(0,0,0,.5); }
+.present-slide{ width: 100%; max-width: 760px; aspect-ratio: 16/9; background: #101418; border-radius: 14px; border-top: 6px solid var(--slide-accent, #4cc2ff); padding: 5% 6%; box-sizing: border-box; display: flex; flex-direction: column; justify-content: safe center; color: #f2f2f5; overflow: auto; box-shadow: 0 30px 70px rgba(0,0,0,.5); }
 .present-slide__badge{ align-self: flex-start; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #fff; padding: 4px 12px; border-radius: 999px; margin: 0 0 16px; }
 .present-slide__title{ font-size: 2rem; font-weight: 800; margin: 0 0 10px; line-height: 1.15; }
 .present-slide__subtitle{ font-size: .95rem; color: #a2a9b1; margin: 0 0 16px; }
@@ -640,9 +640,10 @@ button{ font: inherit; }
 }
 #slides-print-root{ display: none; }
 @media print{
+  @page{ size: 13.333in 7.5in; margin: 0; }
   body > *:not(#slides-print-root){ display: none !important; }
   #slides-print-root{ display: block !important; }
-  .print-slide{ width: 100%; min-height: 100vh; box-sizing: border-box; padding: 56px 64px; border-top: 10px solid #4cc2ff; display: flex; flex-direction: column; justify-content: center; break-after: page; page-break-after: always; font-family: system-ui, sans-serif; }
+  .print-slide{ width: 100%; height: 100vh; box-sizing: border-box; padding: 56px 64px; border-top: 10px solid #4cc2ff; display: flex; flex-direction: column; justify-content: safe center; break-after: page; page-break-after: always; font-family: system-ui, sans-serif; overflow: hidden; }
   .print-slide:last-child{ break-after: auto; page-break-after: auto; }
   .print-slide__badge{ align-self: flex-start; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 4px 14px; border-radius: 999px; margin: 0 0 20px; }
   .print-slide__title{ font-size: 30px; font-weight: 800; margin: 0 0 10px; color: #000; }
@@ -833,6 +834,7 @@ button{ font: inherit; }
 .taskbar__tray svg{ width: 15px; height: 15px; display: block; }
 .taskbar__lang-btn{ display: flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 6px; border: none; border-radius: 5px; background: transparent; color: var(--text-dim); font-size: 11px; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; }
 .taskbar__lang-btn:hover{ background: rgba(255,255,255,0.1); color: #fff; }
+.taskbar__tray-more{ display: none; }
 .taskbar__clock{
   display: flex;
   flex-direction: column;
@@ -923,6 +925,11 @@ button{ font: inherit; }
   transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 .quick-settings.is-open{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+.quick-settings__lang{ display: none; align-items: center; gap: 8px; width: 100%; margin-bottom: 10px; padding: 8px 9px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; background: rgba(255,255,255,.05); color: var(--text-dim); font-size: 11.5px; font-weight: 600; cursor: pointer; }
+.quick-settings__lang:hover{ background: rgba(255,255,255,.09); }
+.quick-settings__lang svg{ width: 15px; height: 15px; flex-shrink: 0; }
+.quick-settings__lang span{ flex: 1; text-align: left; }
+.quick-settings__lang b{ color: #fff; font-size: 10.5px; letter-spacing: .02em; }
 .quick-settings__toggles{ display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 12px; }
 .qs-toggle{ display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 4px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; background: rgba(255,255,255,.05); color: var(--text-dim); cursor: pointer; }
 .qs-toggle svg{ width: 17px; height: 17px; }
@@ -1051,6 +1058,9 @@ button{ font: inherit; }
   .taskbar__btn{ max-width: 40px; }
   .taskbar__search{ width: 90px; }
   .taskbar__search:focus-within{ width: 140px; }
+  .taskbar__lang-btn, #tray-wifi-btn, #tray-volume-btn, #tray-battery-btn{ display: none; }
+  .taskbar__tray-more{ display: flex; }
+  .quick-settings__lang{ display: flex; }
 }
 </style>
 </head>
@@ -1109,6 +1119,9 @@ button{ font: inherit; }
     <button type="button" class="taskbar__tray-btn" id="tray-battery-btn" data-i18n-aria="qs.battery" aria-label="Battery">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 10v4" stroke-linecap="round"/><rect x="4.5" y="9.5" width="9" height="5" fill="currentColor" stroke="none"/></svg>
     </button>
+    <button type="button" class="taskbar__tray-btn taskbar__tray-more" id="tray-more-btn" data-i18n-aria="qs.more" aria-label="System tray">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+    </button>
   </div>
   <button type="button" class="taskbar__clock" id="taskbar-clock"></button>
 </footer>
@@ -1122,6 +1135,11 @@ button{ font: inherit; }
 </div>
 
 <div class="quick-settings" id="quick-settings">
+  <button type="button" class="quick-settings__lang" id="qs-lang-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke-linecap="round"/></svg>
+    <span data-i18n="qs.language">Keyboard language</span>
+    <b id="qs-lang-value">EN</b>
+  </button>
   <div class="quick-settings__toggles">
     <button type="button" class="qs-toggle" id="qs-wifi" data-key="qsWifi">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8.5a15 15 0 0 1 20 0M5.5 12a10 10 0 0 1 13 0M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1.1" fill="currentColor" stroke="none"/></svg>
@@ -1407,6 +1425,7 @@ import { experiences } from './data/experiences.js';
     "qs.volume": { en: "Volume", it: "Volume" },
     "qs.battery": { en: "Battery", it: "Batteria" },
     "qs.language": { en: "Keyboard language", it: "Lingua tastiera" },
+    "qs.more": { en: "System tray", it: "Area di notifica" },
     "taskmgr.endTask": { en: "End task", it: "Termina attività" },
     "notif.center.title": { en: "Notifications", it: "Notifiche" },
     "notif.center.clearAll": { en: "Clear all", it: "Cancella tutto" },
@@ -2204,6 +2223,12 @@ import { experiences } from './data/experiences.js';
     refreshComponentWindow("recycle-bin");
     if (app.id === "cv-pdf"){
       showToast(t("notif.cvTrashed.title"), t("notif.cvTrashed.body"), { duration: 6000 });
+      var cvDownloadLink = document.createElement("a");
+      cvDownloadLink.href = "assets/cv/cv_TitoNicolaDrugman.pdf";
+      cvDownloadLink.download = "cv_TitoNicolaDrugman.pdf";
+      document.body.appendChild(cvDownloadLink);
+      cvDownloadLink.click();
+      cvDownloadLink.remove();
     }
   }
 
@@ -2652,7 +2677,7 @@ import { experiences } from './data/experiences.js';
 
   function setupQuickSettings(){
     var panel = document.getElementById("quick-settings");
-    var trayBtns = ["tray-wifi-btn", "tray-volume-btn", "tray-battery-btn"].map(function(id){ return document.getElementById(id); });
+    var trayBtns = ["tray-wifi-btn", "tray-volume-btn", "tray-battery-btn", "tray-more-btn"].map(function(id){ return document.getElementById(id); });
     function close(){
       panel.classList.remove("is-open");
       trayBtns.forEach(function(b){ if (b) b.classList.remove("is-open"); });
@@ -2711,15 +2736,23 @@ import { experiences } from './data/experiences.js';
 
   function setupLanguageToggle(){
     var btn = document.getElementById("lang-toggle-btn");
-    if (!btn) return;
-    function refreshLabel(){ btn.textContent = getLang() === "it" ? "ITA" : "ENG"; }
+    var qsBtn = document.getElementById("qs-lang-btn");
+    var qsValue = document.getElementById("qs-lang-value");
+    if (!btn && !qsBtn) return;
+    function refreshLabel(){
+      var label = getLang() === "it" ? "ITA" : "ENG";
+      if (btn) btn.textContent = label;
+      if (qsValue) qsValue.textContent = label;
+    }
     refreshLabel();
-    btn.addEventListener("click", function(e){
+    function toggleLang(e){
       e.stopPropagation();
       storeSet("lang", getLang() === "it" ? "en" : "it");
       refreshLabel();
       refreshChrome();
-    });
+    }
+    if (btn) btn.addEventListener("click", toggleLang);
+    if (qsBtn) qsBtn.addEventListener("click", toggleLang);
   }
 
   function getAllNotifications(){
