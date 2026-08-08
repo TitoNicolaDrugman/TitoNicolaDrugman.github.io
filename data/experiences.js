@@ -31,8 +31,8 @@ export const experiences = [
       "Inter-university Bachelor's programme in Artificial Intelligence, jointly run by three Italian universities and launched the year of enrolment — graduated in its inaugural cohort.",
     highlights: [
       "Core coursework spanning machine learning, deep learning, statistics, algorithms, programming and databases, alongside knowledge representation & reasoning, computational logic and cognitive psychology.",
-      "Graduated on 26/09/2024 with a final score of 106/110.",
-      "Bachelor's thesis, 'Neural Network Tool for Hyperparameter Optimization for Embedded Systems', supervised by Prof. Claudio Cusano (Università di Pavia) and developed on-site during the STMicroelectronics internship."
+      "Graduated on 26/09/2024.",
+      "Bachelor's thesis, 'Neural Network Tool for Hyperparameter Optimization for Embedded Systems', developed on-site during the STMicroelectronics internship."
     ],
     tags: ["Education", "Artificial Intelligence", "Machine Learning"],
     link: null,
@@ -99,7 +99,7 @@ export const experiences = [
       "Replaced an initial 'poisoning' strategy for oversized trials — which could let a barely-trained large model outperform fully-trained constrained ones — with a cleaner trial-skipping mechanism built on Keras' FailedTrialError API.",
       "Diagnosed and engineered a workaround for an upstream Keras Tuner bug that terminated an entire search whenever the first proposed configuration violated the constraints, keeping long unattended remote tuning runs alive.",
       "Operated inside STMicroelectronics' confidential corporate environment — remote access to internal Linux workstations via company VPN — with fully reproducible, version-controlled Conda environments and systematic experiment logs.",
-      "Findings compiled into the Bachelor's thesis, supervised academically by Prof. Claudio Cusano with Davide Denaro (AI Research Sr Advisor, STMicroelectronics) as industrial tutor."
+      "Findings compiled into the Bachelor's thesis, co-supervised academically at the university and industrially at STMicroelectronics."
     ],
     tags: ["Embedded AI", "TinyML", "Keras Tuner", "STM32"],
     link: null,
@@ -184,7 +184,7 @@ export const experiences = [
     ongoing: false,
     upcoming: false,
     summary:
-      "Two-part exam project with Giacomo Colosio: a faithful replication and critical analysis of the WebVoyager end-to-end web-agent framework, followed by experiments to reduce execution time and cost, plus a literature review tracing the evolution of web agents.",
+      "Two-part exam project completed with one course partner: a faithful replication and critical analysis of the WebVoyager end-to-end web-agent framework, followed by experiments to reduce execution time and cost, plus a literature review tracing the evolution of web agents.",
     highlights: [
       "Part I replicates WebVoyager and evaluates modifications aimed at reducing execution time and operational cost while improving overall effectiveness, benchmarked against the reference implementation.",
       "Part II surveys the emerging web-agent landscape and details the ethical and safety risks of the technology.",
@@ -192,7 +192,7 @@ export const experiences = [
     ],
     tags: ["Web Agents", "LLMs", "Literature Review"],
     link: "https://github.com/TitoNicolaDrugman/LLM-web-agent-WebVoyager",
-    collaborators: ["Giacomo Colosio"]
+    collaborators: []
   },
   {
     id: "transformer-npu-stm32n6",
@@ -208,7 +208,7 @@ export const experiences = [
     ongoing: false,
     upcoming: false,
     summary:
-      "Full-stack edge-AI engineering project with Patrizio Acquadro, advised by Prof. Silvano Cristina and Dott. Marco Ronzani: designed, trained and INT8-quantised a custom 4.56M-parameter encoder-only Transformer from scratch for autoregressive text generation, then deployed it on the Neural Processing Unit of an STM32N6570-DK.",
+      "Full-stack edge-AI engineering project completed with one course partner: designed, trained and INT8-quantised a custom 4.56M-parameter encoder-only Transformer from scratch for autoregressive text generation, then deployed it on the Neural Processing Unit of an STM32N6570-DK.",
     highlights: [
       "Validated the toolchain first against a Model Zoo MobileNetV2 and a hand-crafted CNN before tackling the Transformer as the project's core objective.",
       "Applied per-channel symmetric INT8 quantisation of both weights and activations against a held-out calibration set.",
@@ -218,7 +218,7 @@ export const experiences = [
     ],
     tags: ["TinyML", "INT8 Quantisation", "STM32N6", "Edge AI"],
     link: "https://github.com/TitoNicolaDrugman/Transformer-NPU-STM32N6",
-    collaborators: ["Patrizio Acquadro"]
+    collaborators: []
   },
   {
     id: "cuhk-exchange",
@@ -255,7 +255,7 @@ export const experiences = [
     ongoing: false,
     upcoming: false,
     summary:
-      "A rigorous re-evaluation and enhancement of the Sen2Fire wildfire-detection benchmark, with Kauymbayev Kalizhan (CUHK-Shenzhen) and Vladislav Palamrchuk (HSE University, Moscow).",
+      "A rigorous re-evaluation and enhancement of the Sen2Fire wildfire-detection benchmark, developed with an international three-person team spanning CUHK-Shenzhen and HSE University Moscow.",
     highlights: [
       "Benchmarked a modified U-Net baseline against nnU-Net, SegFormer, Dual-Stream SegFormer and MixedTrans-CNN architectures on Sentinel-2 / Sentinel-5P multispectral imagery.",
       "Established a new state-of-the-art F1-score of 0.3675 (IoU 0.2250) with nnU-Net on all 13 spectral bands, versus the original paper's 0.2810 — challenging its conclusion that band subsets outperform the full spectral range.",
@@ -263,7 +263,7 @@ export const experiences = [
     ],
     tags: ["Remote Sensing", "Segmentation", "nnU-Net", "SegFormer"],
     link: "https://github.com/TitoNicolaDrugman/Sen2Fire-Wildfire-Detection",
-    collaborators: ["Kauymbayev Kalizhan", "Vladislav Palamrchuk"]
+    collaborators: []
   },
   {
     id: "cifar10-from-scratch",
@@ -297,7 +297,7 @@ export const experiences = [
     ongoing: false,
     upcoming: false,
     summary:
-      "With Asia Montico: replicated and extended the WebVoyager framework for end-to-end AI web agents, replacing proprietary GPT-4o with locally-hosted open-source Large Multimodal Models to test a scalable, cost-free path to self-hosted web agents.",
+      "A two-person CUHK-Shenzhen coursework team replicated and extended the WebVoyager framework for end-to-end AI web agents, replacing proprietary GPT-4o with locally-hosted open-source Large Multimodal Models to test a scalable, cost-free path to self-hosted web agents.",
     highlights: [
       "Deployed Qwen3-VL:8b and Qwen3-VL:30b locally via Ollama, and integrated DeepSeek-V3 (685B MoE) via OpenRouter as a third comparison point against GPT-4o.",
       "Built a fully-automated document/page-classification pipeline using locally-hosted Qwen3-VL:30b, producing a 1,101-image labelled dataset with zero manual annotation.",
@@ -306,7 +306,7 @@ export const experiences = [
     ],
     tags: ["VLM Agents", "Qwen3-VL", "Set-of-Mark", "Ollama"],
     link: "https://github.com/TitoNicolaDrugman/LLMsWebAgent",
-    collaborators: ["Asia Montico"]
+    collaborators: []
   },
   {
     id: "rag-code-generation",
@@ -321,7 +321,7 @@ export const experiences = [
     ongoing: false,
     upcoming: false,
     summary:
-      "With Giacomo Colosio and Patrizio Acquadro: investigated whether retrieval-augmented generation and prompt engineering improve LLM-based code generation for library-centric tasks (PySCF and SEED-Emulator), using CodeLlama-7B-Instruct over a knowledge base of 7,600+ code snippets.",
+      "A three-person course-exam project investigating whether retrieval-augmented generation and prompt engineering improve LLM-based code generation for library-centric tasks (PySCF and SEED-Emulator), using CodeLlama-7B-Instruct over a knowledge base of 7,600+ code snippets.",
     highlights: [
       "Engineered and benchmarked three single-hop retrievers (lexical BM25, semantic dense via CodeBERT 768-d embeddings, hybrid via Reciprocal Rank Fusion) and two LLM-driven multi-hop pipelines (query decomposition, iterative refinement).",
       "Deployed the end-to-end system fully on-premises on a dual-RTX-5060-Ti Linux workstation with zero external API calls, using 4-bit NF4 quantisation (bitsandbytes) to fit CodeLlama-7B-Instruct in available VRAM.",
@@ -330,7 +330,7 @@ export const experiences = [
     ],
     tags: ["RAG", "CodeLlama-7B", "bitsandbytes", "Hybrid Retrieval"],
     link: "https://github.com/TitoNicolaDrugman/RAG-Code-Generation",
-    collaborators: ["Giacomo Colosio", "Patrizio Acquadro"]
+    collaborators: []
   },
   {
     id: "genhack2025",
@@ -373,7 +373,7 @@ export const experiences = [
     highlights: [
       "Applied specifically for Profile 1 rather than a general AI internship, drawing on daily practice self-hosting open-source LLMs (Llama, Qwen, DeepSeek) via Ollama on a dual-GPU Linux workstation.",
       "Plans to containerise the existing Ollama + RAG stack with Docker Compose and stand up a Tesseract/PaddleOCR ingestion pipeline ahead of the start date, to arrive ready to integrate rather than ramp up.",
-      "Supported by a recommendation letter from his STMicroelectronics thesis tutor, Davide Denaro (AI Research Sr Advisor), linking the on-device/microcontroller reasoning discipline directly to on-premises institutional AI deployment."
+      "Extends the on-device/microcontroller reasoning discipline built during the STMicroelectronics internship directly into on-premises institutional AI deployment."
     ],
     tags: ["On-Premises AI", "RAG", "OCR", "EU Institutions"],
     link: null,

@@ -1,387 +1,949 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="it" class="theme-auto">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- keep this page out of search engines -->
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="googlebot" content="noindex, nofollow">
-<title>Tito Nicola Drugman - Wikipedia (parody)</title>
+<title>Tito Nicola Drugman - Wikipedia</title>
 <style>
-  /* ---- Wikipedia (Vector-legacy) styling, approximated for parody ---- */
-  html,body{margin:0;padding:0;}
-  body{
-    font-family:sans-serif;
-    font-size:14px;
-    line-height:1.6;
-    color:#202122;
-    background:#f6f6f6;
+:root{
+  --blue:#3366cc; --blue-visited:#6a60b0; --red:#bf3c2c;
+  --border:#a2a9b1; --border-light:#c8ccd1; --box-bg:#f8f9fa; --box-bg2:#eaecf0;
+  --text:#202122; --muted:#54595d; --bg:#fff;
+  --link-hover-bg:rgba(6,69,173,.05);
+  --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --font-head:"Linux Libertine","Georgia","Times New Roman",serif;
+  --sticky-h:48px;
+}
+html.theme-dark{
+  --blue:#88a3e8; --blue-visited:#a799cd; --red:#fd7865;
+  --border:#3d3d3d; --border-light:#3d3d3d; --box-bg:#27292d; --box-bg2:#2b2f33;
+  --text:#eaecf0; --muted:#a2a9b1; --bg:#101418; --link-hover-bg:rgba(136,163,232,.1);
+}
+@media (prefers-color-scheme: dark){
+  html.theme-auto{
+    --blue:#8ab4f8; --blue-visited:#c0b6f2; --red:#ff8a80;
+    --border:#3d3d3d; --border-light:#3d3d3d; --box-bg:#27292d; --box-bg2:#2b2f33;
+    --text:#eaecf0; --muted:#a2a9b1; --bg:#101418; --link-hover-bg:rgba(138,180,248,.08);
   }
-  a{color:#0645ad;text-decoration:none;}
-  a:hover{text-decoration:underline;}
-  a.new{color:#ba0000;}        /* red link */
-  a.ext{color:#3366bb;}
-  a.ext::after{content:" \1f855";font-size:10px;}
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font-ui);font-size:14px;color:var(--text);background:var(--bg);transition:background 150ms ease,color 150ms ease;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;}
+a:visited{color:var(--blue-visited);}
+a.new,a.new:visited{color:var(--red);}
+a.ext{color:var(--blue);}
+a.ext::after{content:"\2197";font-size:.72em;margin-left:2px;}
+button{font-family:inherit;}
+ul,ol{padding-left:1.4em;}
+img{max-width:100%;}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+.skip-link{position:absolute;left:-999px;top:0;background:var(--blue);color:#fff;padding:8px 14px;z-index:200;}
+.skip-link:focus{left:8px;top:8px;}
 
-  /* top personal bar */
-  .p-personal{
-    background:#fff;border-bottom:1px solid #a7d7f9;
-    font-size:12px;text-align:right;padding:4px 12px;color:#54595d;
-  }
-  .p-personal a{margin-left:10px;}
+/* ============ top masthead (scrolls away normally) ============ */
+.masthead{display:flex;align-items:center;gap:14px;padding:8px 16px;border-bottom:1px solid var(--border-light);flex-wrap:wrap;}
+.hamburger-btn{background:none;border:none;font-size:19px;line-height:1;color:var(--text);cursor:pointer;padding:6px 4px;border-radius:3px;}
+.hamburger-btn:hover{background:var(--box-bg);}
+.logo-block{display:flex;align-items:center;gap:9px;}
+.wm-globe{width:38px;height:38px;border-radius:50%;flex:none;position:relative;
+  background:radial-gradient(circle at 32% 28%,#fff 0 10%,#dcdcdc 11% 45%,#a9adb1 46% 100%);
+  border:1px solid #9a9a9a;}
+.wm-globe::before{content:"";position:absolute;inset:5px;border-radius:50%;opacity:.55;
+  background:repeating-linear-gradient(0deg,transparent 0 5px,#8d9096 5px 6px),repeating-linear-gradient(90deg,transparent 0 5px,#8d9096 5px 6px);}
+.wordmark{line-height:1.05;}
+.wordmark .wm-name{font-family:var(--font-head);font-size:19px;letter-spacing:.2px;color:var(--text);}
+.wordmark .wm-tag{font-size:10.5px;color:var(--muted);letter-spacing:.1px;}
+.searchbox{position:relative;margin-left:6px;flex:1;max-width:420px;min-width:140px;}
+.searchbox form{display:flex;}
+.searchbox input{flex:1;border:1px solid var(--border);border-right:none;height:30px;padding:0 10px;font-size:13.5px;
+  border-radius:3px 0 0 3px;background:var(--bg);color:var(--text);min-width:0;}
+.searchbox button{border:1px solid var(--border);background:var(--box-bg);height:32px;padding:0 12px;cursor:pointer;
+  border-radius:0 3px 3px 0;color:var(--text);}
+.search-suggest{display:none;position:absolute;left:0;right:0;top:32px;background:var(--bg);border:1px solid var(--border);
+  border-radius:0 0 4px 4px;box-shadow:0 4px 10px rgba(0,0,0,.15);z-index:40;font-size:13px;overflow:hidden;}
+.search-suggest.is-open{display:block;}
+.search-suggest__item{display:flex;gap:8px;align-items:center;padding:8px 10px;cursor:pointer;}
+.search-suggest__item:hover{background:var(--box-bg);}
+.search-suggest__item img{width:28px;height:28px;object-fit:cover;border-radius:2px;flex:none;}
+.search-suggest__note{padding:6px 10px 8px;font-size:11px;color:var(--muted);font-style:italic;border-top:1px solid var(--border-light);}
+.masthead-actions{margin-left:auto;display:flex;gap:14px;font-size:12.5px;white-space:nowrap;}
 
-  /* header: logo + search */
-  .head{
-    background:#fff;border-bottom:1px solid #a7d7f9;
-    display:flex;align-items:center;gap:16px;padding:8px 12px;
-  }
-  .logo{display:flex;align-items:center;gap:10px;min-width:170px;}
-  .globe{
-    width:42px;height:42px;border-radius:50%;
-    background:radial-gradient(circle at 32% 30%, #fff 0 8%, #dcdcdc 9% 40%, #c8c8c8 41% 100%);
-    border:1px solid #b7b7b7;position:relative;flex:none;
-  }
-  .globe::before,.globe::after{
-    content:"";position:absolute;inset:0;border-radius:50%;
-    background:
-      repeating-linear-gradient(90deg,transparent 0 5px,#9aa0a6 5px 6px),
-      repeating-linear-gradient(0deg,transparent 0 6px,#b0b4b8 6px 7px);
-    opacity:.5;
-  }
-  .globe span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    font-family:serif;font-size:15px;color:#54595d;transform:rotate(-8deg);}
-  .wordmark{font-family:"Linux Libertine",Georgia,serif;line-height:1.05;}
-  .wordmark b{font-size:19px;font-weight:400;letter-spacing:.2px;}
-  .wordmark small{display:block;font-size:8.5px;color:#54595d;font-family:sans-serif;letter-spacing:1px;}
-  .search{margin-left:auto;display:flex;}
-  .search input{border:1px solid #a2a9b1;border-right:none;height:26px;width:min(360px,42vw);padding:0 8px;font-size:13px;}
-  .search button{border:1px solid #a2a9b1;background:#f8f9fa;height:28px;padding:0 12px;cursor:pointer;}
+/* ============ sticky header (hidden until scrolled past H1) ============ */
+.sticky-header{position:fixed;top:0;left:0;right:0;height:var(--sticky-h);z-index:60;background:var(--bg);
+  border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:10px;padding:0 14px;
+  transform:translateY(-100%);opacity:0;transition:transform 180ms ease,opacity 180ms ease;box-shadow:0 2px 6px rgba(0,0,0,.08);}
+.sticky-header.is-visible{transform:translateY(0);opacity:1;}
+html.no-motion .sticky-header{transition:none;}
+.sticky-header .wm-globe{width:26px;height:26px;}
+.sticky-header__title{font-family:var(--font-head);font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;color:var(--text);}
+.sticky-header__icons{display:flex;gap:4px;flex:none;}
+.sticky-header__icons button{background:none;border:1px solid transparent;border-radius:3px;width:30px;height:30px;font-size:14.5px;cursor:pointer;color:var(--text);}
+.sticky-header__icons button:hover{background:var(--box-bg);border-color:var(--border-light);}
 
-  /* layout */
-  .container{display:flex;align-items:flex-start;}
-  .sidebar{width:160px;flex:none;padding:12px 8px 40px 12px;font-size:12.5px;background:#f6f6f6;}
-  .sidebar .portlet{margin-bottom:16px;}
-  .sidebar h3{font-size:11px;color:#54595d;font-weight:normal;border-bottom:1px solid #c8ccd1;padding-bottom:2px;margin:0 0 4px;text-transform:none;}
-  .sidebar ul{list-style:none;margin:0;padding:0;}
-  .sidebar li{padding:2px 0 2px 6px;}
+/* ============ hamburger menu dropdown ============ */
+.menu-dropdown{display:none;position:absolute;top:100%;left:8px;width:230px;background:var(--bg);border:1px solid var(--border);
+  border-radius:0 0 4px 4px;box-shadow:0 6px 16px rgba(0,0,0,.18);z-index:70;font-size:13px;padding:6px 0;}
+.menu-dropdown.is-open{display:block;}
+.menu-dropdown h4{margin:8px 14px 4px;font-size:11px;text-transform:none;color:var(--muted);font-weight:normal;border-bottom:1px solid var(--border-light);padding-bottom:3px;}
+.menu-dropdown ul{list-style:none;margin:0;padding:0;}
+.menu-dropdown li a,.menu-dropdown li button{display:block;width:100%;text-align:left;background:none;border:none;padding:6px 14px;color:var(--blue);cursor:pointer;font-size:13px;font-family:inherit;}
+.menu-dropdown li a:hover,.menu-dropdown li button:hover{background:var(--box-bg);text-decoration:none;}
+.header-wrap{position:relative;}
 
-  .content{
-    flex:1;background:#fff;border:1px solid #a7d7f9;border-top:none;
-    padding:0 18px 28px;min-width:0;
-  }
+/* ============ article title row ============ */
+.title-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 20px 0;flex-wrap:wrap;}
+h1.firstHeading{font-family:var(--font-head);font-weight:normal;font-size:30px;margin:0;color:var(--text);}
+.lang-select{position:relative;flex:none;}
+.lang-btn{background:var(--box-bg);border:1px solid var(--border-light);border-radius:3px;padding:5px 10px;font-size:12.5px;color:var(--text);cursor:pointer;}
+.lang-btn:hover{background:var(--box-bg2);}
+.lang-dropdown{display:none;position:absolute;right:0;top:100%;margin-top:4px;width:210px;background:var(--bg);
+  border:1px solid var(--border);border-radius:4px;box-shadow:0 6px 16px rgba(0,0,0,.18);z-index:40;font-size:12.5px;padding:6px 0;}
+.lang-dropdown.is-open{display:block;}
+.lang-dropdown a{display:block;padding:5px 12px;color:var(--blue);}
+.lang-dropdown a:hover{background:var(--box-bg);text-decoration:none;}
+.lang-dropdown__note{padding:6px 12px 4px;color:var(--muted);font-style:italic;font-size:11px;border-top:1px solid var(--border-light);margin-top:4px;}
 
-  /* article tabs */
-  .tabs{display:flex;font-size:12.5px;border-bottom:1px solid #a7d7f9;margin:0 -18px 0;padding:0 12px;background:#fff;}
-  .tabs .left,.tabs .right{display:flex;}
-  .tabs .right{margin-left:auto;}
-  .tabs a{padding:8px 12px 6px;color:#0645ad;border:1px solid transparent;border-bottom:none;}
-  .tabs a.sel{background:#fff;color:#202122;border-color:#a7d7f9;position:relative;top:1px;}
+/* ============ tab row ============ */
+.tabs-row{display:flex;align-items:center;padding:6px 20px 0;border-bottom:1px solid var(--border-light);font-size:13px;flex-wrap:wrap;gap:2px;}
+.tabs-group{display:flex;}
+.tabs-row a{padding:8px 11px;color:var(--blue);border-bottom:2px solid transparent;}
+.tabs-row a:hover{text-decoration:none;background:var(--link-hover-bg);}
+.tabs-row a.sel{color:var(--text);border-bottom-color:var(--muted);font-weight:600;}
+.tabs-spacer{margin-left:auto;display:flex;align-items:center;gap:6px;}
+.protect-badge{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#fef6df;
+  border:1px solid #d4b543;border-radius:2px;font-size:11px;font-weight:800;color:#7a6417;cursor:default;}
+.more-menu-btn{background:none;border:none;font-size:16px;color:var(--muted);cursor:pointer;padding:6px 8px;}
 
-  h1.firstHeading{
-    font-family:"Linux Libertine",Georgia,serif;font-weight:normal;
-    font-size:28px;border-bottom:1px solid #a2a9b1;padding:14px 0 4px;margin:6px 0 0;
-  }
-  .subtitle{font-size:12.5px;color:#54595d;font-style:italic;margin:2px 0 12px;}
+/* ============ 3-col layout ============ */
+.vector-body{display:flex;align-items:flex-start;max-width:1600px;margin:0 auto;padding-bottom:40px;}
+.toc-col,.aspetto-col{width:212px;flex:none;padding:14px 10px;position:sticky;top:var(--sticky-h);align-self:flex-start;
+  max-height:calc(100vh - var(--sticky-h));overflow:auto;}
+.content-col{flex:1;min-width:0;padding:14px 26px;}
+.content-inner{max-width:46rem;}
+html.width-wide .content-inner{max-width:none;}
 
-  h2,h3{font-family:"Linux Libertine",Georgia,serif;font-weight:normal;}
-  h2{font-size:22px;border-bottom:1px solid #a2a9b1;margin:22px 0 8px;padding-bottom:3px;}
-  h3{font-size:17px;margin:16px 0 6px;}
-  .mw-editsection{font-family:sans-serif;font-size:11px;color:#54595d;font-style:normal;}
-  .mw-editsection a{color:#0645ad;}
+.side-box{border:1px solid var(--border-light);border-radius:4px;background:var(--box-bg);}
+.side-box__head{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;font-weight:700;font-size:13px;}
+.side-box__hide{background:none;border:none;color:var(--blue);font-size:12px;cursor:pointer;font-weight:normal;}
+.side-box__body{padding:2px 12px 10px;font-size:13px;}
+.side-box.is-collapsed .side-box__body{display:none;}
 
-  p{margin:0 0 12px;}
-  sup{font-size:10px;}
+#toc-desktop ol{list-style:none;margin:0;padding-left:0;counter-reset:tocN;}
+#toc-desktop > ol > li{counter-increment:tocN;margin:1px 0;}
+#toc-desktop > ol > li > a::before{content:counter(tocN) "\00a0\00a0";color:var(--muted);}
+#toc-desktop ol ol{list-style:none;padding-left:18px;margin:2px 0 4px;counter-reset:tocSub;max-height:500px;overflow:hidden;transition:max-height 220ms ease,opacity 220ms ease;opacity:1;}
+#toc-desktop li.is-collapsed > ol{max-height:0;opacity:0;margin:0;}
+#toc-desktop ol ol li{counter-increment:tocSub;}
+#toc-desktop ol ol li a::before{content:counter(tocN) "." counter(tocSub) "\00a0\00a0";color:var(--muted);}
+.toc-line{display:flex;align-items:center;gap:4px;}
+.toc-chevron{background:none;border:none;color:var(--muted);cursor:pointer;font-size:10px;width:14px;flex:none;transition:transform 180ms ease;}
+.toc-chevron.is-open{transform:rotate(90deg);}
+#toc-desktop a{color:var(--blue);display:inline-block;padding:2px 0;flex:1;}
+#toc-desktop a.is-active{color:var(--text);font-weight:700;}
+#toc-desktop li:not(.has-children) .toc-chevron{visibility:hidden;}
 
-  /* hatnotes / banners */
-  .hatnote{font-style:italic;color:#54595d;padding:2px 0 6px 22px;margin:4px 0;font-size:13px;}
-  .parody-banner{
-    border:1px solid #c8ccd1;background:#fef6e7;padding:8px 12px;margin:12px 0;font-size:12.5px;
-    display:flex;gap:10px;align-items:flex-start;
-  }
-  .parody-banner .icon{font-size:18px;line-height:1;}
-  .ambox{
-    border:1px solid #c8ccd1;border-left:4px solid #f4c430;background:#fbfbfb;
-    padding:8px 12px;margin:12px 0;font-size:12.5px;display:flex;gap:10px;align-items:flex-start;
-  }
-  .ambox .icon{font-size:18px;}
+.aspetto-fieldset{margin:10px 0 4px;}
+.aspetto-fieldset legend{font-size:12px;color:var(--muted);margin-bottom:4px;padding:0;}
+.aspetto-opt{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:13px;cursor:pointer;}
+.aspetto-opt input{margin:0;accent-color:var(--blue);}
 
-  /* contents box */
-  .toc{
-    display:inline-block;border:1px solid #a2a9b1;background:#f8f9fa;
-    padding:8px 16px 10px;margin:8px 0 16px;font-size:13px;
-  }
-  .toc .toctitle{text-align:center;font-weight:bold;margin-bottom:4px;}
-  .toc ol{margin:0;padding-left:22px;}
-  .toc ol ol{padding-left:20px;}
-  .toc a{display:block;}
-  .toc .tocnumber{color:#202122;padding-right:6px;}
+/* ============ article content ============ */
+.mw-body-content{font-size:15px;line-height:1.7;transition:font-size 150ms ease;}
+html.text-small .mw-body-content{font-size:13px;}
+html.text-large .mw-body-content{font-size:17.5px;}
+.subtitle{font-size:.87em;color:var(--muted);font-style:italic;margin:2px 0 12px;}
+.hatnote{display:flex;gap:8px;align-items:flex-start;font-style:italic;color:var(--muted);font-size:.92em;margin:0 0 10px;padding:2px 0;}
+.hatnote .ic{flex:none;font-style:normal;}
+.ambox{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--border-light);border-left:4px solid #f4c430;
+  background:var(--box-bg);padding:9px 12px;margin:12px 0;font-size:.87em;}
+.ambox .ic{font-size:19px;flex:none;line-height:1;}
+.parody-box{border-left-color:#3366bb;}
 
-  /* infobox */
-  .infobox{
-    float:right;clear:right;width:270px;margin:0 0 14px 18px;
-    border:1px solid #a2a9b1;background:#f8f9fa;font-size:12.5px;line-height:1.5;
-  }
-  .infobox .ib-title{background:#ccccff;text-align:center;font-weight:bold;padding:6px 8px;font-size:14px;}
-  .infobox .ib-img{text-align:center;padding:10px 8px 4px;}
-  .infobox .ib-face{
-    width:150px;height:170px;margin:0 auto;background:#e6e6e6;border:1px solid #c8ccd1;
-    display:flex;align-items:center;justify-content:center;font-size:52px;color:#9aa0a6;
-  }
-  .infobox .ib-cap{font-size:11px;color:#54595d;padding:4px 8px;text-align:center;}
-  .infobox table{width:100%;border-collapse:collapse;}
-  .infobox th{text-align:left;vertical-align:top;padding:5px 8px;width:38%;background:transparent;}
-  .infobox td{vertical-align:top;padding:5px 8px;}
-  .infobox tr{border-top:1px solid #e3e5e8;}
-  .infobox .ib-section{background:#ccccff;text-align:center;font-weight:bold;padding:4px 8px;}
+.mw-body-content h2{font-family:var(--font-head);font-weight:normal;font-size:1.6em;border-bottom:1px solid var(--border-light);
+  margin:1.5em 0 .5em;padding-bottom:.2em;display:flex;align-items:baseline;gap:8px;}
+.mw-body-content h3{font-family:var(--font-head);font-weight:normal;font-size:1.25em;margin:1.1em 0 .4em;}
+.mw-editsection{font-family:var(--font-ui);font-size:.6em;font-weight:normal;color:var(--muted);margin-left:auto;flex:none;}
+.mw-editsection a{color:var(--blue);}
+.section-toggle{display:none;background:none;border:none;font-size:.62em;color:var(--muted);cursor:pointer;margin-left:auto;flex:none;transition:transform 200ms ease;}
+.section-toggle.is-open{transform:rotate(180deg);}
+.section-body{overflow:hidden;transition:max-height 260ms ease;}
+html.no-motion .section-body{transition:none;}
 
-  .citneeded{font-size:10px;color:#54595d;vertical-align:super;}
-  .refs{font-size:12px;}
-  .refs ol{padding-left:26px;}
-  .refs li{margin-bottom:3px;}
-  blockquote{margin:0 0 12px 20px;color:#202122;border-left:2px solid #eaecf0;padding-left:12px;font-style:italic;}
+.mw-body-content p{margin:0 0 .9em;}
+sup.ref-sup{font-size:.72em;line-height:1;}
+sup.ref-sup a{padding:1px 2px;border-radius:2px;}
+.cn{font-size:.7em;color:var(--muted);vertical-align:super;}
+blockquote{margin:0 0 1em 1.2em;padding-left:12px;border-left:2px solid var(--border-light);color:var(--text);font-style:italic;}
+.flash-target{animation:flashHL 1.2s ease;}
+html.no-motion .flash-target{animation:none;background:#fff6c2;}
+@keyframes flashHL{ 0%{background:#fff6c2;} 100%{background:transparent;} }
 
-  /* footer */
-  .footer{
-    font-size:11.5px;color:#54595d;padding:16px 18px 40px;border-top:1px solid #c8ccd1;
-    background:#f6f6f6;
-  }
-  .footer p{margin:0 0 8px;}
-  .footer a{color:#0645ad;}
+.wiki-thumb{border:1px solid var(--border-light);background:var(--box-bg);padding:5px;font-size:.78em;margin:0 0 1em 1.2em;
+  float:right;width:230px;clear:right;}
+.wiki-thumb img{display:block;width:100%;height:170px;object-fit:cover;cursor:zoom-in;background:var(--box-bg2);}
+.wiki-thumb figcaption{padding:6px 3px 2px;color:var(--muted);line-height:1.4;}
+.wiki-thumb.left{float:left;margin:0 1.2em 1em 0;}
 
-  @media (max-width:640px){
-    .sidebar{display:none;}
-    .infobox{float:none;width:auto;margin:0 0 14px;}
-    .search input{width:44vw;}
-    .tabs .left a:nth-child(n+2){display:none;}
-  }
+.infobox{float:right;clear:right;width:272px;margin:4px 0 14px 18px;border:1px solid var(--border-light);
+  background:var(--box-bg);font-size:.85em;line-height:1.5;}
+.infobox .ib-title{background:var(--box-bg2);text-align:center;font-weight:700;padding:7px 8px;font-size:1.05em;font-family:var(--font-head);}
+.infobox .ib-img{text-align:center;padding:9px 8px 4px;}
+.infobox .ib-face{width:100%;max-width:180px;height:190px;object-fit:cover;object-position:center top;margin:0 auto;
+  display:block;border:1px solid var(--border-light);cursor:zoom-in;}
+.infobox .ib-cap{font-size:.85em;color:var(--muted);padding:5px 6px 2px;text-align:center;}
+.infobox .ib-signature{max-width:100%;max-height:34px;display:block;margin:6px auto 0;}
+.infobox table{width:100%;border-collapse:collapse;}
+.infobox th{text-align:left;vertical-align:top;padding:5px 8px;width:38%;font-weight:600;}
+.infobox td{vertical-align:top;padding:5px 8px;}
+.infobox tr{border-top:1px solid var(--border-light);}
+.infobox .ib-section{background:var(--box-bg2);text-align:center;font-weight:700;padding:4px 8px;}
+.infobox .ib-sub{font-size:.85em;color:var(--muted);}
+
+.toc-inline{display:none;}
+
+.refs-list{font-size:.85em;list-style:none;margin:0;padding:0;counter-reset:refN;}
+.refs-list li{display:flex;gap:6px;margin:0 0 5px;padding:2px 4px;border-radius:3px;}
+.refs-list li::before{counter-increment:refN;content:counter(refN) ".";color:var(--muted);flex:none;}
+.refs-list a.back{margin-right:2px;}
+
+.catlinks{border:1px solid var(--border-light);background:var(--box-bg);padding:8px 12px;margin-top:26px;font-size:.82em;}
+.catlinks b{font-weight:700;}
+
+.footer-page{border-top:1px solid var(--border-light);background:var(--box-bg);padding:18px 20px 60px;font-size:11.5px;color:var(--muted);}
+.footer-page p{margin:0 0 8px;max-width:60rem;}
+.footer-page a{color:var(--blue);}
+
+/* ============ image lightbox ============ */
+.lightbox{position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column;}
+.lightbox.is-open{display:flex;}
+.lightbox__top{display:flex;justify-content:flex-end;align-items:center;gap:10px;padding:12px 16px;color:#fff;font-size:13px;flex:none;}
+.lightbox__count{color:#ccc;}
+.lightbox__iconbtn{background:rgba(255,255,255,.08);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;}
+.lightbox__iconbtn:hover{background:rgba(255,255,255,.18);}
+.lightbox__stage{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;padding:0 70px;}
+.lightbox__stage img{max-width:100%;max-height:100%;object-fit:contain;}
+.lightbox__nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:none;color:#fff;font-size:18px;cursor:pointer;}
+.lightbox__nav:hover{background:rgba(255,255,255,.2);}
+.lightbox__nav--prev{left:16px;}
+.lightbox__nav--next{right:16px;}
+.lightbox__info{flex:none;background:#101010;color:#e8e8e8;padding:12px 20px;font-size:13px;}
+.lightbox__caption-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:8px;}
+.lightbox__caption{flex:1;line-height:1.5;}
+.lightbox__caption a{color:#7fb2ff;}
+.lightbox__details-btn{flex:none;background:#3366bb;color:#fff;border:none;border-radius:4px;padding:8px 14px;font-size:12.5px;
+  cursor:pointer;white-space:nowrap;}
+.lightbox__details-btn:hover{background:#3d76d8;}
+.lightbox__attrib{display:flex;gap:18px;flex-wrap:wrap;font-size:11.5px;color:#9a9a9a;border-top:1px solid #2a2a2a;padding-top:8px;}
+.lightbox__attrib span{display:flex;align-items:center;gap:5px;}
+
+/* ============ mobile / narrow layout ============ */
+@media (max-width: 1000px){
+  .toc-col,.aspetto-col{display:none;}
+  .masthead-actions{display:none;}
+  .searchbox{order:3;flex-basis:100%;max-width:none;margin:8px 0 0;}
+  .title-row{padding:12px 14px 0;}
+  h1.firstHeading{font-size:24px;}
+  .tabs-row{padding:6px 14px 0;}
+  .tabs-row a{padding:7px 8px;}
+  .content-col{padding:10px 14px;}
+  .content-inner{max-width:none;}
+  .infobox{float:none;width:auto;margin:6px 0 14px;}
+  .infobox .ib-face{max-width:220px;}
+  .wiki-thumb{float:none;width:auto;margin:0 0 1em;}
+  .wiki-thumb img{height:auto;max-height:260px;}
+  .toc-inline{display:block;margin:10px 0 16px;}
+  .mw-editsection{display:none;}
+  .section-toggle{display:inline-block;}
+  .lightbox__stage{padding:0 8px;}
+  .lightbox__nav{width:38px;height:38px;}
+  .lightbox__caption-row{flex-direction:column;}
+  .lightbox__details-btn{align-self:flex-start;}
+}
+@media (max-width:1220px) and (min-width:1001px){
+  .toc-col{width:190px;}
+  .aspetto-col{width:190px;}
+}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#content-start">Vai al contenuto</a>
 
-<div class="p-personal">
-  Not logged in
-  <a href="#">Talk</a>
-  <a href="#">Contributions</a>
-  <a href="#">Create account</a>
-  <a href="#">Log in</a>
-</div>
-
-<div class="head">
-  <div class="logo">
-    <div class="globe" aria-hidden="true"><span>W?</span></div>
-    <div class="wordmark">
-      <b>WIKIPEDIA</b>
-      <small>THE FREE-ISH ENCYCLOPEDIA</small>
+<div class="header-wrap">
+  <div class="masthead">
+    <button class="hamburger-btn" id="hamburger-btn" aria-haspopup="true" aria-expanded="false" aria-label="Menu principale">&#9776;</button>
+    <div class="logo-block">
+      <div class="wm-globe" aria-hidden="true"></div>
+      <div class="wordmark"><span class="wm-name">WIKIPEDIA</span><span class="wm-tag" style="display:block;">25 anni di enciclopedia libera</span></div>
+    </div>
+    <div class="searchbox">
+      <form id="search-form" autocomplete="off">
+        <input type="text" id="search-input" placeholder="Cerca in Wikipedia" aria-label="Cerca in Wikipedia">
+        <button type="submit">Ricerca</button>
+      </form>
+      <div class="search-suggest" id="search-suggest">
+        <div class="search-suggest__item" id="search-suggest-item">
+          <img src="../assets/pictures/profile.jpg" alt="">
+          <span>Tito Nicola Drugman</span>
+        </div>
+        <div class="search-suggest__note">Nessun altro risultato è mai stato trovato per nessuna query.</div>
+      </div>
+    </div>
+    <div class="masthead-actions">
+      <a href="#" id="donate-link">Fai una donazione</a>
+      <a href="#" id="register-link">Registrati</a>
+      <a href="#" id="login-link">Entra</a>
     </div>
   </div>
-  <form class="search" onsubmit="return false;">
-    <input type="text" placeholder="Search Wikipedia" aria-label="Search">
-    <button type="submit">Search</button>
-  </form>
+  <nav class="menu-dropdown" id="menu-dropdown">
+    <h4>Navigazione</h4>
+    <ul>
+      <li><a href="#content-start">Pagina principale (questa)</a></li>
+      <li><button type="button" id="random-article-btn">Una voce a caso</button></li>
+      <li><a href="#refs">Aiuto</a></li>
+    </ul>
+    <h4>In altri progetti</h4>
+    <ul>
+      <li><a href="../index.html" target="_top">Portfolio reale</a></li>
+      <li><a href="../timeline.html" target="_top">Timeline completa</a></li>
+    </ul>
+  </nav>
 </div>
 
-<div class="container">
+<div class="sticky-header" id="sticky-header">
+  <button class="hamburger-btn" id="sticky-hamburger-btn" aria-label="Menu principale">&#9776;</button>
+  <div class="wm-globe" aria-hidden="true"></div>
+  <span class="sticky-header__title">Tito Nicola Drugman</span>
+  <div class="sticky-header__icons">
+    <button type="button" title="Discussione" id="sticky-talk-btn">&#128172;</button>
+    <button type="button" title="Cronologia" id="sticky-hist-btn">&#128340;</button>
+    <button type="button" title="Aspetto" id="sticky-aspetto-btn">Aa</button>
+  </div>
+</div>
 
-  <nav class="sidebar">
-    <div class="portlet">
-      <ul>
-        <li><a href="#">Main page</a></li>
-        <li><a href="#">Contents</a></li>
-        <li><a href="#">Current events</a></li>
-        <li><a href="#">Random article</a></li>
-        <li><a href="#">About Wikipedia</a></li>
-      </ul>
+<div class="title-row">
+  <h1 class="firstHeading">Tito Nicola Drugman</h1>
+  <div class="lang-select">
+    <button class="lang-btn" id="lang-btn">&#26862; 2 lingue &#8964;</button>
+    <div class="lang-dropdown" id="lang-dropdown">
+      <a href="#" data-lang-joke="1">English (traduzione automatica, ovviamente)</a>
+      <a href="#" data-lang-joke="1">Latin (Titus Nicolaus Drugmanus)</a>
+      <div class="lang-dropdown__note">Nessuna di queste versioni esiste davvero.</div>
     </div>
-    <div class="portlet">
-      <h3>Contribute</h3>
-      <ul>
-        <li><a href="#">Help</a></li>
-        <li><a href="#">Recent changes</a></li>
-        <li><a href="#">Upload file</a></li>
-      </ul>
-    </div>
-    <div class="portlet">
-      <h3>Tools</h3>
-      <ul>
-        <li><a href="#">What links here</a></li>
-        <li><a href="#">Related changes</a></li>
-        <li><a href="#">Permanent link</a></li>
-        <li><a href="#">Page information</a></li>
-        <li><a href="#">Cite this page</a></li>
-      </ul>
-    </div>
-    <div class="portlet">
-      <h3>Print/export</h3>
-      <ul>
-        <li><a href="#">Download as PDF</a></li>
-        <li><a href="#">Printable version</a></li>
-      </ul>
-    </div>
-    <div class="portlet">
-      <h3>In other projects</h3>
-      <ul>
-        <li><a href="../index.html" target="_top">Actual portfolio</a></li>
-        <li><a href="../timeline.html" target="_top">Full timeline</a></li>
-      </ul>
+  </div>
+</div>
+
+<div class="tabs-row">
+  <div class="tabs-group">
+    <a href="#" class="sel">Voce</a>
+    <a href="#" id="talk-tab">Discussione</a>
+  </div>
+  <div class="tabs-spacer">
+    <a href="#" class="sel">Leggi</a>
+    <a href="#" id="source-tab">Visualizza sorgente</a>
+    <a href="#" id="history-tab">Cronologia</a>
+    <span class="protect-badge" title="Voce semi-protetta: modificabile solo dal soggetto stesso, che è anche l'unico ad averla mai modificata">S</span>
+    <button class="more-menu-btn" title="Altre opzioni">&#8942;</button>
+  </div>
+</div>
+
+<div class="vector-body">
+
+  <nav class="toc-col" aria-label="Indice">
+    <div class="side-box" id="toc-box">
+      <div class="side-box__head"><span>Indice</span><button class="side-box__hide" data-hide-target="toc-box">nascondi</button></div>
+      <div class="side-box__body">
+        <nav id="toc-desktop"></nav>
+      </div>
     </div>
   </nav>
 
-  <main class="content">
-    <div class="tabs">
-      <div class="left">
-        <a class="sel" href="#">Article</a>
-        <a href="#">Talk</a>
-      </div>
-      <div class="right">
-        <a href="#">Read</a>
-        <a href="#">Edit</a>
-        <a href="#">View history</a>
-      </div>
+  <main class="content-col">
+    <div class="content-inner mw-body-content" id="content-start">
+
+    <p class="subtitle">Da Wikipedia, l'enciclopedia libera.</p>
+
+    <p class="hatnote"><span class="ic">&#8853;</span> <span>Questa voce parla della persona reale. Per l'omonimo dittatore jugoslavo, vedi <a class="new" href="#">Tito (disambigua)</a>. Per la sostanza stupefacente, vedi <a class="new" href="#">Droga</a>.</span></p>
+    <p class="hatnote"><span class="ic">&#8853;</span> <span>Non confondere con <a class="new" href="#">Tito "Blue Shell" Drugman</a>, pilota di Mario Kart Wii di dubbia esistenza.</span></p>
+
+    <div class="ambox parody-box">
+      <span class="ic">&#127183;</span>
+      <span><b>Questa è una pagina parodia.</b> Non è affiliata, sponsorizzata né approvata da Wikipedia o dalla Wikimedia Foundation. Ogni "fatto" qui sotto è stato scritto dal soggetto su se stesso, per gioco. Nessun server è stato maltrattato nella stesura.</span>
     </div>
-
-    <h1 class="firstHeading">Tito Nicola Drugman</h1>
-    <p class="subtitle">From Wikipedia, the free encyclopedia</p>
-
-    <div class="parody-banner">
-      <span class="icon">🃏</span>
-      <span><b>This is a parody.</b> This page is not affiliated with, endorsed by, or connected to Wikipedia or the Wikimedia Foundation. Every "fact" below is fictional and written by the subject about himself, in good fun. No globes were harmed.</span>
-    </div>
-
-    <p class="hatnote">Not to be confused with <a class="new" href="#">Tito the Historical Yugoslav One</a> or <a class="new" href="#">a drug, man</a>.</p>
-
     <div class="ambox">
-      <span class="icon">📚</span>
-      <span>This article <b>relies excessively on sources too closely associated with the subject</b>, namely the subject. Please help improve it by adding sources written by literally anyone else. <i>(This tag will never be removed.)</i></span>
+      <span class="ic">&#128218;</span>
+      <span>Questa voce <b>si basa eccessivamente su fonti troppo vicine al soggetto</b>, ossia il soggetto. Aiuta a migliorarla aggiungendo fonti scritte da chiunque altro. <i>(Il template non verrà mai rimosso.)</i></span>
     </div>
 
-    <!-- INFOBOX -->
     <aside class="infobox">
       <div class="ib-title">Tito Nicola Drugman</div>
       <div class="ib-img">
-        <div class="ib-face" aria-hidden="true">👤</div>
-        <div class="ib-cap">Drugman, allegedly, circa a Tuesday.<sup class="citneeded">[<a class="new" href="#">citation needed</a>]</sup></div>
+        <img class="ib-face wiki-lightbox-img" src="../assets/pictures/profile.jpg" alt="Tito Nicola Drugman" data-caption="Drugman, allegedly, ritratto in un momento imprecisato tra un training run e l'altro." data-credit="Autoscatto" data-license="Uso ragionevole (è la sua faccia)">
+        <div class="ib-cap">Drugman, allegedly.<sup class="cn">[<a class="new" href="#">senza fonte</a>]</sup></div>
       </div>
       <table>
-        <tr><th>Born</th><td>Sometime · Milan, Italy<br><span style="color:#54595d;font-size:11px;">(has been "finishing his Master's" ever since)</span></td></tr>
-        <tr><th>Nationality</th><td>Italian</td></tr>
-        <tr><th>Occupation</th><td>Alleged AI engineer</td></tr>
-        <tr><th>Known for</th><td>Running LLMs locally so nobody has to pay for an API; owning two GPUs and mentioning it</td></tr>
-        <tr><th>Education</th><td>Politecnico di Milano (<a class="new" href="#">still</a>)</td></tr>
-        <tr><td class="ib-section" colspan="2">Technical career</td></tr>
-        <tr><th>Fields</th><td>RAG, edge AI, quantisation, procrastination</td></tr>
-        <tr><th>Employer</th><td>European Court of Auditors <i>(pending, dramatically)</i></td></tr>
-        <tr><th>GPUs</th><td>2 × RTX 5060 Ti<br><span style="font-size:11px;color:#54595d;">(will tell you the VRAM unprompted)</span></td></tr>
-        <tr><td class="ib-section" colspan="2">Metrics</td></tr>
-        <tr><th>CodeBLEU</th><td>0.186 → 0.257<br><span style="font-size:11px;color:#54595d;">(relative, as he is legally obligated to specify)</span></td></tr>
-        <tr><th>Sleep schedule</th><td>Deprecated</td></tr>
+        <tr><td class="ib-section" colspan="2">Informazioni generali</td></tr>
+        <tr><th>Nato</th><td>Milano, Italia<br><span class="ib-sub">(risiede tuttora nella stessa città, per motivi mai del tutto chiariti)</span></td></tr>
+        <tr><th>Nazionalità</th><td>Italiana</td></tr>
+        <tr><th>Occupazione</th><td>Ingegnere AI, presunto</td></tr>
+        <tr><th>Noto per</th><td>Far girare modelli in locale per non pagare l'API; possedere due GPU e dirlo a chiunque</td></tr>
+        <tr><td class="ib-section" colspan="2">Istruzione</td></tr>
+        <tr><th>Triennale</th><td>Intelligenza Artificiale — Pavia / Milano / Bicocca<sup class="ref-sup" id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup></td></tr>
+        <tr><th>Magistrale</th><td>Politecnico di Milano <i>(tuttora in corso)</i></td></tr>
+        <tr><th>Scambio</th><td>CUHK-Shenzhen, Cina</td></tr>
+        <tr><td class="ib-section" colspan="2">Carriera</td></tr>
+        <tr><th>Datore futuro</th><td>Corte dei Conti Europea <i>(in attesa, drammaticamente)</i></td></tr>
+        <tr><th>GPU</th><td>2 × RTX 5060 Ti<br><span class="ib-sub">(la VRAM verrà comunicata non richiesta)</span></td></tr>
+        <tr><th>Ritmo sonno</th><td>Deprecato</td></tr>
+        <tr><td class="ib-section" colspan="2">Firma</td></tr>
+        <tr><td colspan="2"><img class="ib-signature wiki-lightbox-img" src="../assets/pictures/singature.png" alt="Firma di Tito Nicola Drugman" data-caption="Firma autografa, riprodotta qui senza un motivo enciclopedico chiaro." data-credit="Archivio personale" data-license="Pubblico dominio (probabilmente no)"></td></tr>
       </table>
     </aside>
 
-    <p><b>Tito Nicola Drugman</b> (<i>fl.</i> the present tense) is an Italian artificial-intelligence engineer, alleged Master's student, and self-described "guy who runs the model locally to save on the API bill."<sup>[1]</sup> He is best known for deploying transformers onto microcontrollers so small they can barely hold their own opinions, and for a portfolio website on which this article is, inexplicably, a second page.<sup>[2]</sup></p>
+    <p><b>Tito Nicola Drugman</b> (<i>fl.</i> tempo presente) è un ingegnere informatico italiano, studente magistrale a tempo indeterminato e autodefinitosi "quello che fa girare il modello in locale per risparmiare sull'API".<sup class="ref-sup" id="cite_ref-2"><a href="#cite_note-2">[2]</a></sup> È noto soprattutto per aver infilato dei transformer dentro microcontrollori troppo piccoli per avere opinioni proprie, e per una voce enciclopedica che, inspiegabilmente, esiste.<sup class="ref-sup" id="cite_ref-3"><a href="#cite_note-3">[3]</a></sup></p>
 
-    <p>Drugman rose to modest prominence within a knowledge base of approximately 7,600 code snippets, none of which have thanked him.<sup class="citneeded">[<a class="new" href="#">citation needed</a>]</sup> He is not to be confused with a controlled substance, a Yugoslav statesman, or the recurring temptation to name a variable <code>temp2</code>.</p>
+    <p>Cresciuto a Milano, si è successivamente formato tra tre atenei per la triennale, un solo ateneo (ma due lauree di distanza) per la magistrale, e una libreria Python per tutto il resto. Non va confuso con una sostanza stupefacente, uno statista jugoslavo, o la tentazione ricorrente di chiamare una variabile <code>temp2</code>.<sup class="cn">[<a class="new" href="#">senza fonte</a>]</sup></p>
 
-    <!-- TOC -->
-    <div class="toc" role="navigation">
-      <div class="toctitle">Contents <span style="font-weight:normal;font-size:11px;">[<a href="#">hide</a>]</span></div>
-      <ol>
-        <li><a href="#life"><span class="tocnumber">1</span> Life</a>
-          <ol>
-            <li><a href="#early"><span class="tocnumber">1.1</span> Early life and dual-boot</a></li>
-            <li><a href="#career"><span class="tocnumber">1.2</span> Alleged career</a></li>
-          </ol>
-        </li>
-        <li><a href="#horn"><span class="tocnumber">2</span> Hornofecinty</a></li>
-        <li><a href="#controversy"><span class="tocnumber">3</span> Controversy</a></li>
-        <li><a href="#personal"><span class="tocnumber">4</span> Personal life</a></li>
-        <li><a href="#death"><span class="tocnumber">5</span> Death</a></li>
-        <li><a href="#see"><span class="tocnumber">6</span> See also</a></li>
-        <li><a href="#refs"><span class="tocnumber">7</span> References</a></li>
-      </ol>
+    <nav class="toc-inline side-box is-collapsed" id="toc-mobile-box">
+      <div class="side-box__head"><span>Indice</span><button class="side-box__hide" data-hide-target="toc-mobile-box">apri</button></div>
+      <div class="side-box__body" style="display:none;">
+        <nav id="toc-mobile"></nav>
+      </div>
+    </nav>
+
+    <section class="wiki-section" data-id="biografia">
+      <h2 id="biografia">Biografia <button class="section-toggle is-open" aria-label="Comprimi sezione">&#9662;</button><span class="mw-editsection">[<a class="new" href="#">modifica</a> | <a class="new" href="#">modifica wikitesto</a>]</span></h2>
+      <div class="section-body">
+
+        <h3 id="primi-anni">Primi anni e dual-boot</h3>
+        <p>Drugman nasce e cresce a Milano, dove tuttora vive coi genitori e con una partizione Linux che giura essere "fondamentalmente stabile ormai".<sup class="ref-sup" id="cite_ref-4"><a href="#cite_note-4">[4]</a></sup> Le fonti concordano sul fatto che abbia raggiunto la piena autocoscienza la prima volta che un training run è terminato con successo durante la notte, e da allora insegue quella sensazione.</p>
+        <p>Da adolescente ha trascorso un anno di scambio negli Stati Uniti, un'esperienza che descrive come "formativa" e di cui, curiosamente, ricorda soprattutto il fuso orario.<sup class="cn">[<a class="new" href="#">dubbio – discutine</a>]</sup></p>
+
+        <figure class="wiki-thumb">
+          <img class="wiki-lightbox-img" src="../assets/pictures/degree_1.jpg" alt="Discussione della tesi triennale" data-caption="Discussione della tesi triennale, Università degli Studi di Pavia." data-credit="Fotografo non accreditato" data-license="Tutti i diritti riservati, in teoria">
+          <figcaption>Discussione della tesi triennale, Pavia.</figcaption>
+        </figure>
+        <h3 id="formazione">Formazione</h3>
+        <p>Consegue la laurea triennale in Intelligenza Artificiale frequentando contemporaneamente tre atenei — Pavia, Milano Statale e Bicocca — una scelta che i biografi attribuiscono al desiderio di collezionare il maggior numero possibile di tessere universitarie.<sup class="ref-sup" id="cite_ref-1b"><a href="#cite_note-1">[1]</a></sup> La tesi, sviluppata durante uno stage in un'azienda di semiconduttori, riguardava l'ottimizzazione di iperparametri per sistemi embedded — argomento che continua a spiegare a chiunque gli chieda, anche solo educatamente, "come va".</p>
+        <p>Prosegue con la magistrale in Ingegneria Informatica al Politecnico di Milano, dove ha scelto deliberatamente un percorso a base di progetti invece che di soli esami, definendolo poi "più lento, ma almeno soffro con uno scopo".</p>
+
+        <figure class="wiki-thumb">
+          <img class="wiki-lightbox-img" src="../assets/pictures/china_8.jpg" alt="Il campus di CUHK-Shenzhen" data-caption="Il campus della Chinese University of Hong Kong, Shenzhen, all'ora del tramonto." data-credit="Fotografo non accreditato" data-license="Pubblico dominio (probabilmente no)">
+          <figcaption>Il campus di CUHK-Shenzhen.</figcaption>
+        </figure>
+        <h3 id="shenzhen">Scambio a Shenzhen</h3>
+        <p>Nel 2025 vola a <a class="new" href="#">Shenzhen</a> per un semestre di scambio alla CUHK, esperienza che descrive come "sorprendentemente ben documentata fotograficamente" e che secondo alcuni osservatori ha contribuito in modo determinante alla sezione "Miracoli" di questa voce.<sup class="ref-sup" id="cite_ref-5"><a href="#cite_note-5">[5]</a></sup> Durante il soggiorno ha continuato a far girare esperimenti di ricerca sul proprio doppio server RTX a Milano, da remoto, dimostrando che l'unica cosa più stabile del suo dual-boot è la sua connessione SSH.</p>
+      </div>
+    </section>
+
+    <section class="wiki-section" data-id="carriera">
+      <h2 id="carriera">Carriera <button class="section-toggle is-open" aria-label="Comprimi sezione">&#9662;</button><span class="mw-editsection">[<a class="new" href="#">modifica</a> | <a class="new" href="#">modifica wikitesto</a>]</span></h2>
+      <div class="section-body">
+        <p>Durante uno stage come AI Engineer presso un'importante azienda di semiconduttori, Drugman contribuisce a progetti che non può raccontare a causa di un accordo di riservatezza — dettaglio che, secondo i colleghi, ha soltanto amplificato la sua fama in ufficio.<sup class="ref-sup" id="cite_ref-6"><a href="#cite_note-6">[6]</a></sup> Parallelamente svolge da anni attività di formatore in robotica industriale su piattaforme Comau e Fanuc, insegnando a bracci meccanici a compiere azioni utili e, occasionalmente, vagamente inquietanti.</p>
+        <p>È inoltre guida museale certificata, ruolo che gli richiede di spiegare concetti tecnici complessi a pubblici eterogenei — competenza che esercita regolarmente anche fuori orario di lavoro, non richiesta.</p>
+        <p>È stato selezionato per un tirocinio in intelligenza artificiale presso la Corte dei Conti Europea, in Lussemburgo, un fatto che da allora cita in email a proprietari di casa, medici, professori, università e — a quanto pare — un'enciclopedia.<sup class="ref-sup" id="cite_ref-7"><a href="#cite_note-7">[7]</a></sup></p>
+      </div>
+    </section>
+
+    <section class="wiki-section" data-id="hornofecinty">
+      <h2 id="hornofecinty">Hornofecinty <button class="section-toggle is-open" aria-label="Comprimi sezione">&#9662;</button><span class="mw-editsection">[<a class="new" href="#">modifica</a> | <a class="new" href="#">modifica wikitesto</a>]</span></h2>
+      <div class="section-body">
+        <div class="ambox">
+          <span class="ic">&#128300;</span>
+          <span>La <b>neutralità</b> di questa sezione è contestata, principalmente perché nessun altro riesce a definire questa parola. Discussione in corso nella <a class="new" href="#">pagina di discussione</a>.</span>
+        </div>
+        <p><b>Hornofecinty</b> (dal drugmaniano <i>hornofek</i>, "ingegnerizzare oltre il necessario", + <i>-inty</i>, suffisso di significato incerto) è un campo di studi proposto, un tratto della personalità e, secondo il suo unico praticante, "una vibe a tutti gli effetti".<sup class="ref-sup" id="cite_ref-8"><a href="#cite_note-8">[8]</a></sup> Descrive in generale la compulsione a risolvere un problema da quindici minuti con una pipeline di sei settimane, tre formati di quantizzazione e un benchmark.</p>
+        <p>Sintomi acuti includono: comprare una seconda GPU "per la tesi"; sostituire un <code>if</code> funzionante con una Random Forest; rispondere a "come va?" con una cifra di latenza in millisecondi. La condizione è cronica, incurabile e, secondo la maggior parte dei resoconti, strutturalmente indistinguibile dalla sua personalità.<sup class="cn">[<a class="new" href="#">parole ingannevoli</a>]</sup></p>
+        <blockquote>«Poteva essere uno script. Lui ne ha fatto un sistema.»<br>— revisione tra pari, presumibilmente<sup class="ref-sup" id="cite_ref-9"><a href="#cite_note-9">[9]</a></sup></blockquote>
+      </div>
+    </section>
+
+    <section class="wiki-section" data-id="miracoli">
+      <h2 id="miracoli">Miracoli <button class="section-toggle is-open" aria-label="Comprimi sezione">&#9662;</button><span class="mw-editsection">[<a class="new" href="#">modifica</a> | <a class="new" href="#">modifica wikitesto</a>]</span></h2>
+      <div class="section-body">
+        <p>Alla figura di Drugman vengono attribuiti diversi prodigi, nessuno confermato dalla competente commissione:</p>
+        <ul>
+          <li>aver fatto funzionare l'accesso remoto al primo tentativo, senza errori di autenticazione <i>(non riproducibile)</i>;</li>
+          <li>aver convinto un servizio cloud di sincronizzazione file a comportarsi in modo identico su Linux e Windows;</li>
+          <li>aver sopravvissuto a un intero semestre a Shenzhen senza perdere l'adattatore di corrente;</li>
+          <li>aver fatto una domanda in aula ricevendo una risposta comprensibile al primo tentativo.<sup class="ref-sup" id="cite_ref-10"><a href="#cite_note-10">[10]</a></sup></li>
+        </ul>
+        <figure class="wiki-thumb left">
+          <img class="wiki-lightbox-img" src="../assets/pictures/china_1.jpg" alt="Pergamena di calligrafia ricevuta in dono" data-caption="Una pergamena di calligrafia, ricevuta in dono — non autoprodotta, per chiarezza." data-credit="Dono di terzi" data-license="Uso concesso, verbalmente">
+          <figcaption>Pergamena ricevuta in dono. Non è farina del suo sacco.</figcaption>
+        </figure>
+        <p>Attribuitagli anche la capacità di tenere un discorso in una lingua che sta ancora imparando, in piedi, davanti a una platea paziente, senza (del tutto) perdere il filo.<sup class="ref-sup" id="cite_ref-11"><a href="#cite_note-11">[11]</a></sup></p>
+      </div>
+    </section>
+
+    <section class="wiki-section" data-id="controversie">
+      <h2 id="controversie">Controversie <button class="section-toggle is-open" aria-label="Comprimi sezione">&#9662;</button><span class="mw-editsection">[<a class="new" href="#">modifica</a> | <a class="new" href="#">modifica wikitesto</a>]</span></h2>
+      <div class="section-body">
+        <p>Drugman è stato coinvolto in diverse dispute, tutte con se stesso:</p>
+        <ul>
+          <li>In un episodio scarsamente diffuso, ha citato un miglioramento percentuale senza indicare immediatamente il valore assoluto di riferimento. Si è successivamente scusato, ha aggiunto il numero mancante, e ora lo include preventivamente anche nelle conversazioni informali.<sup class="ref-sup" id="cite_ref-12"><a href="#cite_note-12">[12]</a></sup></li>
+          <li>È accusato di riferirsi alla propria workstation con due GPU nello stesso tono con cui altri parlano dei propri animali domestici.</li>
+          <li>Sostiene che le sue email "non sembrino scritte dall'intelligenza artificiale", posizione ritenuta ironica vista la sua professione, la sua workstation e questa stessa voce.<sup class="ref-sup" id="cite_ref-13"><a href="#cite_note-13">[13]</a></sup></li>
+        </ul>
+        <p>Nonostante ripetute richieste, Drugman non ha mai confermato né smentito se Docker Compose sia "fondamentalmente DevOps", citando un'indagine interna ancora in corso.</p>
+      </div>
+    </section>
+
+    <section class="wiki-section" data-id="onorificenze">
+      <h2 id="onorificenze">Onorificenze <button class="section-toggle is-open" aria-label="Comprimi sezione">&#9662;</button><span class="mw-editsection">[<a class="new" href="#">modifica</a> | <a class="new" href="#">modifica wikitesto</a>]</span></h2>
+      <div class="section-body">
+        <ul>
+          <li>&#127942; <b>Cavaliere dell'Ordine del Kernel Panic</b> — «per aver guardato lo schermo nero senza piangere»</li>
+          <li>&#129351; <b>Medaglia per la Costanza nell'Autoironia Documentale</b>, categoria voci enciclopediche autoscritte</li>
+          <li>&#128220; <b>Menzione d'onore</b> per il maggior numero di modelli linguistici per metro quadro d'Italia</li>
+          <li>&#127942; <b>Premio "Ma Funziona Sul Mio PC"</b>, edizione perenne</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="wiki-section" data-id="vita-privata">
+      <h2 id="vita-privata">Vita privata <button class="section-toggle is-open" aria-label="Comprimi sezione">&#9662;</button><span class="mw-editsection">[<a class="new" href="#">modifica</a> | <a class="new" href="#">modifica wikitesto</a>]</span></h2>
+      <div class="section-body">
+        <p>Drugman risiede a Milano con i genitori e un elenco di cose da fare in costante, ambizioso aggiornamento.<sup class="ref-sup" id="cite_ref-14"><a href="#cite_note-14">[14]</a></sup> Tra i suoi interessi figurano i terminali, il dual-boot, e la tendenza a dire alle persone che il modello locale è "onestamente abbastanza vicino" a quelli commerciali migliori, per poi aggiungere sottovoce "su alcuni task".</p>
+        <p>È fluente in italiano, inglese e messaggi di commit passivo-aggressivi. Non vive, contrariamente a quanto si dice, dentro un microcontrollore, benché lo abbia preso in considerazione per la bassa latenza.</p>
+      </div>
+    </section>
+
+    <section class="wiki-section" data-id="morte">
+      <h2 id="morte">Morte <button class="section-toggle is-open" aria-label="Comprimi sezione">&#9662;</button><span class="mw-editsection">[<a class="new" href="#">modifica</a> | <a class="new" href="#">modifica wikitesto</a>]</span></h2>
+      <div class="section-body">
+        <div class="ambox">
+          <span class="ic">&#9888;&#65039;</span>
+          <span>Questa sezione è scritta come una <b>profezia</b>. Aiuta a migliorarla aspettando.</span>
+        </div>
+        <p>Drugman è, al momento della stesura, vivo e in ritardo su una scadenza. Questa sezione esiste comunque perché ha insistito che la voce fosse "completa".<sup class="ref-sup" id="cite_ref-15"><a href="#cite_note-15">[15]</a></sup></p>
+        <p>Secondo la proiezione più diffusa, non morirà tanto quanto <i>smetterà di essere in esecuzione</i> — la sua coscienza, nel frattempo quantizzata in INT8 e caricata su un microcontrollore che assorbe pochi milliwatt e non dorme mai. Gli storici concordano sul fatto che le sue ultime parole saranno probabilmente "fammi solo ricontrollare un'altra volta", e che, tragicamente, il controllo andrà a buon fine.<sup class="ref-sup" id="cite_ref-16"><a href="#cite_note-16">[16]</a></sup> È previsto un <code>README.md</code> commemorativo.</p>
+      </div>
+    </section>
+
+    <section class="wiki-section" data-id="vedi-anche">
+      <h2 id="vedi-anche">Voci correlate <button class="section-toggle is-open" aria-label="Comprimi sezione">&#9662;</button><span class="mw-editsection">[<a class="new" href="#">modifica</a> | <a class="new" href="#">modifica wikitesto</a>]</span></h2>
+      <div class="section-body">
+        <ul>
+          <li><a class="new" href="#">Elenco di persone che possiedono due GPU</a></li>
+          <li><a class="new" href="#">Reciprocal rank fusion</a> <i>(ne va particolarmente fiero)</i></li>
+          <li><a class="new" href="#">"Funziona sul mio computer" (fenomeno)</a></li>
+          <li><a class="new" href="#">Ordine del Kernel Panic</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="wiki-section" data-id="note">
+      <h2 id="note">Note <button class="section-toggle is-open" aria-label="Comprimi sezione">&#9662;</button><span class="mw-editsection">[<a class="new" href="#">modifica</a> | <a class="new" href="#">modifica wikitesto</a>]</span></h2>
+      <div class="section-body">
+        <ol class="refs-list" id="refs">
+          <li id="cite_note-1"><a class="back" href="#cite_ref-1">^</a> Registro Nazionale delle Tessere Universitarie, edizione riveduta.</li>
+          <li id="cite_note-2"><a class="back" href="#cite_ref-2">^</a> Drugman, T. N. (2026). <i>Fidati, Gira in Locale</i>. Autopubblicato, ovviamente.</li>
+          <li id="cite_note-3"><a class="back" href="#cite_ref-3">^</a> «Perché esiste una voce Wikipedia su questo portfolio?». <i>Rivista delle Decisioni Discutibili</i>, p.&nbsp;404.</li>
+          <li id="cite_note-4"><a class="back" href="#cite_ref-4">^</a> «La Partizione Ora È Stabile». <i>Annali del Dual-Boot</i>, vol.&nbsp;12.</li>
+          <li id="cite_note-5"><a class="back" href="#cite_ref-5">^</a> Rullino fotografico completo, richiesta di pubblicazione approvata dal soggetto stesso.</li>
+          <li id="cite_note-6"><a class="back" href="#cite_ref-6">^</a> Corrispondenza interna, oggetto: «Re: Re: Re: documenti in sospeso».</li>
+          <li id="cite_note-7"><a class="back" href="#cite_ref-7">^</a> Casella di posta ECA-STAGE, medesimo oggetto di cui sopra.</li>
+          <li id="cite_note-8"><a class="back" href="#cite_ref-8">^</a> Collega Anonimo, cur. <i>Note sul campo sull'hornofecinty</i>. Inedito, per fortuna.</li>
+          <li id="cite_note-9"><a class="back" href="#cite_ref-9">^</a> Pari, A. Anonimo. Origine orale, probabile.</li>
+          <li id="cite_note-10"><a class="back" href="#cite_ref-10">^</a> Verbale d'aula, testimoni non concordi.</li>
+          <li id="cite_note-11"><a class="back" href="#cite_ref-11">^</a> Registrazione video, qualità dell'audio insufficiente a confermare o smentire.</li>
+          <li id="cite_note-12"><a class="back" href="#cite_ref-12">^</a> «Il Valore Assoluto Era 0,1859, Abbiamo Capito». <i>Settimanale dei Lettori Statisticamente Alfabetizzati</i>.</li>
+          <li id="cite_note-13"><a class="back" href="#cite_ref-13">^</a> «Email Che Non Sembrano Scritte dall'IA (E Chi Le Scrive Con l'IA)».</li>
+          <li id="cite_note-14"><a class="back" href="#cite_ref-14">^</a> Censimento delle liste di cose-da-fare milanesi, edizione 2026.</li>
+          <li id="cite_note-15"><a class="back" href="#cite_ref-15">^</a> «La Completezza e Altre Ansie». <i>Studi sulle Scadenze</i>.</li>
+          <li id="cite_note-16"><a class="back" href="#cite_ref-16">^</a> Supervisore non meglio precisato. <i>Il Controllo È Andato a Buon Fine: Un Monito</i>.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="wiki-section" data-id="link-esterni">
+      <h2 id="link-esterni">Collegamenti esterni <button class="section-toggle is-open" aria-label="Comprimi sezione">&#9662;</button><span class="mw-editsection">[<a class="new" href="#">modifica</a> | <a class="new" href="#">modifica wikitesto</a>]</span></h2>
+      <div class="section-body">
+        <ul>
+          <li><a class="ext" href="../index.html" target="_top">Portfolio personale (versione reale)</a></li>
+          <li><a class="ext" href="../timeline.html" target="_top">Timeline completa di esperienze e progetti</a></li>
+          <li><a class="new" href="#">Pagina che non esiste ancora</a> <i>(esempio di collegamento rosso)</i></li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="catlinks">
+      <b>Categorie</b>: <a class="new" href="#">Persone viventi</a> | <a class="new" href="#">Ingegneri informatici italiani</a> | <a class="new" href="#">Studenti del Politecnico di Milano</a> | <a class="new" href="#">Self-hoster</a> | <a class="new" href="#">Voci con affermazioni prive di fonte</a>
     </div>
 
-    <!-- LIFE -->
-    <h2 id="life">Life <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
-
-    <h3 id="early">Early life and dual-boot</h3>
-    <p>Drugman was born in Milan, where he lived with his parents and, later, with a Linux partition he insists is "basically stable now."<sup>[3]</sup> Sources close to the subject report that he first achieved consciousness the moment a training run finished successfully overnight, and has been chasing that feeling ever since. He spent a formative semester at CUHK-Shenzhen, an experience he describes as "life-changing" and which appears on his CV in a slightly larger font than everything else.<sup class="citneeded">[<a class="new" href="#">dubious – discuss</a>]</sup></p>
-
-    <h3 id="career">Alleged career</h3>
-    <p>Drugman's body of work spans retrieval-augmented generation, hardware-aware AutoML, and vision-language web agents that browse the internet approximately as well as a tired human. Notable achievements include a transformer running at 73&nbsp;ms per token inside a 7.16&nbsp;MB flash footprint, a figure he can produce faster than his own phone number.<sup>[4]</sup></p>
-    <p>He was selected for an AI traineeship at the European Court of Auditors, a fact he has now foregrounded in emails to landlords, doctors, professors, universities, and — per this article — an encyclopedia.<sup>[5]</sup> Colleagues describe him as "honest to a fault," particularly regarding whether a given model was self-hosted or accessed via API, a distinction he will clarify whether or not you asked.<sup>[6]</sup></p>
-
-    <!-- HORNOFECINTY -->
-    <h2 id="horn">Hornofecinty <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
-    <div class="ambox">
-      <span class="icon">🔬</span>
-      <span>The <b>neutrality</b> of this section is disputed, mainly because nobody else can define the word. Relevant discussion may be found on the <a class="new" href="#">talk page</a>.</span>
     </div>
-    <p><b>Hornofecinty</b> (<span style="font-style:italic;">from the Drugmanian <span lang="drug">hornofek</span>, "to over-engineer," + <span lang="drug">-inty</span>, a suffix of no fixed meaning) is a proposed field of study, a personality trait, and — according to its sole practitioner — "a whole vibe."<sup>[7]</sup> It is generally understood to describe the compulsion to solve a fifteen-minute problem with a six-week pipeline, three quantisation formats, and a benchmark.</p>
-    <p>Symptoms of acute hornofecinty include: buying a second GPU "for the thesis"; replacing a working `if` statement with a Random Forest; and answering "how are you?" with a latency figure. The condition is chronic, incurable, and, by most accounts, load-bearing to his entire personality.<sup class="citneeded">[<a class="new" href="#">weasel words</a>]</sup></p>
-    <blockquote>"It could have been a script. He made it a system."<br>— peer review, allegedly<sup>[8]</sup></blockquote>
-
-    <!-- CONTROVERSY -->
-    <h2 id="controversy">Controversy <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
-    <p>Drugman has been embroiled in several disputes, all of them with himself:</p>
-    <ul>
-      <li>In a widely uncirculated incident, he described a metric as "+38%" without immediately stating the absolute baseline. He has since apologised, added the 0.186, and now includes it preemptively in casual conversation.<sup>[9]</sup></li>
-      <li>Critics allege he refers to "my dual RTX 5060 Ti workstation" the way other people refer to their pets.</li>
-      <li>He is said to prefer that emails "not sound AI-written," a stance considered ironic given his profession, his workstation, and this article.<sup>[10]</sup></li>
-    </ul>
-    <p>Despite repeated requests, Drugman has declined to confirm whether Docker Compose is "basically DevOps," citing an ongoing internal investigation.</p>
-
-    <!-- PERSONAL LIFE -->
-    <h2 id="personal">Personal life <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
-    <p>Drugman resides in Milan with his parents and an increasingly ambitious to-do list.<sup>[11]</sup> His interests include terminals, dual-booting, and telling people that the local model is "honestly pretty close to GPT-4o" before quietly adding "on some tasks."</p>
-    <p>He is fluent in Italian, English, and passive-aggressive commit messages. He does not, contrary to popular belief, live inside the STM32N6570-DK, though he has considered it for the low latency.</p>
-
-    <!-- DEATH -->
-    <h2 id="death">Death <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
-    <div class="ambox">
-      <span class="icon">⚠️</span>
-      <span>This section is written like a <b>prophecy</b>. Please help improve it by waiting.</span>
-    </div>
-    <p>Drugman is, at the time of writing, alive and behind on a deadline. Nevertheless, this section exists because he insisted the article be "complete."<sup>[12]</sup></p>
-    <p>According to the most widely circulated projection, he will not die so much as <i>fail to be freed</i> — his consciousness having long since been quantised INT8 and flashed to a microcontroller that draws 3&nbsp;mW and never sleeps. Historians will note that his final words were reportedly "let me just re-run it once more to be sure," and that the run, tragically, succeeded.<sup>[13]</sup> A memorial `README.md` is planned.</p>
-
-    <!-- SEE ALSO -->
-    <h2 id="see">See also <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
-    <ul>
-      <li><a href="../index.html" target="_top">The actual portfolio</a> (recommended)</li>
-      <li><a href="../timeline.html" target="_top">The full timeline</a> (for the terminally curious)</li>
-      <li><a class="new" href="#">List of people who own two GPUs</a></li>
-      <li><a class="new" href="#">Reciprocal rank fusion</a> (he loves this one)</li>
-      <li><a class="new" href="#">"It works on my machine" (phenomenon)</a></li>
-    </ul>
-
-    <!-- REFERENCES -->
-    <h2 id="refs">References <span class="mw-editsection">[<a class="new" href="#">edit</a>]</span></h2>
-    <div class="refs">
-      <ol>
-        <li id="cite1">^ Drugman, T. N. (2026). <i>Trust Me, It's Running Locally</i>. Self-published, obviously.</li>
-        <li>^ "Why is there a Wikipedia page on this portfolio?" <i>Journal of Questionable Decisions</i>. p. 404.</li>
-        <li>^ "The Partition Is Stable Now." <i>Annals of Dual-Booting</i>, Vol. 12.</li>
-        <li>^ Acquadro, P.; Drugman, T. N. "73 ms and Proud." <i>Proceedings of a Very Small Chip</i>.</li>
-        <li>^ ECA-STAGE inbox, subject line: "Re: Re: Re: pending documents."</li>
-        <li>^ "API vs. Self-Hosted: A Distinction He Will Make." <i>Honesty Quarterly</i>.</li>
-        <li>^ Montico, ed. <i>Field Notes on Hornofecinty</i>. Unpublished, thankfully.</li>
-        <li>^ Peer, A. Anonymous. Overheard, probably.</li>
-        <li>^ "The Baseline Was 0.1859, We Get It." <i>Statistically Literate Audiences Weekly</i>.</li>
-        <li>^ "Emails That Don't Sound Like AI (And The People Who Draft Them With AI)."</li>
-        <li>^ Census of Milanese To-Do Lists, 2026 ed.</li>
-        <li>^ "Completeness and Other Anxieties." <i>Deadline Studies</i>.</li>
-        <li>^ Denaro, D. <i>The Run Succeeded: A Cautionary Tale</i>.</li>
-      </ol>
-    </div>
-
   </main>
+
+  <aside class="aspetto-col" aria-label="Aspetto">
+    <div class="side-box" id="aspetto-box">
+      <div class="side-box__head"><span>Aspetto</span><button class="side-box__hide" data-hide-target="aspetto-box">nascondi</button></div>
+      <div class="side-box__body">
+        <fieldset class="aspetto-fieldset">
+          <legend>Testo</legend>
+          <label class="aspetto-opt"><input type="radio" name="wk-text" value="small"> Piccolo</label>
+          <label class="aspetto-opt"><input type="radio" name="wk-text" value="standard" checked> Standard</label>
+          <label class="aspetto-opt"><input type="radio" name="wk-text" value="large"> Grande</label>
+        </fieldset>
+        <fieldset class="aspetto-fieldset">
+          <legend>Larghezza</legend>
+          <label class="aspetto-opt"><input type="radio" name="wk-width" value="standard" checked> Standard</label>
+          <label class="aspetto-opt"><input type="radio" name="wk-width" value="wide"> Largo</label>
+        </fieldset>
+        <fieldset class="aspetto-fieldset">
+          <legend>Colore (beta)</legend>
+          <label class="aspetto-opt"><input type="radio" name="wk-theme" value="auto" checked> Automatico</label>
+          <label class="aspetto-opt"><input type="radio" name="wk-theme" value="light"> Chiaro</label>
+          <label class="aspetto-opt"><input type="radio" name="wk-theme" value="dark"> Scuro</label>
+        </fieldset>
+      </div>
+    </div>
+  </aside>
+
 </div>
 
-<div class="footer">
-  <p>This page is a <b>parody</b> and is not associated with Wikipedia® or the Wikimedia Foundation, which own their respective trademarks. It exists purely for amusement.</p>
-  <p>This page was last edited when the subject should have been studying. Text is available under a <a class="new" href="#">Creative Commons Definitely-Made-Up License</a>; additional terms may apply and probably won't.</p>
-  <p><a class="new" href="#">Privacy policy</a> · <a class="new" href="#">About</a> · <a class="new" href="#">Disclaimers</a> · <a href="../index.html" target="_top">Return to the real site</a></p>
+<div class="footer-page">
+  <p>Questa pagina è una <b>parodia</b> a uso personale e non è associata a Wikipedia® o alla Wikimedia Foundation, che detengono i rispettivi marchi. Esiste puramente per divertimento.</p>
+  <p>Questa pagina è stata modificata l'ultima volta mentre il soggetto avrebbe dovuto studiare. Il testo è disponibile secondo una licenza <a class="new" href="#">Creative Commons Palesemente Inventata</a>; ulteriori termini potrebbero applicarsi e probabilmente no.</p>
+  <p><a class="new" href="#">Informativa sulla privacy</a> · <a class="new" href="#">Informazioni su Wikipedia</a> · <a class="new" href="#">Avvertenze</a> · <a href="../index.html" target="_top">Torna al sito reale</a></p>
 </div>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizzatore immagini">
+  <div class="lightbox__top">
+    <span class="lightbox__count" id="lb-count"></span>
+    <button class="lightbox__iconbtn" id="lb-close" aria-label="Chiudi">&times;</button>
+  </div>
+  <div class="lightbox__stage">
+    <button class="lightbox__nav lightbox__nav--prev" id="lb-prev" aria-label="Precedente">&#8592;</button>
+    <img id="lb-img" src="" alt="">
+    <button class="lightbox__nav lightbox__nav--next" id="lb-next" aria-label="Successiva">&#8594;</button>
+  </div>
+  <div class="lightbox__info">
+    <div class="lightbox__caption-row">
+      <div class="lightbox__caption" id="lb-caption"></div>
+      <button class="lightbox__details-btn" id="lb-details">&#9432; Ulteriori dettagli</button>
+    </div>
+    <div class="lightbox__attrib">
+      <span>&#128100; <span id="lb-credit"></span></span>
+      <span>&#128274; <span id="lb-license"></span></span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced) document.documentElement.classList.add("no-motion");
+
+  /* ---------- persisted Aspetto settings ---------- */
+  function storeGet(k, d){ try{ var v = localStorage.getItem("wikiparody:" + k); return v === null ? d : v; }catch(e){ return d; } }
+  function storeSet(k, v){ try{ localStorage.setItem("wikiparody:" + k, v); }catch(e){} }
+
+  function applyText(val){
+    document.documentElement.classList.remove("text-small", "text-large");
+    if (val === "small") document.documentElement.classList.add("text-small");
+    else if (val === "large") document.documentElement.classList.add("text-large");
+    document.querySelectorAll('input[name="wk-text"]').forEach(function(r){ r.checked = (r.value === val); });
+  }
+  function applyWidth(val){
+    document.documentElement.classList.toggle("width-wide", val === "wide");
+    document.querySelectorAll('input[name="wk-width"]').forEach(function(r){ r.checked = (r.value === val); });
+  }
+  function applyTheme(val){
+    document.documentElement.classList.remove("theme-auto", "theme-light", "theme-dark");
+    document.documentElement.classList.add("theme-" + val);
+    document.querySelectorAll('input[name="wk-theme"]').forEach(function(r){ r.checked = (r.value === val); });
+  }
+  applyText(storeGet("text", "standard"));
+  applyWidth(storeGet("width", "standard"));
+  applyTheme(storeGet("theme", "auto"));
+
+  document.querySelectorAll('input[name="wk-text"]').forEach(function(r){
+    r.addEventListener("change", function(){ applyText(r.value); storeSet("text", r.value); });
+  });
+  document.querySelectorAll('input[name="wk-width"]').forEach(function(r){
+    r.addEventListener("change", function(){ applyWidth(r.value); storeSet("width", r.value); });
+  });
+  document.querySelectorAll('input[name="wk-theme"]').forEach(function(r){
+    r.addEventListener("change", function(){ applyTheme(r.value); storeSet("theme", r.value); });
+  });
+
+  /* ---------- collapsible side boxes (TOC / Aspetto "nascondi") ---------- */
+  document.querySelectorAll("[data-hide-target]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var box = document.getElementById(btn.dataset.hideTarget);
+      var collapsed = box.classList.toggle("is-collapsed");
+      var isMobileToc = box.id === "toc-mobile-box";
+      if (isMobileToc){
+        box.querySelector(".side-box__body").style.display = collapsed ? "none" : "";
+        btn.textContent = collapsed ? "apri" : "chiudi";
+      } else {
+        btn.textContent = collapsed ? "mostra" : "nascondi";
+      }
+    });
+  });
+
+  /* ---------- build TOC (desktop sidebar + mobile inline) from headings ---------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll(".wiki-section"));
+  function buildToc(container, isMobile){
+    var ol = document.createElement("ol");
+    sections.forEach(function(sec, i){
+      var h2 = sec.querySelector("h2");
+      var h2Id = h2.id;
+      var h2Text = h2.childNodes[0].textContent.trim();
+      var subs = sec.querySelectorAll("h3");
+      var li = document.createElement("li");
+      var line = document.createElement("div");
+      line.className = "toc-line";
+      if (subs.length){ li.classList.add("has-children"); if(!isMobile) li.classList.add("is-collapsed"); }
+      if (!isMobile){
+        var chev = document.createElement("button");
+        chev.type = "button"; chev.className = "toc-chevron"; chev.setAttribute("aria-label", "Espandi/comprimi");
+        chev.textContent = "❯";
+        chev.addEventListener("click", function(e){
+          e.preventDefault();
+          li.classList.toggle("is-collapsed");
+          chev.classList.toggle("is-open", !li.classList.contains("is-collapsed"));
+        });
+        line.appendChild(chev);
+      }
+      var a = document.createElement("a");
+      a.href = "#" + h2Id; a.dataset.target = h2Id; a.className = "toc-link";
+      a.textContent = h2Text;
+      a.addEventListener("click", function(e){
+        e.preventDefault();
+        jumpTo(h2Id);
+        if (isMobile){ document.getElementById("toc-mobile-box").classList.add("is-collapsed"); document.querySelector('#toc-mobile-box .side-box__body').style.display="none"; document.querySelector('#toc-mobile-box .side-box__hide').textContent="apri"; }
+      });
+      line.appendChild(a);
+      li.appendChild(line);
+      if (subs.length){
+        var subOl = document.createElement("ol");
+        subs.forEach(function(h3){
+          var subLi = document.createElement("li");
+          var subA = document.createElement("a");
+          subA.href = "#" + h3.id; subA.dataset.target = h3.id; subA.className = "toc-link";
+          subA.textContent = h3.textContent.trim();
+          subA.addEventListener("click", function(e){
+            e.preventDefault();
+            jumpTo(h3.id);
+            if (isMobile){ document.getElementById("toc-mobile-box").classList.add("is-collapsed"); document.querySelector('#toc-mobile-box .side-box__body').style.display="none"; document.querySelector('#toc-mobile-box .side-box__hide').textContent="apri"; }
+          });
+          subLi.appendChild(subA);
+          subOl.appendChild(subLi);
+        });
+        li.appendChild(subOl);
+      }
+      ol.appendChild(li);
+    });
+    container.innerHTML = "";
+    container.appendChild(ol);
+  }
+  buildToc(document.getElementById("toc-desktop"), false);
+  buildToc(document.getElementById("toc-mobile"), true);
+
+  function jumpTo(id){
+    var el = document.getElementById(id);
+    if (!el) return;
+    var section = el.closest(".wiki-section");
+    if (section && section.classList.contains("is-collapsed")) toggleSection(section, true);
+    var top = el.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--sticky-h")) + 10);
+    window.scrollTo({ top: top, behavior: reduced ? "auto" : "smooth" });
+  }
+
+  /* ---------- scrollspy: highlight current section in both TOC copies ---------- */
+  var headings = sections.map(function(s){ return s.querySelector("h2"); });
+  var activeId = null;
+  function setActive(id){
+    if (id === activeId) return;
+    activeId = id;
+    document.querySelectorAll(".toc-link").forEach(function(a){ a.classList.toggle("is-active", a.dataset.target === id); });
+    document.querySelectorAll("#toc-desktop > ol > li").forEach(function(li){
+      var link = li.querySelector(":scope > .toc-line > .toc-link");
+      var isCurrent = link && link.dataset.target === id;
+      if (li.classList.contains("has-children")){
+        li.classList.toggle("is-collapsed", !isCurrent);
+        var chev = li.querySelector(":scope > .toc-line > .toc-chevron");
+        if (chev) chev.classList.toggle("is-open", isCurrent);
+      }
+    });
+  }
+  var spyTicking = false;
+  function updateSpy(){
+    spyTicking = false;
+    var pos = window.scrollY + 90;
+    var current = headings[0] ? headings[0].id : null;
+    for (var i = 0; i < headings.length; i++){
+      if (headings[i].getBoundingClientRect().top + window.scrollY <= pos) current = headings[i].id;
+    }
+    if (current) setActive(current);
+  }
+  window.addEventListener("scroll", function(){ if (!spyTicking){ spyTicking = true; requestAnimationFrame(updateSpy); } }, { passive: true });
+  updateSpy();
+
+  /* ---------- sticky header show/hide past H1 ---------- */
+  var h1 = document.querySelector("h1.firstHeading");
+  var stickyHeader = document.getElementById("sticky-header");
+  function updateSticky(){
+    if (!h1) return;
+    var bottom = h1.getBoundingClientRect().bottom;
+    stickyHeader.classList.toggle("is-visible", bottom < 0);
+  }
+  window.addEventListener("scroll", updateSticky, { passive: true });
+  updateSticky();
+
+  /* ---------- footnote <-> reference jump + flash ---------- */
+  function wireHashLinks(selector){
+    document.querySelectorAll(selector).forEach(function(a){
+      a.addEventListener("click", function(e){
+        var href = a.getAttribute("href");
+        if (!href || href.charAt(0) !== "#") return;
+        var target = document.getElementById(href.slice(1));
+        if (!target) return;
+        e.preventDefault();
+        var section = target.closest(".wiki-section");
+        if (section && section.classList.contains("is-collapsed")) toggleSection(section, true);
+        target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+        target.classList.remove("flash-target"); void target.offsetWidth; target.classList.add("flash-target");
+        setTimeout(function(){ target.classList.remove("flash-target"); }, 1300);
+      });
+    });
+  }
+  wireHashLinks(".ref-sup a");
+  wireHashLinks(".refs-list a.back");
+
+  /* ---------- mobile collapsible sections ---------- */
+  function toggleSection(section, forceOpen){
+    var body = section.querySelector(".section-body");
+    var btn = section.querySelector(".section-toggle");
+    var isCollapsed = section.classList.contains("is-collapsed");
+    var shouldOpen = forceOpen === true ? true : isCollapsed;
+    if (shouldOpen && !isCollapsed) return;
+    if (shouldOpen){
+      section.classList.remove("is-collapsed");
+      if (btn) btn.classList.add("is-open");
+      if (reduced){ body.style.maxHeight = "none"; return; }
+      var h = body.scrollHeight;
+      body.style.maxHeight = h + "px";
+      var onEnd = function(ev){ if (ev.propertyName !== "max-height") return; body.style.maxHeight = "none"; body.removeEventListener("transitionend", onEnd); };
+      body.addEventListener("transitionend", onEnd);
+    } else {
+      if (btn) btn.classList.remove("is-open");
+      if (reduced){ section.classList.add("is-collapsed"); body.style.maxHeight = "0px"; return; }
+      body.style.maxHeight = body.scrollHeight + "px";
+      void body.offsetHeight;
+      requestAnimationFrame(function(){
+        section.classList.add("is-collapsed");
+        body.style.maxHeight = "0px";
+      });
+    }
+  }
+  sections.forEach(function(sec, i){
+    var btn = sec.querySelector(".section-toggle");
+    var body = sec.querySelector(".section-body");
+    body.style.maxHeight = "none";
+    btn.addEventListener("click", function(){ toggleSection(sec); });
+  });
+
+  /* ---------- image lightbox ---------- */
+  var lbImgs = Array.prototype.slice.call(document.querySelectorAll(".wiki-lightbox-img"));
+  var lb = document.getElementById("lightbox");
+  var lbImg = document.getElementById("lb-img");
+  var lbCaption = document.getElementById("lb-caption");
+  var lbCredit = document.getElementById("lb-credit");
+  var lbLicense = document.getElementById("lb-license");
+  var lbCount = document.getElementById("lb-count");
+  var lbIndex = 0;
+  function openLb(i){
+    lbIndex = (i + lbImgs.length) % lbImgs.length;
+    var el = lbImgs[lbIndex];
+    lbImg.src = el.currentSrc || el.src;
+    lbImg.alt = el.alt || "";
+    lbCaption.innerHTML = el.dataset.caption || el.alt || "";
+    lbCredit.textContent = el.dataset.credit || "Sconosciuto";
+    lbLicense.textContent = el.dataset.license || "Non specificata";
+    lbCount.textContent = (lbIndex + 1) + " / " + lbImgs.length;
+    lb.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeLb(){ lb.classList.remove("is-open"); document.body.style.overflow = ""; }
+  lbImgs.forEach(function(el, i){ el.addEventListener("click", function(){ openLb(i); }); });
+  document.getElementById("lb-close").addEventListener("click", closeLb);
+  document.getElementById("lb-prev").addEventListener("click", function(){ openLb(lbIndex - 1); });
+  document.getElementById("lb-next").addEventListener("click", function(){ openLb(lbIndex + 1); });
+  document.getElementById("lb-details").addEventListener("click", function(){
+    lbLicense.parentElement.style.color = "#fff";
+    setTimeout(function(){ lbLicense.parentElement.style.color = ""; }, 900);
+  });
+  lb.addEventListener("click", function(e){ if (e.target === lb) closeLb(); });
+  document.addEventListener("keydown", function(e){
+    if (!lb.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeLb();
+    else if (e.key === "ArrowLeft") openLb(lbIndex - 1);
+    else if (e.key === "ArrowRight") openLb(lbIndex + 1);
+  });
+
+  /* ---------- hamburger menu ---------- */
+  var menuDropdown = document.getElementById("menu-dropdown");
+  function toggleMenu(force){
+    var open = force !== undefined ? force : !menuDropdown.classList.contains("is-open");
+    menuDropdown.classList.toggle("is-open", open);
+    document.getElementById("hamburger-btn").setAttribute("aria-expanded", String(open));
+  }
+  document.getElementById("hamburger-btn").addEventListener("click", function(e){ e.stopPropagation(); toggleMenu(); });
+  document.getElementById("sticky-hamburger-btn").addEventListener("click", function(e){ e.stopPropagation(); toggleMenu(); window.scrollTo({top:0, behavior: reduced ? "auto":"smooth"}); });
+  document.addEventListener("click", function(e){ if (!menuDropdown.contains(e.target)) toggleMenu(false); });
+
+  /* ---------- language dropdown ---------- */
+  var langDropdown = document.getElementById("lang-dropdown");
+  document.getElementById("lang-btn").addEventListener("click", function(e){
+    e.stopPropagation();
+    langDropdown.classList.toggle("is-open");
+  });
+  document.addEventListener("click", function(e){ if (!langDropdown.contains(e.target) && e.target.id !== "lang-btn") langDropdown.classList.remove("is-open"); });
+
+  /* ---------- search box: always "finds" this very article ---------- */
+  var searchInput = document.getElementById("search-input");
+  var searchSuggest = document.getElementById("search-suggest");
+  searchInput.addEventListener("input", function(){
+    searchSuggest.classList.toggle("is-open", searchInput.value.trim().length > 0);
+  });
+  searchInput.addEventListener("focus", function(){ if (searchInput.value.trim().length > 0) searchSuggest.classList.add("is-open"); });
+  document.getElementById("search-form").addEventListener("submit", function(e){ e.preventDefault(); window.scrollTo({top:0, behavior: reduced?"auto":"smooth"}); searchSuggest.classList.remove("is-open"); });
+  document.getElementById("search-suggest-item").addEventListener("click", function(){ window.scrollTo({top:0, behavior: reduced?"auto":"smooth"}); searchSuggest.classList.remove("is-open"); searchInput.value=""; });
+  document.addEventListener("click", function(e){ if (!e.target.closest(".searchbox")) searchSuggest.classList.remove("is-open"); });
+
+  /* ---------- random article: jumps to a random section of... this article ---------- */
+  document.getElementById("random-article-btn").addEventListener("click", function(){
+    toggleMenu(false);
+    var pick = sections[Math.floor(Math.random() * sections.length)];
+    jumpTo(pick.querySelector("h2").id);
+  });
+
+  /* ---------- sticky-header quick icons ---------- */
+  document.getElementById("sticky-talk-btn").addEventListener("click", function(){ jumpTo("note"); });
+  document.getElementById("sticky-hist-btn").addEventListener("click", function(){ jumpTo("note"); });
+  document.getElementById("sticky-aspetto-btn").addEventListener("click", function(){
+    var box = document.getElementById("aspetto-box");
+    if (window.innerWidth <= 1000){ jumpTo("note"); return; }
+    box.classList.remove("is-collapsed");
+    box.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+  });
+
+  /* ---------- inert top-bar joke links ---------- */
+  ["donate-link","register-link","login-link","talk-tab","source-tab","history-tab"].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.addEventListener("click", function(e){ e.preventDefault(); jumpTo("note"); });
+  });
+  document.querySelectorAll('a[data-lang-joke]').forEach(function(a){
+    a.addEventListener("click", function(e){ e.preventDefault(); });
+  });
+})();
+</script>
 </body>
 </html>

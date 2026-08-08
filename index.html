@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>Tito Nicola Drugman — AI Engineer</title>
 <meta name="description" content="Tito Nicola Drugman — AI/ML engineer building on-premises, constrained AI systems: quantised transformers on microcontrollers, local LLM + RAG stacks, and vision-language web agents.">
 <meta name="theme-color" content="#12121a">
@@ -19,6 +19,7 @@
 }
 *, *::before, *::after{ box-sizing: border-box; }
 html, body{ height: 100%; }
+html{ touch-action: manipulation; }
 body{
   margin: 0;
   font: 400 100%/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -222,12 +223,12 @@ button{ font: inherit; }
 .search-results__empty{ padding: 10px; font-size: 12px; color: var(--text-dim); margin: 0; }
 
 /* ---------------------------------------------------------------- cv-doc toolbar (editable) */
-.cv-doc-toolbar{ position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 6px; padding: 6px 10px; background: #f0f0f3; border-bottom: 1px solid #e3e3e8; font-family: system-ui, sans-serif; }
-.cv-doc-toolbar button{ min-width: 28px; height: 26px; padding: 0 8px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; font-size: 12px; }
+.cv-doc-toolbar{ position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 6px; padding: 6px 10px; background: #f0f0f3; border-bottom: 1px solid #e3e3e8; font-family: system-ui, sans-serif; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+.cv-doc-toolbar button{ flex-shrink: 0; min-width: 28px; height: 26px; padding: 0 8px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; font-size: 12px; white-space: nowrap; }
 .cv-doc-toolbar button:hover{ background: #f4f4f7; }
-.cv-doc-toolbar__select{ height: 26px; padding: 0 4px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; font-size: 12px; max-width: 108px; }
-.cv-doc-toolbar__color{ width: 26px; height: 26px; padding: 2px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; }
-.cv-doc-toolbar__spacer{ flex: 1; }
+.cv-doc-toolbar__select{ flex-shrink: 0; height: 26px; padding: 0 4px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; font-size: 12px; max-width: 108px; }
+.cv-doc-toolbar__color{ flex-shrink: 0; width: 26px; height: 26px; padding: 2px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; }
+.cv-doc-toolbar__spacer{ flex: 0 0 12px; }
 .cv-doc-toolbar__reset{ color: #c0392b !important; }
 .cv-doc__editable{ outline: none; }
 .cv-doc__editable:focus{ box-shadow: inset 0 0 0 2px rgba(76,194,255,.35); border-radius: 4px; }
@@ -308,15 +309,25 @@ button{ font: inherit; }
 .browser-app__ram-progress-fill{ height: 100%; width: 0; background: #2f9e52; }
 .browser-app__ram-result{ margin-top: 1rem; font-size: 0.82rem; color: #232326; }
 .overleaf-app{ display: flex; height: 100%; font-family: ui-monospace, monospace; font-size: 0.75rem; }
-.overleaf-app__source{ width: 46%; flex-shrink: 0; overflow: auto; background: #1e1e1e; color: #d4d4d4; padding: 0.9rem 1rem; border-right: 1px solid #3c3c3c; }
-.overleaf-app__source pre{ margin: 0; white-space: pre-wrap; word-break: break-word; line-height: 1.6; }
+.overleaf-app__source{ width: 46%; flex-shrink: 0; background: #1e1e1e; border-right: 1px solid #3c3c3c; }
+.overleaf-app__editor{ display: block; width: 100%; height: 100%; margin: 0; padding: 0.9rem 1rem; box-sizing: border-box; border: none; outline: none; resize: none; background: #1e1e1e; color: #d4d4d4; font: inherit; white-space: pre-wrap; word-break: break-word; line-height: 1.6; }
 .overleaf-app__preview{ flex: 1; min-width: 0; display: flex; flex-direction: column; background: #525659; }
 .overleaf-app__toolbar{ display: flex; align-items: center; gap: 0.7rem; padding: 0.5rem 0.75rem; background: #3c3c3c; flex-shrink: 0; }
 .overleaf-app__toolbar button{ font-family: system-ui, sans-serif; font-size: 0.75rem; font-weight: 700; padding: 0.4rem 0.8rem; border-radius: 5px; border: none; background: #1c8a3c; color: #fff; cursor: pointer; }
 .overleaf-app__toolbar button:disabled{ opacity: 0.6; cursor: default; }
 .overleaf-app__toolbar a{ font-family: system-ui, sans-serif; font-size: 0.75rem; font-weight: 600; color: #d4d4d4; text-decoration: none; }
 .overleaf-app__toolbar a:hover{ text-decoration: underline; }
+.overleaf-app__dirty-flag{ margin-left: auto; font-family: system-ui, sans-serif; font-size: 0.7rem; font-weight: 700; color: #f2b84b; }
 .overleaf-app__log{ flex: 1; overflow: auto; background: #1e1e1e; color: #9fdc9f; padding: 0.75rem 1rem; line-height: 1.6; }
+.overleaf-app__log.is-error{ color: #ff8a80; }
+.overleaf-app__error{ flex: 1; overflow: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; background: #3c2426; color: #f2d4d2; padding: 1.5rem; text-align: center; }
+.overleaf-app__error-icon{ font-size: 2rem; }
+.overleaf-app__error-title{ margin: 0; font-family: system-ui, sans-serif; font-weight: 700; font-size: 0.9rem; color: #ff8a80; }
+.overleaf-app__error-detail{ margin: 0; font-family: system-ui, sans-serif; font-size: 0.78rem; max-width: 32rem; color: #e0bcbb; }
+.overleaf-app__error-cta{ margin-top: 0.5rem; font-family: system-ui, sans-serif; font-size: 0.8rem; font-weight: 700; padding: 0.55rem 1rem; border-radius: 6px; background: #1c8a3c; color: #fff; text-decoration: none; }
+.overleaf-app__error-cta:hover{ background: #23a349; }
+.overleaf-app__error-revert{ font-family: system-ui, sans-serif; font-size: 0.75rem; font-weight: 600; padding: 0.4rem 0.7rem; border-radius: 5px; border: 1px solid rgba(255,255,255,.25); background: transparent; color: #f2d4d2; cursor: pointer; }
+.overleaf-app__error-revert:hover{ background: rgba(255,255,255,.08); }
 .overleaf-app__pdf{ flex: 1; border: none; width: 100%; }
 
 .terminal-app{ flex: 1; min-height: 0; height: 100%; display: flex; flex-direction: column; background: #0c0c10; color: #d8d8de; font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, monospace; font-size: 12.5px; }
@@ -401,18 +412,59 @@ button{ font: inherit; }
 .mail-app__reading h3{ margin: 0 0 0.4rem; font-size: 1rem; }
 .mail-app__meta{ font-size: 0.75rem; color: #8a8a92; margin: 0 0 1rem; }
 .mail-app__body{ font-size: 0.85rem; line-height: 1.6; color: #232326; }
+.mail-app__back{ display: block; margin: 0 0 0.9rem; padding: 6px 12px; border: 1px solid #d6d6dc; border-radius: 6px; background: #fff; color: #232326; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+/* Narrow windows (mobile): show one pane at a time instead of squeezing all three. */
+.mail-app.is-narrow{ overflow: hidden; }
+.mail-app.is-narrow .mail-app__sidebar{ width: 96px; }
+.mail-app.is-narrow .mail-app__list{ width: auto; flex: 1; }
+.mail-app.is-narrow .mail-app__reading{ flex: 1; width: 100%; padding: 1rem; }
 
 /* ---------------------------------------------------------------- photos app */
 .photos-app{ height: 100%; overflow: auto; padding: 0.9rem; box-sizing: border-box; }
 .photos-app--empty{ display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .photos-app--empty p{ color: #8a8a92; font-size: 0.85rem; font-family: system-ui, sans-serif; }
 .photos-app__grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.photos-app__album-heading{ grid-column: 1 / -1; margin: 0.6rem 0 0.1rem; font-family: system-ui, sans-serif; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: #8a8a92; }
+.photos-app__album-heading:first-child{ margin-top: 0; }
 .photos-app__thumb{ aspect-ratio: 1; border-radius: 8px; border: none; background-size: cover; background-position: center; cursor: pointer; padding: 0; }
-.photos-app__lightbox{ position: absolute; inset: 0; background: rgba(0,0,0,.9); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; }
+.photos-app__lightbox{ position: absolute; inset: 0; background: rgba(0,0,0,.9); flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; }
+.photos-app__lightbox:not([hidden]){ display: flex; }
 .photos-app__lightbox img{ max-width: 90%; max-height: 78%; border-radius: 6px; }
 .photos-app__lightbox p{ color: #fff; font-size: 0.8rem; font-family: system-ui, sans-serif; }
 .photos-app__lightbox-close{ position: absolute; top: 10px; right: 14px; width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(255,255,255,.12); color: #fff; font-size: 18px; cursor: pointer; }
 .photos-app__lightbox-close:hover{ background: rgba(255,255,255,.22); }
+.photos-app__lightbox-nav{ position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: none; background: rgba(255,255,255,.12); color: #fff; font-size: 18px; cursor: pointer; }
+.photos-app__lightbox-nav:hover{ background: rgba(255,255,255,.22); }
+.photos-app__lightbox-nav--prev{ left: 14px; }
+.photos-app__lightbox-nav--next{ right: 14px; }
+@media (pointer: coarse){ .photos-app__lightbox-nav{ width: 44px; height: 44px; } }
+
+/* ---------------------------------------------------------------- maps app */
+.maps-app{ height: 100%; overflow: auto; box-sizing: border-box; padding: 1rem 1.25rem 1.5rem; font-family: system-ui, sans-serif; }
+.maps-app__subtitle{ margin: 0 0 0.75rem; font-size: 0.85rem; color: #6b6b72; }
+.maps-app__legend{ display: flex; flex-wrap: wrap; gap: 0.9rem; margin: 0 0 0.85rem; font-size: 0.75rem; color: #55555c; }
+.maps-app__legend-item{ display: flex; align-items: center; gap: 0.35rem; }
+.maps-app__legend-item i{ width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.maps-app__canvas{ position: relative; width: 100%; aspect-ratio: 1010 / 666; border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+.maps-app__ocean{ position: absolute; inset: 0; background: linear-gradient(180deg, #eaf3fc, #cfe3f5 60%, #bcd8ef); }
+.maps-app__country{ fill: #8fbf95; stroke: #4c8f56; stroke-width: 1; stroke-linejoin: round; }
+.maps-app__country-label{ position: absolute; transform: translate(-50%,0); font-size: 0.64rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(28,54,34,.6); white-space: nowrap; pointer-events: none; user-select: none; }
+.maps-app__country-patch{ position: absolute; transform: translate(-50%,-50%); width: 11px; height: 11px; border-radius: 50%; background: #8fbf95; border: 1px solid #4c8f56; box-shadow: 0 0 0 3px rgba(143,191,149,.35); pointer-events: none; }
+.maps-app__routes{ position: absolute; inset: 0; width: 100%; height: 100%; }
+.maps-app__grid-line{ stroke: rgba(255,255,255,.55); stroke-width: 1; }
+.maps-app__route{ fill: none; stroke: #5b5b63; stroke-width: 2; stroke-dasharray: 5 5; opacity: 0.55; }
+.maps-app__route--upcoming{ stroke-width: 2.4; opacity: 0.85; }
+.maps-app__pin{ position: absolute; transform: translate(-50%,-100%); background: none; border: none; padding: 0; margin: 0; cursor: pointer; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+.maps-app__pin-dot{ width: 14px; height: 14px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--pin-color); border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35); transition: transform 120ms ease; }
+.maps-app__pin-label{ position: absolute; bottom: 100%; left: 50%; margin-bottom: 2px; font-size: 0.68rem; font-weight: 700; color: #232326; background: rgba(255,255,255,.9); padding: 1px 6px; border-radius: 999px; opacity: 0; transform: translateX(-50%); transition: opacity 120ms ease; white-space: nowrap; pointer-events: none; }
+.maps-app__pin:hover .maps-app__pin-label, .maps-app__pin.is-active .maps-app__pin-label, .maps-app__pin:focus-visible .maps-app__pin-label{ opacity: 1; }
+.maps-app__pin.is-active .maps-app__pin-dot{ transform: rotate(-45deg) scale(1.3); }
+.maps-detail{ margin-top: 1rem; background: #fff; border: 1px solid #e3e3e8; border-radius: 10px; padding: 1rem 1.1rem; box-shadow: 0 -8px 20px rgba(0,0,0,.06); }
+.maps-detail__close{ float: right; background: none; border: none; font-size: 16px; cursor: pointer; color: #8a8a92; }
+.maps-detail__badge{ display: inline-block; font-size: 0.75rem; font-weight: 700; color: #fff; padding: 0.2rem 0.6rem; border-radius: 999px; margin: 0 0 0.55rem; }
+.maps-app__meta{ font-size: 0.75rem; color: #6b6b72; margin: 0 0 0.5rem; }
+.maps-detail p:not(.maps-app__meta){ font-size: 0.85rem; line-height: 1.55; margin: 0; }
+.maps-app__pending{ font-size: 0.85rem; color: #8a8a92; font-style: italic; }
 
 /* ---------------------------------------------------------------- fake VS Code */
 .vscode-app{ display: flex; height: 100%; font-family: ui-monospace, monospace; background: #1e1e1e; color: #d4d4d4; }
@@ -891,6 +943,7 @@ button{ font: inherit; }
       <li><a href="assets/cv/cv_TitoNicolaDrugman.pdf">Download CV (PDF)</a></li>
       <li><a href="wikipedia/index.html">Wikipedia (allegedly)</a></li>
       <li><a href="https://github.com/TitoNicolaDrugman">GitHub</a></li>
+      <li><a href="https://linkedin.com/in/titonicoladrugman">LinkedIn</a></li>
       <li><a href="mailto:drugmantito@gmail.com">drugmantito@gmail.com</a></li>
     </ul>
   </div>
@@ -989,6 +1042,10 @@ button{ font: inherit; }
   <a href="https://github.com/TitoNicolaDrugman" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.36 1.08 2.93.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.55 9.55 0 0 1 5 0c1.9-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.83-2.34 4.68-4.57 4.92.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
     <span data-i18n="start.github">GitHub</span>
+  </a>
+  <a href="https://linkedin.com/in/titonicoladrugman" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM3.2 8.75h3.5V21H3.2V8.75Zm6.3 0H13v1.68h.05c.46-.87 1.6-1.79 3.3-1.79 3.53 0 4.18 2.32 4.18 5.35V21h-3.5v-5.3c0-1.26-.02-2.88-1.76-2.88-1.76 0-2.03 1.37-2.03 2.79V21H9.5V8.75Z"/></svg>
+    <span data-i18n="start.linkedin">LinkedIn</span>
   </a>
   <a href="mailto:drugmantito@gmail.com">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
@@ -1125,6 +1182,7 @@ import { experiences } from './data/experiences.js';
     "app.settings": { en: "Settings", it: "Impostazioni" },
     "app.taskManager": { en: "Task Manager", it: "Gestione attività" },
     "app.mail": { en: "Mail", it: "Posta" },
+    "mail.back": { en: "Back", it: "Indietro" },
     "app.tetris": { en: "Tetris", it: "Tetris" },
 
     "hero.eyebrow": { en: "AI Engineer · On-Premises Systems", it: "AI Engineer · Sistemi On-Premises" },
@@ -1140,6 +1198,7 @@ import { experiences } from './data/experiences.js';
     "start.classic": { en: "Classic (text) version", it: "Versione classica (testo)" },
     "start.timeline": { en: "Full timeline", it: "Timeline completa" },
     "start.github": { en: "GitHub", it: "GitHub" },
+    "start.linkedin": { en: "LinkedIn", it: "LinkedIn" },
     "start.email": { en: "Email", it: "Email" },
 
     "power.sleep": { en: "Sleep", it: "Sospendi" },
@@ -1228,8 +1287,19 @@ import { experiences } from './data/experiences.js';
     "skills.legend": { en: "Skill level", it: "Livello competenza" },
     "overleaf.recompile": { en: "Recompile", it: "Ricompila" },
     "overleaf.download": { en: "Download PDF", it: "Scarica PDF" },
+    "overleaf.unsaved": { en: "Edited", it: "Modificato" },
+    "overleaf.errorTitle": { en: "Compilation failed — 1 error, 0 warnings.", it: "Compilazione fallita — 1 errore, 0 avvisi." },
+    "overleaf.errorDetail": { en: "Undefined control sequence on line 42. Fix the source and recompile, or grab the last version that actually built.", it: "Sequenza di controllo non definita alla riga 42. Correggi il sorgente e ricompila, oppure scarica l'ultima versione che ha effettivamente compilato." },
+    "overleaf.errorDownload": { en: "Download last successful PDF", it: "Scarica l'ultimo PDF compilato con successo" },
+    "overleaf.revert": { en: "Revert my changes", it: "Annulla le mie modifiche" },
     "photos.empty": { en: "No photos yet — check back soon.", it: "Ancora nessuna foto — torna a trovarmi presto." },
     "app.photos": { en: "Photos", it: "Foto" },
+    "app.maps": { en: "Maps", it: "Mappe" },
+    "maps.subtitle": { en: "Places I've lived.", it: "Posti in cui ho vissuto." },
+    "maps.pending": { en: "Details coming soon.", it: "Dettagli in arrivo." },
+    "maps.legend.home": { en: "Home base", it: "Base" },
+    "maps.legend.upcoming": { en: "Incoming move", it: "Trasferimento in arrivo" },
+    "maps.viewTimeline": { en: "View full timeline ↗", it: "Vedi la timeline completa ↗" },
     "app.vscode": { en: "VS Code", it: "VS Code" },
     "app.videoPlayer": { en: "Video Player", it: "Video Player" },
     "vscode.noProblems": { en: "no problems (that I know of)", it: "nessun problema (che io sappia)" }
@@ -1293,6 +1363,9 @@ import { experiences } from './data/experiences.js';
       '<rect x="6" y="6" width="36" height="36" rx="4" fill="#fff" stroke="#54595d" stroke-width="2"/>' +
       '<path d="M14 34V20M24 34V14M34 34V24" stroke="#4cc2ff" stroke-width="4" stroke-linecap="round"/></svg>',
     github: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.36 1.08 2.93.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.55 9.55 0 0 1 5 0c1.9-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.83-2.34 4.68-4.57 4.92.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>',
+    linkedin: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<rect width="24" height="24" rx="4" fill="#0A66C2"/>' +
+      '<text x="12" y="17" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="system-ui, sans-serif">in</text></svg>',
     skillsFolder: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
       '<rect x="6" y="6" width="36" height="36" rx="7" fill="#fff" stroke="#54595d" stroke-width="2"/>' +
       '<rect x="12" y="12" width="9" height="9" rx="2" fill="#4cc2ff"/>' +
@@ -1342,7 +1415,10 @@ import { experiences } from './data/experiences.js';
     photos: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
       '<rect x="6" y="9" width="36" height="30" rx="5" fill="#fff" stroke="#54595d" stroke-width="2"/>' +
       '<circle cx="16" cy="18" r="4" fill="#f4c542"/>' +
-      '<path d="M8 33 18 22l7 7 5-5 10 11Z" fill="#4cc2ff"/></svg>'
+      '<path d="M8 33 18 22l7 7 5-5 10 11Z" fill="#4cc2ff"/></svg>',
+    maps: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path d="M24 5c-7.9 0-14.3 6.3-14.3 14.1 0 10.6 14.3 24 14.3 24s14.3-13.4 14.3-24C38.3 11.3 31.9 5 24 5Z" fill="#ff5f5f" stroke="#c23f3f" stroke-width="2" stroke-linejoin="round"/>' +
+      '<circle cx="24" cy="19" r="6" fill="#fff"/></svg>'
   };
 
   /* ============================================================ WindowManager */
@@ -2093,7 +2169,11 @@ import { experiences } from './data/experiences.js';
     var labels = storeGet("iconLabels", {});
     var visibleApps = apps.filter(function(a){ return a.desktopIcon && !deletedIds[a.id]; });
     var savedPositions = storeGet("iconPositions", {});
-    var defaults = defaultPositions(visibleApps.map(function(a){ return a.id; }), container);
+    // Default slots are computed from the full (stable) desktop-icon list, not the currently-visible
+    // one — otherwise deleting an icon shifts everyone after it into a new default slot, which can
+    // collide with another icon's saved (dragged) position.
+    var allDesktopAppIds = apps.filter(function(a){ return a.desktopIcon; }).map(function(a){ return a.id; });
+    var defaults = defaultPositions(allDesktopAppIds, container);
 
     visibleApps.forEach(function(app){
       var pos = savedPositions[app.id] || defaults[app.id] || { x: 0, y: 0 };
@@ -2862,6 +2942,7 @@ import { experiences } from './data/experiences.js';
     { id: "c", name: "C", category: "Languages", sinceYear: 2021, level: 3, blurb: "Low-level work for microcontroller-class targets during the STMicroelectronics internship." },
     { id: "java", name: "Java", category: "Languages", sinceYear: 2021, level: 2, blurb: "Core coursework language during the BSc in Artificial Intelligence." },
     { id: "sql", name: "SQL", category: "Languages", sinceYear: 2022, level: 2, blurb: "Querying and shaping structured data for coursework and applied projects." },
+    { id: "matlab", name: "MATLAB", category: "Languages", sinceYear: 2022, level: 2, blurb: "Coursework language for control systems and numerical methods during the BSc." },
     { id: "pytorch", name: "PyTorch", category: "ML & AI", sinceYear: 2022, level: 5, blurb: "Main deep learning framework — CNNs from scratch through a custom Transformer quantised for an STM32 NPU." },
     { id: "tensorflow", name: "TensorFlow", category: "ML & AI", sinceYear: 2023, level: 3, blurb: "Keras Tuner-based hyperparameter search for embedded neural networks at STMicroelectronics." },
     { id: "keras", name: "Keras", category: "ML & AI", sinceYear: 2024, level: 3, blurb: "High-level API on top of TensorFlow — extended Keras Tuner for the STM32 hyperparameter-search framework." },
@@ -2873,6 +2954,7 @@ import { experiences } from './data/experiences.js';
     { id: "llamacpp", name: "llama.cpp", category: "Local AI", sinceYear: 2025, level: 3, blurb: "Lightweight local inference for quantised open-weight models." },
     { id: "hf-transformers", name: "Hugging Face Transformers", category: "Local AI", sinceYear: 2024, level: 4, blurb: "Model loading, fine-tuning and evaluation across most local-AI projects." },
     { id: "bitsandbytes", name: "bitsandbytes", category: "Local AI", sinceYear: 2025, level: 3, blurb: "4-bit / NF4 quantisation to fit 7B-class LLMs in available VRAM, fully on-premises." },
+    { id: "openrouter", name: "OpenRouter", category: "Local AI", sinceYear: 2025, level: 3, blurb: "API access to DeepSeek-v3 (685B MoE) as a comparison point against locally-hosted models in WebVoyager." },
     { id: "linux", name: "Ubuntu Linux", category: "Systems", sinceYear: 2024, level: 3, blurb: "Daily-driver OS for training workstations and self-hosted infrastructure." },
     { id: "docker", name: "Docker / Podman", category: "Systems", sinceYear: 2024, level: 3, blurb: "Containerises local AI stacks for reproducibility — next up: the ECA traineeship's Ollama + RAG stack." },
     { id: "ssh", name: "SSH", category: "Systems", sinceYear: 2024, level: 2, blurb: "Remote access to internal workstations and personal infrastructure alike." },
@@ -2883,7 +2965,14 @@ import { experiences } from './data/experiences.js';
     { id: "pandas", name: "Pandas", category: "Data & Tools", sinceYear: 2022, level: 3, blurb: "Wrangling tabular and geospatial data, including the 3M+ row GenHack climate dataset." },
     { id: "matplotlib", name: "Matplotlib", category: "Data & Tools", sinceYear: 2021, level: 2, blurb: "Plots training curves, ablations and evaluation charts across projects and the thesis." },
     { id: "selenium", name: "Selenium", category: "Data & Tools", sinceYear: 2025, level: 3, blurb: "Browser automation driving the locally-hosted multimodal WebVoyager web-agent replication." },
-    { id: "jupyter", name: "Jupyter", category: "Data & Tools", sinceYear: 2022, level: 3, blurb: "Exploratory analysis and experiment notebooks alongside Anaconda-managed environments." }
+    { id: "jupyter", name: "Jupyter", category: "Data & Tools", sinceYear: 2022, level: 3, blurb: "Exploratory analysis and experiment notebooks alongside Anaconda-managed environments." },
+    { id: "anaconda", name: "Anaconda", category: "Data & Tools", sinceYear: 2022, level: 3, blurb: "Manages reproducible, version-controlled environments across every training run and experiment." },
+    { id: "stm32cubeide", name: "STM32CubeIDE", category: "Embedded AI", sinceYear: 2024, level: 4, blurb: "C-code generation, flashing and on-device debugging for the STM32N6 NPU Transformer deployment." },
+    { id: "x-cube-ai", name: "X-Cube-AI", category: "Embedded AI", sinceYear: 2024, level: 4, blurb: "ST's neural-network-to-C compiler — mapped a quantised Transformer onto the STM32N6 NPU." },
+    { id: "tflite", name: "TFLite", category: "Embedded AI", sinceYear: 2024, level: 3, blurb: "INT8 quantisation format for deploying neural networks on microcontroller-class hardware." },
+    { id: "mlperf-tiny", name: "MLPerf Tiny", category: "Embedded AI", sinceYear: 2024, level: 3, blurb: "Benchmarked constraint-aware hyperparameter search against MLPerf Tiny reference models at STMicroelectronics." },
+    { id: "roboguide", name: "RoboGuide", category: "Robotics", sinceYear: 2022, level: 4, blurb: "Programs and validates industrial robot motion in simulation ahead of hands-on FANUC/COMAU sessions." },
+    { id: "fanuc-comau", name: "FANUC / COMAU", category: "Robotics", sinceYear: 2022, level: 4, blurb: "Certified trainer and certification assessor on industrial robot programming and Industry 4.0 protocols." }
   ];
   function makeSkillApp(skill){
     return {
@@ -2910,7 +2999,7 @@ import { experiences } from './data/experiences.js';
   var skillApps = SKILLS.map(makeSkillApp);
   skillApps.forEach(function(a){ apps.push(a); });
 
-  var SKILL_CATEGORIES = ["Languages", "ML & AI", "Local AI", "Systems", "Data & Tools"];
+  var SKILL_CATEGORIES = ["Languages", "ML & AI", "Local AI", "Systems", "Data & Tools", "Embedded AI", "Robotics"];
   function fakeSkillChange(id){
     var h = Math.abs(hashCode(id + "-chg"));
     return Math.round((((h % 900) / 100) - 4.5) * 10) / 10;
@@ -3246,33 +3335,281 @@ import { experiences } from './data/experiences.js';
     { title: "Timeline", icon: ICONS.timeline, kind: "internal", src: "timeline.html" },
     { title: "CV (PDF)", icon: ICONS.pdf, kind: "internal", src: "assets/cv/cv_TitoNicolaDrugman.pdf" },
     { title: "GitHub", icon: ICONS.github, kind: "external", src: "https://github.com/TitoNicolaDrugman" },
+    { title: "LinkedIn", icon: ICONS.linkedin, kind: "external", src: "https://linkedin.com/in/titonicoladrugman" },
     { title: "Email", icon: null, kind: "external", src: "mailto:drugmantito@gmail.com" },
     { title: "Overleaf", icon: ICONS.overleaf, kind: "fake", key: "overleaf" },
     { title: "Download More RAM", icon: ICONS.ram, kind: "fake", key: "ram" }
   ];
   var CV_LATEX_SNIPPET =
-    "\\documentclass[11pt,a4paper,sans]{moderncv}\n" +
-    "\\moderncvstyle{banking}\n" +
-    "\\moderncvcolor{blue}\n" +
-    "% polished together with a little help from Claude & Gemini\n" +
-    "\\name{Tito Nicola}{Drugman}\n" +
-    "\\title{AI Engineer}\n\n" +
+    "%-----------------------------------------------------------------------------------------------------------------------------------------------%\n" +
+    "%	The MIT License (MIT)\n" +
+    "%\n" +
+    "%	Copyright (c) 2021 Jitin Nair\n" +
+    "%\n" +
+    "%	Permission is hereby granted, free of charge, to any person obtaining a copy\n" +
+    "%	of this software and associated documentation files (the \"Software\"), to deal\n" +
+    "%	in the Software without restriction, including without limitation the rights\n" +
+    "%	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n" +
+    "%	copies of the Software, and to permit persons to whom the Software is\n" +
+    "%	furnished to do so, subject to the following conditions:\n" +
+    "%\n" +
+    "%	THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
+    "%	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" +
+    "%	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" +
+    "%	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" +
+    "%	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
+    "%	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n" +
+    "%	THE SOFTWARE.\n" +
+    "%\n" +
+    "%\n" +
+    "%-----------------------------------------------------------------------------------------------------------------------------------------------%\n" +
+    "\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "%	DOCUMENT DEFINITION\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "\n" +
+    "% article class because we want to fully customize the page and not use a cv template\n" +
+    "\\documentclass[a4paper,12pt]{article}\n" +
+    "\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "%	PACKAGES\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "\\usepackage{url}\n" +
+    "\\usepackage{parskip}\n" +
+    "\n" +
+    "%other packages for formatting\n" +
+    "\\RequirePackage{color}\n" +
+    "\\RequirePackage{graphicx}\n" +
+    "\\usepackage[usenames,dvipsnames]{xcolor}\n" +
+    "\\usepackage[scale=0.9]{geometry}\n" +
+    "\n" +
+    "%tabularx environment\n" +
+    "\\usepackage{tabularx}\n" +
+    "\n" +
+    "%for lists within experience section\n" +
+    "\\usepackage{enumitem}\n" +
+    "\n" +
+    "% centered version of 'X' col. type\n" +
+    "\\newcolumntype{C}{>{\\centering\\arraybackslash}X}\n" +
+    "% left-aligned wrapping X column, used for job/project titles\n" +
+    "\\newcolumntype{L}{>{\\raggedright\\arraybackslash}X}\n" +
+    "\n" +
+    "%to prevent spillover of tabular into next pages\n" +
+    "\\usepackage{supertabular}\n" +
+    "\\usepackage{tabularx}\n" +
+    "\\newlength{\\fullcollw}\n" +
+    "\\setlength{\\fullcollw}{0.47\\textwidth}\n" +
+    "\n" +
+    "%custom \\section\n" +
+    "\\usepackage{titlesec}\n" +
+    "\\usepackage{multicol}\n" +
+    "\\usepackage{multirow}\n" +
+    "\n" +
+    "%CV Sections inspired by:\n" +
+    "%http://stefano.italians.nl/archives/26\n" +
+    "\\titleformat{\\section}{\\Large\\scshape\\raggedright}{}{0em}{}[\\titlerule]\n" +
+    "\\titlespacing{\\section}{0pt}{10pt}{10pt}\n" +
+    "\n" +
+    "%for publications\n" +
+    "\\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}\n" +
+    "\n" +
+    "%Setup hyperref package, and colours for links\n" +
+    "\\usepackage[unicode, draft=false]{hyperref}\n" +
+    "\\definecolor{linkcolour}{rgb}{0,0.2,0.6}\n" +
+    "\\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}\n" +
+    "\\addbibresource{citations.bib}\n" +
+    "\\setlength\\bibitemsep{1em}\n" +
+    "\n" +
+    "%for social icons\n" +
+    "\\usepackage{fontawesome5}\n" +
+    "\n" +
+    "% job listing environments\n" +
+    "\\newenvironment{jobshort}[2]\n" +
+    "    {\n" +
+    "    \\begin{tabularx}{\\linewidth}{@{}L r@{}}\n" +
+    "    \\textbf{#1} & #2 \\\\[3.75pt]\n" +
+    "    \\end{tabularx}\n" +
+    "    }\n" +
+    "    {\n" +
+    "    }\n" +
+    "\n" +
+    "\\newenvironment{joblong}[2]\n" +
+    "    {\n" +
+    "    \\begin{tabularx}{\\linewidth}{@{}L r@{}}\n" +
+    "    \\textbf{#1} & #2 \\\\[3.75pt]\n" +
+    "    \\end{tabularx}\n" +
+    "    \\begin{minipage}[t]{\\linewidth}\n" +
+    "    \\begin{itemize}[nosep,after=\\strut, leftmargin=1em, itemsep=3pt,label=--]\n" +
+    "    }\n" +
+    "    {\n" +
+    "    \\end{itemize}\n" +
+    "    \\end{minipage}\n" +
+    "    }\n" +
+    "\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "%	BEGIN DOCUMENT\n" +
+    "%----------------------------------------------------------------------------------------\n" +
     "\\begin{document}\n" +
-    "\\makecvtitle\n\n" +
-    "\\section{Skills}\n" +
-    "\\cvitem{Local AI}{Ollama, llama.cpp, bitsandbytes}\n" +
-    "\\cvitem{Systems}{Ubuntu, Docker, SSH, Git, LaTeX}\n" +
-    "\\cvitem{LLMs \\& RAG}{RAG, prompt engineering, Transformers}\n" +
-    "% TODO: stop rewriting this section at 2am\n" +
-    "\\end{document}";
+    "\n" +
+    "% non-numbered pages\n" +
+    "\\pagestyle{empty}\n" +
+    "\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "%	TITLE\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "\n" +
+    "\\begin{tabularx}{\\linewidth}{@{} C @{}}\n" +
+    "\\Huge{Tito Nicola Drugman} \\\\[7.5pt]\n" +
+    "\\href{https://github.com/TitoNicolaDrugman}{\\raisebox{-0.05\\height}\\faGithub\\ TitoNicolaDrugman} \\ $|$ \\\n" +
+    "\\href{https://linkedin.com/in/titonicoladrugman}{\\raisebox{-0.05\\height}\\faLinkedin\\ titonicoladrugman} \\ $|$ \\\n" +
+    "\\href{mailto:drugmantito@gmail.com}{\\raisebox{-0.05\\height}\\faEnvelope \\ drugmantito@gmail.com} \\ $|$ \\\n" +
+    "\\raisebox{-0.05\\height}\\faMapMarker \\ Milan, Italy\n" +
+    "\\end{tabularx}\n" +
+    "\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "%	SUMMARY\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "\\section{Summary}\n" +
+    "M.Sc. student in Computer Science \\& Engineering (AI track) at Politecnico di Milano, with a research interest in information retrieval and in the deployment of language models under resource and confidentiality constraints. My recent work sits at the intersection of the two: a fully on-premises RAG pipeline for code generation over a 7,600-snippet knowledge base, comparing lexical, dense and hybrid retrieval and two multi-hop strategies; an automated labelling and page-state classification pipeline for a vision-language web agent, built to remove manual annotation from the evaluation loop; and a 4.56M-parameter encoder-only Transformer quantised to INT8 and deployed on an STM32N6 NPU, which is the same compression problem that governs local LLM inference at a larger scale. I run open-weight models locally on a dual-GPU Linux workstation and work daily on Ubuntu. From October 2026 to March 2027 I will be an AI trainee at the European Court of Auditors in Luxembourg, working on on-premises LLM deployment, RAG, OCR and document classification.\n" +
+    "\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "%	EDUCATION\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "\\section{Education}\n" +
+    "\\begin{tabularx}{\\linewidth}{@{}l X@{}}\n" +
+    "\n" +
+    "2024 - present & M.Sc. in Computer Science \\& Engineering (Artificial Intelligence) at \\textbf{Politecnico di Milano} \\hfill %(GPA: 3.8/4.0) \\\\\n" +
+    "\\\\\n" +
+    "\\\\\n" +
+    "Fall 2025 & Exchange semester at \\textbf{The Chinese University of Hong Kong, Shenzhen} \\hfill \\\\\n" +
+    "\\\\\n" +
+    "2021 - 2024 & B.Sc. in Artificial Intelligence at \\textbf{Università di Pavia}, \\textbf{Università} \\newline \\textbf{Milano Statale}, \\textbf{Università Milano Bicocca} \\hfill \\\\%(GPA: 3.7/4.0) \\\\\n" +
+    "\\\\\n" +
+    "2019 - 2020 & Academic year abroad at \\textbf{LaSalle High School} (Ohio, USA) \\hfill \\\\\n" +
+    "\n" +
+    "\\end{tabularx}\n" +
+    "\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "%	PROJECTS\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "\\section{Projects}\n" +
+    "\n" +
+    "\\begin{joblong}{RAG for LLM-Based Code Generation \\ \\small{[\\href{https://github.com/TitoNicolaDrugman/RAG-Code-Generation}{GitHub}]}}{Sep 2025 - Feb 2026}\n" +
+    "    \\item Designed a reproducible ingestion, chunking and indexing pipeline over a knowledge base of 7{,}600+ code snippets, corpus-agnostic by design and transferable to technical-documentation and audit domains.\n" +
+    "    \\item Benchmarked three single-hop retrievers (lexical BM25, dense CodeBERT 768-d embeddings, hybrid via Reciprocal Rank Fusion) and two LLM-driven multi-hop pipelines (query decomposition, iterative refinement).\n" +
+    "    \\item Deployed the full system on-premises on local Linux hardware (2$\\times$ RTX 5060 Ti) with zero external API calls, using Hugging Face Transformers and 4-bit NF4 quantisation (bitsandbytes) to fit CodeLlama-7B-Instruct in available VRAM.\n" +
+    "    \\item Semantic retrieval reached 0.2567 CodeBLEU against a 0.1859 no-retrieval baseline (+38\\% relative); multi-hop decomposition reached 0.2505.\n" +
+    "    \\item Engineering: deterministic generation, resume-safe execution, OOM handling, version-controlled configurations.\n" +
+    "\\end{joblong}\n" +
+    "\n" +
+    "\\vspace{-2pt}\n" +
+    "\n" +
+    "\\begin{joblong}{Autonomous Web Agents (WebVoyager) \\ \\small{[\\href{https://github.com/TitoNicolaDrugman/LLMsWebAgent}{GitHub}]}}{Sep 2025 - Jan 2026}\n" +
+    "    \\item Replaced proprietary GPT-4o with locally hosted open-weight models: Qwen3-VL:8b and Qwen3-VL:30b served via Ollama, with DeepSeek-v3 (685B MoE) accessed through the OpenRouter API as a third comparison point.\n" +
+    "    \\item Built a fully automated labelling pipeline using locally hosted Qwen3-VL:30b to classify webpage screenshots into 12 semantic categories, producing a 1{,}101-image dataset with zero manual annotation.\n" +
+    "    \\item Fine-tuned a ResNet-18 page-state classifier and integrated it as a visual prior in the agent loop, cutting reasoning latency by 17\\% (34.5\\% overall accuracy, 56.0\\% excluding the dominant HOMEPAGE class).\n" +
+    "    \\item Co-authored the grayscale + colored Set-of-Mark grounding study (52.4\\% vs.\\ 51.1\\%) and the GPT-4o reference replication (62.7\\% task success vs.\\ 59.1\\% in the original paper).\n" +
+    "    \\item Stack: Python, Selenium, Ollama, PyTorch, Hugging Face, OpenRouter.\n" +
+    "\\end{joblong}\n" +
+    "\n" +
+    "\\vspace{-2pt}\n" +
+    "\n" +
+    "\\begin{joblong}{On-Device Transformer on an STM32N6 NPU \\ \\small{[\\href{https://github.com/TitoNicolaDrugman/Transformer-NPU-STM32N6}{GitHub}]}}{Mar 2025 - Sep 2025}\n" +
+    "    \\item Designed, trained and INT8-quantised a custom 4.56M-parameter encoder-only Transformer from scratch for autoregressive text generation, under strict flash and memory budgets.\n" +
+    "    \\item Applied per-channel symmetric INT8 quantisation of both weights and activations using a held-out calibration set, a methodology directly transferable to compressing larger LLMs for on-premises inference.\n" +
+    "    \\item Engineered the end-to-end pipeline: model design in PyTorch, training on $\\sim$1.4M words from Project Gutenberg, quantisation calibration, C-code generation via STM32CubeIDE / X-Cube-AI, NPU configuration and on-device validation.\n" +
+    "    \\item On-board results: 73.14 ms/token latency, 13.67 tokens/s throughput, 257/407 operators accelerated on the NPU; produced a quantitative CNN-vs-Transformer comparison under identical hardware constraints.\n" +
+    "\\end{joblong}\n" +
+    "\n" +
+    "\\vspace{-2pt}\n" +
+    "\n" +
+    "\\begin{joblong}{GenHack 2025: Urban Heat Island Bias Correction \\ \\small{[\\href{https://github.com/TitoNicolaDrugman/GENHACK}{GitHub}]}}{Oct 2025 - Nov 2025}\n" +
+    "    \\item Three-person hackathon organised by École Polytechnique, BNP Paribas and Kayrros: built an ML pipeline correcting systematic Urban Heat Island bias in 9 km ERA5-Land reanalysis data.\n" +
+    "    \\item Fused four heterogeneous sources (ERA5-Land, Sentinel-2 NDVI, ECA\\&D ground stations, JRC Global Surface Water) into a unified 3M+ row training set across IT/ES/FR/PT.\n" +
+    "    \\item Compared Random Forest and HistGradientBoosting regressors with a station-based split to prevent geographic leakage; engineered a land-cover segmentation step to resolve urban/water spectral ambiguity.\n" +
+    "    \\item Reduced raw ERA5 error from 3.01\\textdegree C to 1.94\\textdegree C RMSE ($-$35.5\\%), MAE by $-$45\\% and systematic urban bias by $-$93\\% on hold-out stations; feature importance was dominated by elevation and coordinates rather than urban fraction. Stack: Python, scikit-learn, GeoPandas, Xarray, Dask.\n" +
+    "\\end{joblong}\n" +
+    "\n" +
+    "\\vspace{-2pt}\n" +
+    "\n" +
+    "\\begin{joblong}{Wildfire Segmentation (Sen2Fire) \\ \\small{[\\href{https://github.com/TitoNicolaDrugman/Sen2Fire-Wildfire-Detection}{GitHub}]}}{2025}\n" +
+    "    \\item Benchmarked nnU-Net, SegFormer, Dual-Stream SegFormer and hybrid Transformer-CNN architectures on Sen2Fire (Sentinel-2 multispectral and Sentinel-5P aerosol imagery).\n" +
+    "    \\item Reached an F1-score of 0.3675 with nnU-Net against a 0.2810 published baseline and challenged the original study's conclusion by showing that robust architectures exploit the full 13-band input rather than hand-selected band subsets.\n" +
+    "    \\item Implemented Test Time Augmentation and analysed its accuracy-latency trade-off.\n" +
+    "\\end{joblong}\n" +
+    "\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "%	WORK EXPERIENCE\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "\\section{Work Experience}\n" +
+    "\n" +
+    "\\begin{joblong}{AI Engineer Intern, STMicroelectronics}{Mar 2024 - Jul 2024}\n" +
+    "    \\item Designed and implemented an automated hyperparameter optimisation framework in Python, extending the Keras Tuner library, for neural networks deployed on microcontroller-class hardware, targeting an industrial audio anomaly-detection use case for predictive maintenance.\n" +
+    "    \\item Engineered the search procedure to evaluate candidate architectures jointly against accuracy and strict embedded constraints (ROM footprint, RAM usage, Multiply-Accumulate operations), so that only deployable models are returned.\n" +
+    "    \\item Validated the framework's ROM/RAM/MACC estimators against STM32Cube.AI ground-truth measurements on three MLPerf Tiny reference models (anomaly detection, image classification, keyword spotting).\n" +
+    "    \\item Demonstrated the end-to-end constraint-aware search on two MLPerf Tiny tasks, producing smaller constraint-compliant models with performance comparable to the larger MLPerf baselines.\n" +
+    "    \\item Diagnosed and engineered a workaround for an upstream Keras Tuner bug that broke long unattended remote tuning runs under hardware-constraint filtering.\n" +
+    "    \\item Worked on internal Linux workstations over corporate VPN in a confidential environment; maintained reproducibility through version-controlled Conda environments and systematic experiment logs.\n" +
+    "\\end{joblong}\n" +
+    "\n" +
+    "\\vspace{-2pt}\n" +
+    "\n" +
+    "\\begin{joblong}{Robotics Trainer \\& Certification Assessor, Fanuc-Sanoma / Comau-Pearson}{Oct 2022 - present}\n" +
+    "    \\item Deliver technical training and administer official industry certifications on industrial communication protocols, robot programming and Industry 4.0 to mixed audiences of engineers, educators and students across Northern Italy.\n" +
+    "    \\item Program and configure industrial robots and validate motion programs in RoboGuide; run hands-on sessions on Comau e.DO cells.\n" +
+    "    \\item Produce structured course materials and assessment criteria and lead \"Train the Trainer\" sessions.\n" +
+    "\\end{joblong}\n" +
+    "\n" +
+    "\\vspace{-2pt}\n" +
+    "\n" +
+    "\\begin{joblong}{Science Museum Guide, Leonardo da Vinci National Museum}{Mar 2023 - present}\n" +
+    "    \\item Lead tours in the Leonardo da Vinci Galleries and the Air and Transport Pavilion, including the official narration inside the Enrico Toti submarine.\n" +
+    "    \\item Communicate complex technical and historical concepts to a diverse public audience.\n" +
+    "\\end{joblong}\n" +
+    "\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "%	SKILLS\n" +
+    "%----------------------------------------------------------------------------------------\n" +
+    "\\vspace{-2pt}\n" +
+    "\n" +
+    "\\section{Languages, Skills \\& Additionals}\n" +
+    "\\begin{tabularx}{\\linewidth}{@{}l X@{}}\n" +
+    "Languages & \\normalsize{Italian (Native), English (C1).} \\\\\n" +
+    "LLMs, RAG \\& IR & \\normalsize{RAG (BM25, dense CodeBERT embeddings, hybrid via Reciprocal Rank Fusion), multi-hop retrieval (query decomposition, iterative refinement), document ingestion/chunking/indexing, prompt engineering, Transformer architectures, CodeLlama, Qwen3-VL, DeepSeek-v3, Llama-3.} \\\\\n" +
+    "Local \\& On-Prem AI & \\normalsize{Ollama, llama.cpp, Hugging Face Transformers (local inference), bitsandbytes (4-bit NF4), local vision-language model deployment, OpenRouter, API-free pipelines.} \\\\\n" +
+    "ML \\& Computer Vision & \\normalsize{PyTorch, TensorFlow, Keras, scikit-learn, deep learning, quantisation-aware deployment, image classification, semantic segmentation.} \\\\\n" +
+    "Embedded AI & \\normalsize{ST X-Cube-AI, STM32CubeIDE, STM32N6570-DK, TFLite INT8 quantisation, MLPerf Tiny.} \\\\\n" +
+    "Systems \\& Tooling & \\normalsize{Ubuntu Linux (daily driver), SSH, Bash, Docker, Podman (rootless containers), Git, GitHub, Selenium, Anaconda, Jupyter, \\LaTeX.} \\\\\n" +
+    "Programming \\& Data & \\normalsize{Python, C, Java, MATLAB, SQL, NumPy, Pandas, Matplotlib, GeoPandas, Xarray, Dask, MongoDB, Neo4j, Redis, Cassandra, YAML/JSON.} \\\\\n" +
+    "Robotics \\& Training & \\normalsize{FANUC, COMAU, RoboGuide; certified technical instructor \\& certification examiner.} \\\\\n" +
+    "Interests & \\normalsize{On-device \\& local AI, geopolitics, public transport, travelling.} \\\\\n" +
+    "\\end{tabularx}\n" +
+    "\n" +
+    "\\end{document}\n";
   var OVERLEAF_LOG_LINES = [
     "This is pdfTeX, Version 3.141592653-2.6-1.40.25",
     "LaTeX2e <2023-11-01>",
     "(./cv_TitoNicolaDrugman.tex",
-    "Document Class: moderncv 2023/03/26 v2.3.0",
-    "quantum_polish.sty loaded (feedback from Claude & Gemini applied)",
-    "Output written on cv_TitoNicolaDrugman.pdf (2 pages).",
+    "Document Class: article 2023/05/17 v1.4o Standard LaTeX document class",
+    "(geometry.sty)(tabularx.sty)(titlesec.sty)(fontawesome5.sty)(hyperref.sty)",
+    "Output written on cv_TitoNicolaDrugman.pdf (4 pages, 150395 bytes).",
     "Compilation finished."
+  ];
+  var OVERLEAF_ERROR_LOG_LINES = [
+    "This is pdfTeX, Version 3.141592653-2.6-1.40.25",
+    "LaTeX2e <2023-11-01>",
+    "(./cv_TitoNicolaDrugman.tex",
+    "Document Class: article 2023/05/17 v1.4o Standard LaTeX document class",
+    "(geometry.sty)(tabularx.sty)(titlesec.sty)(fontawesome5.sty)(hyperref.sty)",
+    "! Undefined control sequence.",
+    "l.42 \\begin{joblong}",
+    "? ",
+    "! Emergency stop.",
+    "<*> cv_TitoNicolaDrugman.tex",
+    "*** (job aborted, no legal \\end found)",
+    "",
+    "No pages of output.",
+    "Compilation failed — 1 error, 0 warnings."
   ];
   var browserApp = {
     id: "browser", title: "Browser.exe", icon: ICONS.browser, desktopIcon: true, maximizeOnSmallViewport: true,
@@ -3347,38 +3684,70 @@ import { experiences } from './data/experiences.js';
         });
       }
       function renderOverleafPage(){
+        var pristineSource = CV_LATEX_SNIPPET;
         body.innerHTML =
           '<div class="overleaf-app">' +
-            '<div class="overleaf-app__source"><pre>' + escapeHtml(CV_LATEX_SNIPPET) + "</pre></div>" +
+            '<div class="overleaf-app__source">' +
+              '<textarea class="overleaf-app__editor" id="ol-source" spellcheck="false" autocapitalize="off" autocomplete="off">' + escapeHtml(pristineSource) + "</textarea>" +
+            "</div>" +
             '<div class="overleaf-app__preview">' +
               '<div class="overleaf-app__toolbar">' +
                 '<button type="button" id="ol-recompile">' + t("overleaf.recompile") + "</button>" +
                 '<a href="assets/cv/cv_TitoNicolaDrugman.pdf" download>' + t("overleaf.download") + "</a>" +
+                '<span class="overleaf-app__dirty-flag" id="ol-dirty" hidden>● ' + t("overleaf.unsaved") + "</span>" +
               "</div>" +
               '<div class="overleaf-app__log" id="ol-log" hidden></div>' +
+              '<div class="overleaf-app__error" id="ol-error" hidden>' +
+                '<div class="overleaf-app__error-icon">⚠</div>' +
+                '<p class="overleaf-app__error-title">' + t("overleaf.errorTitle") + "</p>" +
+                '<p class="overleaf-app__error-detail">' + t("overleaf.errorDetail") + "</p>" +
+                '<a href="assets/cv/cv_TitoNicolaDrugman.pdf" download class="overleaf-app__error-cta">⬇ ' + t("overleaf.errorDownload") + "</a>" +
+                '<button type="button" id="ol-revert" class="overleaf-app__error-revert">' + t("overleaf.revert") + "</button>" +
+              "</div>" +
               '<iframe class="overleaf-app__pdf" id="ol-pdf" src="assets/cv/cv_TitoNicolaDrugman.pdf"></iframe>' +
             "</div>" +
           "</div>";
+        var sourceEl = body.querySelector("#ol-source");
+        var dirtyFlag = body.querySelector("#ol-dirty");
         var logEl = body.querySelector("#ol-log");
+        var errorEl = body.querySelector("#ol-error");
         var pdfEl = body.querySelector("#ol-pdf");
         var btn = body.querySelector("#ol-recompile");
+        function updateDirtyFlag(){
+          dirtyFlag.hidden = sourceEl.value === pristineSource;
+        }
+        sourceEl.addEventListener("input", updateDirtyFlag);
+        body.querySelector("#ol-revert").addEventListener("click", function(){
+          sourceEl.value = pristineSource;
+          updateDirtyFlag();
+          errorEl.hidden = true;
+          pdfEl.hidden = false;
+        });
         btn.addEventListener("click", function(){
           if (btn.disabled) return;
+          var edited = sourceEl.value !== pristineSource;
           btn.disabled = true;
           pdfEl.hidden = true;
+          errorEl.hidden = true;
           logEl.hidden = false;
+          logEl.classList.toggle("is-error", edited);
           logEl.innerHTML = "";
-          OVERLEAF_LOG_LINES.forEach(function(line, i){
+          var lines = edited ? OVERLEAF_ERROR_LOG_LINES : OVERLEAF_LOG_LINES;
+          lines.forEach(function(line, i){
             setTimeout(function(){
               var p = document.createElement("div");
               p.textContent = line;
               logEl.appendChild(p);
               logEl.scrollTop = logEl.scrollHeight;
-              if (i === OVERLEAF_LOG_LINES.length - 1){
+              if (i === lines.length - 1){
                 setTimeout(function(){
                   logEl.hidden = true;
-                  pdfEl.hidden = false;
-                  pdfEl.src = "assets/cv/cv_TitoNicolaDrugman.pdf?_=" + Date.now();
+                  if (edited){
+                    errorEl.hidden = false;
+                  } else {
+                    pdfEl.hidden = false;
+                    pdfEl.src = "assets/cv/cv_TitoNicolaDrugman.pdf?_=" + Date.now();
+                  }
                   btn.disabled = false;
                 }, 400);
               }
@@ -3807,7 +4176,7 @@ import { experiences } from './data/experiences.js';
     { from: "STMicroelectronics IT", subject: "VPN certificate expiring soon", preview: "Renew before Friday or lose remote access.", body: "Your VPN certificate expires in 3 days. Please renew it before Friday \u2014 ideally not at 23:58 on Thursday.", time: "Mon" }
   ];
   var MAIL_SENT = [
-    { to: "prof.cusano@polimi.it", subject: "Re: Late thesis draft submission", preview: "Apologies for the delay, my training run\u2026", body: "Dear Professor,\n\nApologies for the delay \u2014 my training run finished at 4am and I wanted to include the final numbers.\n\nBest,\nTito", time: "2 weeks ago" },
+    { to: "thesis.supervisor@unipv.it", subject: "Re: Late thesis draft submission", preview: "Apologies for the delay, my training run\u2026", body: "Dear Professor,\n\nApologies for the delay \u2014 my training run finished at 4am and I wanted to include the final numbers.\n\nBest,\nTito", time: "2 weeks ago" },
     { to: "me@myself.com", subject: "IMPORTANT DO NOT DELETE \u2014 final_v3.py", preview: "(empty body, just the attachment)", body: "(No message body. The subject line was the entire plan.)", time: "1 month ago" },
     { to: "team-rag-project", subject: "pushed a fix, should work now", preview: "(narrator: it did not work now)", body: "Pushed a fix for the retrieval bug, should work now.\n\nUPDATE: it did not work now.", time: "1 month ago" }
   ];
@@ -3818,34 +4187,49 @@ import { experiences } from './data/experiences.js';
     render: function(container){
       var folder = "inbox";
       var openIndex = 0;
+      var mobileView = "list"; // "list" | "reading" — only used when narrow
+      // container isn't attached to the DOM yet on first render (clientWidth reads 0),
+      // so fall back to the viewport width for that first pass; the ResizeObserver
+      // below corrects it once real layout is available.
+      var narrow = (container.clientWidth || window.innerWidth) < 640;
 
       function render(){
         var list = folder === "inbox" ? MAIL_INBOX : MAIL_SENT;
+        var showList = !narrow || mobileView === "list";
+        var showReading = !narrow || mobileView === "reading";
         container.innerHTML =
-          '<div class="mail-app">' +
-            '<nav class="mail-app__sidebar">' +
-              '<button type="button" class="mail-app__folder' + (folder === "inbox" ? " is-active" : "") + '" data-folder="inbox">Inbox <span class="mail-app__count">' + MAIL_INBOX.length + "</span></button>" +
-              '<button type="button" class="mail-app__folder' + (folder === "sent" ? " is-active" : "") + '" data-folder="sent">Sent</button>' +
-            "</nav>" +
-            '<div class="mail-app__list">' +
-              list.map(function(m, i){
-                return '<button type="button" class="mail-app__item' + (i === openIndex ? " is-active" : "") + '" data-idx="' + i + '">' +
-                  '<span class="mail-app__item-from">' + escapeHtml(m.from || m.to) + "</span>" +
-                  '<span class="mail-app__item-subject">' + escapeHtml(m.subject) + "</span>" +
-                  '<span class="mail-app__item-preview">' + escapeHtml(m.preview) + "</span>" +
-                  '<span class="mail-app__item-time">' + m.time + "</span>" +
-                "</button>";
-              }).join("") +
-            "</div>" +
-            '<div class="mail-app__reading" id="mail-reading"></div>' +
+          '<div class="mail-app' + (narrow ? " is-narrow" : "") + '">' +
+            (showList ?
+              '<nav class="mail-app__sidebar">' +
+                '<button type="button" class="mail-app__folder' + (folder === "inbox" ? " is-active" : "") + '" data-folder="inbox">Inbox <span class="mail-app__count">' + MAIL_INBOX.length + "</span></button>" +
+                '<button type="button" class="mail-app__folder' + (folder === "sent" ? " is-active" : "") + '" data-folder="sent">Sent</button>' +
+              "</nav>" +
+              '<div class="mail-app__list">' +
+                list.map(function(m, i){
+                  return '<button type="button" class="mail-app__item' + (i === openIndex ? " is-active" : "") + '" data-idx="' + i + '">' +
+                    '<span class="mail-app__item-from">' + escapeHtml(m.from || m.to) + "</span>" +
+                    '<span class="mail-app__item-subject">' + escapeHtml(m.subject) + "</span>" +
+                    '<span class="mail-app__item-preview">' + escapeHtml(m.preview) + "</span>" +
+                    '<span class="mail-app__item-time">' + m.time + "</span>" +
+                  "</button>";
+                }).join("") +
+              "</div>"
+            : "") +
+            (showReading ?
+              '<div class="mail-app__reading" id="mail-reading">' +
+                (narrow ? '<button type="button" class="mail-app__back">&larr; ' + t("mail.back") + "</button>" : "") +
+              "</div>"
+            : "") +
           "</div>";
         container.querySelectorAll("[data-folder]").forEach(function(btn){
           btn.addEventListener("click", function(){ folder = btn.dataset.folder; openIndex = 0; render(); });
         });
         container.querySelectorAll("[data-idx]").forEach(function(btn){
-          btn.addEventListener("click", function(){ openIndex = Number(btn.dataset.idx); render(); });
+          btn.addEventListener("click", function(){ openIndex = Number(btn.dataset.idx); mobileView = "reading"; render(); });
         });
-        renderReading();
+        var backBtn = container.querySelector(".mail-app__back");
+        if (backBtn) backBtn.addEventListener("click", function(){ mobileView = "list"; render(); });
+        if (showReading) renderReading();
       }
 
       function renderReading(){
@@ -3853,11 +4237,18 @@ import { experiences } from './data/experiences.js';
         var m = list[openIndex];
         var pane = container.querySelector("#mail-reading");
         if (!m || !pane) return;
-        pane.innerHTML =
+        pane.insertAdjacentHTML("beforeend",
           "<h3>" + escapeHtml(m.subject) + "</h3>" +
           '<p class="mail-app__meta">' + (folder === "inbox" ? "From: " + escapeHtml(m.from) : "To: " + escapeHtml(m.to)) + " · " + m.time + "</p>" +
-          '<p class="mail-app__body">' + escapeHtml(m.body).replace(/\n/g, "<br>") + "</p>";
+          '<p class="mail-app__body">' + escapeHtml(m.body).replace(/\n/g, "<br>") + "</p>");
       }
+
+      var ro = new ResizeObserver(function(){
+        if (!document.body.contains(container)){ ro.disconnect(); return; }
+        var next = container.clientWidth > 0 && container.clientWidth < 640;
+        if (next !== narrow){ narrow = next; render(); }
+      });
+      ro.observe(container);
 
       render();
     }
@@ -3865,47 +4256,245 @@ import { experiences } from './data/experiences.js';
   apps.push(mailApp);
 
   /* ============================================================ Photos */
-  var PHOTOS = []; // seeded later — each entry: { src, caption }
+  var PHOTOS = [
+    { src: "assets/pictures/degree_1.jpg", album: "Bachelor's thesis defense", caption: "Bachelor's thesis defense at Università degli Studi di Pavia." },
+    { src: "assets/pictures/degree_2.jpg", album: "Bachelor's thesis defense", caption: "Explaining ROM vs. RAM vs. MACC to a very patient room." },
+    { src: "assets/pictures/degree_3.jpg", album: "Bachelor's thesis defense", caption: "Somewhere in here, someone learned what a MACC is." },
+    { src: "assets/pictures/china_7.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Landing at CUHK-Shenzhen, Fall 2025." },
+    { src: "assets/pictures/china_8.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Campus at golden hour." },
+    { src: "assets/pictures/china_9.jpg", album: "Exchange — CUHK-Shenzhen", caption: "The crest. Still working out what the scroll underneath says." },
+    { src: "assets/pictures/china_6.jpg", album: "Exchange — CUHK-Shenzhen", caption: "The library looks more like a spaceship than a library." },
+    { src: "assets/pictures/china_10.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Where most of the semester's actual reading happened." },
+    { src: "assets/pictures/china_2.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Orientation week — somewhere in this crowd." },
+    { src: "assets/pictures/china_1.jpg", album: "Exchange — CUHK-Shenzhen", caption: "A calligraphy scroll, gifted, not self-made." },
+    { src: "assets/pictures/china_3.jpg", album: "Exchange — CUHK-Shenzhen", caption: "On my feet mid-talk, in a language I'm still learning." },
+    { src: "assets/pictures/china_4.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Presenting to a very patient, very round room." },
+    { src: "assets/pictures/china_5.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Mid-sentence, hoping it's still making sense." },
+    { src: "assets/pictures/china_11.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Shenzhen's old town — lanterns, crowds, better food than my dorm." }
+  ];
   var photosApp = {
     id: "photos", title: "Photos", titleKey: "app.photos", icon: ICONS.photos, desktopIcon: true, maximizeOnSmallViewport: true,
     kind: "component", singleInstance: true,
-    window: { width: 680, height: 520, minWidth: 380, minHeight: 320, resizable: true, maximizable: true },
+    window: { width: 760, height: 580, minWidth: 380, minHeight: 320, resizable: true, maximizable: true },
     render: function(container){
       function render(){
         if (!PHOTOS.length){
           container.innerHTML = '<div class="photos-app photos-app--empty"><p>' + t("photos.empty") + "</p></div>";
           return;
         }
+        var lastAlbum = null;
+        var gridHtml = PHOTOS.map(function(p, i){
+          var headingHtml = "";
+          if (p.album && p.album !== lastAlbum){
+            headingHtml = '<div class="photos-app__album-heading">' + escapeHtml(p.album) + "</div>";
+            lastAlbum = p.album;
+          }
+          return headingHtml + '<button type="button" class="photos-app__thumb" data-photo="' + i + '" style="background-image:url(\'' + p.src + '\')" title="' + escapeHtml(p.caption || "") + '"></button>';
+        }).join("");
         container.innerHTML =
           '<div class="photos-app">' +
-            '<div class="photos-app__grid">' +
-              PHOTOS.map(function(p, i){
-                return '<button type="button" class="photos-app__thumb" data-photo="' + i + '" style="background-image:url(\'' + p.src + '\')" title="' + escapeHtml(p.caption || "") + '"></button>';
-              }).join("") +
-            "</div>" +
+            '<div class="photos-app__grid">' + gridHtml + "</div>" +
             '<div class="photos-app__lightbox" id="photos-lightbox" hidden>' +
               '<button type="button" class="photos-app__lightbox-close" aria-label="' + t("win.close") + '">&times;</button>' +
+              '<button type="button" class="photos-app__lightbox-nav photos-app__lightbox-nav--prev" data-lb-nav="-1" aria-label="Previous">&larr;</button>' +
               '<img id="photos-lightbox-img" alt="" />' +
+              '<button type="button" class="photos-app__lightbox-nav photos-app__lightbox-nav--next" data-lb-nav="1" aria-label="Next">&rarr;</button>' +
               '<p id="photos-lightbox-caption"></p>' +
             "</div>" +
           "</div>";
         var lightbox = container.querySelector("#photos-lightbox");
         var lbImg = container.querySelector("#photos-lightbox-img");
         var lbCaption = container.querySelector("#photos-lightbox-caption");
+        var current = 0;
+        function show(i){
+          current = (i + PHOTOS.length) % PHOTOS.length;
+          var p = PHOTOS[current];
+          lbImg.src = p.src;
+          lbCaption.textContent = p.caption || "";
+        }
         container.querySelectorAll("[data-photo]").forEach(function(btn){
           btn.addEventListener("click", function(){
-            var p = PHOTOS[Number(btn.dataset.photo)];
-            lbImg.src = p.src;
-            lbCaption.textContent = p.caption || "";
+            show(Number(btn.dataset.photo));
             lightbox.hidden = false;
           });
         });
+        container.querySelectorAll("[data-lb-nav]").forEach(function(btn){
+          btn.addEventListener("click", function(){ show(current + Number(btn.dataset.lbNav)); });
+        });
         container.querySelector(".photos-app__lightbox-close").addEventListener("click", function(){ lightbox.hidden = true; });
+        container.addEventListener("keydown", function(e){
+          if (lightbox.hidden) return;
+          if (e.key === "Escape") lightbox.hidden = true;
+          else if (e.key === "ArrowLeft") show(current - 1);
+          else if (e.key === "ArrowRight") show(current + 1);
+        });
       }
       render();
     }
   };
   apps.push(photosApp);
+
+  /* ============================================================ Maps */
+  // World outline traced from real country borders (MIT-licensed data, github.com/VictorCazanave/svg-maps),
+  // trimmed to the four countries this map actually needs and simplified to 1 decimal place — real
+  // coastlines instead of an abstract shape, without shipping a full 250-country atlas for four pins.
+  var MAPS_VB_W = 1010, MAPS_VB_H = 666;
+  var MAPS_COUNTRY_SHAPES = [
+    { id: "it", name: "Italy", d: "m513.3 ,315.9-0.1 ,0.2-0.1 ,0.1-0.2 ,0.1-0.2 ,0.2-0.2 ,0.2-0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0.2 ,0.1 ,0 ,0.1-0.1 ,0.1-0.2 ,0.2-0.2 ,0.2 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.3 ,0 ,0 ,0.1-0.1 ,0.5 ,0 ,0.1 ,0.2 ,0.1 ,0.2 ,0.1 ,0.3 ,0.3 ,0.1 ,0.3-0.1 ,0.1-0.2 ,0-0.2 ,0 ,0.2-0.2-0.4-0.6-0.2 ,0-0.3 ,0.2-0.7-0.2-0.1 ,0.1-0.1 ,0.2-0.3 ,0.2-0.4 ,0.1-0.4 ,0.3-0.4 ,0.2-0.3 ,0.1-0.2 ,0 ,0.3-0.3-0.1 ,0-0.4 ,0.2-0.2 ,0.2-0.1 ,0.3-0.1 ,0.5 ,0.2 ,0.1 ,0.3 ,0.7 ,0.4 ,0.3-0.1 ,0.3-0.1 ,0.2-0.2 ,0.2-0.2-0.1-0.1 ,0-0.1 ,0.4 ,0.2 ,1.2 ,0.3 ,0.8 ,0.3 ,0.4 ,0.6 ,0.5 ,0.6 ,0.3 ,1.1 ,0.9 ,0.6 ,0.3 ,0.2 ,0.2 ,0.4 ,0.7 ,0.3 ,0.8 ,0.3 ,1.3 ,0.2 ,0.6 ,0.5 ,0.7 ,1 ,1 ,0.9 ,0.7 ,0.9 ,0.4 ,0.7 ,0.1 ,1.6-0.1 ,0.3 ,0 ,0.3 ,0.1 ,0.1 ,0.3-0.1 ,0.2-0.3 ,0.2-0.3 ,0.3 ,0 ,0.4 ,0.3 ,0.3 ,1.5 ,0.8 ,1.5 ,0.6 ,0.5 ,0.3 ,0.6 ,0.5 ,1.3 ,0.7 ,0.2 ,0.3 ,0.8 ,0.7 ,0.4 ,0.5 ,0.1 ,0.4-0.2 ,0.4-0.1 ,0.3-0.1 ,0.3-0.3-0.1-0.4-0.3-0.6-1.3-1.1-0.1-0.2-0.1-0.4-0.2 ,0-0.1-0.1-0.2-0.1-0.1-0.4 ,0-0.3 ,0.2-0.3 ,0.5-0.4 ,0.7-0.4 ,1 ,0 ,0.4 ,0.2 ,0.4 ,0.6 ,0.2 ,0.5 ,0.4 ,0.3 ,0.4 ,0 ,0.9 ,0.1 ,0.5-0.2 ,0.3-0.4-0.1-0.5 ,0.2-0.4 ,0.3-0.2 ,0.3 ,0 ,0.8-0.1 ,0.3-0.7 ,0.6-0.4 ,0.6-0.1 ,0.2-0.1 ,0.3-0.9 ,0-0.2-0.3 ,0-0.5 ,0.2-0.3 ,0.3-0.1 ,0.2-0.6-0.1-0.5 ,0.1-0.2 ,0.1-0.1 ,0.3-0.1 ,0.4-0.1 ,0-0.7-0.3-0.3-0.1-0.4-0.1-0.8-0.5-1-0.3-0.9-0.2-0.4-0.3-0.2-0.5 ,0-0.3-0.1-1-0.6-0.1-0.1 ,0-0.2 ,0.2-0.2-0.1-0.3-0.1-0.3-0.2-0.3-0.2-0.1-0.4 ,0.1-0.2 ,0.1-0.3 ,0-0.2 ,0.1-0.1 ,0 ,0.3-0.5-0.1-0.1-0.3-0.2-0.5 ,0-0.1 ,0-0.1 ,0.1-0.1-0.1 ,0-0.2-0.5-1-0.4-0.4-0.2-0.1-0.3 ,0.1-0.5-0.2-0.3 ,0-0.2 ,0-0.3 ,0.1-0.1-0.1 ,0-0.1-0.5-0.4-0.6-0.2-1.2-1.3-0.4-0.5-0.8-0.5-0.5-0.8-0.4-0.3-0.6-0.2-0.1 ,0-0.2 ,0.1-0.1 ,0-0.1-0.1 ,0.1-0.1 ,0.1 ,0 ,0-0.3-0.6-0.8-0.4-0.2-0.1-0.2-0.1-0.2-0.1-0.1-0.2-0.1-0.2 ,0-0.2-0.1 ,0-0.4 ,0-0.3 ,0-0.2-0.2-0.6-0.4-0.5-0.2-1.3-0.2-0.4-0.4-0.3-0.9-0.3-1.2-0.9-0.3 ,0-0.7-0.3-0.5-0.1-0.6 ,0.3-0.7 ,0.8-0.6 ,0.8-0.2 ,0.2-0.8 ,0.3-0.7 ,0.1 ,0-0.2 ,0-0.2 ,0.1-0.2 ,0.2-0.2 ,0.2-0.3 ,0.1-0.2 ,0-0.1-0.1-0.2-0.1 ,0-0.6 ,0.2-0.1 ,0-0.5-0.2-0.5-0.3-0.2-0.2-0.1-0.2 ,0.1-0.1 ,0-0.1-0.1-0.2 ,0.1-0.2 ,0.2-0.3 ,0.1-0.2 ,0.1 ,0 ,0.1-0.1-0.1-0.4-0.1-0.1-0.1-0.1-0.1 ,0-0.2-0.1-0.2-0.2 ,0-0.2-0.1-0.2-0.2-0.2 ,0-0.2 ,0.2-0.1 ,0.2 ,0 ,0.2 ,0 ,0.4-0.3 ,0.1 ,0 ,0.1-0.1 ,0.1-0.4 ,0.1-0.1 ,0-0.1-0.1-0.1-0.3-0.3-0.1-0.3-0.2-0.4-0.2-0.2 ,0-0.1 ,0-0.2 ,0-0.1 ,0.4-0.2 ,0.2-0.2 ,0.1 ,0.1 ,0.2 ,0.1 ,0.6-0.1 ,0.3-0.1 ,0.2-0.1 ,0.2 ,0 ,0.5 ,0.2 ,0.2-0.1 ,0.4-0.3 ,0.1-0.1 ,0.3-0.4 ,0-0.1-0.1-0.3 ,0-0.1 ,0.4-0.3 ,0.2-0.3 ,0.2-0.2 ,0.1 ,0 ,0 ,0.1 ,0 ,0.1 ,0 ,0.5 ,0.1 ,0.1 ,0.3 ,0.3 ,0.2 ,0.2 ,0.5 ,0.1 ,0 ,0.1-0.1 ,0.3 ,0.3 ,0.3 ,0.1 ,0.2 ,0.1 ,0.1 ,0.2-0.1 ,0.1-0.1-0.1-0.2-0.1-0.2 ,0-0.1 ,0.1-0.1 ,0.1-0.2 ,0.4-0.5 ,0.1-0.3 ,0-0.4 ,0-0.3 ,0.1-0.1 ,0.3 ,0.1 ,0.1 ,0 ,0 ,0.2 ,0.1 ,0.3 ,0.1 ,0.2 ,0.1 ,0 ,0.2 ,0 ,0.4-0.2 ,0.3-0.1 ,0.2 ,0 ,0.1 ,0.1 ,0.2 ,0.4 ,0.1 ,0 ,0.1 ,0 ,0-0.1 ,0-0.1-0.1-0.3-0.1-0.2-0.1-0.1 ,0-0.1 ,0.1-0.3 ,0.1-0.2 ,0.1-0.1 ,0.2 ,0 ,0.2 ,0.2 ,0.3 ,0.1 ,0.2 ,0 ,0-0.1 ,0-0.1-0.1-0.2 ,0-0.3 ,0.1-0.5 ,0.1 ,0 ,0.3 ,0 ,0.3 ,0 ,0.2 ,0.2 ,0.2 ,0.1 ,0.3 ,0 ,0.2 ,0 ,0.1-0.1 ,0.1-0.3 ,0.2-0.3 ,0.3-0.2 ,0.5 ,0 ,0.3-0.1 ,0.3 ,0 ,0.2 ,0 ,0.2 ,0 ,0.5-0.2 ,0.6-0.2 ,0.1 ,0 ,0 ,0.1-0.1 ,0.1-0.1 ,0.2 ,0.1 ,0.2 ,0.3 ,0.4 ,0.2 ,0.3 ,0.2 ,0.2 ,0.3 ,0.1 ,0.3 ,0.1 ,0.3 ,0 ,0.3 ,0.1 ,1 ,0.2 ,0.5 ,0.1 ,0.4 ,0 ,0.6 ,0.1zm-3.4 ,10.4 ,0.1-0.2 ,0-0.1-0.2 ,0-0.1 ,0.2 ,0.1 ,0.2 ,0.2 ,0zm-0.1 ,7.6 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0zm-5.7-3.6 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1 ,0 ,0.2-0.2-0.2-0.4 ,0.1-0.2 ,0-0.1-0.2 ,0.1-0.1 ,0.3 ,0 ,0.1 ,0 ,0.2 ,0 ,0.1-0.1zm-2.1 ,7.4 ,0.1 ,0.2 ,0.3 ,1 ,0 ,0.2-0.1 ,0.2-0.1 ,0.2-0.3 ,0.5 ,0 ,0.4 ,0.1 ,0.2 ,0 ,0.3-0.1 ,0.3-0.2 ,2.1-0.1 ,0.4-0.1 ,0.3-0.2 ,0.1-0.3-0.1-0.3-0.2-0.2 ,0-0.2 ,0.1-0.1-0.1-0.1-0.1-0.1 ,0.7-0.2 ,0.3-0.2 ,0.2-0.2 ,0-0.2-0.1-0.2 ,0-0.1-0.1-0.1-0.2-0.2-0.3-0.2-0.3 ,0-0.3 ,0-0.7 ,0.1-0.1 ,0.1-0.1 ,0-0.3 ,0-0.3 ,0.1-0.1 ,0.1 ,0.1 ,0.1 ,0 ,0-0.1 ,0-0.3-0.1-0.2-0.2-0.1 ,0-0.2 ,0-0.2 ,0.1-0.1 ,0-0.2 ,0-0.6-0.2-0.2-0.1-0.3-0.1-0.2-0.2-0.2-0.2-0.2-0.1-0.2 ,0-0.4 ,0.1-0.4 ,0.1-0.2 ,0.1 ,0 ,0.2 ,0.2 ,0.1 ,0 ,0.3 ,0 ,0.3-0.1 ,0.4-0.2 ,0.3-0.2 ,0.5-0.6 ,0.3-0.1 ,0.2-0.2 ,0.1-0.2 ,0.1-0.1 ,0.2 ,0.2 ,0.2 ,0 ,0.3 ,0.2 ,0.1 ,0.2 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0 ,0 ,0-0.1 ,0-0.1 ,0.2 ,0.1 ,0.1 ,0.2 ,0.1zm-3.8-0.6-0.1 ,0.2-0.1 ,0 ,0.1-0.1 ,0.1-0.3 ,0.1-0.1 ,0.1 ,0.1-0.1 ,0.1-0.1 ,0.1zm15.9 ,1.2-0.1 ,0-0.1 ,0 ,0-0.1 ,0-0.1 ,0.3 ,0.1 ,0 ,0.1-0.1 ,0zm-15.3 ,6-0.2 ,0.4-0.2-0.3 ,0-0.2 ,0-0.1 ,0.2 ,0.1 ,0.1 ,0.1zm19.9 ,3-0.2 ,0.4-0.1 ,0.2-0.7 ,1-0.1 ,0.2 ,0 ,0.2-0.1 ,0.2-0.1 ,0.2-0.1 ,0.3 ,0 ,0.3 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1-0.2 ,0.1 ,0.2 ,0.2 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.1-0.3 ,0.3-0.1 ,0.2-0.1 ,0.2 ,0 ,0.2 ,0 ,0.2 ,0 ,0.2-0.3 ,0-0.3-0.1-0.3 ,0-0.5-0.2-0.2 ,0-0.1-0.1-0.4-0.6-0.3-0.3-0.3-0.2-0.3 ,0-0.3 ,0-0.3-0.1-0.6-0.4-0.6-0.3-0.3-0.2-0.1-0.1-0.1-0.1-0.4-0.1-0.3-0.2-0.1 ,0-0.3 ,0-0.2 ,0-0.2-0.1-0.3-0.3-0.2-0.4-0.1-0.2 ,0.1-0.4 ,0.2-0.4 ,0.2-0.1 ,0.2-0.1 ,0.1-0.1 ,0.1-0.1 ,0.3 ,0.4 ,0.1 ,0.1 ,0.1 ,0 ,0.3-0.2 ,0-0.2 ,0.3-0.2 ,0.4 ,0 ,0.2 ,0 ,0.1 ,0.2 ,0.1 ,0.1 ,0.2 ,0 ,0.5 ,0.4 ,0.2 ,0.1 ,0.2 ,0 ,0.4-0.2 ,0.3-0.1 ,0.7 ,0.1 ,0.4-0.1 ,0.3 ,0 ,0.4-0.1 ,0.3-0.2 ,0.1-0.1 ,0.2 ,0 ,0.4 ,0 ,0.4 ,0.1 ,0.2-0.1 ,0.1-0.2 ,0.2-0.1 ,0.2 ,0 ,0.4-0.3 ,0.2 ,0 ,0.2 ,0.1-0.2 ,0.2zm-9.9 ,5.2-0.1 ,0-0.2-0.1 ,0-0.2 ,0 ,0 ,0.2 ,0.1 ,0.1 ,0.2 ,0 ,0.1z" },
+    { id: "us", name: "United States", d: "m79.2 ,187.7 ,0 ,2.3 ,0 ,2.3 ,0 ,2.3 ,0 ,2.2 ,0 ,2.2 ,0 ,2.2 ,0 ,2.2 ,0 ,2.1 ,0 ,2.1 ,0 ,2.1 ,0 ,2.1 ,0 ,2 ,0 ,2 ,0 ,2 ,0 ,2 ,0 ,1.9 ,0 ,1.9 ,0 ,1.9 ,0 ,1.9 ,0 ,1.9 ,0 ,1.8 ,0 ,1.8 ,0 ,1.8 ,0 ,1.8 ,0 ,1.8 ,0 ,1.8 ,0 ,1.7 ,0 ,1.7 ,0 ,1.7 ,0 ,1.7 ,0 ,1.7 ,0 ,1.7 ,0.7 ,0.2 ,0.7 ,0.2 ,0.2-0.5 ,0.7 ,0.4 ,0.6 ,0.3 ,0.4-0.4 ,0.4-0.4 ,0.6 ,0 ,0.7 ,0 ,0.4 ,0 ,0 ,0.4-0.2 ,0.6-0.1 ,0.5 ,0.4 ,0.5 ,0.5 ,0.3 ,0.5 ,0.2 ,0.2 ,0.7 ,0.5 ,0.5 ,0.4 ,0.4 ,0.4 ,0.4 ,0.5 ,0.5 ,0.4 ,0.4 ,0.5 ,0.5 ,0.3 ,0.3 ,0.1 ,0.6 ,0.2 ,0.7-0.1 ,0.4 ,0.2 ,0.1 ,0.5-0.5 ,0.4-0.3 ,0.5-0.4 ,0.4-0.2 ,0.7 ,0 ,0.3-0.7 ,0-1 ,0.3 ,0 ,0.2-0.1 ,0.1-0.3-0.2-0.4 ,0.6-0.2 ,0.5-0.1 ,0.7-0.4 ,0.6-0.4 ,0.3 ,0.3 ,0.3 ,0.3 ,0.6 ,0.6 ,0 ,0.2 ,0 ,0.3-0.1 ,0.3 ,0.4 ,0.8 ,0.1 ,0.1 ,0.3 ,0.1 ,0.4 ,0.3 ,0.2 ,0.2 ,0.5 ,0.4 ,0.1 ,0.2 ,0 ,0.3 ,0.1 ,0.2 ,0.1 ,0.2 ,0.1 ,0.2 ,0.2 ,0.3 ,0.4 ,0.3 ,0.3 ,0.2 ,0.4 ,0.3 ,0.4 ,0.6 ,0.4 ,0.5 ,0.4 ,0.5-0.1 ,0.4 ,0.4 ,0.6 ,0.4 ,0.8 ,0.3 ,0.7 ,0.2 ,0.4 ,0.3 ,0.5 ,0.3 ,0.7 ,0.4 ,0.8 ,0.3 ,0.5 ,0.4 ,0.7 ,0.2 ,0.4-0.1 ,0.3-0.2 ,0.3 ,0.5 ,0.2 ,0.4 ,0.1-0.1 ,0.4-0.1 ,0.5 ,0.4 ,0.2 ,0.3 ,0.1-0.1 ,0.3 ,0.1 ,0.3 ,0 ,0.5 ,0.5 ,0 ,0.2 ,0 ,0.3 ,0.2 ,0.4 ,0.3 ,0.4 ,0.3 ,0.3 ,0.2 ,0.4 ,0.1 ,0.5 ,0.2 ,0.3 ,0.4 ,0.5 ,0.2 ,0.2 ,0.5 ,0.6 ,0.2 ,0.3-0.1 ,0.1 ,0.2 ,0.1 ,0.3 ,0 ,0.3 ,0 ,0.3-0.1 ,0.3-0.1 ,0.3-0.1 ,0.3 ,0 ,0.3 ,0 ,0.3 ,0.1 ,0.3 ,0.2 ,0.6 ,0.1 ,0.3 ,0 ,0.2-0.4 ,0.8-0.1 ,0.4 ,0 ,0.2-0.3 ,0.4-0.5 ,0.5-0.2 ,0.3-0.1-0.1-0.7-0.1-0.2-0.7-0.1-0.5-0.2-0.5 ,0-0.1 ,0.2-0.3 ,0.7-0.3 ,0-0.1-0.2-0.1-0.1-0.1-0.1-0.5 ,0-0.5 ,0-0.3-0.1-0.6-0.2-0.4-0.4-0.7 ,0-0.2 ,0.2-0.2 ,0.1-0.2-0.7 ,0.4-1 ,0.4-0.4 ,0.3-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.3 ,0 ,0.1-0.1 ,0.2-0.1 ,0.4-0.2 ,0.5-0.1 ,0.1-0.4-0.2-0.1-0.1-0.2-0.6 ,0-0.2 ,0.1-0.1 ,0.2-0.3 ,0.2-0.5 ,0.5-1.2 ,0.3 ,0 ,0.5-0.2-0.8-0.1-0.1-0.1-0.1-0.2-0.1-0.3-0.2-0.3-0.3-0.1-0.1-0.1-0.2-0.3-0.1-0.2-0.1-0.2 ,0-0.2-0.1-0.1-0.2 ,0-0.1-0.1 ,0-0.6-0.4-0.2-0.2-0.1-0.3-0.4-0.1-0.2 ,0-0.2 ,0.1-0.4 ,0-0.1-0.2 ,0-1.5-0.6 ,0.1-0.9-0.3-1.1-0.3-0.5 ,0.1-0.2 ,0.1-0.1 ,0.1 ,0 ,0.6 ,0.3 ,0.6 ,0.4 ,0.1-0.1-0.9-0.8-0.2-0.3-0.1-0.3 ,0-0.2 ,0.1-0.1 ,0.8 ,0.1 ,0.1-0.1-0.9-0.2-0.2 ,0-0.2 ,0.4-0.1 ,0.1-0.2 ,0-0.1-0.1-0.2-0.4-0.2-0.3-0.4-0.4-0.1-0.3 ,0-0.4 ,0.1-0.4 ,0.3-1 ,0.1-0.2 ,0-0.1-0.1 ,0-0.1 ,0.1-0.3 ,0.4-0.3 ,0.7-0.2 ,0.2-0.1-0.1-0.2-0.3-0.4-0.4-0.5-0.1-0.3-0.4-0.5-1-0.1-0.5-0.1-0.1-0.3-0.2-0.2-0.2-0.2-1.3-0.3-0.9-0.1-0.5 ,0-0.5 ,0-0.1-0.1 ,0.4 ,0 ,0.2-0.2 ,0.1 ,0.2 ,0.4 ,0 ,0.2-0.1 ,0-0.2 ,0 ,0.3 ,0.6 ,0.1 ,1 ,0.2 ,0.7 ,0.1 ,0.6 ,0.1 ,0.4 ,0.1 ,0.4 ,0.3 ,0.9 ,0 ,0.2 ,0 ,0.1-0.1 ,0.2-0.1 ,0.1-0.5-0.1-0.2-0.2-0.2-0.4-0.3-0.2-0.8 ,0.1-0.1 ,0 ,0-0.3 ,0.1-0.6-0.1-0.2-0.4-0.9 ,0-0.2 ,0.6-0.4-0.3 ,0-0.2 ,0.2-0.1-0.1-0.1-0.6-0.1-0.2 ,0 ,0 ,0 ,0.6 ,0.1 ,0.3 ,0 ,0.2 ,0 ,0.2-0.1 ,0.2-0.1 ,0.1-0.1 ,0-0.2-0.1-0.2-0.2-0.2-0.1-0.1-0.1-0.1-0.2-0.2-0.2-0.7-0.2-0.4-0.3 ,0 ,0.1 ,0.1 ,0.3 ,0 ,0.2-0.1 ,0.1-0.2 ,0.3 ,0.1 ,0 ,0.2-0.1 ,0.2 ,0 ,0.4 ,0.2 ,0.4 ,0.2 ,0.1 ,0.1 ,0.1 ,0.2 ,0 ,0.1 ,0.3 ,0.2 ,0 ,0.1-0.2 ,0.3 ,0.5 ,0 ,0.3 ,0.1 ,0.3 ,0.5 ,0.1 ,0.3 ,0 ,0.4-0.1 ,0.1-0.1 ,0.1-0.9 ,0.1-0.3 ,0.4-0.1 ,0-0.3-0.1-0.5-0.4-0.6-0.3-1.3-1 ,0 ,0 ,0-0.2-0.1-0.1-0.2-0.1-0.2-0.3-0.3-0.4-0.2-0.3-0.1-0.2-0.2-0.3-0.6-0.6-0.3-0.2-0.3-0.1-0.2 ,0-0.1-0.1 ,0.1-0.1 ,0-0.1-0.5-0.1-0.5-0.3-1.3-0.8-0.7-0.5-0.4-0.2-0.2-0.1-0.1-0.1 ,0.1-0.1 ,0.3-0.1 ,0.2-0.1 ,0.3-0.5 ,0-0.2-0.1-0.4-0.1-0.3 ,0-0.2 ,0-0.2 ,0-0.1 ,0.1-0.1 ,0.1-0.1 ,0.1 ,0 ,0.3 ,0.4 ,0 ,0.2 ,0 ,0.6 ,0.1 ,0.7 ,0-0.1 ,0-0.2 ,0-0.4 ,0-0.2 ,0.1-0.2 ,0.1-0.1 ,0.4 ,0.1 ,0.2 ,0-0.7-0.3-0.4-0.6-0.1-0.1-0.2 ,0-0.3 ,0.2-0.7 ,0.8-0.2 ,0.1-0.8 ,0.4-0.6 ,0.1-0.6-0.1-0.5-0.1-1.4-0.7-0.2-0.2 ,0.3-0.4 ,0-0.1-0.1-0.4-0.1-0.1-0.1-0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.2-0.1 ,0.1-0.2 ,0.1-0.4 ,0.1-1.2-0.4-1.2-0.3-1.1-0.1-1.6 ,0.2-0.8 ,0.2-0.5 ,0-0.5 ,0 ,0-0.2 ,0.2-0.1 ,0-0.1-0.3-0.4-0.4-0.2-0.6-0.1-0.3-0.1-0.1-0.1-0.2-0.1-0.3-0.1-0.1-0.2 ,0.1-0.7 ,0.1-0.4 ,0.1-0.3 ,0.3-0.5-0.1 ,0-0.4 ,0.4-0.3 ,0.4-0.3 ,0.5-0.2 ,0.2-0.2 ,0.2-0.4 ,0-0.5-0.3-0.4-0.2-0.4 ,0-0.1-0.1 ,0.2-0.3 ,0.1-0.2 ,0.2-0.3 ,0-0.2-1.3-0.1 ,0-0.2 ,0-0.1 ,0-0.1-0.2-0.1-0.3 ,0.1-0.4 ,0.2-0.2-0.2 ,0.1-0.1 ,0.1-0.1 ,0.3-0.3-0.4-0.2-0.2-0.2-0.1-0.2 ,0-0.5 ,0.1-0.4 ,0.9-0.3-0.3-0.1-0.6 ,0-0.4 ,0.3-0.4 ,0.4-0.3 ,0.2-0.2-0.1-0.2 ,0-0.2 ,0-0.2 ,0.1-0.1 ,0.2-0.1 ,0.1-0.1 ,0.1-0.1 ,0-0.1-0.2-0.3-0.1-0.1-0.1-0.1 ,0.1-0.1 ,0.3-0.1 ,0.1-0.4 ,0.1-0.2 ,0-0.3-0.3 ,0-0.1 ,0.1-0.3 ,0.6-1.2-0.1 ,0-0.2 ,0.2-0.4 ,0.5-0.2 ,0.1-0.3 ,0-0.1 ,0-0.2 ,0-0.2 ,0.1-0.1 ,0.1-0.1 ,0.1 ,0 ,0 ,0.3-0.2 ,0.2 ,0 ,0 ,0.1-0.2 ,0.5-0.1 ,0.5-0.1 ,0.1-0.2 ,0-0.2 ,0 ,0 ,0.1 ,0.4 ,0.4 ,0.2 ,0.1 ,0.2 ,0.1 ,0 ,0.1-0.1 ,0.4-0.1 ,0.1-0.1 ,0.1-0.4 ,0-0.1 ,0-0.2 ,0.2-0.1 ,0.2 ,0 ,0 ,0.2-0.2 ,0.3-0.1 ,0.4 ,0 ,0.3-0.1 ,0.2-0.2 ,0.2 ,0 ,0.2 ,0.3 ,0.1 ,0.2-0.1 ,0.2-0.2 ,0.1-0.2 ,0.1-0.1 ,0.1-0.1 ,0.2 ,0 ,0.2 ,0 ,0.3 ,0.1 ,0.6 ,0 ,0.1-0.1 ,0-0.1 ,0-0.1 ,0.1-0.3 ,0.7-0.1 ,0.1-0.1-0.1-0.1 ,0-0.1 ,0.1-0.2 ,0.1-0.3 ,0.1-0.3 ,0-0.5-0.2-0.2-0.1-0.1-0.2-0.4 ,0.2-0.1-0.1-0.3-0.5-0.1 ,0 ,0 ,0.6-0.1 ,0.2-0.3 ,0.4-0.1 ,0.7 ,0 ,0 ,0-0.1-0.2-0.6-0.1-0.1-0.2 ,0.4 ,0 ,0.1 ,0.1 ,0.5-0.1 ,0.1-0.5-0.2-0.1 ,0 ,0 ,0 ,0.2 ,0.4 ,0 ,0.1-0.6 ,0.7-0.2 ,0-0.1-0.1-0.1 ,0-0.4 ,0.3-0.1 ,0-0.2-0.1-0.1 ,0 ,0 ,0.2 ,0 ,0.3-0.2 ,0.3-0.5 ,0.5-0.1 ,0.2-0.1 ,0.3-0.1 ,0-0.3-0.2-0.3-0.1 ,0 ,0.1 ,0.1 ,0.2 ,0 ,0.1-0.1 ,0-0.2 ,0-0.2-0.1-0.3 ,0.1-0.4 ,0.2-0.3 ,0-0.5-0.4-0.1 ,0 ,0-0.1 ,0.1-0.3 ,0.1-0.2 ,0.1-0.1 ,0.4-0.3 ,0.5-0.1 ,0.3-0.2 ,0.4-0.4 ,0.2-0.3 ,0.4-0.7 ,0-0.1-0.1 ,0-0.9 ,0.7-0.1 ,0.1-0.2 ,0-0.7-0.3-0.1-0.1-0.1-0.3 ,0.2-0.8 ,0.1-0.4 ,0.3-0.6 ,0.5-0.6 ,0.2-0.4 ,0.2-1.1 ,0-0.5-0.1-0.6 ,0-0.4 ,0.1-0.1 ,1-0.6 ,0.5-0.4 ,0.9-0.6 ,0.3 ,0 ,0.2 ,0.2 ,0.2 ,0.2 ,0.3 ,0.1 ,0.3 ,0 ,0.4-0.2 ,0.6 ,0.1 ,1.3 ,0.4 ,0.3 ,0 ,0-0.1-0.2-0.3-0.9-0.2-0.4-0.2-1.1-0.7-0.2-0.3 ,0.1-0.1 ,0.3-0.1 ,0.1-0.1 ,0-0.2 ,0.1-0.3 ,0.3-0.3 ,0.4-0.3 ,0.7-0.5-0.3 ,0-0.5 ,0.1-0.2 ,0.1-0.4 ,0.3-0.1 ,0.2-0.2 ,0.5-0.1 ,0.1-0.4 ,0.1-1 ,0-0.2-0.2-0.1 ,0-0.1 ,0-0.9 ,0.6-0.3 ,0.3-0.2 ,0.3-0.4 ,0.3-0.5 ,0.2-0.4 ,0.2-0.4 ,0.4-0.1 ,0.3 ,0 ,0.1 ,0.1 ,0.4-0.1 ,0.1-0.2 ,0-0.4 ,0.3-0.8 ,0.9-0.1 ,0.3 ,0 ,0.1 ,0.1 ,0.2-0.1 ,0.2-0.2 ,0.3-0.5 ,0.4-0.3 ,0.2-0.2 ,0-0.2-0.1-0.4-0.3-0.3 ,0 ,0 ,0 ,0.4 ,0.3 ,0.4 ,0.4 ,0.2 ,0.3 ,0.1 ,0.2 ,0 ,0.2-0.1 ,0.2-0.3 ,0.4-0.3 ,0.1-0.7 ,0.1-0.2 ,0.1-0.1 ,0.1 ,0.5 ,0.2 ,0 ,0.1-0.1 ,0.4-0.1 ,0.1-0.4 ,0.2-0.4 ,0.1-0.1 ,0 ,0.1-0.3 ,0-0.1-0.1-0.1-0.2 ,0.1-0.5 ,0.4-0.1 ,0.1 ,0.2 ,0.1 ,0 ,0.1-0.3 ,0.3-0.1 ,0.2-0.2 ,0.2-0.8 ,0.6 ,0.1 ,0.1-0.2 ,0.5-0.1 ,0.5 ,0.1 ,0.2 ,0.6 ,0.2 ,0.3 ,0.1 ,0.4 ,0.2 ,0.7 ,0.4 ,0.2 ,0.3 ,0 ,0.1 ,0 ,0.1-0.1 ,0.2-0.2 ,0.4-0.5 ,0.5-0.2 ,0.2-0.3 ,0.1-0.1 ,0.1-0.4 ,0.5-0.1 ,0.3 ,0 ,0.2-0.1 ,0.2-0.6 ,0.3 ,0 ,0.1 ,0.2 ,0-0.1 ,0.3 ,0 ,0.4-0.1 ,0.1-0.4 ,0-0.5 ,0.2 ,0 ,0 ,0 ,0.3-1.2 ,0.2-0.3 ,0.5-0.1 ,0.2-0.5 ,0.4-0.3 ,0.2-0.3 ,0.1-0.2 ,0.1 ,0 ,0.2-0.1 ,0.1-0.3 ,0.2-0.1 ,0.3-0.1 ,0-0.5 ,0.1-0.1 ,0.1-0.1 ,0.4-0.1 ,0-0.2-0.1-0.2 ,0.1-0.5 ,0.5-0.1 ,0.2 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.3 ,0 ,0.2-0.2 ,0.5-0.1 ,0.1-0.3 ,0.1-0.1 ,0.3-0.2 ,0-0.2 ,0.1-0.1 ,0.2-0.1 ,0.1-0.1 ,0-0.2 ,0.2-0.2 ,0.3-0.2 ,0.2-0.2 ,0.1-0.2 ,0-0.2 ,0-0.2 ,0-0.1 ,0.1-0.1 ,0.2-0.1 ,0.4-0.1 ,0.2-0.1 ,0-0.2 ,0-0.3-0.1-0.3 ,0-0.4 ,0.3-0.1 ,0.2 ,0.3 ,0 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.2 ,0-0.1 ,0-0.2 ,0.1-0.5 ,0.1-0.2 ,0.1-0.3 ,0.5 ,0 ,0.1 ,0 ,0 ,0.2-0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.3 ,0 ,0-0.4 ,0.4-0.1 ,0.2-0.1 ,0.1-0.1-0.1-0.1-0.5 ,0-0.1-0.1 ,0-0.1 ,0.2-0.2 ,0.6-0.2 ,0.3-1.8 ,0.7-0.3 ,0.2-0.1 ,0.3-0.1 ,0.3-0.1 ,0.2-0.1 ,0.1 ,0-0.1 ,0-0.7 ,0-0.1-0.2-0.1-0.1 ,0-0.1 ,0-0.2 ,0.2-0.1 ,0-0.1 ,0-0.2 ,0.2-0.6 ,0.5-0.4 ,0.1-0.1 ,0.1-0.2 ,0.3-0.1 ,0.1-0.2 ,0-0.2-0.1-0.2 ,0.1-0.1 ,0.2-0.1 ,0.1-0.4-0.1-0.2 ,0.1-0.2 ,0.3-0.2 ,0.2-0.2 ,0.1-0.6 ,0.1-0.2-0.1 ,0-0.1 ,0-0.3 ,0.1-0.2 ,0.1-0.1 ,0.1-0.1 ,0.2 ,0 ,0.3 ,0.1 ,0-0.1-0.1-0.1-0.3-0.2-0.3-0.1-0.2 ,0.1-0.2 ,0.1-0.2 ,0.1-0.1 ,0.2-0.1 ,0.5-0.1 ,0.1-0.7 ,0.9-0.3 ,0.3-0.3 ,0-0.1 ,0.1-0.2 ,0.2-0.2 ,0.1-0.1 ,0-0.1 ,0-0.1-0.1 ,0-0.1 ,0.1-0.1 ,0-0.2-0.2-0.3-0.1-0.2-0.2 ,0 ,0 ,0.1 ,0.1 ,0.7 ,0 ,0.2-0.2 ,0.2-0.4 ,0.2-0.1 ,0-0.4-0.4-0.3-0.1 ,0 ,0.1 ,0.1 ,0.3-0.1 ,0.3-0.3 ,0.3-0.2 ,0.1-0.1 ,0 ,0-0.2 ,0.1-0.4 ,0-0.3-0.1-0.2 ,0-0.2 ,0.1-0.1 ,0.5-0.4 ,0.2-0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.2-0.1 ,0.1-0.1 ,0-0.2 ,0.2-0.2 ,0.4-0.3 ,0.4-0.5 ,0.5-0.7 ,0.5-0.6 ,0.6-0.5 ,0.7-0.4 ,1.4-0.6 ,0.1 ,0-0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0 ,0.5-0.1 ,0.2-0.1 ,0.1 ,0.1-0.1 ,0.1-0.3 ,0.1 ,0 ,0.1 ,0.4 ,0.6 ,0.1 ,0.1 ,0.1 ,0 ,0-0.1 ,0-0.4 ,0.1-0.1 ,0.3 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0.2 ,0.1 ,0.3 ,0.1 ,0.2 ,0 ,0.1-0.1-0.1-0.2-0.5-0.4-0.1-0.1 ,0-0.2 ,0.1-0.3 ,0.2-0.4 ,0.2-0.5 ,0.2-0.4 ,0.4-0.4 ,0.3-0.2 ,0.7-0.6 ,1.4-0.6 ,0.3-0.4 ,0.5-0.5 ,0.2-0.1 ,0 ,0.2 ,0.1 ,0.2 ,0.3 ,0.1 ,0.2 ,0 ,0.1 ,0 ,0-0.2 ,0-0.3 ,0-0.3 ,0-0.3 ,0-0.2 ,0.2-0.4 ,0.3-0.4 ,0.4-0.5 ,0.3-0.2 ,0.3-0.1 ,0.2-0.2 ,0.4-0.5 ,0.1-0.1 ,0.3-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.3 ,0.1 ,0.2-0.1 ,0-0.1-0.2 ,0-0.1-0.1-0.1-0.3-0.2-0.2 ,0-0.2 ,0-0.3 ,0.2-0.8 ,0-0.8 ,0.2-0.5 ,0.3-0.2 ,0.7-0.1-0.4-0.2-0.2 ,0-0.3-0.1-0.1-0.5 ,0-0.4 ,0.2-0.4 ,0.7-0.7 ,0.7-0.5-0.1 ,0-0.1-0.2 ,0.3-1 ,0.3-0.9-0.4 ,0.8-0.5 ,0.6-1.5 ,0.7-1 ,0.6-0.5 ,0.1-0.3-0.1-0.2-0.6-0.1-0.2-0.2-0.4 ,0.1-0.5 ,0.1-0.3 ,0.3-0.1 ,0.4 ,0.2 ,0.3 ,0-0.4-0.3-0.6-0.3-0.3 ,0.1-0.2 ,0.5-0.3 ,0.3-0.2-0.1-0.1-0.1 ,0.1 ,0.4-0.2 ,0.6-0.1 ,0.4 ,0.3 ,1.1 ,0 ,0.4-0.5 ,0.2-0.4-0.3-0.8-1.4-0.3-0.4-0.6-0.6-0.2 ,0.1-0.3 ,0.3-0.2 ,0.1-0.7-0.5-0.3-0.4-0.3-0.4-0.4 ,0.2-0.4 ,0.3-0.4 ,0.5-0.3 ,0-0.8 ,0.4-0.1 ,0-0.1 ,0.2-0.1 ,0.1-0.1 ,0.4-1.1 ,0.3-1.1-0.2 ,0.4-0.2 ,0.4-0.2 ,0.4-0.4-0.2-0.6 ,0-0.3 ,0-0.4 ,0.4-0.5-0.4 ,0-0.3 ,0.2-0.3-0.4-0.1-0.8 ,0.3-0.4 ,0.1-0.3 ,0.1-0.5 ,0-0.4-0.2-0.7-0.6-1.5-0.3-1.1-0.5-0.6 ,0.4-1 ,0.4-0.9 ,0.5-0.4 ,0-0.1-0.3 ,0-0.2 ,0.1-0.2 ,0.3-0.2 ,0.2-0.6 ,1.1-0.4 ,0.6-0.2 ,0.2 ,0.4 ,0.2 ,0.1 ,0.2 ,0.1 ,0.4-0.1 ,0.5-0.1 ,0.3-0.5 ,0-0.4 ,0.4-1 ,0.4-1.3 ,0.2-0.6 ,0-0.7-0.5 ,0-0.3 ,0-0.3-1-0.9-0.5-0.9-0.4 ,0-0.3-0.2-0.4-0.4 ,0-0.3 ,0.1-0.2-0.2-0.1-0.3 ,0-0.4-0.1 ,0.9-1.1 ,0.3-0.8 ,0.3-0.1 ,0.3 ,0.1 ,0.5 ,0.3 ,0.4 ,0.1 ,0.1 ,0.1 ,0.1 ,0.3-0.2 ,0.4-0.1 ,0.3 ,0.2-0.1 ,0.5-0.5 ,0.4-0.4 ,0.2 ,0 ,0.1 ,0.1 ,0.2 ,0.4 ,0.3 ,0.4 ,0.6-0.4 ,0.3-0.5-0.3-0.2-0.3-0.1-0.8-0.2 ,0.2-0.2 ,0.5 ,0 ,0.2-0.1-0.2-0.2-0.3-0.2-0.7 ,0.6-1.3 ,0-0.9-0.4-0.9 ,0.1-0.1-0.1-0.2-0.2 ,0.5-0.5 ,0.3-0.2 ,0-0.1-0.2 ,0-0.4 ,0.1-0.2-0.2 ,0-0.4-0.1 ,0-0.2 ,0.2-0.2-0.1-0.2-0.2 ,0.1-0.2 ,0.2-0.2-0.1 ,0-0.2 ,0.1-0.2 ,0.3 ,0 ,0.3 ,0 ,0.4-0.3 ,0.1-0.2 ,0-0.2-0.4-0.2-0.8-0.5-0.2-0.1-0.4 ,0.3-0.5-0.1-0.3-0.3-0.1-0.4 ,0.3-0.2-0.2 ,0-0.3 ,0-0.4 ,0.1 ,0 ,0.1 ,0.1 ,0.7-0.2 ,0.1-0.1-0.6-0.3-0.2-0.3 ,0.2-0.2 ,0.4 ,0 ,0.6-0.2-0.3-0.3-0.1-0.2-0.1-0.3 ,0.1-0.5 ,0.7-1.2 ,0.7-1 ,0.2-0.2 ,0.3-0.1 ,0.3 ,0.1 ,0.3 ,0.2 ,0.1-0.1-0.1-0.1-0.1-0.4 ,0.4-0.2 ,0.3-0.5 ,0-0.1-0.3 ,0.2-0.3 ,0.3-0.1-0.3-0.1-0.8 ,0.1-0.7 ,0.1-0.3 ,0.2-0.3 ,0.7-0.1 ,0.1 ,0.1 ,0-0.1-0.4-0.5 ,0.2-0.4 ,0.2-0.2 ,0.8-0.3 ,0.5 ,0.1 ,0.6 ,0.3 ,0.3 ,0.4 ,0 ,0.2-0.1 ,0.1-0.2 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0.2-0.2 ,0.4-0.3 ,0.2 ,0.1 ,0.2 ,0.2 ,0.2 ,0 ,0.6-0.2 ,0.3-0.2 ,0.4-0.6 ,0.5-0.4 ,0.7-1.2 ,0.2-0.5 ,0.3-0.1 ,0.2 ,0 ,0.2 ,0.4 ,0.2 ,0.1 ,1.3-0.1 ,0.7-0.2 ,0.5-0.4 ,0.5-0.6 ,0.3-0.4 ,0.1-0.6-0.2-0.7-0.2-0.6-0.2-1.4-0.7-0.9-0.5-0.3-0.3 ,0 ,0.2-0.6 ,0.6 ,0.1 ,0.4-0.1 ,0.3-0.3 ,0.1-0.2 ,0.2-0.5-0.1-0.5-0.1-0.3-0.2-0.3-0.3-0.4-0.2-0.1-0.2 ,0-0.8 ,0.9-0.5 ,0-0.4-0.2-0.3 ,0.5-0.9 ,0.4-0.5 ,0.4-0.8 ,1.1-0.2 ,0.5-0.3 ,0-0.2-0.9-0.9-0.9-0.3 ,0.3 ,0.2 ,0.3 ,0.2 ,0.2 ,0.3 ,0.1-0.1 ,0.3-0.1 ,0.4-0.3-0.3-0.6-0.5-0.6-0.3-1.7 ,0-1.1 ,0.5-0.1-0.1-0.1 ,0-0.2 ,0.1-0.1 ,0.2-0.1 ,0.1-0.2 ,0-0.4-0.1-0.9-0.3-2-0.5-0.5-0.3-0.4-0.7 ,0-0.5 ,0.2-0.2 ,0-0.7-0.4-0.2-0.8-0.9-0.3-0.4 ,0.1 ,0 ,0.1 ,0.1 ,0.3 ,0.1 ,0.7-0.1 ,0.2-0.6 ,0.5-0.2 ,0.4 ,0.1-0.1-0.2-0.1-0.1-1.2-0.3-0.2 ,0.1-2.1-0.6-1.6-1-0.1-0.2-0.1-0.4 ,0.2-0.4 ,0.2-0.2 ,0 ,0.2 ,0 ,0.2 ,0.9-0.5 ,0.5-0.7 ,0.9-0.1 ,0.2-0.2 ,0.3-0.4 ,0.4-0.6 ,0.6-0.3 ,0.4-0.3 ,0.5-0.2 ,0.4 ,0.3 ,0.1 ,0 ,0.8 ,0.1 ,0.3-0.1 ,0.1-0.1 ,0.1-0.2-0.8-0.5 ,0.1-0.3 ,0.1-0.2 ,0.9-0.6 ,0.7-0.2 ,0.4 ,0 ,1.1-0.8 ,0.6-0.2 ,1.1-0.2 ,0.9 ,0 ,0.3 ,0.3-0.5-0.1-0.2 ,0.1 ,0.2 ,0.1 ,0.2 ,0.2-0.1 ,0.3-0.3 ,0.8 ,0 ,0.6-0.2 ,0.2-0.2 ,0.3 ,1 ,0.9 ,1.5 ,0.1 ,0.8-0.2 ,0.5 ,0.3 ,0.4 ,0.1 ,1-0.1 ,0.8 ,0.2 ,0.3-0.1 ,0.7-1.4 ,0.3-0.2 ,0.3 ,0.2 ,0.4 ,0.2 ,0.3-0.1 ,0.2 ,0.4-0.1-0.7-0.1-0.3-1.2-0.5-0.8 ,0.3-0.2-0.3 ,0.1-0.6-0.9-1.4-0.4-0.3-0.4 ,0-0.2-0.5-0.2-0.6 ,0.4-0.3 ,0.3-0.1 ,0.3 ,0.2 ,0.3 ,0.8 ,0.3 ,0.1-0.1 ,0.8 ,0.4 ,0.8 ,0.9 ,0.7 ,0.7-0.3 ,0.5 ,0 ,0.3 ,0.1 ,0.7 ,0.6 ,0.4 ,0.1 ,1.2-0.3 ,0-0.6-0.1-0.4-0.3-0.3-0.8 ,0.1-0.6-0.5-0.5 ,0.1-1 ,0.7-0.5-0.3-0.3-0.4-0.5-0.4-0.1-0.7 ,0.4-0.8 ,0.3-0.4-0.3-0.3-0.7-0.2-1.2 ,0.2-0.1-0.3 ,0-0.3-0.5 ,0.6-0.5-0.1-0.7 ,0.1-1.5-0.5-0.5-0.7-0.2-0.5-0.4-1.5-0.5-0.9-3.5-3.3-1.6-0.8-0.8-0.9-0.5-0.2-0.5-0.1-0.6-0.3 ,0.4-0.4 ,0.3-0.1-0.3 ,0.4 ,0.2 ,0.1 ,0.3-0.2 ,0.2-0.3 ,0.3-1.1 ,0.3-1.7-0.1-0.7 ,2 ,0.1 ,1.3-0.1 ,0.4-0.2 ,1.6-0.3 ,0.4-0.2 ,0.8-0.6 ,0.9-1 ,0.8-1.4 ,0.1-0.4 ,0.1 ,0.1 ,0.1-0.1 ,0.1-0.5 ,0.1-1.3 ,0.4-1.2 ,1.7-2.7 ,0.8-1.1 ,0.3-0.5 ,0.3-0.4 ,0.2 ,0.3 ,0.1 ,0.1 ,0.1 ,0.2-0.2 ,0.1-0.3 ,0.4-0.4 ,0.2-0.1 ,0.1 ,0.2 ,0 ,0.6-0.3 ,0.4-0.3 ,1.8-0.6 ,1-1 ,0-0.2 ,1.5-1.2 ,0.2 ,0 ,0.2 ,0.1-0.4 ,0.8 ,0.3 ,0.2-0.3 ,1 ,0.5 ,0 ,0.1 ,0.4 ,0-0.4 ,0-0.5 ,0-0.5 ,0.1-0.4 ,0.4 ,0.2 ,0.8-0.4-1 ,0-0.6-0.9-0.3 ,0 ,1.1-1.3 ,1-0.8 ,0.2 ,0 ,0.1 ,0.1 ,0 ,0.2-0.2 ,0.2-0.2 ,0.3 ,0.1 ,0.2 ,0.1 ,0 ,0.5-0.2 ,0.2-0.3 ,1.1 ,0 ,0.3-0.2 ,0.1-0.2 ,1.4 ,0 ,0.3-0.1 ,0.9-0.7 ,0.8-0.8 ,0.4-0.5 ,0.6-1.2 ,0.5-0.8 ,0.9-0.8 ,0.2 ,0.1-0.3 ,0.2-0.2 ,0.3 ,0.3 ,0.4 ,1.8 ,0.9 ,0.5 ,0 ,0.2 ,0.5-0.2 ,0.5-0.5 ,0.6-1 ,0.6 ,0.3 ,0.2 ,0.2 ,0.5 ,0.3 ,0.1 ,0.5-0.2 ,0.4-0.3 ,0.7-1 ,0.2-0.6 ,0.2-0.1 ,0.6 ,0.1 ,0.4 ,0.3 ,0.4 ,0.5-0.1 ,0.5-0.2 ,0.3 ,0.5 ,0.4 ,0.6 ,0.1 ,0.6 ,0.3 ,0.8-0.7 ,0.6-0.1 ,0.6 ,0 ,0.7-0.4 ,1.3 ,0.5 ,0.3-0.1 ,0.5 ,0.1 ,0.5 ,0.3 ,0.2 ,0.3-0.6 ,0.7-0.1 ,0.7 ,0.2 ,0.3 ,0.4 ,0 ,0 ,0.4 ,0.2 ,0.1 ,1.1 ,0-0.1 ,0.2-0.1 ,0.2-0.4 ,0.5 ,2 ,0.3 ,0.3-0.3 ,0.4-0.1 ,0.9-0.4 ,0.3 ,0.2 ,0.4 ,0.4 ,0.4 ,0.1 ,0.3-0.1 ,0.8-0.6 ,0.9 ,0 ,0.4 ,0.2 ,0.4-0.1 ,1.2 ,0.6 ,0.4 ,0.1 ,0.6 ,0.8 ,0.3 ,0 ,0.3-0.3 ,0.3 ,0 ,0.3 ,0.3 ,0.5 ,0.1 ,0.2 ,0.5 ,0.2 ,0.2 ,1.8 ,0.4 ,0.9-0.2 ,1.3 ,0 ,0.6 ,0.2 ,0.7 ,0 ,1.1 ,0.9 ,0.6 ,0.1 ,0.1 ,0.2 ,1.6 ,0.2 ,0.6-0.5 ,1-0.1 ,0.9-0.4 ,0.5 ,0 ,0.6 ,0.1 ,0.2 ,0 ,0.2-0.2 ,1.4 ,0.7 ,0.8 ,0.8 ,0.4 ,0.6 ,1.7 ,0.8 ,0.5 ,0.5 ,0.3 ,0.5 ,0.2 ,0.1 ,0.1-0.1 ,0.6 ,0 ,0.2 ,0.1zm-70.5 ,25.6-0.1 ,0 ,0-0.1 ,0.3-0.3 ,0.6-0.4 ,0 ,0.1-0.3 ,0.3-0.5 ,0.4zm51 ,34.1-0.4 ,0-0.2-0.1 ,0-0.1 ,0.1-0.3 ,0-0.1 ,0.2 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0 ,0.3zm-11.5 ,2.7-0.1 ,0 ,0.2-0.3 ,0.1-0.5 ,0.2 ,0.1 ,0 ,0.1-0.3 ,0.6-0.1 ,0.1zm12.2-0.5 ,0 ,0.1-0.1 ,0.1 ,0.1 ,0.3-0.1 ,0.5-0.1 ,0.3-0.1 ,0.2-0.1 ,0.1-0.1 ,0 ,0-0.1 ,0-0.2-0.2 ,0-0.1-0.4 ,0.1-0.1 ,0-0.2 ,0-0.1 ,0.1-0.5 ,0 ,0 ,0 ,0.1 ,0 ,0 ,0.1 ,0 ,0.1-0.2 ,0 ,0 ,0.1 ,0.2zm3.5 ,0 ,0.1 ,0.2 ,0.5 ,0 ,0.2 ,0 ,0.1 ,0.1-0.1 ,0.1-0.2 ,0.1-0.6 ,0.2-0.5 ,0.3-0.1 ,0-0.1-0.3-0.1-0.1-0.1-0.2 ,0-0.1 ,0.1-0.1 ,0.2-0.2 ,0.1-0.1 ,0.5 ,0.2zm3.6 ,0.6-0.1 ,0.1-0.2 ,0-0.1-0.1 ,0.4-0.4 ,0.1 ,0.1 ,0 ,0.3zm-59-0.3 ,0.3 ,0.3 ,0.1 ,0 ,0.4-0.1 ,0.2 ,0.1 ,0.2 ,0.1 ,0.1 ,0.2 ,0 ,0.3-0.1 ,0.3 ,0 ,0.4 ,0 ,0.2 ,0.2 ,0.2 ,0.1 ,0.3 ,0 ,0.3-0.5 ,0.1-0.5 ,0-0.4 ,0.2-0.1 ,0.2 ,0.1 ,0.2-0.1 ,0.1-0.1-0.1-0.2-0.2-0.2-0.1-0.8-0.2-1-0.7-0.4-0.1-0.4-0.5-0.4-0.6 ,0.3-0.1 ,0.3-0.1 ,1.2 ,0.1 ,0.1-0.4 ,0.2-0.1 ,0.4-0.1 ,0.3-0.2 ,0.2 ,0 ,0.2 ,0.1 ,0.3-0.1 ,0.2 ,0 ,0.1 ,0.1zm51.6 ,3.2-0.3 ,0.1-0.1-0.2 ,0.2-0.4 ,0.1-0.2 ,0.1-0.1 ,0.4-0.5 ,0.4-0.3 ,0.4-0.5 ,0.4-0.7 ,0.1-0.3 ,0.2 ,0 ,0.3 ,0.2 ,0.2 ,0.2-0.1 ,0.2-0.9 ,1-0.1 ,0.1-0.1 ,0.3-0.1 ,0.1-0.1 ,0.1-0.1 ,0.1-0.1 ,0.2-0.1 ,0.1-0.2 ,0-0.1 ,0.1-0.1 ,0.1-0.2 ,0.1zm-0.8-1.4-0.1 ,0.2-0.6-0.1 ,0.1-0.3 ,0.4-0.2 ,0.5 ,0.3-0.3 ,0.2zm9.7 ,1.4-0.1 ,0 ,0.2-0.4 ,0.3-0.4 ,0.3-0.3 ,0.3-0.1 ,0 ,0.2-0.4 ,0.3-0.5 ,0.6zm-45.9 ,6.8-0.2 ,0.1-0.2 ,0-0.2-0.5 ,0.1 ,0 ,0.3-0.4 ,0.6-0.3 ,0.2 ,0-0.6 ,1.2zm23.7 ,0.5-0.1 ,0-0.2-0.2-0.1-0.2 ,0.1-0.1 ,0.4-0.3 ,0.2 ,0 ,0.1 ,0 ,0 ,0.1 ,0 ,0.1-0.1 ,0.2-0.3 ,0.3zm0.2 ,0.7 ,0.1 ,0 ,0.1-0.3 ,0.1 ,0 ,0.3 ,0.3 ,0.2-0.1 ,0.1 ,0.3 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0 ,0.3-0.2 ,0.4-0.1 ,0.1-0.2-0.1-0.1 ,0-0.1-0.2-0.1-0.2 ,0 ,0-0.2 ,0.2 ,0 ,0.1 ,0.1 ,0.2 ,0 ,0.1-0.2 ,0.1-0.2 ,0-0.2 ,0.2-0.1-0.1 ,0-0.3-0.1 ,0-0.1 ,0.3-0.1 ,0.2-0.2 ,0.2 ,0 ,0.1-0.2 ,0-0.2 ,0.1-0.2 ,0-0.9-0.3-0.2-0.1 ,0.7-0.8 ,0.4-0.3 ,0.2 ,0 ,0.2 ,0.1 ,0.1 ,0 ,0-0.4-0.2-0.3 ,0-0.1 ,0.5-0.2 ,0.2 ,0 ,0.2 ,0.1 ,0.2 ,0.2 ,0.2 ,0.2zm49.8 ,1.1 ,0.7 ,0.1 ,0.5 ,0 ,0.5 ,0.8 ,0.3 ,0.6 ,0.2 ,0.4 ,0.1 ,0.4 ,0.1 ,0.4 ,0 ,0.1-0.3-0.3-0.2-0.6-0.1-0.2-0.1-0.1-0.1-0.2-0.2-0.5 ,0-0.2-0.1-0.1-0.1-0.1-0.1 ,0 ,0 ,0.1 ,0 ,0.4 ,0.1 ,0.4 ,0.5 ,0.9 ,0.3 ,0.5 ,0.1 ,0.2 ,0 ,0.5-0.1 ,0.2 ,0.2 ,0.4 ,0 ,0.1 ,0 ,0.1-0.5 ,0.2-0.4 ,0.8-0.5 ,0.5-0.2 ,0.1-0.1-0.1-0.1-0.2-0.1-0.2 ,0-0.3 ,0.1-0.2 ,0.2-1 ,0-0.3-0.3-0.4-0.2-0.4-0.1-0.5-0.2-1.4-0.1-0.4-0.1-0.4-0.1-0.3-0.1-0.3-0.1-0.4 ,0-0.1 ,0.2 ,0.2 ,0.3 ,0.5 ,0.1 ,0.3zm1-0.4 ,0 ,0.1-0.4 ,0-0.4-0.2-0.2-0.3 ,0-0.1 ,0.4-0.1 ,0.3 ,0.2 ,0.2 ,0.3zm-4-0.1 ,0.4 ,0.5 ,0 ,0.1-0.1 ,0.4-0.2 ,0.1 ,0.1 ,0.1 ,0.2 ,0.1 ,0.1-0.1 ,0.4-0.5 ,0.1-0.1 ,0.1 ,0 ,0.5 ,0.2 ,0.5 ,0.2 ,0.1 ,0.2 ,0.1 ,0.3-0.1 ,0.7-0.4 ,0.1-0.2 ,0-0.2-0.1-0.3 ,0.2 ,0.3 ,0.2 ,0.8 ,0 ,0.2 ,0.4 ,0.1 ,0.3-0.2 ,0.6-0.4-0.2-0.4-0.3-0.8-0.5-0.2 ,0-0.1 ,0.1 ,0 ,0.3 ,0 ,0.6-0.2 ,0.3-0.6-0.1-0.2-0.5-0.2-0.7-0.8-0.9-0.2-0.2-0.3-0.5 ,0.1-0.4 ,0-0.2 ,0.2-0.1 ,0.2-0.2 ,0.1-0.4 ,0.2 ,0.3 ,0.3 ,0.3 ,0-0.3 ,0.1-0.2 ,0.3 ,0 ,0.1 ,0 ,0.2-0.2 ,0.3-0.1 ,0.2 ,0.1zm-48.2 ,2.2 ,0 ,0.3 ,0.1 ,0 ,0.4-0.3 ,0.2-0.1 ,0.3 ,0 ,0.2 ,0.1 ,0 ,0.1 ,0 ,0.1-0.2 ,0.3 ,0 ,0.2 ,0.2 ,0.3 ,0.5 ,0.2 ,0.1 ,0.1 ,0 ,0.1-0.3 ,0.5-0.1 ,0.1-0.1 ,0-0.6-0.1-0.6-0.2-0.2 ,0-0.1 ,0.1-0.2 ,0.2 ,0.1 ,0 ,0.5 ,0 ,0.2 ,0.2 ,0.1 ,0.2 ,0 ,0.2-0.1 ,0.1-0.2 ,0.1-0.3 ,0-0.3 ,0.2-0.2 ,0.2-0.6 ,0.1-0.5 ,0.3-0.2 ,0.2-0.1 ,0.2-0.2 ,0.1-0.4 ,0.1 ,0.2 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1-0.3 ,0.5-0.6 ,0.4-0.2 ,0-0.1-0.1-0.1-0.1 ,0-0.1 ,0.8-0.9 ,0 ,0-0.2 ,0-0.3-0.2-0.2 ,0.2-0.1 ,0 ,0.1-0.2 ,0.2-0.2 ,0-0.1-0.1-0.1-0.2 ,0-0.3 ,0-0.2 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0.3 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.2-0.1 ,0.2-0.1 ,0.3-0.2 ,0-0.4-0.6-0.2-0.9-0.4-0.7 ,0-0.2 ,0.1-0.4 ,0.4-0.6 ,0.4-0.2 ,0.3-0.2 ,0.3-0.1 ,0.2 ,0 ,0.2 ,0.1 ,0.1 ,0.2-0.1 ,0.1 ,0 ,0.1 ,0.2 ,0.1 ,0.2 ,0.5 ,0.2 ,0.4 ,0.1 ,0.2 ,0.2 ,0.1-0.2-0.3-0.1-0.4-0.1-0.8-0.1-0.2 ,0.1-0.1 ,0.3 ,0 ,0-0.1-0.3-0.3-0.2-0.2-0.1-0.2 ,0-0.2 ,0.2-0.2 ,0.1-0.1 ,0.1 ,0 ,0.2 ,0 ,0.1 ,0.1 ,0.3 ,0.5 ,0.1 ,0.2 ,0.1 ,0 ,0.1-0.1 ,0.1-0.2 ,0.1-0.1 ,0.1 ,0 ,0.3 ,0.1 ,0.1 ,0 ,0-0.1 ,0-0.2 ,0.1-0.1 ,0-0.2-0.2-0.2 ,0.2-0.1 ,0.6 ,0.2 ,0.3 ,0.2-0.1 ,0.4zm-1-0.1-0.1 ,0.1-0.1 ,0-0.2-0.2-0.3-0.2-0.1-0.2 ,0-0.1 ,0.1-0.1 ,0.4 ,0.2 ,0.2 ,0.2 ,0.1 ,0.3zm51.3 ,2.6 ,0.2 ,0.6 ,0.2 ,0.4 ,0.2 ,0.5 ,0.3 ,1.1 ,0.1 ,0.4 ,0 ,0.2 ,0 ,0.6 ,0 ,0.1-0.1 ,0.1 ,0 ,0.2 ,0.1 ,0.4 ,0 ,0.7-0.1 ,0.4-0.1 ,0.1-0.2-0.1-0.2-0.2-0.1-0.2-0.3-0.7-0.1-0.3 ,0-0.2 ,0-0.2 ,0.1-0.1 ,0.2-0.3 ,0 ,0-0.1 ,0.1-0.3 ,0-0.2-0.2-0.2-0.1 ,0-0.4 ,0-0.1-0.3 ,0.1-0.1-0.1 ,0-0.1 ,0-0.2 ,0.1-0.2 ,0.3-0.5 ,0-0.1-0.2 ,0-0.2-0.2-0.1-0.6-0.2-0.3-0.1 ,0-0.3 ,0.9-0.1 ,0.2-0.4 ,0.1 ,0.1-0.2 ,0-0.2-0.1-0.7 ,0-0.3 ,0.1-0.2 ,0.3-0.1 ,0.2-0.1 ,0.1-0.2 ,0-0.2 ,0.2-0.5 ,0.1-0.1 ,0.3 ,0 ,0.6 ,0.5 ,0.2 ,0.1 ,0.3 ,0.3zm-50.6 ,1.2-0.4 ,0.2-0.1 ,0-0.2 ,0.3-0.2 ,0.1-0.2-0.3 ,0.1-0.4 ,0.2-0.3 ,1 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.2 ,0zm55.1 ,0.6 ,0.2 ,0.2 ,0.1-0.2 ,0.2 ,0 ,0.4 ,0.2 ,0.2 ,0.2 ,0.1 ,0.3 ,0 ,0.2 ,0 ,0.3 ,0 ,0.4 ,0 ,0.2 ,0 ,0.2-0.1 ,0.1-0.1 ,0-0.3-0.3-0.3-0.6-0.2-0.2 ,0 ,0.1 ,0.1 ,0.2 ,0.2 ,0.3 ,0 ,0.2 ,0.1 ,0.2 ,0.1 ,0.2 ,0 ,0.2 ,0 ,0.2 ,0 ,0.2-0.1 ,0.1-0.1 ,0-0.5 ,0-0.3 ,0.1-0.3-0.1-0.1-0.1 ,0-0.2 ,0-0.4-0.1-0.6 ,0-0.4-0.2-0.4-0.2-0.2-0.3-0.2-0.2-0.2 ,0-0.2 ,0.3-0.1 ,0.4 ,0 ,1 ,0.3zm-1.7 ,0.8 ,0.2 ,0.4 ,0.3 ,0 ,0.1 ,0.3 ,0.1 ,0.4-0.1 ,0.3-0.1-0.1-0.1 ,0.1-0.1 ,0.5 ,0 ,0.5 ,0 ,0.5-0.2 ,0.5 ,0 ,0.3-0.1 ,0.1-0.1 ,0-0.1-0.1-0.1-0.1-0.2 ,0.3-0.2 ,0-0.2-0.6 ,0.1-1.1 ,0.3-0.2-0.2-0.3-0.4-0.3 ,0-0.2-0.3-0.5 ,0-0.1 ,0-0.5 ,0.3-0.4 ,0.4-0.1 ,0.3 ,0.2 ,0.1 ,0.1 ,0 ,0.1zm3.5 ,1.6 ,0 ,0.1-0.4 ,0-0.1-0.1 ,0-0.2 ,0-0.2 ,0.1-0.2 ,0.1-0.3 ,0.1-0.5 ,0.5 ,0.6 ,0.2 ,0.3 ,0.1 ,0.3-0.2 ,0.1-0.2 ,0.1-0.1 ,0.1zm-60.2 ,0.1-0.1 ,0-0.2-0.1 ,0-0.2 ,0.3-0.2 ,0.3 ,0 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0.1-0.2 ,0.1zm-1.3 ,0.4-0.2 ,0.1-0.1 ,0 ,0-0.1 ,0-0.2 ,0.1-0.2 ,0.3-0.3 ,0.3-0.2 ,0.2 ,0 ,0.1 ,0.1-0.2 ,0.3-0.5 ,0.4zm63.3 ,1.6-0.1 ,0.8-0.1 ,0-0.1 ,0-0.2 ,0.1-0.2-0.1-0.1-0.1 ,0-0.1 ,0-0.2-0.1-0.1-0.4 ,0-0.2-0.1-0.1-0.3 ,0-0.3 ,0.1-0.1 ,0.2-0.1 ,0.2-0.4 ,0.1-0.1 ,0.4-0.8 ,0.2 ,0.1 ,0.3 ,0.5 ,0.4 ,0.7-0.1 ,0.7zm-1.9-0.7-0.1 ,0-0.2-0.1-0.4-0.4 ,0-0.1 ,0.1-0.1 ,0.2-0.3 ,0.1-0.1 ,0.6 ,0 ,0.2 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0.1-0.3 ,0.2zm-2.2-0.5 ,0.5 ,0.1 ,0.5 ,0 ,0.2 ,0.2 ,0.1 ,0.2 ,0.1 ,0.2 ,0 ,0.2 ,0 ,0.1-0.1 ,0.1 ,0 ,0 ,1 ,0.5 ,0.4 ,0.5 ,0.2 ,0.3 ,0.1 ,0.2 ,0.2 ,0.6 ,0.4 ,0.6 ,0.2 ,0.2 ,0.1 ,0.2-0.1 ,0-0.3-0.1-0.6-0.4 ,0 ,0-0.1 ,0.2-0.1 ,0.2-0.1 ,0.1 ,0.1 ,0 ,0.5-0.1 ,0.4 ,0.4 ,0.2 ,0.1 ,0.2 ,0.3 ,0 ,0.1-0.1 ,0.2-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0 ,0.5-0.1 ,0.1 ,0.1-0.1 ,0.9 ,0.1 ,0.3 ,0 ,0.1-0.1 ,0.2 ,0 ,0.2 ,0 ,0.2 ,0 ,0.1-0.1 ,0.4-0.1 ,0.1-0.2 ,0-0.2-0.1-0.2-0.3-0.2-0.5-0.1-0.1-0.3-0.1 ,0-0.1-0.2 ,0-0.1-0.2 ,0-0.3-0.1-0.3 ,0-0.1-0.1-0.1-0.1 ,0.1 ,0.1 ,0.3-0.1 ,0.2-0.2-0.1-0.4-0.7-0.4-0.6-0.2-0.1 ,0-0.2 ,0.2-0.1 ,0.2 ,0 ,0-0.1-0.3-0.5 ,0-0.2 ,0.1-0.3-0.2-0.1-0.4 ,0.1-0.2-0.1-0.1-0.2-0.1-0.2-0.4 ,0-0.1 ,0-0.2-0.3-0.1-0.2 ,0-0.1 ,0.2-0.2 ,0.1 ,0 ,0.3 ,0.2 ,0.1 ,0 ,0.3-0.2 ,0-0.2 ,0.2-0.2 ,0-0.2-0.1-0.3-0.2-0.1-0.5 ,0.2-0.4 ,0.3-0.2-0.1 ,0-0.2 ,0.4-0.5 ,0.2-0.3 ,0-0.2-0.1-0.2 ,0-0.5 ,0.1-0.1zm7.3 ,4.2-0.1 ,0.5-0.2 ,0.6-0.3 ,0.3-0.2-0.1-0.2-0.2-0.1 ,0-0.2 ,0-0.1-0.2 ,0.1-0.3-0.1-0.2-0.1 ,0.2-0.1 ,0.2-0.3 ,0.2-0.2 ,0.4-0.1 ,0.3-0.1-0.3-0.1-0.7 ,0-0.3 ,0.2-0.4 ,0.3-0.4 ,0.1-1.2 ,1-0.6 ,0.1 ,0 ,0.3 ,0.5 ,0.3 ,0.6 ,0.1 ,0.3 ,0 ,0.5 ,0 ,0.4zm-69-1.6-0.1 ,0.2-0.2 ,0-0.1-0.1 ,0-0.1 ,0.3-0.4 ,0.1-0.1 ,0.1 ,0 ,0 ,0.2 ,0 ,0.3zm62.5 ,1.4 ,0.1 ,0.1 ,0 ,0.1-0.4 ,0.3 ,0 ,0.1-0.1 ,0.2-0.1 ,0.1-0.2 ,0.2-0.3 ,0.2 ,0-0.7-0.3-0.4 ,0.3-0.2 ,0.2 ,0.1 ,0.3 ,0 ,0.3-0.2 ,0.1 ,0.1zm-76.8 ,1.1 ,0 ,0 ,0.1 ,0 ,0.2-0.3 ,0.1 ,0 ,0 ,0.1-0.1 ,0.3 ,0.1 ,0.4 ,0.1 ,0.2 ,0 ,0.1-0.3 ,0.1-0.3-0.1-0.1 ,0-0.1 ,0.1-0.1-0.1-0.1-0.7 ,0-0.1 ,0.1-0.2 ,0.2-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.2zm1-0.1 ,0 ,0.4-0.4-0.2-0.1-0.1 ,0.1-0.1 ,0.4 ,0 ,0.1 ,0.1zm77.1 ,2.2 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.2 ,0.2 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.3 ,0 ,0.4-0.1 ,0.1-0.1 ,0.2-0.3-0.1-0.2-0.3-0.3-0.4-0.2-0.3 ,0-0.1-0.1-0.1-0.2-0.6-0.1-0.4-0.2-0.1-0.3-0.1-0.1-0.2 ,0.1-0.2 ,0.4-0.1 ,0.6 ,0.6 ,0.1 ,0.2 ,0.2 ,0.3 ,0 ,0.4 ,0.1 ,0.1 ,0.2 ,0.5zm-75.8-1.1-0.2 ,0.1-0.1 ,0.1-0.1 ,0.1-0.1 ,0.1-0.4 ,0.5-0.2 ,0.1 ,0.2-0.4 ,0-0.1 ,0-0.1-0.1-0.3 ,0.1 ,0 ,0.1-0.1 ,0.2-0.3 ,0.2 ,0 ,0.2-0.3 ,0.1 ,0 ,0 ,0-0.1 ,0.2 ,0.2 ,0.2 ,0 ,0.2-0.1 ,0.1zm80.1 ,0.2 ,0.3 ,0.6 ,0 ,0.2-0.3 ,0.1-0.2 ,0-0.1-0.1 ,0-0.1 ,0.1-0.3-0.1-0.2-0.2-0.1-0.1 ,0.1 ,0-0.3 ,0.1-0.2-0.1-0.3 ,0-0.2 ,0-0.1 ,0.1 ,0 ,0.3 ,0.2 ,0.2 ,0.7zm-79.1-0.4 ,0 ,0.4 ,0 ,0.1-0.1-0.1-0.2 ,0.1-0.1-0.1 ,0-0.1 ,0-0.1 ,0.1 ,0 ,0-0.2 ,0-0.1 ,0.1-0.2 ,0.1 ,0 ,0.1 ,0.4zm0.4 ,0.9-0.1 ,0-0.1-0.1-0.1-0.3 ,0-0.1 ,0.2 ,0.1 ,0.1 ,0.2 ,0 ,0.1zm-11.5 ,0 ,0.3 ,0.8 ,0.1 ,0.2 ,0.2 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.2 ,0 ,0.1-0.8-0.3-0.5 ,0.5-0.1 ,0.1-1.4 ,0-0.3 ,0.1-0.2 ,0.2-0.3 ,0.4-0.2 ,0.2-0.2 ,0.1-0.4 ,0.1-0.4 ,0-0.2-0.1-0.1-0.2-0.1-0.4 ,0-0.1 ,0-0.2 ,0.4-0.3 ,0.1-0.1 ,0.5-0.9 ,0.1-0.1 ,0.2 ,0 ,0.4 ,0.1 ,0.4-0.3 ,0.8-0.4 ,0.2 ,0 ,0.6 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.2zm3.3 ,0.7-0.1 ,0-0.2-0.1-0.1-0.1-0.1-0.2 ,0.4-0.2 ,0.1 ,0 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.3-0.1 ,0.1zm-0.7 ,2.2-0.2 ,0.1-0.3-0.1-0.2-0.2 ,0-0.2 ,0.5 ,0.2 ,0.1 ,0.1 ,0.2 ,0.2zm-8.4 ,1.3-0.1 ,0 ,0 ,0 ,0-0.2-0.1-0.3 ,0.2-0.1 ,0.1 ,0 ,0 ,0.1 ,0.1 ,0.3 ,0.1 ,0.1 ,0.1 ,0.1-0.2 ,0.1-0.3 ,0.2zm-0.8 ,0.3-0.1 ,0.1-0.1 ,0-0.1 ,0-0.3 ,0.1-0.1 ,0-0.1-0.3 ,0-0.1 ,0.1-0.1 ,0.1-0.1 ,0.2-0.1 ,0.2 ,0 ,0.4 ,0.3 ,0.2 ,0.2 ,0 ,0.1-0.1 ,0.1-0.3 ,0zm-2.2 ,0.8 ,0.1 ,0.2 ,0.2-0.1 ,0.2-0.2 ,0.1-0.3 ,0.1-0.1 ,0.1 ,0.1 ,0.3 ,0.2-0.2 ,0.3-0.5 ,0.4-0.2 ,0.3 ,0 ,0.1 ,0.5-0.1 ,0.1 ,0 ,0.1 ,0.1-0.1 ,0.1-0.3 ,0.1-0.2 ,0.2-0.5 ,0.3-0.2 ,0.3-0.2 ,0.1-0.3 ,0-0.5 ,0.2-0.3 ,0.2-0.1 ,0.1-0.1 ,0-0.1 ,0-0.1 ,0.1-0.1 ,0.2-0.1 ,0.1-0.2 ,0-0.1 ,0.1-0.1 ,0-0.3-0.2-0.1-0.1 ,0.3-0.2 ,0.2-0.1 ,0.3 ,0 ,0.3-0.2 ,0.6-0.3 ,0.2-0.1 ,0.1-0.5 ,0.1-0.1 ,0.1-0.2 ,0.3 ,0 ,0.2 ,0.2 ,0.1 ,0 ,0 ,0 ,0-0.2 ,0.2-0.1-0.1-0.1-0.3-0.1-0.2-0.1-0.2 ,0-0.1-0.1-0.1-0.1 ,0-0.1 ,0-0.1 ,0.1-0.2 ,0.1-0.2 ,0.2-0.1 ,0.4-0.1 ,0.3-0.1 ,0.2 ,0 ,0.1 ,0 ,0 ,0.4zm1.1 ,0.8 ,0 ,0-0.1-0.1 ,0-0.1 ,0-0.1 ,0.1-0.2 ,0.1-0.1 ,0.1 ,0 ,0 ,0-0.1 ,0.2-0.1 ,0.1-0.1 ,0.2zm-4.9 ,1.8-0.9 ,0.5-0.3 ,0.4-0.2 ,0.4-0.2 ,0.2-0.1 ,0-0.1 ,0.1-0.3 ,0.2-0.1 ,0-0.9 ,0.6-0.1 ,0 ,0-0.1 ,0.3-0.2 ,0.2-0.2 ,0.2-0.3 ,0.1-0.1 ,0-0.2 ,0-0.3 ,0.1-0.1 ,0.2-0.2 ,0.1-0.1 ,0.2 ,0 ,0.4 ,0 ,0.2-0.1 ,0-0.1-0.1-0.1 ,0-0.1 ,0-0.3 ,0.1-0.2 ,0.2-0.2 ,0.3-0.2 ,0.3-0.1 ,0.2 ,0 ,0.4 ,0.2 ,0.1 ,0.1-0.1 ,0.2-0.1 ,0.2-0.3 ,0.2zm209.3 ,21 ,0.3-0.1 ,0.3 ,0 ,0.3 ,0 ,0.2 ,0 ,0.4 ,0.2 ,0.3 ,0.2 ,0.4 ,0.3 ,0.2 ,0.1 ,0.1 ,0.3 ,0.1 ,0.4 ,0.2 ,0 ,0.1-0.2 ,0.4 ,0 ,0.5 ,0.2 ,0.4 ,0.4 ,0.6 ,0.4 ,0.4 ,0.2 ,0.4 ,0 ,0.5-0.2 ,0.5-0.4 ,0.4-0.1 ,0.2 ,0 ,0.1 ,0.3 ,0.1 ,0.1 ,0.4 ,0 ,0.8 ,0.1 ,0.6-0.1 ,0.1 ,0.2 ,0.1 ,0.3 ,0.3 ,0.1 ,0.4-0.1 ,0.6 ,0.1-0.1 ,0-0.1 ,0-0.1 ,0.1-0.1 ,0.1-0.3 ,0.2-0.5 ,0.2-0.6 ,0.2-1.1 ,0.4-0.7 ,0.4-0.3 ,0.3-1.2 ,1.3-0.7 ,0.7-1.2 ,0.9-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.2 ,0.2 ,0.2 ,0 ,0.2 ,0 ,0.9-0.3 ,0.4-0.2 ,0.4-0.3 ,0 ,0 ,0.2 ,0.1 ,0.1 ,0 ,0.5-0.4 ,0.2 ,0 ,0.1 ,0 ,0.2 ,0.1 ,0 ,0.1-0.1 ,0.2-0.1 ,0.2-0.1 ,0.2 ,0 ,0.2-0.1 ,0.2-0.2 ,0.2 ,0.1 ,0.1 ,0.4-0.2 ,0.1-0.1 ,0 ,0 ,0 ,0 ,0 ,0 ,0.3 ,0.2 ,0.2 ,0.1 ,0.2 ,0.1 ,0.4-0.1 ,0.5-0.2 ,0.5-0.3 ,0.4-0.3 ,0.5-0.2 ,0.6-0.1 ,0.4-0.1 ,0.2-0.1 ,0.3-0.3 ,0.2-0.1 ,0.2 ,0 ,0.2-0.1 ,0.1-0.2 ,0.2-0.2 ,0.3-0.3 ,0.2-0.1 ,0 ,0 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0 ,0.2 ,0 ,0.3 ,0 ,0.2 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0-0.1 ,0-0.1 ,0.5-0.3 ,0.1 ,0 ,0.2 ,0.1 ,0.7 ,0.1 ,0.3 ,0.1 ,0.3 ,0.2 ,0.1 ,0.1 ,0.4 ,0.6 ,0.2 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.2 ,0.1 ,0.1 ,0.5 ,0 ,0.2 ,0 ,0.1-0.1 ,0.2 ,0.1 ,0.2 ,0.2 ,0.2 ,0.1 ,0.2-0.1 ,0.2 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0 ,0 ,0.3-0.3 ,0.4-0.3 ,0.5-0.3 ,0.3-0.1 ,0.1 ,0 ,0.4-0.1 ,0.4 ,0 ,0.5 ,0.1 ,0.5-0.1 ,0.5-0.2 ,0.4-0.1 ,0.3 ,0 ,0.1 ,0.1-0.1 ,0.1 ,0 ,0.2 ,0 ,0.3 ,0 ,0.2-0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.3 ,0 ,0.2 ,0.1 ,0.2 ,0 ,0.2-0.1 ,0.2 ,0 ,0.1 ,0.2 ,0.2 ,0 ,0.2-0.1 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.3 ,0.1 ,0.2 ,0 ,0.3 ,0 ,0.1 ,0 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.3 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.3 ,0.2 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.1 ,0-1-0.2-0.3 ,0 ,0 ,0.1 ,0 ,0 ,0 ,0-0.1 ,0 ,0 ,0 ,0-0.1-0.1-0.1-0.1 ,0-0.1 ,0.1-0.1 ,0.3 ,0 ,0.1 ,0 ,0.2 ,0 ,0.1 ,0 ,0 ,0 ,0-0.1 ,0-0.1 ,0-0.5-0.5-0.4-0.2-0.4-0.2-0.4-0.1-0.3 ,0-0.2 ,0.1-0.2 ,0.2-0.3 ,0.1-0.4 ,0-0.2 ,0.1 ,0 ,0.1-0.1 ,0-0.2-0.1-0.2 ,0-0.2 ,0-0.2 ,0.1-0.2 ,0.3 ,0 ,0.1-0.1 ,0.1-0.4 ,0.2 ,0 ,0.1-0.2 ,0.2-0.1 ,0.1 ,0 ,0.1-0.1 ,0-0.1-0.1 ,0-0.2 ,0.1-0.2 ,0.1-0.1 ,0.1 ,0 ,0.1-0.1 ,0-0.2 ,0-0.1-0.2 ,0-0.1 ,0.1-0.1 ,0-0.1 ,0-0.1 ,0.1-0.1 ,0.3-0.1 ,0.2-0.2 ,0.1-0.1-0.1-0.1-0.3 ,0-0.2 ,0.1-0.3 ,0 ,0-0.1 ,0.1-0.1 ,0.2-0.1 ,0.5-0.1 ,0.1-0.1 ,0.1-0.2 ,0.3-0.2 ,0.5-0.3 ,0.5-0.3 ,0.5-0.2 ,0.2-0.1 ,0 ,0 ,0.1 ,0 ,0.3-0.1 ,0.2-0.2 ,0.2-0.4 ,0.2-0.1 ,0.1 ,0 ,0.1-0.3 ,0.5-0.1 ,0.3-0.1 ,0.3 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.1 ,0.2-0.1 ,0.1-0.2 ,0.2-0.4 ,0.2-0.2 ,0.1 ,0 ,0 ,0 ,0.2-0.1 ,0.2 ,0 ,0.1 ,0.2 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.2-0.1 ,0.2-0.1 ,0.2-0.1 ,0.4-0.1 ,0.5 ,0 ,0.4 ,0.1 ,0.2-0.1 ,0.2-0.2 ,0.2-0.2 ,0.3-0.1 ,0.3-0.1 ,0.3 ,0 ,0.2 ,0 ,0.2 ,0.1 ,0.2 ,0 ,0.1-0.2 ,0.5-0.1 ,0.2 ,0 ,0.2-0.1 ,0.2-0.2 ,0.4 ,0 ,0.2 ,0 ,0.2 ,0 ,0.3 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.2 ,0.1 ,0.2 ,0.1 ,0.1 ,0 ,0.2-0.1 ,0.3 ,0 ,0.5 ,0 ,0.8 ,0 ,0.5 ,0.1 ,0.2 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0.3 ,0.1 ,0.5 ,0.1 ,0.4 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0 ,0.1 ,0.2 ,0.1 ,0.3 ,0 ,0.3 ,0 ,0.2-0.1 ,0.8-0.4 ,0.3-0.2 ,0.2-0.2 ,0.2-0.3 ,0.2-0.4 ,0.3-0.5 ,0.2-0.3 ,0.1-0.4 ,0.1-0.4 ,0.1-0.5 ,0-0.5 ,0-0.5-0.1-0.5-0.1-0.5-0.1-0.3 ,0-0.1-0.3-0.6-0.3-0.9 ,0-0.1 ,0.3-0.5 ,0-0.1 ,0-0.4-0.1-0.2-0.1-0.3 ,0-0.1 ,0.3-0.4 ,0.2-0.3 ,0.2-0.3 ,0.1-0.4 ,0-0.5 ,0-0.3-0.1-0.2 ,0-0.1 ,0.1-0.1 ,0.3-0.1 ,0.1-0.2 ,0-0.3 ,0.1-0.2 ,0.1 ,0 ,0.1-0.1 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.2-0.2 ,0.3-0.5 ,0.2-0.3 ,0.1-0.1 ,0 ,0-0.1 ,0.1 ,0 ,0.2 ,0 ,0.2 ,0 ,0.2-0.1 ,0.2 ,0 ,0.1-0.1 ,0.3 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.2 ,0-0.1 ,0 ,0 ,0-0.1 ,0.1-0.2 ,0.1-0.1 ,0.1 ,0 ,0 ,0.1 ,0 ,0.2-0.2 ,0.4 ,0 ,0.1 ,0 ,0 ,0.2-0.3 ,0.2-0.4 ,0.1-0.3 ,0-0.2 ,0-0.5 ,0-0.2 ,0-0.1 ,0.2-0.1 ,0.3-0.2 ,0.3-0.1 ,0.3 ,0 ,0.2 ,0 ,0.1-0.1 ,0-0.1-0.2 ,0-0.1-0.1-0.1-0.2 ,0-0.2 ,0-0.2 ,0.1-0.2 ,0.2-0.2 ,0.1-0.1-0.1-0.1 ,0.1 ,0 ,0.2 ,0 ,0.2 ,0 ,0.1-0.1 ,0 ,0 ,0.2 ,0.1 ,0.4 ,0.2 ,0.3 ,0.1 ,0.3 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.2 ,0.2 ,0.1 ,0.2 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0.8 ,0.3 ,0.3 ,0.2 ,0.2 ,0.2 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0.2 ,0.1 ,0 ,0 ,0.1 ,0 ,0.2 ,0 ,0.1 ,0.1 ,0.1 ,0 ,0-0.2-0.1-0.1 ,0-0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.3 ,0.4 ,0.1 ,0.3 ,0 ,0.4 ,0 ,0.2 ,0 ,0.3 ,0 ,0.5 ,0 ,0.2-0.1 ,0.2-0.3 ,0.3 ,0 ,0-0.1 ,0-0.1 ,0-0.1 ,0.2-0.1 ,0.4-0.1 ,0.2-0.1 ,0-0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.2 ,0-0.2 ,0.1-0.1 ,0.3 ,0 ,0.2-0.1 ,0.2 ,0 ,0.2 ,0.1 ,0.1 ,0.2 ,0.1 ,0.3 ,0.1 ,0.2 ,0 ,0.1-0.1 ,0.1-0.2 ,0.1-0.1 ,0.2 ,0 ,0.1-0.1 ,0.3-0.5 ,0-0.1-0.1 ,0 ,0 ,0 ,0.1 ,0 ,0.1-0.1 ,0.1-0.1 ,0.2-0.1 ,0.4-0.1 ,0.2-0.1 ,0.1 ,0 ,0.2 ,0.1 ,0.3 ,0.2 ,0.2 ,0.3 ,0.1 ,0.3 ,0.2 ,0.9 ,0.2 ,1.4 ,0.2 ,0.8 ,0.1 ,0.2 ,0 ,0.1-0.2 ,1.1-0.2 ,0.4-0.3 ,0.3-0.3 ,0.2-0.3 ,0.4-0.4 ,0.2-0.2 ,0.1 ,0 ,0.1 ,0 ,0-0.1 ,0.2-0.1 ,0.3 ,0 ,0.2 ,0 ,0.1-0.1 ,0.1-0.1 ,0.2 ,0 ,0.1 ,0 ,0.1 ,0 ,0-0.1 ,0-0.1 ,0-0.1 ,0.2-0.2 ,0.4 ,0 ,0.1 ,0 ,0.1 ,0.3 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0.5 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.3 ,0.1 ,0 ,0-0.8 ,0.2-0.2 ,0.1 ,0.2 ,0.1 ,0.2 ,0 ,0.2-0.1 ,0.2 ,0 ,0.2 ,0 ,0.1 ,0 ,0 ,0 ,0.3 ,0.2 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0.3-0.1 ,0.5-0.1 ,0.4-0.1 ,0.4 ,0 ,0.3 ,0 ,0.2-0.1 ,0.5-0.5 ,0.6-0.4 ,1-0.5 ,1.5-0.6 ,0.2-0.1 ,0.2-0.1 ,0.1-0.1 ,0.1-0.1 ,1-0.6 ,0.5-0.3 ,0.3-0.2 ,0.3-0.2 ,0.3-0.2 ,0.2-0.2 ,0.2-0.3 ,0.2-0.2 ,0.2-0.1 ,0.1-0.1 ,0-0.1 ,0-0.2-0.1-0.2 ,0-0.2 ,0.1-0.1 ,0-0.1 ,0 ,0-0.4-0.1 ,0-0.7 ,0 ,0 ,0 ,0 ,1-0.3 ,0.7-0.1 ,0.8 ,0 ,0.9 ,0.1 ,0.4 ,0.1 ,0.2 ,0.2 ,0.3 ,0 ,0.3-0.1 ,0.4 ,0 ,0.5 ,0 ,0.3 ,0 ,0 ,0.1 ,0 ,0 ,0-0.1 ,0.1-0.1 ,0.4-0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.2 ,0.2-0.2 ,0.3-0.2 ,0.3-0.1 ,0.2 ,0 ,0.2 ,0 ,0.1-0.1 ,0-0.1 ,0-0.1 ,0-0.1 ,0 ,0 ,0 ,0 ,0-0.1 ,0-0.3 ,0-0.2-0.1-0.1-0.1-0.1 ,0-0.1 ,0.1-0.1 ,0 ,0.1 ,0 ,0 ,0.1 ,0 ,0.2-0.2 ,0-0.1 ,0.1-0.1 ,0.1-0.1-0.1 ,0-0.2 ,0 ,0 ,0 ,0.1-0.2 ,0-0.1 ,0 ,0-0.1 ,0-0.2 ,0.1-0.1 ,0 ,0-0.1-0.1-0.2 ,0.3-0.3 ,1.1-0.8 ,0.1-0.1 ,0-0.1 ,0-0.1 ,0 ,0 ,0 ,0 ,1.1-1.1 ,0.6-0.5 ,0.5-0.3 ,0.4-0.1 ,0.3 ,0 ,0.2 ,0 ,0.1 ,0 ,0.7 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,0.3-0.8 ,0.3-0.4 ,0.4 ,0.1 ,0.2 ,0 ,0.2-0.2 ,0.2-0.1 ,0.1 ,0 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.2 ,0-0.2 ,0.1-0.2 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0-0.1 ,0-0.2 ,0-0.2 ,0.3-0.4 ,0.4-0.3 ,0.1-0.1 ,0-0.3 ,0.2-0.3 ,0.1-0.2 ,0-0.1-0.1-0.2 ,0-0.3 ,0.1-0.4 ,0.1-0.4 ,0.2-0.4 ,0.3-0.4 ,0.1-0.5 ,0.1-0.6 ,0.4-0.5 ,0.4-0.6 ,0.2-0.4 ,0.4-0.6 ,0.3-0.5 ,0.2-0.2 ,0.2-0.3 ,0.3 ,0.1 ,0.3 ,0.1 ,0 ,0.4 ,0 ,0.3 ,0.1 ,0.2 ,0.2 ,0.1 ,0.1 ,0 ,0.2 ,0 ,0.5-0.2 ,0.5-0.1 ,0.3-0.1 ,0.1-0.1 ,0.1 ,0 ,0.2 ,0 ,0.4 ,0.3 ,0.5 ,0.4 ,0.4 ,0.3 ,0 ,0.6 ,0 ,0.6 ,0 ,0.7 ,0 ,0.5 ,0 ,0.7 ,0 ,0.5 ,0 ,0.7 ,0 ,0.4 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.2 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.2 ,0.1 ,0.2 ,0 ,0.1 ,0 ,0.2 ,0.1 ,0.1 ,0.2 ,0 ,0.1-0.1 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.2 ,0 ,0.2-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1-0.1 ,0.1-0.1 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.2 ,0.1 ,0.4-0.1 ,0.2 ,0 ,0.2 ,0.3 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.6 ,0.6-0.5-0.1-0.3 ,0.2-0.3 ,0-0.1 ,0.3-0.2 ,0.1-0.2 ,0-0.2-0.1-0.1 ,0-0.2 ,0.5-0.2 ,0-0.1 ,0.2-0.1 ,0.1-0.1 ,0.1-0.1-0.2-0.1-0.2-0.1 ,0-0.1-0.1-0.1 ,0-0.1 ,0-0.1 ,0.1-0.2 ,0.1-0.1-0.1-0.1-0.2-0.1 ,0.2-0.1 ,0.3 ,0 ,0.3-0.1 ,0.2-0.1 ,0-0.1-0.2-0.3-0.1-0.2 ,0 ,0.1-0.2 ,0.2-0.2-0.1 ,0-0.1 ,0 ,0 ,0 ,0.1-0.2 ,0-0.2-0.1 ,0.1-0.1 ,0.3-0.3 ,0.2 ,0 ,0.3-0.3 ,0.7 ,0 ,0.3-0.2 ,0.2-0.2 ,0.2-0.3-0.1-0.3 ,0.2-0.1 ,0.2-0.1 ,0-0.1-0.3 ,0-0.1-0.1 ,0.4-0.1 ,0 ,0-0.3 ,0-0.2-0.1 ,0.2-0.1 ,0.4-0.1 ,0 ,0-0.1-0.1 ,0 ,0 ,0.2 ,0 ,0.2 ,0 ,0.1-0.1-0.1-0.1-0.1-0.1 ,0.1-0.1 ,0 ,0-0.1 ,0-0.1-0.3 ,0.1-0.3 ,0.3-0.3 ,0.4 ,0.1 ,0.1 ,0.1 ,0.1-0.4 ,0.6-0.5 ,0.5-0.3 ,0.8-0.1 ,0.1-0.1 ,0.2-0.1 ,0.5-0.1 ,0.4 ,0.1 ,0.2 ,0.1 ,0.2 ,0.1 ,0.2 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0-0.3 ,0.2-0.2 ,0.1-0.1 ,0.2-0.2 ,0.2-0.3 ,0.4 ,0.1 ,0.1 ,0.5 ,0.1 ,0.2 ,0.1 ,0.3 ,0.7-0.1 ,0.1 ,0 ,0.1 ,0.3 ,0.2 ,0.1 ,0.5 ,0.2 ,0.2 ,0.4 ,0.1 ,0.5-0.2 ,0.4-0.2 ,0-0.2-0.2-0.4-0.1-0.2-0.2-0.1-0.1 ,0.1-0.1-0.1 ,0-0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0.4 ,0.4 ,0.1 ,0.6 ,0 ,0.4 ,0 ,0.1-0.1 ,0-0.2 ,0-1 ,0.2-0.2 ,0.2-0.5 ,0.2 ,0-0.1 ,0-0.2 ,0-0.4-0.1 ,0-0.8 ,0.6-0.3 ,0-0.2 ,0.2-0.1-0.1 ,0-0.5 ,0.2-0.4-0.1 ,0-0.3 ,0.2-0.1-0.1-0.1-0.2-0.1-0.1-0.1 ,0 ,0.1 ,0.3-0.2 ,0.3 ,0 ,0.7-0.2 ,0.3-0.7 ,0.2-0.5 ,0-0.4 ,0.1-0.5 ,0.1-0.3-0.1-0.3 ,0.1-1 ,0-0.2-0.1-0.3 ,0.3-0.4 ,0.2-1.1 ,0.6-0.2 ,0.2-0.3 ,0.3-0.2 ,0.2-0.2 ,0.1-0.1 ,0.1-0.1 ,0.1 ,0.1-0.3 ,0.1-0.3 ,0.1-0.5 ,0-0.4-0.1-0.2-0.1-0.1 ,0.1 ,0.4 ,0 ,0.5-0.1 ,0.3-0.3 ,0.6-0.1 ,0.1-0.1 ,0.1-0.1 ,0.1-0.1 ,0.1-0.1 ,0.1-0.1 ,0.3 ,0.1 ,0.3 ,0.5 ,0.1 ,0.1-0.1 ,0.1 ,0.2 ,0 ,0.3 ,0 ,0.3-0.1 ,0.3-0.1 ,0.4-0.1 ,0.5-0.1 ,0.5 ,0-0.1 ,0.1-0.6-0.1 ,0.1-0.1 ,0.1-0.2 ,0.8-0.2 ,0.4-0.2 ,0.3-0.2 ,0 ,0 ,0.2-0.1 ,0.1 ,0 ,0.2-0.1 ,0.2-0.1 ,0-0.2 ,0.1-0.1 ,0.1 ,0 ,0.2-0.1 ,0.1-0.4 ,0.7-0.4 ,0.2-0.1 ,0 ,0.1-0.3 ,0.1-0.4-0.2-0.2-0.2-0.1-0.2 ,0-0.3-0.3-0.3-0.2-0.5-0.5 ,0-0.2 ,0-0.3 ,0.1-0.4 ,0.1-0.3 ,0.2-0.1 ,0.6-0.1 ,0.1-0.2 ,0.1-0.2-0.3 ,0.3-0.4 ,0.1-0.2 ,0.1-0.2 ,0.2-0.1 ,0.2-0.2 ,0.3 ,0 ,0.2 ,0 ,0.1 ,0 ,0.3 ,0.2 ,0.3 ,0.3 ,0.4 ,0.1 ,0.7 ,0.2 ,0.5 ,0.4 ,0.5 ,0.3 ,0.2 ,0 ,0.2-0.1 ,0.3-0.2 ,0.1 ,0.2 ,0 ,0.1 ,0.1 ,0.1 ,0.3 ,0 ,0.3 ,0 ,0.2-0.1 ,0.1 ,0-0.2 ,0-0.1-0.1 ,0.1 ,0 ,0.1 ,0 ,0.3-0.1 ,0.2-0.2 ,0-0.2 ,0.4-0.2 ,0.2-0.7 ,1.5 ,0 ,0.3-0.1 ,0.1-0.2 ,0.1-0.2 ,0.2-0.1 ,0.2-0.1 ,0.5-0.2 ,0.5-0.1-0.2 ,0-0.2 ,0.1-0.5 ,0.2-0.8 ,0.3-0.5 ,0.2-0.2 ,0.2-0.5-0.2-0.1-0.3 ,0 ,0.1-0.2 ,0.1-0.2-0.2-0.2-0.1 ,0-0.1-0.1 ,0.1-0.2 ,0.1-0.2 ,0-0.2 ,0.1-0.2-0.1 ,0-0.1 ,0.2-0.1 ,0.1-0.1-0.1-0.1 ,0 ,0 ,0.1-0.1 ,0.1-0.2-0.1-0.3-0.2-0.1-0.3-0.1-0.2 ,0.1-0.4 ,0.2-0.1 ,0.2 ,0.1 ,0.3 ,0 ,0-0.1-0.1 ,0-0.3-0.3-0.1-0.2-0.2-0.1-0.1 ,0.2-0.1 ,0 ,0.1-0.4 ,0.2 ,0 ,0.2-0.1-0.1-0.2-0.1-0.1-0.3 ,0.1 ,0-0.2 ,0-0.2 ,0.2 ,0 ,0.2 ,0.1 ,0.1-0.3 ,0-0.1-0.2 ,0.2-0.1-0.5 ,0.2-0.4 ,0.2-0.2 ,0.3 ,0 ,0.3 ,0-0.2-0.1-0.2 ,0 ,0.1-0.2 ,0.1 ,0 ,0.1-0.2-0.3 ,0 ,0-0.3-0.1 ,0.1-0.2 ,0-0.1 ,0.1 ,0 ,0.2 ,0 ,0.1-0.1 ,0.1-0.2 ,0.1 ,0-0.1-0.1-0.1 ,0 ,0.3-0.1 ,0.1-0.2-0.3 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0.1 ,0 ,0.2-0.1 ,0.1-0.4-0.2 ,0 ,0.1 ,0.2 ,0.3 ,0.2 ,0.1 ,0 ,0.2-0.1 ,0.2-0.2-0.1 ,0 ,0 ,0.1 ,0.2 ,0.1 ,0.2-0.1 ,0.2 ,0 ,0.2 ,0 ,0.2 ,0 ,0.2 ,0.1 ,0.8 ,0.1 ,0.2 ,0.1 ,0.2 ,0.1 ,0.2-0.1 ,0-0.2-0.1-0.2-0.1-0.2-0.4 ,0-0.1-0.1-0.1 ,0 ,0.3 ,0.1 ,0.3 ,0.7 ,0.7 ,0.1 ,0.3 ,0.1 ,0.2 ,0 ,0.2-0.2-0.1-0.1-0.2-0.4-0.2-0.5-0.1-0.3-0.5 ,0 ,0.2-0.1 ,0.2-0.2-0.2-0.1-0.2 ,0-0.2-0.2 ,0-0.2 ,0.2-0.2 ,0 ,0-0.3 ,0.1-0.2 ,0.2-0.4 ,0.2-0.2 ,0.1-0.3 ,0-0.4 ,0 ,0.4-0.1 ,0.2-0.2 ,0.2-0.3 ,0.3-0.1 ,0.3-0.1 ,0.5 ,0.1 ,0.2 ,0.1 ,0 ,0.3-0.1 ,0.2 ,0 ,0.4 ,0.6 ,0.7 ,0.2 ,0.3 ,0.1 ,0.2 ,0.3 ,0.3 ,0.2 ,0.3 ,0.2 ,0 ,0.2-0.1 ,0.2 ,0 ,0.3-0.1 ,0.2-0.3 ,0-0.2 ,0-0.8-0.9-0.1-0.1-0.3-0.5-0.4-0.3-0.1 ,0 ,0.5 ,0.5 ,0.2 ,0.3 ,0.4 ,0.5 ,0.3 ,0.2 ,0.2 ,0.3 ,0.2 ,0.1 ,0.5 ,0.2-0.2 ,0.1 ,0.3 ,0.1 ,0 ,0.2 ,0 ,0.3-0.4-0.1 ,0 ,0.2 ,0 ,0.1-0.2 ,0.1-0.2-0.1-0.6-0.7 ,0 ,0.1 ,0.1 ,0.1 ,0.4 ,0.4 ,0.3 ,0.3 ,0.3 ,0.1 ,0.2 ,0.2 ,0.1 ,0.1 ,0 ,0.2-0.2 ,0.1-0.2 ,0.1-0.2-0.1-0.1-0.1-0.3-0.2-0.1-0.3-0.2 ,0-0.9-0.4-0.7 ,0 ,0.1 ,0.1 ,0.1 ,0 ,0.5 ,0.1 ,0.2 ,0.2 ,0.4 ,0.1 ,0.3 ,0 ,0.1 ,0.4 ,0.4 ,0.3 ,0 ,0.2 ,0.2 ,0 ,0.4-0.2 ,0.3 ,0.1 ,0.4 ,0.1 ,0.1 ,0.2 ,0.1 ,0.3 ,0.1 ,0.4 ,0.4 ,1.5 ,0.6 ,1.2 ,0.1 ,0.2-0.1-0.2-0.4-0.8-0.2-0.6-0.2-1-0.1-0.2-0.1-0.1-0.1 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0.3 ,0 ,0.2 ,0.2 ,0.2 ,0.2 ,0.4 ,0.1 ,0.5-0.2-0.2-0.2-0.1-0.3-0.1-0.3-0.2 ,0 ,0.2 ,0 ,0.2-0.2-0.1-0.1-0.1 ,0.1 ,0.3-0.3-0.1-0.2 ,0-0.1 ,0.2-0.2 ,0.1-0.2 ,0-0.3-0.2-0.1-0.3 ,0-0.3 ,0 ,0.3 ,0.1 ,0.3 ,0 ,0.3 ,0.3 ,0 ,0.3 ,0 ,0.4 ,0 ,0.3 ,0 ,0.2-0.1 ,0.4 ,0.1 ,0 ,0.3 ,0 ,0.3 ,0 ,0.3 ,0.1 ,0 ,0.1-0.1 ,0.1-0.6 ,0.4-0.2 ,0.1 ,0 ,0.1 ,0.2 ,0 ,0.2 ,0 ,0.3-0.1 ,0.4-0.5 ,0.5-0.4 ,0.4-0.2 ,0.1-0.3-0.1-0.3-0.1-0.2 ,0-0.1 ,0-0.1-0.1 ,0-0.2-0.1-0.1-0.1 ,0-0.1 ,0.3-0.3 ,0.1-0.4-0.1-0.4-0.2 ,0.2 ,0.2 ,1.1 ,0.4 ,0.1 ,0.1 ,0.1 ,0.1-0.1 ,0.2-0.1 ,0.2 ,0 ,0.2 ,0 ,0.1-0.4 ,0.3-0.2 ,0-0.6-0.5 ,0.3 ,0.4 ,0.2 ,0.2 ,0.4 ,0.1 ,0.8-0.2 ,0.3 ,0.2-0.2 ,0.3-0.2 ,0.2-0.3 ,0-0.2 ,0.1-0.1 ,0.2-0.2 ,0-0.3 ,0-0.4 ,0-0.2 ,0-0.3 ,0.3-0.1 ,0-0.2-0.1-0.1-0.3-0.1-0.1 ,0 ,0.5 ,0 ,0.1 ,0.1 ,0.1-0.4 ,0.3-0.4 ,0.3-0.1 ,0.1-0.2 ,0.2-0.3 ,0.5-0.1 ,0.3-0.1 ,0.4 ,0-0.2 ,0-0.3-0.1-0.3 ,0 ,0.6-0.1 ,0.3-1.1 ,0-0.5 ,0.1-0.7 ,0.5-0.2 ,0.2-0.6 ,0.8-0.2 ,0.5-0.1-0.2 ,0-0.2 ,0-0.1-0.2 ,0.3 ,0.1 ,0.4-0.1 ,0.2-0.4 ,0.3-0.2 ,0.1-0.2 ,0.1-0.1 ,0.3-0.3 ,0.3-0.2 ,0.1-0.4-0.1 ,0.1 ,0.3-0.1 ,0.2-0.2 ,0.2-0.3 ,0.1-0.2 ,0-0.1 ,0.1-0.1 ,0.1-0.3 ,0.1-0.3-0.1-0.3 ,0-0.2 ,0.1 ,0.3 ,0.1 ,0.2 ,0.2 ,0 ,0.2-0.1 ,0.1-0.2 ,0.1-0.1 ,0 ,0-0.1-0.1-0.2-0.1 ,0 ,0 ,0.1-0.1 ,0-0.3-0.4 ,0 ,0.3 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.2 ,0.2-0.1 ,0.1-0.2 ,0-0.1 ,0.1 ,0 ,0.1-0.1 ,0.3-0.3 ,0.2-0.1 ,0-0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.2 ,0-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.2 ,0.1 ,0 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0-0.1 ,0.2-0.1 ,0.1-0.1 ,0.2-0.2 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.2-0.2 ,0.3-0.1 ,0-0.1-0.1-0.1 ,0.2 ,0 ,0.1-0.1 ,0.3-0.1 ,0.3-0.1 ,0.1 ,0 ,0.2 ,0 ,0.2 ,0.1 ,0.3 ,0.2 ,1.2 ,0.1 ,0.4 ,0.2 ,1.1 ,0.4 ,1.1 ,0.6 ,1.3 ,0.9 ,1.6 ,0.1 ,0.2-0.1 ,0.2 ,0 ,0.2 ,0 ,0.3 ,0 ,0.3 ,0.1 ,0.4 ,0.2 ,0.5-0.1-0.1-0.3-0.8 ,0-0.5 ,0-0.6-0.1 ,0-0.1 ,0.2 ,0 ,0.2-0.1 ,0.1-0.1-0.4 ,0-0.2 ,0.1-0.2 ,0-0.1-0.2-0.1 ,0-0.2 ,0-0.2-0.1-0.1-0.1 ,0 ,0.1 ,0.4 ,0.1 ,0.2 ,0.1 ,0.6 ,0.2 ,0.3 ,0.1 ,0.3 ,1.2 ,3.1 ,0.3 ,0.4 ,0.1 ,0.3 ,0.1 ,0.6 ,0 ,0.7-0.2 ,1.4 ,0 ,0.9 ,0 ,0 ,0-0.1 ,0 ,0-0.2 ,0.4-0.2 ,0.4-0.1 ,0.6-0.1 ,0.3-0.3 ,0.3-0.2 ,0-0.5 ,0.2-0.4-0.1-0.4 ,0.1-0.3 ,0-0.2-0.3 ,0-0.1 ,0.1-0.1 ,0.1 ,0 ,0.4 ,0.3 ,0.1-0.1-0.1-0.1-0.2-0.1-0.2-0.1-0.3-0.7-0.3-0.5-0.1-0.3-0.6-0.2-0.4-0.3-0.3-0.5-0.2-0.9-0.2-0.1-0.1-0.1 ,0.2-0.3 ,0.2-0.3-0.1 ,0.1-0.1 ,0.1-0.1 ,0.2-0.1 ,0-0.1 ,0-0.1-0.5 ,0-0.6 ,0.2-0.2-0.2 ,0-0.2 ,0.1 ,0 ,0.2 ,0 ,0.1-0.2 ,0-0.1-0.1-0.2-0.2-0.2-0.4-0.5-1.1-0.1-0.2-0.2-0.2 ,0.1 ,0 ,0.1 ,0 ,0.3-0.5 ,0.3-0.3 ,0.1-0.2 ,0-0.1-0.1-0.1-0.1 ,0.1-0.1 ,0-0.2-0.3-0.2-0.1-0.1 ,0.1 ,0.1 ,0.2 ,0.1 ,0.1 ,0 ,0.3 ,0 ,0.1-0.1 ,0.1-0.2 ,0-0.1 ,0.1-0.1-0.1-0.1-0.1-0.1-0.2 ,0.3-1.2 ,0.2-0.8 ,0-0.9 ,0-0.1 ,0-0.2-0.3-0.5-1.5-1.3-1.1-1.5-1-0.6-0.7 ,0.1-0.1 ,0.1-0.1 ,0.2 ,0 ,0.2-0.1 ,0.1-0.2 ,0-0.3 ,0-0.7 ,0.4-0.2 ,0-0.2 ,0.1-0.2 ,0.1-0.4 ,0-0.4 ,0.1-0.2 ,0-0.1-0.2 ,0-0.2 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1-0.1 ,0-0.1-0.1-0.3-0.4-0.3-0.5-0.5 ,0.1 ,0 ,0-0.1-0.1-0.1 ,0.1-0.2 ,0.1-0.2-0.2 ,0-0.2 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0-0.2-0.1-0.9-0.4-0.8-0.2 ,0.6-0.1 ,0.3 ,0.1 ,0-0.1-0.1-0.1-0.3-0.1-0.3 ,0-0.2 ,0-0.2 ,0.1-0.2 ,0.1-0.2 ,0.1-0.8 ,0.1-0.7 ,0.1 ,0.1-0.1 ,0.1-0.1 ,0.4-0.1 ,0.1-0.2-0.1-0.2-0.1 ,0.1-0.1 ,0.2-0.1-0.1-0.1 ,0 ,0 ,0.3-0.2 ,0.2-0.1 ,0.2-0.5 ,0.1-0.1 ,0 ,0.2-0.2 ,0-0.1-0.2 ,0.1-0.3 ,0.3-1.1 ,0.1 ,0.1-0.1 ,0.2 ,0 ,0.3-0.1-0.1-0.2-0.1-0.2-0.1 ,0-0.1-0.1 ,0-0.4-0.1-0.2-0.2-0.2-0.1 ,0-0.1 ,0.4-0.1 ,0.5-0.1 ,0.2-0.3 ,0-0.3 ,0-1 ,0.1-0.4-0.2-0.1 ,0-0.1 ,0-0.4 ,0.2-0.5 ,0.1-0.1 ,0-0.2 ,0-0.3 ,0.4-0.4 ,0.2-1-0.3-0.3-0.3-0.2-0.1-0.3 ,0-0.3 ,0.3-0.2 ,0.4 ,0.4 ,0.2 ,0.3 ,0.1 ,0.5-0.1 ,0.3-0.2 ,0.2 ,0 ,0.1 ,0 ,0.1-0.1 ,0.2 ,0.1 ,0 ,0.1-0.1 ,0.1-0.2 ,0.1-0.1 ,0.1 ,0.2 ,0.2 ,0.3 ,0.1 ,0.1 ,0 ,0.1-0.3 ,0.2-0.2 ,0.3 ,0 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0.2 ,0 ,0.3 ,0 ,0.1-0.3 ,0.1-0.2 ,0-0.2 ,0.2 ,0.1 ,0.1-0.2 ,0.1-0.1 ,0-0.1 ,0 ,0 ,0.1-0.1 ,0.1 ,0.1 ,0.3 ,0.3 ,0.2 ,0.2 ,0.2 ,0.8 ,0.3 ,0.2 ,0 ,0.2 ,0.3 ,0.1 ,0.1 ,0.1 ,0 ,0 ,0.2-0.2 ,0.1-0.1 ,0.2-0.1 ,0.1-0.1-0.1-0.1-0.1-0.3 ,0.3-0.1 ,0.1 ,0.1-0.3-0.1-0.1-0.2-0.3-0.2-0.2-0.2-0.1-0.1-0.1-0.1 ,0-0.1 ,0-0.2-0.1 ,0-0.2-0.1-0.1-0.2-0.1-0.8-0.3 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.3-0.1 ,0.1 ,0 ,0.2-0.1 ,0.2-0.1 ,0.1-0.2 ,0.1-0.1-0.1-0.2-0.4-0.2-0.1-0.3 ,0-0.2 ,0.1-0.3 ,0.4-0.2 ,0.1-0.7-0.2-0.8-0.3 ,0-0.1 ,0.1 ,0 ,0.2 ,0 ,0-0.1-0.2-0.3 ,0-0.2 ,0-0.2-0.1 ,0-0.1 ,0.2-0.5-0.1-0.1-0.2-0.3-0.5-0.4 ,0-0.2-0.3-0.3 ,0.1-0.2 ,0.1-0.2 ,0.2 ,0.1 ,0.1 ,0.2 ,0.2-0.1 ,0.1-0.5 ,0.1-1.2-0.1-0.3-0.1-0.5-0.3-0.6-0.2-0.3 ,0-0.3 ,0-0.9 ,0-0.2 ,0.1-0.2 ,0.1-0.1-0.1-0.1-0.2 ,0.1 ,0 ,0.1-0.1 ,0.1-0.2 ,0-0.1-0.1-0.1-0.1 ,0-0.3 ,0.5 ,0.2 ,0.3 ,0 ,0.1-0.6 ,0.1-1.3 ,0.6-0.5 ,0.3 ,0-0.1 ,0.6-0.4-0.2-0.1-0.4 ,0.1-0.1 ,0 ,0.2-0.3 ,0-0.3-0.3 ,0-0.2 ,0.2-0.1 ,0-0.1-0.1-0.1 ,0 ,0.1 ,0.6 ,0.2 ,0.2 ,0.1 ,0.3-0.4 ,0.4-0.3 ,0.3 ,0 ,0.3-0.3 ,0.4-0.3 ,0.2-0.8 ,0.5-0.2 ,0.1-0.3 ,0.2-0.5 ,0.2-0.4 ,0.3-0.2 ,0 ,0.3-0.2 ,0.3-0.2-0.3 ,0-0.4-0.1-0.3 ,0 ,0 ,0.1-0.2 ,0.1-0.2-0.2-0.1-0.1 ,0-0.1-0.1 ,0-0.1 ,0 ,0.3 ,0.7 ,0.1 ,0 ,0.2 ,0.1-0.2 ,0.2-0.2 ,0.1-0.3 ,0.1-0.3-0.3-0.1 ,0.3 ,0 ,0.3-0.1 ,0.1-0.1 ,0.1-0.1-0.1 ,0-0.1-0.1 ,0.1-0.1 ,0.1-0.2 ,0-0.2 ,0 ,0 ,0.1 ,0 ,0.1 ,0.3-0.1-0.1 ,0.3-0.3 ,0.3-0.2 ,0.1-0.3 ,0-0.1 ,0-0.1 ,0.1 ,0.4 ,0.5-0.3 ,0.8-0.2 ,0.3-0.1 ,0-0.1 ,0-0.4-0.3-0.2-0.2 ,0.2 ,0.5 ,0.6 ,0.2 ,0 ,0.2 ,0 ,0.2-0.1 ,0.2-0.1 ,0.3 ,0.1 ,0.2 ,0.1 ,0.5 ,0.1 ,0.2 ,0.1 ,0.6 ,0.1 ,0.3 ,0.5 ,1 ,0.2 ,0 ,0 ,0.1 ,0 ,0.2-0.4 ,0.1-0.2 ,0.1 ,0 ,0.1 ,0 ,0 ,0 ,0-0.2-0.1-0.4-0.3-0.6-0.2-0.8-0.1-0.5-0.1-0.3-0.2-0.3-0.1-0.3 ,0-0.3-0.1-0.2-0.2-0.3-0.1-0.4-0.1-0.3-0.1-0.2-0.4 ,0 ,0-0.2-0.6-0.2-0.4-0.4-0.5 ,0-0.1 ,0 ,0 ,0-0.1 ,0-0.3 ,0-0.2-0.1-0.2 ,0-0.2 ,0.1-0.2 ,0-0.2-0.1-0.3-0.3-0.3-0.4-0.3-0.4-0.4-0.3-0.6-0.3-0.4-0.3-0.2-0.2-0.3-0.1-0.3 ,0-0.2 ,0-0.1-0.2-0.4-0.4-0.7-0.2-0.5-0.1-0.3-0.3-0.4-0.5-0.4-0.3-0.3-0.1-0.2 ,0 ,0-0.7-0.6-0.2-0.3-0.2-0.1-0.2 ,0-0.1 ,0 ,0-0.1-0.1 ,0-0.1 ,0.1-0.4 ,0-0.7 ,0-0.5-0.1-0.3-0.1-0.2 ,0-0.1 ,0.2-0.3 ,0.1-0.4 ,0.1-0.3 ,0.3-0.3 ,0.6-0.1 ,0.4 ,0 ,0.2-0.1 ,0.1-0.2 ,0.1-0.2 ,0.2-0.2 ,0.3-0.2 ,0.1-0.3 ,0-0.5-0.2-0.7-0.4-0.5-0.3-0.4-0.1-0.3-0.2-0.3-0.3-0.3-0.2-0.2-0.1-0.3-0.3-0.3-0.6-0.2-0.4 ,0-0.5-0.4-1-0.2-0.4-0.2-0.2-0.3-0.2-0.5-0.3-0.7-0.6-0.8-0.8-0.6-0.5-0.3-0.2-0.3-0.3-0.3-0.4-0.2-0.3 ,0 ,0 ,0 ,0-0.6 ,0-0.6 ,0-0.6 ,0-0.6 ,0-0.6 ,0-0.6 ,0-0.6 ,0-0.6 ,0 ,0 ,0.4 ,0 ,0.4 ,0 ,0.4 ,0 ,0.4-1 ,0-1 ,0-1 ,0-1 ,0-1 ,0-1 ,0-1 ,0-1 ,0-1.3-0.5-1.3-0.5-1.3-0.5-1.3-0.5-1.3-0.5-1.3-0.5-1.3-0.5-1.3-0.5 ,0.1-0.2 ,0.2-0.5-0.3 ,0-0.8 ,0.1-0.8 ,0.1-0.8 ,0.1-0.8 ,0.1-0.8 ,0.1-0.8 ,0.1-0.8 ,0.1-0.8 ,0.1 ,0 ,0 ,0-0.4-0.1-0.1-0.2 ,0.1-0.1-0.5 ,0-0.2 ,0-0.2-0.2-0.5-0.4-0.7-0.9-0.8-0.5-0.3-0.4-0.3-0.2-0.1-0.3 ,0-0.1 ,0.2-0.3-0.1 ,0-0.4-0.3-0.5-0.3-0.1-0.7 ,0-0.9-0.3-0.3-0.2-0.1-0.3-0.4-0.3-0.5-0.3-0.3 ,0.1-0.4 ,0-0.6-0.2-0.3 ,0-0.6 ,0.1-0.2 ,0-0.2-0.2-0.2-0.1 ,0.1-0.3 ,0-0.3 ,0-0.2-0.1-0.5 ,0.1-0.4-0.1-0.2-0.1-0.1-0.4-0.2-0.1-0.2 ,0.1-0.3-0.1-0.2-0.3-0.2-0.3-0.4-0.4-0.2-0.2-0.4-0.3-0.2-0.1-0.2-0.6-0.8-0.6-0.6-0.1-0.4 ,0-0.5 ,0.2-0.3 ,0.1-0.3 ,0-0.2 ,0-0.2-0.2-0.3-0.8-0.2-0.6-0.8 ,0-0.6-0.3-0.6 ,0-0.4 ,0-0.4 ,0.2-0.1 ,0.2 ,0 ,0 ,0.2 ,0.1 ,0.3 ,0.2 ,0.2 ,0.2 ,0.1 ,0.2 ,0.2 ,0.1 ,0.1 ,0.1 ,0-0.1-0.1-0.1-0.1-0.1-0.3-0.2-0.4-0.2-0.2-0.1-0.4-0.1-0.1-0.1-0.1 ,0.2-0.2 ,0.3-0.1 ,0.4 ,0 ,1 ,0.1 ,0.2-0.1 ,0.2 ,0 ,0.1 ,0-0.3-0.1-0.2 ,0-0.2 ,0-0.4 ,0-0.1 ,0-0.2-0.1-0.1 ,0-0.3 ,0.2-0.2 ,0-0.4-0.2-0.2 ,0-0.3 ,0.1 ,0 ,0.6 ,0.1 ,0.4-0.2 ,0-0.2-0.2-0.3-0.1-0.2-0.2-0.3-0.3-0.2-0.1-0.2 ,0.2 ,0-0.1 ,0.1-0.3 ,0-0.5 ,0.3 ,0.4-0.1-0.3-0.2-0.3-0.2-0.1-0.2-0.5-0.5-0.3-0.4-0.5-0.8-0.8-0.1-0.7-0.3-0.9 ,0.1-0.5 ,0-0.4-0.1-0.6-0.1-0.3-0.6-0.9-0.6-0.6-0.1-0.4 ,0-0.4 ,0.1-0.4 ,0.1-0.4 ,0.1-0.1 ,0 ,0 ,0 ,0.1 ,0.1 ,0 ,0-0.2 ,0.1-0.1-0.1 ,0 ,0-0.1 ,0.1-0.1 ,0.2-0.5 ,0-0.7 ,0.2-0.8 ,0-0.3-0.1-0.6-0.1-0.4-0.2-0.3 ,0.1-0.4 ,0-0.4-0.4-0.5-0.2-0.7 ,0-0.3 ,0-0.8-0.1-0.3-0.3-0.5 ,0.1-0.5 ,0.1-0.3 ,0.3-1.3 ,0.1-0.1 ,0.1 ,0 ,0.2-0.2-0.1 ,0-0.2 ,0.1 ,0.1-0.5 ,0.2-0.4 ,0.1-0.2 ,0.1-1.4 ,0.1-1.1 ,0.1-0.4-0.1-0.4 ,0.1-0.5 ,0-0.5 ,0.3-2.5 ,0-0.3 ,0.1-0.4-0.1-1.1 ,0-1.2-0.1-0.2 ,0-0.2 ,0.1 ,0 ,0.1 ,0.2 ,0.7 ,0 ,0.4-0.2 ,0.2 ,0.1 ,0.2 ,0.2 ,0.2 ,0 ,0.3 ,0-0.1-0.1-0.1 ,0-0.3-0.2-0.2-0.2-0.5 ,0-0.1-0.1-0.6 ,0.1-0.2-0.1-0.3 ,0.1 ,0.1-0.4 ,0-0.5 ,0-0.5 ,0.1 ,0.3 ,0.2 ,0.4 ,0.1-0.4 ,0.1-0.5-0.2-0.2-0.3-0.1-0.1-0.5 ,0.8-0.4-0.4-0.1-0.2-0.2-0.2 ,0 ,0 ,0.1-0.1 ,0.2-0.1-0.2 ,0-0.3-0.1-0.5-0.3-0.8-0.2-1.1-0.2-0.5-0.5-0.5-0.1-0.3-0.1-0.7 ,0.1-0.6-0.1-0.4 ,0.2 ,0 ,0.6 ,0.3 ,0.7 ,0.2 ,0.2 ,0.2 ,0.3 ,0.1 ,1.9 ,0.2 ,0.1 ,0 ,0.2-0.1 ,0.1 ,0 ,0.3 ,0.3 ,0.1 ,0 ,0.2 ,0 ,0.1-0.1 ,0.2-0.2 ,0 ,0.1 ,0 ,0.2 ,0.1 ,0.3 ,0.2 ,0.3 ,0.1 ,0.2-0.3 ,0.6-0.1 ,0 ,0-0.2 ,0 ,0-0.6 ,1-0.2 ,0.5 ,0 ,0.2 ,0 ,0.1 ,0.1 ,0 ,0.2 ,0 ,0.3-0.2 ,0 ,0-0.3 ,0.1-0.1 ,0 ,0-0.2 ,0-0.1 ,0.2-0.3 ,0.2-0.2 ,0.3-0.2 ,0.2-0.2 ,0.1-0.3 ,0.3-0.3 ,0.1-0.1 ,0-0.3 ,0 ,0 ,0.1 ,0 ,0.1 ,0.4 ,0 ,0.2-0.3 ,0.2 ,0 ,0.1 ,0 ,0.3 ,0 ,0-0.1 ,0 ,0 ,0 ,0.3 ,0.3 ,0.1 ,0.3 ,0 ,0.2-0.1 ,0.5-0.1 ,0.1-0.1 ,0-0.2-0.1 ,0 ,0-0.1 ,0.4 ,0 ,0-0.1-0.4 ,0 ,0-0.3 ,0.2-0.1 ,0.2-0.1 ,0.3-0.1 ,0.1 ,0.3 ,0 ,0.3-0.1 ,0.2 ,0.1 ,0.1 ,0 ,0.2-0.1 ,0.1-0.1 ,0.2-0.4 ,0.1-0.1 ,0.1 ,0 ,0.1-0.1 ,0.2-0.2 ,0-0.1-0.1-0.6 ,0-0.3 ,0-0.1-0.1-0.1 ,0-0.1 ,0.1-0.2 ,0-0.1-0.1-0.1 ,0-0.2 ,0.2-0.3 ,0-0.1 ,0.2-0.3-0.1-0.1-0.2-0.2-0.1-0.1-0.1-0.2-0.1-0.1 ,0 ,0 ,0.1 ,0.4 ,0 ,0-0.3-0.2-0.1-0.1 ,0-0.2 ,0-0.1 ,0.2-0.1 ,0.2 ,0 ,0-0.1-0.2-0.3-0.1-0.2-0.1-0.1-0.2 ,0-0.1-0.1 ,0-0.1 ,0-0.1 ,0.1 ,0 ,0.2 ,0 ,0.1-0.1 ,0-0.1 ,0-0.1 ,0-0.5-0.1-0.4 ,0-0.1-0.1 ,0-0.1 ,0.1-0.1 ,0-0.1-0.1-0.1-0.2-0.2-0.6 ,0.3 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,1.2 ,0 ,0.7 ,0 ,0-0.9 ,0-0.7 ,0.6 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0 ,0.2 ,0.1 ,0.6 ,0.1 ,0.5 ,0.3 ,0.6 ,0 ,0 ,0 ,0.2 ,0.1 ,0.1 ,0.2 ,0.1 ,0.6 ,0.2 ,1 ,0.2 ,0.6 ,0.2 ,0.1 ,0.2 ,0.3 ,0.1 ,0.4 ,0 ,0.3-0.1 ,0.2-0.2zm-82.5-0.2 ,0 ,0.1-0.1 ,0.1-0.1 ,0-0.1-0.1-0.1 ,0 ,0 ,0.2 ,0 ,0.1-0.3-0.1 ,0-0.1 ,0.1-0.1 ,0.2-0.1 ,0.1 ,0 ,0.3 ,0.2zm-0.6 ,0.7 ,0.1 ,0.1-0.3-0.1-0.1-0.1 ,0-0.1 ,0-0.3 ,0-0.1 ,0.1 ,0 ,0.3 ,0.3 ,0 ,0.2zm0.5 ,0.3 ,0 ,0-0.1-0.1-0.1-0.1 ,0-0.1 ,0.1-0.2 ,0.1-0.1 ,0 ,0 ,0 ,0.2 ,0.1 ,0.2 ,0 ,0.1zm0.7 ,1.2 ,0.1 ,0.5 ,0.1-0.2 ,0.4 ,0.4 ,0 ,0.2 ,0 ,0.1-0.1 ,0-0.1-0.1-0.1-0.1-0.1-0.1-0.2 ,0-0.1-0.2 ,0-0.1 ,0-0.3 ,0-0.1-0.1 ,0-0.1-0.1-0.1-0.2 ,0-0.1 ,0.1-0.2 ,0.2-0.3 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.2 ,0 ,0.1-0.4 ,0.2 ,0 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.2zm94.3 ,1 ,0 ,0.1 ,0.1 ,0 ,0 ,0-0.1 ,0.1-0.3 ,0.1-0.2 ,0-0.1 ,0 ,0-0.1 ,0.1-0.1 ,0-0.1-0.1 ,0 ,0 ,0 ,0.1-0.1 ,1.1-0.6 ,0.5-0.2 ,0.3-0.1 ,0 ,0-0.3 ,0.2 ,0 ,0.1 ,0 ,0.1-0.1 ,0.1-0.8 ,0.4-0.1 ,0zm-94.1 ,1.4 ,0 ,0.1-0.2-0.1-0.1-0.1 ,0-0.2 ,0-0.1 ,0 ,0 ,0.1 ,0.1 ,0 ,0 ,0 ,0.4zm0.3 ,0.8 ,0 ,0.1-0.1 ,0.1-0.1 ,0 ,0-0.1 ,0 ,0-0.1 ,0.1 ,0-0.3 ,0.1-0.3 ,0.1 ,0 ,0.1 ,0.2 ,0.1 ,0.2zm95.9 ,0.8-0.1 ,0.1 ,0 ,0.1-0.3 ,0.4-0.1 ,0.2-0.1 ,0-0.1-0.2 ,0-0.1 ,0.1-0.1 ,0.1-0.1 ,0-0.2 ,0-0.1-0.1 ,0.2 ,0.1 ,0 ,0 ,0 ,0 ,0.1-0.4-0.1-0.1-0.1 ,0-0.2 ,0.1-0.2 ,0.5-0.5 ,0.2-0.1 ,0.6-0.2 ,0.3 ,0 ,0.3 ,0 ,0.2 ,0.1 ,0.1 ,0.1-0.1 ,0.1-0.6 ,0.1 ,0 ,0 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.6 ,0.5zm-97.2 ,0 ,0 ,0.1 ,0 ,0-0.1-0.2 ,0-0.1 ,0.1-0.1 ,0.1 ,0.2 ,0 ,0zm91 ,0.7-0.1 ,0.1 ,0 ,0 ,0-0.1 ,0-0.1 ,0.1 ,0 ,0 ,0 ,0 ,0.1 ,0 ,0.1zm-0.8 ,0.4 ,0 ,0-0.1-0.1 ,0-0.1 ,0-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0 ,0.1zm0.5 ,0-0.1 ,0-0.2 ,0 ,0-0.1 ,0.2-0.1 ,0.1 ,0 ,0 ,0 ,0 ,0.1zm-0.5 ,0.6-0.2 ,0.1-0.1 ,0 ,0-0.1 ,0.1-0.1 ,0.4-0.2 ,0.1 ,0 ,0 ,0.1-0.2 ,0.1-0.1 ,0.1 ,0 ,0.1-0.1 ,0.1zm18.5 ,1.7 ,0 ,0.1-0.1 ,0-0.1-0.1-0.1-0.1-0.1-0.2-0.1-0.2 ,0.2-0.2 ,0.1 ,0 ,0.1 ,0 ,0 ,0.1-0.1 ,0.2 ,0 ,0.2 ,0.1 ,0.2zm0 ,0.5 ,0 ,0-0.1-0.2 ,0-0.1 ,0-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.1zm1.7 ,0.9 ,0 ,0.1-0.1 ,0.1-0.2 ,0.1-0.4 ,0-0.3-0.1-0.1-0.1 ,0 ,0 ,0-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0 ,0.2-0.1 ,0.1-0.1 ,0-0.1-0.1-0.1 ,0 ,0 ,0.2 ,0 ,0.1 ,0.1 ,0.1 ,0.2 ,0.1 ,0zm-3 ,0.8 ,0.4 ,0.1 ,0 ,0 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0-0.1 ,0-0.1-0.1-0.2-0.2 ,0-0.1zm-2.8 ,0.9-0.1 ,0-0.1 ,0 ,0-0.2 ,0.1-0.3 ,0.1-0.1 ,0.1 ,0.1 ,0 ,0 ,0 ,0.4 ,0 ,0.2-0.1 ,0.1zm-3.7 ,1-0.1 ,0-0.2 ,0-0.1-0.1 ,0.1-0.2 ,0 ,0 ,0.1 ,0 ,0 ,0 ,0 ,0.1 ,0 ,0.2zm-0.4 ,0.4-0.1 ,0.1-0.1 ,0 ,0 ,0.1 ,0 ,0.2 ,0 ,0.1-0.1 ,0 ,0 ,0 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.1 ,0 ,0 ,0-0.1 ,0.1-0.1 ,0.2 ,0 ,0.1 ,0 ,0 ,0 ,0.1-0.3 ,0.3-0.1 ,0-0.1 ,0-0.1-0.1 ,0-0.2 ,0-0.1 ,0-0.1 ,0.2-0.3 ,0.1-0.2 ,0.1-0.2 ,0.1-0.1 ,0.2-0.1 ,0.1-0.1 ,0.1-0.2 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0 ,0.1zm2.9 ,0.6 ,0 ,0.1-0.1 ,0-0.1-0.1-0.1-0.2 ,0 ,0 ,0.2 ,0 ,0.1 ,0.1 ,0 ,0.1zm49.9 ,3-0.2 ,0.1-0.2 ,0 ,0 ,0.2 ,0 ,0.1-0.2-0.1-0.1-0.1 ,0-0.3 ,0.2-0.3 ,0.1-0.1 ,0.2 ,0.1 ,0.1 ,0.3 ,0 ,0.1zm-22.2 ,0.2-0.1 ,0 ,0 ,0 ,0 ,0 ,0.1-0.1 ,0.1 ,0 ,0 ,0-0.1 ,0.1zm21 ,0.3-0.1 ,0.1-0.1 ,0 ,0-0.2 ,0-0.1 ,0 ,0 ,0.1 ,0.1 ,0.1 ,0.2zm-21.4 ,0.8 ,0 ,0 ,0-0.1 ,0-0.1 ,0.1 ,0 ,0 ,0-0.1 ,0.1zm-7.5 ,3.7-0.1 ,0.1-0.1 ,0-0.1 ,0 ,0-0.1 ,0-0.1 ,0.1 ,0 ,0.2 ,0 ,0 ,0 ,0 ,0.1zm21.6 ,5.8-0.1 ,0.1-0.2 ,0 ,0.1-0.1 ,0-0.2 ,0.1-0.2 ,0-0.1 ,0.1-0.1 ,0 ,0.6zm-0.3 ,0-0.1 ,0.1 ,0-0.2 ,0.1-0.2 ,0.1 ,0 ,0 ,0.1 ,0 ,0.2zm2.4 ,0.4-0.8 ,0.2-0.1-0.1 ,0.2-0.1 ,0.2-0.3 ,0.2 ,0 ,0.3 ,0.2 ,0 ,0.1zm1.5 ,0.4-0.2 ,0.1-0.5-0.1 ,0.4-0.1 ,0.1 ,0 ,0.1-0.2 ,0-0.1 ,0.2 ,0.4 ,0 ,0.1zm-7.1 ,1-0.2 ,0.2 ,0.2 ,0 ,0.2-0.1 ,0.1-0.1 ,0.3-0.2 ,0.3-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.3-0.1 ,0.3-0.1-1.2 ,0.6-0.2 ,0.1-0.4 ,0.2-0.3 ,0.1-0.2 ,0-1.2 ,0.5-0.1 ,0-0.1 ,0-1 ,0.2-0.4 ,0-0.4 ,0.1 ,0.3-0.2 ,0-0.1-0.1-0.1-0.1 ,0-0.2 ,0.2-0.2 ,0.1 ,0-0.2 ,0.1-0.2 ,0.1-0.2 ,0.2-0.2 ,0.3-0.2 ,0.2-0.1 ,0.1 ,0.1 ,0-0.2 ,0.1-0.1 ,0.1 ,0 ,0.2 ,0 ,0.1 ,0 ,0.1-0.1 ,0.1 ,0 ,0.3 ,0.1 ,0.3 ,0 ,0.2-0.1 ,0.2 ,0 ,0.6 ,0 ,0.6-0.1 ,0.2-0.1 ,0.5-0.4 ,0.3-0.1-0.4 ,0.4-0.2 ,0.2zm-4.7 ,1.7-0.1 ,0 ,0.1-0.4 ,0.2-0.2 ,0.1 ,0 ,0 ,0.1 ,0 ,0.1-0.2 ,0.2-0.1 ,0.1zm0.2 ,3.1-0.3 ,0.5 ,0-0.1 ,0.4-0.7-0.1 ,0.2zm-3.4 ,6.4-0.1 ,0.1 ,0.4-0.7 ,0.2-0.6 ,0.1-0.2-0.1 ,0.4-0.2 ,0.4-0.4 ,0.7zm-0.8 ,7.1 ,0 ,0.1-0.2-0.4 ,0.2 ,0.1 ,0 ,0.1 ,0 ,0.1zm0.3 ,2.1-0.4 ,0.1 ,0 ,0 ,0.4-0.2 ,0.1-0.7 ,0-0.3-0.1-0.6 ,0-0.1 ,0.1 ,0.2 ,0.1 ,0.5 ,0 ,0.4-0.1 ,0.6-0.1 ,0.1zm-0.7 ,0.2-0.5 ,0.2-0.1 ,0 ,0.3-0.2 ,0.2-0.1zm-2 ,1.9-0.1 ,0 ,0.3-0.4 ,0.5-0.5 ,0.1-0.1-0.4 ,0.5-0.4 ,0.5zm-0.1 ,0-0.1 ,0-0.1 ,0-0.2-0.1 ,0-0.1 ,0.1 ,0 ,0.2 ,0.1zm-121.6 ,1.9 ,0.6 ,0.2 ,0.3-0.1 ,0.1 ,0.1 ,0 ,0.1-0.7 ,0.1-0.2-0.1 ,0-0.1-0.1-0.1 ,0.1 ,0zm-1.2 ,0.2-0.1 ,0-0.2 ,0 ,0.1-0.1 ,0.1-0.1 ,0 ,0 ,0.1 ,0.1zm0.7 ,0.4-0.2 ,0-0.1 ,0-0.2-0.3 ,0.5 ,0 ,0.2 ,0.1 ,0 ,0-0.2 ,0.2zm4.8 ,1.8 ,0.1 ,0.2-0.2 ,0-0.2 ,0-0.1-0.1-0.1-0.2 ,0 ,0-0.1 ,0 ,0 ,0 ,0-0.1 ,0 ,0 ,0.5 ,0.2 ,0.1 ,0.1zm-3.1 ,0.6-0.1 ,0-0.2 ,0-0.1-0.2 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.1 ,0 ,0.1zm3.1 ,1.3-0.2 ,0-0.2-0.1-0.2-0.3-0.2-0.3 ,0.1-0.1 ,0.1 ,0.2 ,0.3 ,0.4 ,0.1 ,0.1zm103.6 ,6.1-0.1 ,0.8-0.1-0.3 ,0-0.3 ,0.1-0.2 ,0.1-0.1zm-18.7 ,2.3-0.2 ,0.1-0.4 ,0-0.1 ,0 ,0.1 ,0 ,0.4-0.1 ,0.1 ,0.1zm-1.4 ,0.1 ,0 ,0-0.2-0.1-0.2-0.1 ,0-0.1 ,0.4 ,0.1 ,0 ,0zm-1.9 ,0.4 ,0 ,0.2-0.1-0.1-0.2 ,0 ,0.1-0.1 ,0.1 ,0 ,0-0.1 ,0.3-0.2-0.1 ,0.1 ,0 ,0.1zm1.1 ,0.9-0.1 ,0.1 ,0.1-0.5-0.1-0.4 ,0.1 ,0.2 ,0 ,0.2 ,0 ,0.4zm-0.2 ,0.3-0.2 ,0.2 ,0-0.1 ,0.1-0.2 ,0.1-0.1 ,0 ,0.1zm11.2 ,0.2-0.3 ,0.1-0.3-0.1 ,0.2 ,0 ,0.1 ,0 ,0.3-0.2 ,0.2-0.1 ,0.2 ,0-0.5 ,0.3zm-19.3 ,0.5-0.1 ,0-0.5-0.3 ,0-0.1 ,0.2-0.1 ,0.1 ,0 ,0.2 ,0.1 ,0.1 ,0 ,0 ,0.1 ,0 ,0.1-0.1 ,0.1zm-9.1 ,1.1-0.1 ,0 ,0.6-0.5 ,0.1-0.2 ,0.2 ,0-0.3 ,0.3-0.5 ,0.3zm-4.8 ,3.2-0.1 ,0 ,0.1-0.2 ,0.2-0.1 ,0.5-0.3 ,0.2 ,0 ,0.1-0.1 ,0 ,0 ,0 ,0.1-0.4 ,0.2-0.6 ,0.4zm-0.7 ,0.8-0.1 ,0 ,0.1-0.3 ,0-0.1 ,0.2-0.3 ,0.1 ,0 ,0 ,0.1-0.2 ,0.2-0.3 ,0.4zm47.2 ,2 ,0 ,0.2-0.3-0.5-0.3-0.8-0.2-0.7 ,0.1 ,0.2 ,0.1 ,0.4 ,0.5 ,1.3zm-48.2-0.1-0.1 ,0.2 ,0-0.3 ,0.2-0.6 ,0.5-0.8 ,0.2-0.1-0.5 ,0.9-0.3 ,0.8zm0.5 ,3.6 ,0 ,0.1-0.2-0.7-0.4-1.5 ,0-0.9 ,0.1-0.3 ,0.1 ,1.2 ,0.4 ,1.6 ,0.1 ,0.4zm42.3-1.2 ,0 ,0.2-0.1-0.3-0.1-0.3 ,0.1 ,0.1 ,0.1 ,0.4zm0.1 ,0.3-0.1 ,0.1-0.2-0.1-0.1-0.1 ,0-0.2 ,0.2 ,0.2 ,0.1 ,0.1 ,0.2 ,0zm4.6 ,4.1-0.6 ,0.6 ,0.1-0.1 ,0.2-0.3 ,0.1-0.1 ,0.1-0.1 ,0.1-0.2 ,0-0.2 ,0.2-0.1 ,0.1 ,0-0.3 ,0.6zm-0.7 ,0.7-0.1 ,0 ,0.1-0.1 ,0 ,0-0.1 ,0.1zm-0.5 ,0.3-0.1 ,0 ,0 ,0 ,0.1-0.1 ,0 ,0 ,0 ,0-0.1 ,0.1zm-0.6 ,0.3-0.1 ,0.1-0.1-0.1 ,0.1-0.1 ,0.4-0.1-0.2 ,0.1-0.2 ,0zm-0.8 ,0.2-0.1 ,0.1 ,0 ,0 ,0-0.1-0.1-0.2 ,0-0.1 ,0.3 ,0.2 ,0 ,0.1 ,0 ,0.1zm-0.7 ,0.2-0.2 ,0 ,0.1-0.1 ,0-0.2 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0zm-0.6 ,0.2-0.1 ,0 ,0 ,0 ,0.1-0.1 ,0.1 ,0 ,0 ,0.1-0.1 ,0zm-217.8 ,7.9-0.2 ,0.2-0.1-0.1-0.3 ,0-0.1-0.1-0.3-0.1-0.1-0.2 ,0.2-0.3 ,0.4-0.2 ,0.6 ,0 ,0.1 ,0.2 ,0 ,0.1-0.1 ,0.2 ,0 ,0.2-0.1 ,0.1zm-2.3 ,0.3-0.1 ,0.1-0.1 ,0 ,0-0.1 ,0.1-0.2 ,0.2-0.1 ,0.2-0.2 ,0.1 ,0-0.1 ,0.1 ,0 ,0.2-0.2 ,0.1-0.1 ,0.1zm6.7 ,1.2 ,0.1 ,0 ,0.1 ,0 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1-0.2 ,0.1-0.3 ,0-0.1-0.1-0.1-0.1-0.2 ,0 ,0-0.1 ,0 ,0-0.1 ,0 ,0.1 ,0.2-0.3 ,0-0.1 ,0-0.1-0.2-0.3-0.3 ,0-0.1-0.1-0.2 ,0.4 ,0 ,0.3-0.3 ,0.2 ,0 ,0.3 ,0.4 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0zm1.6 ,0.7 ,0.6 ,0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.5 ,0 ,0.1 ,0-0.1 ,0.2-0.3 ,0.1-0.5-0.1-0.8 ,0 ,0-0.1 ,0.1-0.1 ,0-0.1 ,0.1 ,0zm2 ,0.8 ,0.1 ,0.1 ,0.3-0.1 ,0.2 ,0 ,0.4 ,0.2 ,0.1 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1-0.1 ,0.1-0.3 ,0.2-0.4 ,0-0.2 ,0.1-0.3 ,0-0.1 ,0 ,0-0.3-0.1-0.3-0.2 ,0-0.2-0.1-0.2-0.2 ,0-0.1 ,0.1-0.2 ,0.2 ,0 ,0.1 ,0.1 ,0.1 ,0.2zm-1 ,0.5-0.2 ,0.1-0.2 ,0 ,0-0.2-0.2-0.3 ,0.3-0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1-0.1 ,0.2zm3.6 ,5.2-0.1 ,0.1-0.2 ,0-0.6-0.3-0.1-0.2 ,0-0.8-0.2-0.6-0.2-0.5 ,0.2-0.2 ,0.2-0.2 ,0.2-0.4-0.2-0.5 ,0.1-0.3 ,0.1 ,0 ,0.6 ,0.3 ,1.2 ,0.5 ,0.3 ,0.4 ,0.1 ,0.4 ,0.2 ,0 ,0.1 ,0.3 ,0.3 ,0.2 ,0.1 ,0.1-0.1 ,0.2-0.6 ,0.4-0.7 ,0.2-0.6 ,0.4-0.1 ,0.3z" },
+    { id: "cn", name: "China", d: "m786.1 ,406 ,0.1 ,0.1 ,0.1 ,0.2 ,0.1 ,0.4 ,0 ,0.3-0.3 ,0.2-0.3 ,0.1-0.5 ,0.8-0.1 ,0.2-0.1 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0.4-0.1 ,0.5-0.1 ,0.2-0.1 ,0.1-0.2 ,0.1-0.1 ,0-0.1 ,0-0.3 ,0.3-0.3 ,0.2 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.1 ,0-0.4 ,0.1-0.2 ,0.1-0.2 ,0.3-0.1 ,0-0.3 ,0.1-0.2 ,0-0.3-0.2-0.2-0.1-0.4-0.1-0.4-0.1-0.3-0.1-0.6-0.3-0.1-0.6-0.1-0.3 ,0-0.1 ,0-1.1 ,0-0.1 ,0.1-0.1 ,0.3-0.2 ,0.3-0.2 ,0.4-0.4 ,0.3-0.2 ,0.3-0.3-0.2 ,0-0.1 ,0 ,0.1-0.2 ,0.1-0.1 ,0.1-0.1 ,0.3 ,0 ,0.3 ,0 ,0.2-0.2 ,0.2 ,0 ,0.7 ,0.1 ,0.5-0.1 ,0.2-0.2 ,0.1 ,0 ,0.4 ,0.1 ,0.1 ,0.2 ,0-0.1 ,0-0.1 ,0.1 ,0 ,0.5 ,0.2 ,0-0.3 ,0-0.1 ,0.1-0.1 ,0.1 ,0 ,0.2 ,0.2 ,0.2 ,0.1 ,0.2 ,0.1zm-1.4-3.3 ,0.1 ,0.1 ,0.3-0.1 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.2-0.2-0.1-0.2 ,0-0.2 ,0 ,0-0.1 ,0.1-0.1 ,0.2-0.1zm6.3-1.6-0.3 ,0.1-0.1 ,0 ,0.1-0.2 ,0.2-0.1 ,0 ,0.2zm0.4 ,0.1-0.1 ,0.1-0.1-0.1 ,0-0.2-0.1-0.1 ,0.1-0.1 ,0.1-0.1 ,0.2 ,0 ,0.1 ,0-0.1 ,0.1 ,0 ,0.1 ,0 ,0.3zm2.1-3.6 ,0 ,0.1-0.2-0.2-0.1 ,0-0.1-0.1-0.1-0.1 ,0.2 ,0 ,0.2 ,0.2 ,0.1 ,0.1zm13-5.2-0.1 ,0.2-0.2 ,0 ,0-0.1 ,0 ,0 ,0-0.1 ,0 ,0 ,0.2 ,0.1 ,0 ,0.1zm4.6-3-0.2 ,0.1-0.1-0.1 ,0-0.2 ,0.1-0.2-0.1-0.1 ,0.1-0.1 ,0.2 ,0 ,0.1 ,0.1 ,0.1 ,0 ,0 ,0.1 ,0 ,0.1-0.1 ,0.2 ,0.1 ,0.1 ,0 ,0.1zm4-8.2-0.2 ,0.1-0.1 ,0 ,0-0.2 ,0.2-0.2 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.2zm2.6-5.1 ,0 ,0.1-0.2-0.2-0.1 ,0 ,0.1-0.1 ,0.2 ,0 ,0.1 ,0.3 ,0 ,0.1zm0.7-0.7 ,0 ,0.1-0.1 ,0-0.1-0.3 ,0.1-0.1 ,0.1 ,0 ,0 ,0.2zm-0.3-0.2 ,0 ,0.1-0.3-0.2-0.4 ,0-0.1-0.2 ,0-0.3 ,0.4 ,0 ,0.5 ,0.2 ,0.1 ,0.1-0.1 ,0.2zm-1.2-5-0.2 ,0.1-0.7-0.3-0.5-0.3-0.3-0.4 ,0-0.2 ,0.4 ,0 ,0.4 ,0.1 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.7 ,0.3 ,0.1 ,0.1 ,0.1 ,0.1zm4.6-85 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0.4 ,0.2 ,0.7 ,0.5 ,0.4 ,0.2 ,0.2-0.1 ,0.2 ,0.1 ,0.2 ,0.3 ,0.3 ,0.2 ,0.5 ,0.1 ,0.5 ,0.4 ,0.2 ,0 ,0.1-0.2 ,0.2-0.1 ,0.3 ,0 ,0.4 ,0.2 ,0.6 ,0.4 ,0.3 ,0.2 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.2 ,0 ,0.2 ,0 ,0.1 ,0.1 ,0.2 ,0.2 ,0 ,0.3 ,0.1 ,0.2 ,0.3 ,0.2 ,0.2 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0 ,0.1-0.1 ,0.1 ,0 ,0.2 ,0.1 ,0.2 ,0.3 ,0.1 ,0.1 ,0.1 ,0 ,0.2 ,0.1 ,0.2 ,0.2 ,0.2 ,0.1 ,0.2 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.3 ,0 ,0.2 ,0.2 ,0.2 ,0 ,0.4 ,0.1 ,0.5 ,0.4 ,0.7 ,0.1 ,0.4 ,0 ,0.4 ,0.1 ,0.2 ,0.2 ,0.1 ,0.1 ,0.2 ,0 ,0.3 ,0.1 ,0.2 ,0.1 ,0.2 ,0 ,0.3 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0.3 ,0 ,0.3 ,0.3 ,0.5 ,0.5 ,0.7 ,0.3 ,0.5 ,0.1 ,0.4 ,0 ,0.3-0.1 ,0.2 ,0 ,0.2 ,0.1 ,0.1 ,0 ,0.2 ,0 ,0.2 ,0.2 ,0.2 ,0.5 ,0.4-0.2 ,0.6-0.1 ,0.4 ,0 ,0.4 ,0.1 ,0.3 ,0.2 ,0.2 ,0.2 ,0.2 ,0.1 ,0.2 ,0.3 ,0.2 ,0.5 ,0.2 ,0.7 ,0 ,0.8-0.2 ,0.5 ,0 ,0.2 ,0.1 ,0.1 ,0.2-0.1 ,0.2 ,0.1 ,0.1 ,0.3 ,0.1 ,0.2 ,0.1 ,0.1 ,0.2 ,0.2 ,0.1 ,0.2-0.1 ,0.2 ,0 ,0.2 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.2 ,0 ,0.2 ,0 ,0.1 ,0.3 ,0.2 ,0.2 ,0.2 ,0 ,0.3 ,0.3 ,0.7 ,1 ,0.4 ,0.3 ,0.4 ,0.1 ,0.6 ,0 ,0.2 ,0.4-0.1 ,0.4 ,0 ,0.3 ,0.1 ,0.1 ,0.2 ,0.4 ,0.2 ,0.2 ,0 ,0.2 ,0.1 ,0.2 ,0 ,0.4-0.2 ,0.5 ,0.1 ,0.5 ,0.3 ,0.4 ,0.2 ,0.4 ,0 ,0.3 ,0.1 ,0.2 ,0.1 ,0.1 ,0.3 ,0 ,0.6-0.1 ,0.4 ,0 ,0.3 ,0.2 ,0.6 ,0 ,1-0.2 ,0.6 ,0 ,0.3 ,0.1 ,0.2-0.2 ,0.2-0.5 ,0.2-0.2 ,0.2 ,0 ,0.3-0.2 ,0.4-0.4 ,0.3-0.2 ,0.4 ,0 ,0.5 ,0 ,0.3-0.1 ,0.3-0.3 ,0.5-0.3 ,1-0.4 ,0.2-0.1 ,0.1 ,0 ,0.3 ,0.1 ,0.3 ,0.1 ,0.3 ,0.3 ,0 ,0.2 ,0 ,0.2-0.1 ,0.1-0.1 ,0.2-0.1 ,0.3 ,0.1 ,0.2 ,0.2 ,0.4 ,0.1 ,0.3 ,0.2 ,0.4-0.1 ,0.1-0.1 ,0.2-0.3 ,0.4-0.2 ,0.2-0.2 ,0.2-0.3 ,0-0.1 ,0-0.1 ,0.1-0.1 ,0.1-0.1 ,0.1-0.2 ,0.2 ,0 ,0.2 ,0.1 ,0.3 ,0 ,0.3-0.2 ,0.2-0.1 ,0.4 ,0 ,0.1-0.1 ,0.3 ,0 ,0.1 ,0 ,0.6-0.2 ,0.4-0.3 ,0.5 ,0.1 ,0.3 ,0 ,0.3-0.1 ,0.1 ,0 ,0.1 ,0 ,0.2-0.1 ,0.1-0.2 ,0.2-0.1 ,0.2 ,0 ,0.3-0.1 ,0.2-0.1 ,0.2-0.1 ,0.1-0.2 ,0.1-0.1 ,0.1-0.1 ,0.3 ,0 ,0.2-0.1 ,0.2 ,0 ,0.2-0.1 ,0.2-0.2 ,0.1-0.1 ,0.1-0.1 ,0-0.2 ,0.2-0.2 ,0.7 ,0 ,0.4 ,0 ,0.4-0.3 ,0.2-0.2 ,0.2-0.1-0.1-0.1-0.1-0.3-0.1-0.2-0.1-0.3-0.1-0.5-0.1-0.5-0.2-0.3-0.1-0.3-0.1-0.2-0.1-0.2-0.2-0.2 ,0.1-0.1 ,0.3-0.2 ,0.1-0.1 ,0.3-0.1 ,0.2-0.3 ,0.3-0.1 ,0.1-0.5 ,0.2-0.1 ,0.1-0.4 ,0-0.1 ,0.1-0.1 ,0.2 ,0 ,0.2 ,0.1 ,0.2 ,0.2 ,0.4 ,0.1 ,0.3 ,0.1 ,0.5 ,0.4 ,1.6-0.1 ,0.3-0.1 ,1.2 ,0 ,0.2 ,0 ,0.3 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.2 ,0 ,0.2-0.1 ,0.3-0.1 ,0.4-0.1 ,0.2-0.1 ,0.1-0.1 ,0.1 ,0 ,0.3 ,0 ,0.2-0.2 ,0.1-0.2 ,0.1-0.2 ,0-0.2 ,0-0.2 ,0.1-0.4 ,0.1-0.2 ,0.1-0.1 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.2 ,0 ,0.2 ,0.2 ,0 ,0.2-0.2 ,0.1-0.1-0.1-0.1 ,0-0.3-0.2-0.2-0.2-0.1-0.2 ,0-0.5 ,0-0.1-0.2-0.1-0.1-0.1-0.1-0.1-0.2 ,0-0.1 ,0-0.1-0.1-0.1 ,0-0.1 ,0.1-0.1 ,0.3-0.2 ,0.4 ,0 ,0.3-0.1 ,0.4-0.1 ,0.5-0.1 ,0.1-0.2 ,0-0.1 ,0-0.1 ,0.2-0.1 ,0-0.1-0.1-0.2-0.1-0.2 ,0-0.1 ,0.1-0.2 ,0.2-0.1 ,0.2 ,0 ,0.2 ,0 ,0.2-0.2 ,0.2-0.2 ,0.1-0.3 ,0.3-0.1 ,0.1-0.2 ,0-0.3 ,0-0.3 ,0.1-0.6 ,0-0.3-0.1-0.4 ,0.1-0.3 ,0.1 ,0 ,0.1 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.3 ,0.1 ,0.3 ,0.2 ,0.2 ,0.1 ,0.2 ,0 ,0.2-0.1 ,0.2-0.2 ,0.3-0.1 ,0.2-0.1 ,0-0.2-0.1-0.1-0.1-0.3 ,0-0.6 ,0.1-0.3-0.1-0.2-0.1-0.3 ,0-0.4-0.1-0.3 ,0-0.1-0.1 ,0-0.2-0.1-0.1-0.1-0.2-0.2-0.2-0.1-0.1-0.1 ,0-0.2 ,0.1-0.2 ,0.1-0.1 ,0-0.1 ,0-0.1 ,0.1-0.3 ,0.2-0.1 ,0.2-0.1 ,0.4-0.1 ,0.4-0.1 ,0.1-0.1 ,0-0.1 ,0.1-0.2 ,0.4-0.2 ,0.3-0.3 ,0.2-0.1 ,0.2-0.1 ,0.2-0.2 ,0.3-0.3 ,0-0.3 ,0.1-0.2 ,0-0.1 ,0.1-0.1 ,0.2 ,0 ,0.1-0.1 ,0-0.1 ,0.1-0.4 ,0.3-0.3 ,0.1-0.4 ,0.2-0.3 ,0.2-0.1 ,0.1 ,0 ,0.1 ,0 ,0.1-0.2 ,0-0.1 ,0-0.3 ,0.3-0.2 ,0.2-0.6 ,0.5-0.3 ,0.3-0.1 ,0.4 ,0 ,0-0.2 ,0.3-0.5 ,0.3-1 ,0.1-0.3-0.2-0.1 ,0.1-0.1 ,0.2-0.3 ,0.1-0.4 ,0-0.2 ,0.1-0.1 ,0.1-0.5 ,0-0.2 ,0.2-0.3 ,0.1-1.4 ,0.9-0.3 ,0.4-0.3 ,0.4-0.2 ,0.2-0.2 ,0.1-0.2 ,0.1-0.2 ,0.1-0.2 ,0-0.2-0.1-0.2 ,0-0.1 ,0.2 ,0.1 ,0.2-0.1 ,0.1-0.4 ,0.1-0.6 ,0.1-0.2 ,0.1-0.1 ,0.1-0.1 ,0-0.1-0.3 ,0-0.4 ,0.2-0.1 ,0.2 ,0 ,1.2-0.5-0.1-0.4 ,0.1-0.2 ,0.3-0.3 ,0.2-0.1-0.1-0.1-0.8 ,0.1-0.4 ,0-0.2 ,0 ,0.1-0.2 ,0-0.2-0.1-0.1 ,0.4-0.3 ,0.2-0.1 ,0.1 ,0 ,0-0.2-0.1-0.3 ,0.1-0.3 ,0.8-0.4 ,0.2-0.3 ,0.3-0.3 ,0.6-0.8 ,0-0.1 ,0.2-0.4 ,0-0.2-0.3-0.2-0.1-0.3-0.8-0.6-0.1-0.5-0.1 ,0-0.1 ,0.3-0.1 ,0.1-0.4 ,0-0.2-0.1-1-0.1-0.2 ,0.2-0.2 ,0.3-0.2 ,0.2-0.2 ,0.1-0.2 ,0.2-0.8 ,1.3-0.3 ,0.1-1.5 ,0.8-0.7 ,0.3-0.6 ,0.5-0.2 ,0.3-0.2 ,0.4-0.1 ,0.6-0.5 ,0.7-0.2 ,0.1-0.2 ,0.1-0.2 ,0-0.2 ,0-0.4-0.1-0.4 ,0.2-0.5 ,0.2-0.4-0.5-0.3-0.1-0.5 ,0.1-0.2 ,0.2-0.5 ,1-0.2 ,0.6 ,0 ,0.2 ,0.3 ,0.7 ,0.3 ,0.4 ,0.7 ,0.5 ,1.5 ,0.3 ,0.3-0.1 ,0.4 ,0 ,0.4 ,0.3 ,0.2 ,0.5 ,0 ,0.3 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.2-0.2 ,0.1-0.1 ,0.1-0.1 ,0.5 ,0 ,0.6 ,0.1 ,0.2 ,0.3 ,0.3 ,0.5 ,0.2 ,0.5 ,0 ,0.9-0.1 ,0.4-0.3 ,0-0.1 ,0-0.2 ,0.8-0.5 ,0.4-0.4-0.1-0.1-0.1-0.1 ,0.1 ,0 ,0.2 ,0 ,1.1-0.5 ,0.8 ,0.4 ,0.5 ,0.4 ,0.5 ,0.1 ,0.3 ,0.2 ,0.4 ,0.2 ,0.5 ,0 ,0.4 ,0 ,0.1-0.2 ,0.1-0.1 ,0.1 ,0 ,0.2 ,0.2 ,0.5 ,0.2 ,0.4 ,0 ,0.3-0.1 ,0.2 ,0.1-0.3 ,0.3 ,0 ,0.5-0.2 ,0.2-0.2 ,0.2 ,0.1 ,0.2 ,0.1 ,0.1 ,0 ,0.2-0.2 ,0.1-0.3 ,0.3-0.2 ,0-0.1-0.1-0.1-0.1 ,0-0.2-0.1-0.1-0.3 ,0-0.3 ,0-0.7 ,0.4-0.7 ,0.3-0.8 ,0.3-0.3 ,0.2-0.2 ,0-0.3-0.1-0.2 ,0 ,0 ,0.1 ,0.2 ,0.2 ,0.1 ,0.2 ,0 ,0.1-0.1 ,0.1-0.2-0.1-0.2 ,0.1-0.1 ,0.3 ,0 ,0.6-0.1 ,0.1-0.3 ,0.1-0.4 ,0.2-0.1-0.1 ,0-0.1 ,0-0.3 ,0-0.1-0.2 ,0-0.2 ,0.1-0.2 ,0.2-0.1 ,0.1 ,0.2 ,0.4 ,0.2 ,0 ,0.1 ,0.1-0.2 ,0.2-0.5 ,0.3-0.1 ,0.2-0.1 ,0.2-0.2 ,0.2-0.1 ,0.2-0.2 ,0.1-0.3 ,0.1-0.3 ,0.4-0.2 ,0.4-0.3 ,0.2-0.2 ,0.6-0.4 ,0.3-0.1 ,0.6 ,0.1 ,0.3 ,0.4 ,0 ,0.2 ,0.1 ,0.4 ,0.4 ,0.5 ,0.3 ,0.5 ,0.2 ,0.7 ,0.4 ,0.2 ,0.2 ,0.2 ,0.4 ,0.3 ,1 ,0.2 ,0.5 ,0 ,0.3 ,0.3 ,0.5 ,0.3 ,0.9 ,0.4 ,0.7 ,0.1 ,0.6-0.1 ,0.3 ,0 ,0.3 ,0.4 ,0.3 ,0.9 ,0.4 ,0.1 ,0.1 ,0.2 ,0.2 ,0 ,0.5 ,0.1 ,0.2 ,0.1 ,0.1 ,0.5 ,0.2 ,0.2 ,0.2 ,0.2 ,0.3 ,0.1 ,0.3 ,0 ,0.4-0.3 ,0-0.2 ,0-0.9-0.5-0.2 ,0-0.3 ,0.1-0.5-0.1-0.5-0.5-0.4-0.2-0.4-0.1-0.9 ,0.5-0.2 ,0-0.1 ,0.1-0.1 ,0.1 ,0.4 ,0.1 ,0.4-0.2 ,0.4-0.2 ,0.6 ,0.1 ,0.1 ,0.2 ,0.1 ,0.3 ,0.4 ,0.2 ,0.3 ,0.1 ,0.4 ,0.3 ,0.4 ,0.5 ,0.9 ,0.5 ,0.4 ,0.5 ,0.1 ,0.3 ,0.1 ,0.5-0.3 ,0.2-0.3 ,0-0.4 ,0.1-0.3 ,0.2-0.3 ,0.3-0.9 ,0.5-0.2 ,0.3-0.1 ,0.3-0.2 ,0.1-0.5-0.1-0.5 ,0-0.6 ,0.3-0.1 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.3 ,0.1 ,0.4-0.2 ,0.4 ,0.5 ,0.8-0.1 ,0.7-0.5 ,0.3 ,0 ,0.2 ,0.1 ,0.3 ,0.2 ,0.7 ,0.8 ,0.4 ,0.1 ,0.4 ,0.2 ,0.2 ,0 ,0.2 ,0.1-0.5 ,0.3-0.6 ,0.6-0.3 ,0.2-0.2 ,0.2 ,0.5-0.1 ,0.4-0.3 ,0.2-0.1 ,0.1 ,0.1 ,0.1 ,0.4-0.1 ,1.1-0.2 ,0-0.2-0.3-0.2-0.1-0.2 ,0.1-0.3 ,0-0.1 ,0.1-0.1 ,0.2 ,0.2 ,0 ,0.4 ,0.3 ,0 ,0.2-0.1 ,0.1-0.3-0.1 ,0.3 ,0.3-0.1 ,0.3-0.1 ,0.1-0.2 ,0.1-0.1 ,0.2 ,0.2 ,0.4 ,0.2 ,0.5 ,0 ,0.2-0.3-0.1-0.4 ,0.3-0.2 ,0-0.2-0.4-0.2 ,0.1-0.1 ,0.1-0.2 ,0.4-0.2 ,0.4-0.2 ,0.1-0.2 ,0-0.2 ,0 ,0 ,0.1 ,0.2 ,0.1 ,0 ,0.1-0.4 ,0.5-0.1 ,0.2 ,0 ,0.2-0.2 ,0.2 ,0.1 ,0.3-0.1 ,0.2-0.2 ,0.3-0.2 ,0.2-0.2 ,0.3-0.3 ,0.2-0.4 ,0.7-0.1 ,0.3 ,0 ,0.3-0.1 ,0.1-0.2 ,0.1-0.2-0.1 ,0-0.2-0.1 ,0-0.1-0.1 ,0-0.2 ,0-0.2-0.1 ,0-0.1 ,0.2-0.2 ,0.1-0.2-0.1-0.2-0.1 ,0 ,0.2 ,0.1 ,0.2 ,0 ,0.2 ,0.2 ,0 ,0.2 ,0.2 ,0.1 ,0.3 ,0 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.2 ,0.1-0.3 ,0.2-0.4 ,0.3-0.3 ,0.2-0.3 ,0-0.2 ,0-0.2-0.1-0.3-0.1 ,0.4 ,0.5 ,0.2 ,0.1 ,0.2 ,0 ,0.2-0.2 ,0.3 ,0 ,0.1 ,0.3-0.1 ,0.3-0.2 ,0.4 ,0 ,0.3 ,0.2 ,0.5 ,0 ,0.1-0.1 ,0.1-0.3-0.1-0.2-0.2-0.2 ,0-0.2-0.1-0.2 ,0.1-0.1 ,0.1 ,0.1 ,0.2 ,0.2 ,0.2 ,0.1 ,0.2-0.1 ,0.1-0.6-0.1-0.1 ,0-0.2 ,0.3 ,0.1 ,0.4-0.1 ,0.2-0.2 ,0.1-0.3 ,0.2-0.2 ,0 ,0 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1-0.2 ,0.4-0.3 ,0.1-0.4-0.1-0.3 ,0.1-0.3-0.2-0.3 ,0-0.2 ,0.2 ,0 ,0.2-0.2 ,0-0.1 ,0-0.2 ,0 ,0 ,0.1 ,0.1 ,0.1 ,0.4 ,0.1 ,0.1 ,0.2 ,0 ,0.2-0.4 ,0.4-0.2 ,0.3-0.3 ,0-0.2 ,0.2-0.1 ,0.3-0.1-0.1-0.3 ,0.1-0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.4-0.1 ,0.1-0.1-0.1 ,0-0.2-0.1 ,0-0.2 ,0.2-0.2 ,0.1-0.2 ,0.1-0.1-0.1-0.3-0.1-0.1 ,0.6-0.3 ,0.2-0.1 ,0.1-0.2 ,0 ,0.1 ,0.1 ,0 ,0.2-0.1 ,0.2-0.2 ,0-0.1 ,0.1-0.1 ,0.5-0.1 ,0.2-0.4 ,0-0.3-0.1-0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.3 ,0-0.6 ,0.2-0.3-0.1-0.3-0.1-0.2 ,0.1-0.1 ,0.2-0.1 ,0.1-0.3 ,0-0.3-0.2-0.3-0.1-0.3 ,0.1-0.2 ,0.2-0.3 ,0.1-0.1 ,0.1-0.1 ,0.1-0.3 ,0-0.1-0.3-0.2 ,0-0.2 ,0.2-0.1 ,0.1-0.1 ,0.1 ,0 ,0.3-0.2 ,0-0.2-0.2-0.2 ,0-0.2 ,0.2-0.1 ,0-0.1 ,0-0.2 ,0-0.1 ,0-0.1 ,0-0.1 ,0.1 ,0 ,0-0.2-0.1-0.3-0.2-0.2-0.4-0.3-0.2-0.1-0.2 ,0-0.3 ,0-0.2 ,0-0.2 ,0.1-0.2-0.3 ,0.1-0.2 ,0.1 ,0 ,0.2-0.1 ,0.2-0.3 ,0.1 ,0 ,0.1 ,0 ,0.1 ,0.2 ,0.2 ,0.1 ,0.2 ,0.1 ,0.1 ,0.2 ,0.3 ,0 ,0.6 ,0.1 ,0.2 ,0 ,0.2-0.1 ,0.2 ,0 ,0-0.1-0.1-0.1 ,0 ,0 ,0.1 ,0 ,0.1 ,0 ,0-0.2 ,0-0.1 ,0-0.1 ,0.1-0.2 ,0.2-0.3 ,0-0.2-0.4-0.2 ,0.3-0.1 ,0.5-0.1 ,0.1-0.1 ,0.1-0.3-0.2-0.2 ,0.1-0.2 ,0.1-0.1 ,0.1-0.1 ,0.1-0.3-0.1-0.2-0.2 ,0.1-0.1 ,0-0.1-0.1-0.1-0.1 ,0 ,0.1 ,0.2 ,0 ,0.4-0.1 ,0.1-0.1 ,0.1-0.3-0.1-0.2-0.1-0.3-0.1-0.2 ,0 ,0 ,0.2-0.1 ,0.2-0.1 ,0-0.1 ,0-0.2 ,0.2-0.1 ,0.1-0.2 ,0.1-0.6 ,0.1-0.2 ,0.1-0.3 ,0-0.2 ,0-0.1 ,0-0.1-0.1-0.1 ,0-0.1 ,0.2-0.3 ,0.1-0.3 ,0-0.3 ,0.3-0.2 ,0.2-0.2 ,0-0.1-0.1-0.1-0.3-0.1 ,0 ,0 ,0.3-0.1 ,0.2-0.1 ,0.1-0.4 ,0.3-0.1 ,0.3 ,0.1 ,0.3 ,0.5 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0.6 ,0.5 ,0 ,0.2-0.1 ,0.1-0.1 ,0.2-0.3 ,0.2-0.6 ,0.1-0.5-0.1-0.2-0.2 ,0-0.1 ,0.1 ,0 ,0.1 ,0 ,0-0.1-0.1-0.1-0.2-0.1-0.2-0.3 ,0-0.3-0.1-0.2-0.1-0.2-0.1-0.1-0.1-0.1 ,0.1-0.4-0.1-0.2 ,0.2-0.3 ,0.1-0.3 ,0.4-0.1 ,0-0.3-0.3 ,0-0.2-0.2 ,0 ,0.1-0.2 ,0-0.3-0.4-0.1-0.1-0.1 ,0 ,0.1 ,0.5-0.3 ,0.2-0.2 ,0.1-0.4 ,0-0.2 ,0.1-0.2 ,0 ,0-0.1 ,0.1-0.2-0.1-0.1-0.2-0.1-0.3 ,0-0.2 ,0-0.2 ,0-0.1-0.1-0.2-0.2-0.2-0.1-0.1-0.1 ,0.1-0.2-0.1-0.1-0.3 ,0 ,0 ,0.2 ,0 ,0.3 ,0.1 ,0.2-0.1 ,0.1-0.2 ,0.1-0.2-0.2-0.1-0.1-0.1 ,0-0.1 ,0.2-0.2 ,0.2-0.3 ,0-0.2 ,0.1-0.3 ,0.1-0.2-0.2-0.3-0.3-0.1 ,0-0.3 ,0.1-0.5 ,0-0.1-0.1-0.2 ,0.1-0.2-0.3-0.3 ,0-0.3-0.2-0.1-0.1 ,0-0.2-0.1-0.1-0.1 ,0-0.1-0.1-0.2-0.1-0.2-0.1-0.1 ,0-0.1 ,0 ,0-0.1 ,0-0.4 ,0-0.3 ,0-0.1-0.1-0.1-0.1-0.1 ,0-0.2 ,0-0.3 ,0.1-0.2 ,0.1 ,0 ,0.2-0.2 ,0.1-0.2 ,0.1-0.2-0.4-0.3-0.2-0.1-0.3 ,0-0.3 ,0.1-0.2 ,0-0.1 ,0-0.2-0.3-0.1 ,0-0.2 ,0-0.2 ,0-0.1 ,0.1-0.2 ,0-0.2 ,0-0.2-0.1-0.3-0.2-0.4-0.1 ,0-0.1-0.1-0.2-0.2-0.2-0.3-0.2-0.2-0.1-0.1 ,0.1-0.1 ,0.1-0.5 ,0.3-0.2 ,0.1-0.1 ,0.1-0.1 ,0.1 ,0 ,0.3-0.1 ,0.3-0.2 ,0.2-0.1 ,0.1-0.2 ,0-0.2 ,0-0.1 ,0-0.4 ,0.3-0.2 ,0-0.2-0.2-0.1-0.1-0.2 ,0-0.2 ,0.1-0.1 ,0.3-0.1 ,0.2-0.1 ,0.1-0.1 ,0-0.1 ,0-0.8-0.7 ,0 ,0-0.1 ,0.1-0.1 ,0.4-0.1 ,0.1-0.1 ,0-0.3-0.5-0.1 ,0-0.1 ,0-0.1 ,0.2-0.2 ,0.2-0.2 ,0.1 ,0 ,0.2-0.2 ,0.1-0.2 ,0.1-0.1 ,0-0.1-0.1-0.2-0.2-0.1-0.2-0.3-0.2-0.3-0.2-0.2-0.1-0.1 ,0-0.1 ,0.1-0.1 ,0.1-0.1 ,0.2-0.2 ,0.3-0.2 ,0.2-0.2 ,0.2-0.1 ,0.1-0.1-0.1-0.2-0.1-0.2 ,0-0.3 ,0.2-0.2-0.3-0.1 ,0-0.1 ,0-0.1 ,0.1-0.1 ,0.2-0.1 ,0.2-0.1 ,0.2-0.1 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0.2 ,0.1 ,0.2 ,0.3 ,0.3 ,0.1 ,0.2 ,0 ,0.1 ,0 ,0.5 ,0 ,0.2-0.1 ,0.4 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.1 ,0 ,0-0.2 ,0.1-0.1 ,0-0.1-0.1-0.1 ,0-0.1-0.1-0.1-0.1-0.3 ,0-0.5 ,0.1-0.1 ,0-0.1-0.1 ,0-0.2 ,0-0.2 ,0-0.1-0.1-0.1 ,0.1-0.3-0.2-0.1 ,0 ,0-0.1-0.4 ,0-0.1 ,0 ,0-0.1 ,0-0.2 ,0.1-0.5 ,0.2-0.4 ,0.5-0.2 ,0.1-0.2 ,0-0.2-0.1-0.3-0.1-0.4 ,0.1-0.2-0.1-0.1-0.1-0.1-0.1 ,0-0.2 ,0-0.1-0.2-0.1-0.2-0.1-0.1-0.2 ,0-0.2 ,0-0.2 ,0-0.3-0.1-0.1-0.3-0.1-0.7-0.1-0.6-0.1-0.2 ,0-0.2 ,0-0.1 ,0-0.1-0.1 ,0-0.1 ,0.1-0.3 ,0.1-0.3 ,0.3-0.4 ,0-0.3 ,0-0.3 ,0.1-0.4 ,0.2-0.3 ,0.1-0.1 ,0-0.1-0.1-0.1-0.1-0.1-0.2-0.1-0.3 ,0-0.5-0.1-0.5-0.2 ,0.1-0.4 ,0-0.2-0.1-0.2-0.1-0.1-0.1-0.1 ,0.1-0.3-0.1-0.3-0.1-0.1-0.2-0.2 ,0-0.2 ,0.1-0.2 ,0.4-0.4 ,0-0.1-0.1 ,0-0.1 ,0-0.5 ,0.1-0.1-0.1-0.2-0.1-0.4 ,0-0.4 ,0-0.5 ,0.1-0.5 ,0.2-0.2 ,0.2-0.2 ,0.1-0.2 ,0-0.2-0.1 ,0-0.2 ,0.3-0.4 ,0-0.3-0.1-0.3 ,0-0.2-0.1-0.1-0.2-0.1-0.1-0.1 ,0-0.4 ,0.2-0.4 ,0.2-0.1 ,0.1-0.1 ,0-0.1-0.1-0.3 ,0-0.2 ,0.1-0.4 ,0.1-0.3 ,0.3 ,0 ,0.1-0.1 ,0.1-0.1 ,0.1-0.2 ,0.1-0.2 ,0.1-0.5 ,0.1-0.1 ,0.3 ,0.1 ,0.1-0.1 ,0.2-0.3 ,0.2-0.3 ,0.3-0.1 ,0.2 ,0 ,0.1-0.1 ,0-0.2-0.2-0.3-0.1-0.2 ,0-0.1 ,0.3-0.1 ,0.1-0.2 ,0-0.3 ,0.1-0.4 ,0.1-0.5 ,0-0.4 ,0-0.3 ,0-0.3 ,0-0.5-0.1-0.5 ,0-0.2 ,0-0.6-0.1-0.5-0.1-0.1-0.3-0.2-0.1 ,0-0.1 ,0.1 ,0 ,0.2-0.1 ,0.2-0.1 ,0-0.1-0.2-0.1-0.2-0.3-1 ,0-0.3-0.1-0.3-0.1-0.1-0.1-0.1-0.2-0.3-0.1-0.1-0.1 ,0-0.1 ,0-0.1 ,0-0.1-0.2-0.1-0.2-0.1-0.1-0.2-0.1-0.2 ,0-0.1 ,0.2-0.1 ,0.1-0.1 ,0.2-0.2 ,0.3-0.1 ,0.1-0.1-0.1-0.4-0.3-0.2-0.1-0.3 ,0.1-0.4-0.1-0.2 ,0-0.3-0.3-0.1 ,0-0.5 ,0.2-0.1 ,0.1-0.1 ,0-0.1-0.1-0.1-0.1 ,0-0.1 ,0.1-0.1 ,0-0.1 ,0-0.1 ,0.2-0.3 ,0.5-0.5-0.1-0.2-0.2-0.4 ,0-0.2-0.1-0.1-0.2 ,0.1-0.5 ,0.4-0.1 ,0 ,0-0.1-0.1-0.4 ,0.2-0.1 ,0.3-0.1 ,0.2-0.2 ,0-0.1-0.1 ,0-0.3 ,0-0.1-0.1-0.2-0.3-0.1-0.1-0.1-0.1-0.4 ,0.2-0.5 ,0.2-0.5 ,0.3 ,0 ,0.2-0.1 ,0-0.1 ,0.1-0.1 ,0.2-0.1 ,0.1-0.1 ,0-0.2 ,0-0.4-0.2-0.4-0.1-0.1 ,0-0.6-0.1 ,0-0.1-0.1-0.2-0.2-0.1-0.2 ,0-0.4 ,0.3-0.5 ,0.2-0.3 ,0.3-0.2 ,0.3-0.3 ,0.1 ,0 ,0.2-0.1 ,0.1-0.2 ,0.2-0.4 ,0.2-0.3 ,0.1-0.9 ,0.1-0.3 ,0.1-0.1 ,0.1-0.1 ,0.3-0.1 ,0.3-0.2 ,0.2-0.4 ,0.3-0.5 ,0.3-0.1 ,0.2 ,0 ,0.1 ,0.1 ,0 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.3 ,0.2-0.2 ,0.1-0.2 ,0.1-0.2 ,0-0.2 ,0-0.1 ,0-0.1 ,0-0.2 ,0-0.2 ,0-0.3 ,0.2-0.2 ,0-0.2-0.1-0.3 ,0-0.2 ,0 ,0-0.1 ,0-0.4-0.1-0.1-0.3-0.1-0.4-0.1-0.2-0.1-0.1 ,0-0.1 ,0-0.2 ,0.1-0.2 ,0.2-0.2 ,0-0.2-0.1-0.2-0.1-0.5-0.1-0.2 ,0-0.4 ,0-0.3 ,0-0.1 ,0 ,0-0.1 ,0.1-0.2 ,0-0.2 ,0-0.1-0.4-0.1-0.3-0.1-0.3 ,0-0.2 ,0.1-0.2 ,0.1-0.2 ,0.2-0.3 ,0.1-0.3 ,0.2-0.2 ,0.2-0.2 ,0.3-0.3 ,0.4-0.3 ,0.4-0.2 ,0.4-0.2 ,0.2-0.2 ,0.2-0.2 ,0.5-0.2-0.1-0.2-0.2 ,0-0.3 ,0.2-0.8 ,0.1-0.3-0.1-0.1-0.1-0.3-0.1-0.1-0.4-0.2-0.1 ,0-0.1 ,0.1-0.1 ,0.1-0.2 ,0.1-0.4 ,0.1-0.4 ,0.1-0.1 ,0.1 ,0 ,0.1 ,0 ,0.1-0.2 ,0-0.3 ,0-0.2 ,0-0.5 ,0.2-0.2 ,0-0.2 ,0-0.3 ,0-0.5 ,0-0.4-0.1-0.3-0.3-0.2-0.1-0.3-0.1-0.3-0.1-0.1-0.2-0.1-0.1-0.2 ,0-0.2 ,0.1-0.1 ,0.4-0.1 ,0.1-0.2 ,0-0.2-0.1-0.3-0.2-0.1-0.2-0.1-0.1-0.2 ,0.1 ,0 ,0.3 ,0 ,0.2-0.2 ,0.1-0.1-0.1-0.1-0.2-0.2-0.5-0.2-0.3-0.2-0.2-0.8 ,0-0.6-0.1-0.3-0.1-0.1-0.2 ,0.1-0.4 ,0.1-0.3 ,0-0.1-0.1 ,0-0.2 ,0-0.6 ,0.2-0.2 ,0-0.1-0.1-0.1-0.1-0.1-0.1-0.1-0.1-0.5-0.3-0.2-0.2-0.3-0.2-0.2-0.1-0.1-0.4-0.1-0.4-0.1-0.2-0.2-0.1-0.2-0.1-0.4 ,0.2-0.3 ,0.1-0.2 ,0-0.4-0.4-0.3-0.4-0.3-0.4-0.2-0.2-0.4 ,0-0.4-0.2-0.6-0.5-0.4-0.4-0.7-0.4-0.2-0.2-0.1-0.1-0.1-0.3-0.2-0.3-0.5-0.1-0.6-0.1-0.6 ,0.2-0.5 ,0.8-0.2 ,0.2-0.2 ,0-0.2-0.2-0.1-0.2-0.1-0.2-0.3-0.2-0.4-0.2-0.2-0.2-0.2-0.1-0.2 ,0-0.4-0.1-0.4-0.2-0.2 ,0 ,0-0.1 ,0.1-0.3 ,0-0.2-0.1-0.1-0.2 ,0-0.4-0.3 ,0 ,0-0.1-0.1-0.2-0.1-0.4 ,0-0.3 ,0.1-0.2-0.1-0.3-0.2-0.1-0.1-0.1-0.1-0.3-0.4-0.4-0.5-0.2-0.1-0.1 ,0-0.1 ,0.3-0.1 ,0-0.1 ,0-0.2 ,0.1-0.1 ,0-0.1 ,0 ,0-0.1 ,0-0.4-0.1-0.1 ,0.1-0.3 ,0.1-0.2-0.1-0.2-0.2-0.2 ,0-0.2 ,0.1-0.3 ,0-0.2 ,0-0.1-0.1-0.1-0.5-0.6 ,0-0.1-0.1-0.2 ,0-0.3-0.1-0.2-0.1-0.2 ,0-0.1 ,0.1 ,0 ,0.3 ,0 ,0.3 ,0 ,0.2-0.1 ,0.1 ,0.1 ,0 ,0.2 ,0.1 ,0.1 ,0.2 ,0.2 ,0.2 ,0.2 ,0.2 ,0 ,0.2-0.1 ,0.2-0.3 ,0.1-0.1 ,0.1 ,0 ,0 ,0 ,0-0.2 ,0-0.5 ,0-0.2-0.1-0.2 ,0-0.2 ,0-0.3-0.2-0.2-0.1-0.1 ,0-0.1 ,0.1-0.2 ,0-0.2-0.1-0.2 ,0 ,0-0.1-0.1-0.2-0.1-0.2-0.2-0.1-0.1-0.1-0.1-0.2-0.2 ,0-0.5 ,0-0.5-0.1-0.3-0.1-0.4 ,0-0.1 ,0.1-0.1 ,0.5-0.3 ,0.1-0.1 ,0-0.1 ,0-0.1-0.1-0.2-0.2-0.1-0.3-0.2-0.3-0.2-0.4-0.1-0.5-0.2-0.1-0.2-0.1-0.4-0.2-0.6-0.2-0.6-0.2-0.4 ,0-0.2 ,0.1-0.5 ,0-0.1-0.1 ,0-0.2 ,0.1-0.1 ,0.1-0.1 ,0-0.1-0.1 ,0 ,0 ,0 ,0-0.2 ,0.1-0.4 ,0-0.1 ,0-0.2 ,0-0.4-0.1-0.6-0.2-0.6-0.2-0.3-0.2-0.1-0.1-0.3-0.2-0.2-0.1 ,0-0.4-0.1 ,0-0.3 ,0.1-0.4 ,0.1-0.2 ,0-0.1-0.1-0.1-0.4-0.1-0.1-0.2 ,0-0.2-0.1-0.1-0.1 ,0-0.1 ,0.1-0.2 ,0.1-0.1 ,0-0.7-0.1-0.3-0.1-0.2-0.1-0.3-0.1-0.2-0.2-0.2-0.3-0.2-0.3-0.1-0.3 ,0.1-0.1 ,0-0.1-0.5-0.1-0.1-0.6-0.2-0.3 ,0-0.3 ,0.1-0.2 ,0.1-0.1-0.1-0.2-0.1-0.2-0.1-0.3 ,0-0.2 ,0.1 ,0 ,0-0.1-0.1-0.3-0.3 ,0-0.1 ,0.5-0.3 ,0.3-0.1 ,0.2-0.1 ,0 ,0 ,0.1 ,0.1 ,0.2 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.3-0.2 ,0.2-0.2 ,0.1-0.1-0.1-0.2-0.3-0.3-0.2-0.1-0.1-0.1 ,0.1-0.3 ,0.1-0.3 ,0-0.1-0.1-0.1 ,0-0.3-0.1-0.4-0.1-0.2 ,0-0.3 ,0-0.3 ,0.2-0.5-0.1-0.2-0.2-0.2-0.6-0.3-0.7-0.2-0.3 ,0-0.2 ,0-0.2 ,0.2-0.1 ,0.2-0.2 ,0-0.3-0.1-0.2-0.2-0.1-0.3-0.1-0.4-0.1-0.1 ,0-0.1 ,0.1-0.1 ,0.2-0.1 ,0-0.1 ,0-0.1-0.1-0.2-0.1-0.2-0.2-0.4 ,0-0.2 ,0-0.4 ,0-0.2 ,0.2 ,0 ,0.3-0.1 ,0.1-0.2 ,0.1-0.2 ,0-0.1-0.1-0.4-0.1-0.2 ,0-0.1 ,0.1-0.1 ,0.1-0.2 ,0.2-0.4 ,0.1-0.2 ,0.1-0.1 ,0.2-0.1 ,0.4-0.1 ,0.5-0.2 ,0.6-0.5 ,0.2-0.1 ,0.2-0.1 ,0.2 ,0 ,0-0.1-0.1-0.3 ,0-0.1 ,0.1-0.1 ,0.1 ,0 ,0.4 ,0.2 ,0.3 ,0 ,0.4-0.1 ,0.8-0.5 ,0.1 ,0 ,0.1 ,0.1 ,0.1 ,0.3 ,0.1 ,0.7 ,0.1 ,0.1 ,0.5 ,0 ,0.4-0.2 ,0.2-0.1 ,0.3 ,0 ,0.1-0.1 ,0.1-0.1 ,0.2 ,0.3 ,0.2-0.1 ,0.2-0.2 ,0.1-0.2 ,0.2-0.2 ,0.1-0.3 ,0.1-0.3 ,0.1-0.1 ,0.1-0.1 ,0.3-0.6 ,0.2-0.2 ,0.2-0.1 ,0.5 ,0.1 ,0.3 ,0 ,0.8 ,0.1 ,0.4-0.1 ,0.3-0.1 ,0.4 ,0 ,0.5-0.1 ,0.6-0.8 ,0-0.2 ,0-0.2 ,0.2-0.2 ,0.3-0.2 ,0.6-0.4 ,1.1-0.6 ,0.4-0.2 ,0.2 ,0 ,0.4-0.1 ,0.7-0.3 ,0.2-0.4 ,0.2-0.1 ,0.9-0.1 ,0.1 ,0 ,0-0.1 ,0-0.3-0.1-0.2 ,0.1-0.1 ,0.1-0.1 ,0-0.1-0.1-0.5-0.1-0.4 ,0-0.4 ,0-0.2 ,0.1-0.3 ,0.1-0.2 ,0.5-0.2 ,0.3-0.1 ,0-0.1-0.3-0.1-0.2-0.1 ,0-0.1 ,0-0.1 ,0-0.1 ,0.3-0.2 ,0.3-0.2 ,0.4 ,0.1 ,0.1-0.1 ,0-0.2-0.1-0.2-0.1-0.3-0.2-0.1 ,0-0.2 ,0.1-0.3-0.1-0.5-0.2-0.5-0.3-0.8-0.2-0.2-0.1-0.4-0.1-0.2 ,0-0.3 ,0-0.2 ,0-0.4-0.1-0.4 ,0.1-0.4 ,0.1-0.3 ,0-0.1 ,0.1-0.1 ,0.2 ,0 ,0.1-0.1-0.1-0.1-0.3-0.1-0.3-0.1-0.4 ,0-0.4 ,0-0.2-0.1-0.2-0.1 ,0-0.1 ,0.2-0.2 ,0.3-0.2 ,0.5-0.1 ,0.5-0.2 ,0.3-0.1 ,0.4-0.1 ,0.4 ,0 ,0.2 ,0 ,0.5-0.2 ,0.8-0.3 ,0.8-0.3 ,0.3-0.2 ,0.2 ,0.2 ,0.1 ,0.3 ,0.2 ,0.2 ,0.2 ,0.1 ,0.1 ,0 ,0.4-0.1 ,0.4-0.1 ,0.2 ,0.1 ,0.2 ,0.2 ,0.2 ,0.2 ,0.1 ,0 ,0.1-0.1 ,0.1-0.2 ,0.1-0.3 ,0-0.3 ,0-0.2-0.1-0.1-0.4-0.1-0.4-0.2 ,0-0.2 ,0-0.1 ,0.1-0.3 ,0.2-0.6 ,0.2-0.8 ,0.1-0.6 ,0.4-0.9 ,0.3-1 ,0.5-1.4 ,0.1-0.3 ,0-0.4 ,0-0.2 ,0.2-0.1 ,0.3 ,0.1 ,0.7 ,0.3 ,0.5 ,0.3 ,0.2 ,0.1 ,0.3 ,0.1 ,0.5 ,0.1 ,0.3 ,0 ,0.3-0.1 ,0.3 ,0 ,0.5 ,0.1 ,0.2 ,0 ,0.2 ,0 ,0.1 ,0.1 ,0.1 ,0.3 ,0.1 ,0.1 ,0.2-0.1 ,0.4-0.3 ,0.3-0.2 ,0.3-0.3 ,0.3 ,0 ,0.4-0.1 ,0.1-0.2 ,0.1-0.4 ,0.2-0.3 ,0-0.3-0.1-0.2-0.2-0.4 ,0-0.3-0.1-0.8-0.1-0.7 ,0.1-0.6 ,0.2-0.6 ,0.1-0.2 ,0.1-0.3 ,0.2-0.3 ,0.2-0.1 ,0.6-0.1 ,0.6-0.1 ,0.3-0.1 ,0.3-0.1 ,0.2-0.1 ,0.3-0.5 ,0.2-0.3 ,0.1-0.7-0.1-0.3 ,0.1-0.3 ,0.2-0.2 ,0.2-0.2 ,0.1 ,0 ,0.3-0.1 ,0.5 ,0 ,0.3 ,0.1 ,0.3 ,0 ,0.2-0.1 ,0.1-0.1 ,0.2 ,0 ,0.3-0.1 ,0.3-0.1 ,0.1 ,0 ,0 ,0.2 ,0 ,0.2 ,0.1 ,0.2 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.1 ,0.1 ,0 ,0.2 ,0.2 ,0.2 ,0.1 ,0.2 ,0.3 ,0.1 ,0.2 ,0.1 ,0.1 ,0.1 ,0 ,0.1-0.1 ,0.1-0.1 ,0.2 ,0 ,0.1 ,0 ,0.1 ,0.2 ,0.1 ,0.3 ,0.1 ,0.4 ,0.2 ,0.3 ,0.3 ,0.3 ,0.1 ,0.1 ,0.3 ,0 ,0.4 ,0.3 ,0.2 ,0.4 ,0.3 ,0.2 ,0.1 ,0.1 ,0.2 ,0.2 ,0.2 ,0.2 ,0.1 ,0.2 ,0 ,0.4-0.2 ,0.4 ,0 ,0.2 ,0.1 ,0.2 ,0.4 ,0.2 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0.1 ,0 ,0.2-0.1 ,0.1-0.2 ,0.2 ,0 ,0.1 ,0.1 ,0 ,0.2 ,0.1 ,0.2 ,0.2 ,0.2 ,0.3 ,0.1 ,0 ,0.1 ,0 ,0.2 ,0.1 ,0.2 ,0.1 ,0.2 ,0.1 ,0.4 ,0 ,0.3 ,0.1 ,0.2 ,0.2 ,0.3 ,0.3 ,0.5 ,0.2 ,0.4 ,0.2 ,0.1 ,0.2 ,0.1 ,0.1 ,0.3 ,0.2 ,0.5 ,0 ,0.4 ,0 ,0.3 ,0.1 ,0.1 ,0 ,0.2-0.2 ,0.6-0.1 ,0.3 ,0 ,0.2 ,0.1 ,0.4 ,0.1 ,0.3 ,0 ,0.3-0.1 ,0.2-0.2 ,0.3-0.1 ,0.1-0.2 ,0.1-0.2 ,0.5-0.1 ,0.5 ,0 ,0.3 ,0.1 ,0.2 ,0.2 ,0.2 ,0 ,0.2 ,0.3 ,0.4 ,0.1 ,0.3 ,0.1 ,0 ,0.1-0.1 ,0.3 ,0 ,0.2 ,0.1 ,0.2 ,0.2 ,0.3 ,0.1 ,0.4 ,0 ,0.2 ,0.1 ,0.2 ,0.1 ,0.4 ,0 ,0.3 ,0 ,0.5 ,0 ,0.4 ,0.1 ,0.7 ,0.1 ,0.4 ,0 ,0.6-0.1 ,0.4 ,0.1 ,1.1 ,0.1 ,0.6 ,0.2 ,0.4 ,0.2 ,0.3 ,0.3 ,0.3 ,0.4 ,0.3 ,0.2 ,0.7 ,0.1 ,0.5 ,0.5 ,0.4 ,0.2 ,0.6 ,0.5 ,0.4 ,0.2 ,0.5 ,0.2 ,0.8-0.1 ,0 ,0.1-0.1 ,0.3-0.1 ,0.4 ,0 ,0.3 ,0.1 ,0.1 ,0.3 ,0.1 ,0.2 ,0.1 ,0.1 ,0.2 ,0.1 ,0.1 ,0.3 ,0.7 ,0.4 ,1.1 ,0.1 ,0.4 ,0.1 ,0.3 ,0.5 ,0.4 ,0.2 ,0.3 ,0.4 ,0.3 ,0.1 ,0.3 ,0 ,0.4 ,0.1 ,0.1 ,0.7-0.1 ,0.6-0.1 ,1-0.1 ,1.4 ,0.2 ,1.5 ,0.2 ,1.3 ,0.2 ,0.6 ,0.1 ,1.5 ,0.2 ,0.8-0.2 ,0.6-0.2 ,0.3 ,0 ,1.2 ,0.2 ,0.7 ,0.1 ,0.9 ,0.1 ,0.6 ,0.1 ,0.5 ,0 ,0.2 ,0.1 ,0.2 ,0.1 ,0.2 ,0.1 ,0.5 ,0.7 ,0.3 ,0.3 ,0.5 ,0.2 ,1.2 ,0.2 ,0.7 ,0.2 ,0.7 ,0.2 ,0.5 ,0.3 ,0.6 ,0.3 ,0.7 ,0.4 ,0.8-0.2 ,0.9-0.2 ,0.5-0.1 ,0 ,0.8 ,0.8 ,0.1 ,0.2 ,0 ,0.3 ,0.2 ,0.2-0.1 ,0.2-0.2 ,0.2-0.3 ,0.3-0.1 ,0.6-0.3 ,0.1-0.1 ,0.8-0.4 ,1.3-0.6 ,0.6-0.3 ,0.2-0.1 ,0.3-0.1 ,0.2-0.1 ,0.4-0.1 ,0.5 ,0 ,0.6-0.1 ,1.3-0.2 ,0.2 ,0 ,0.7-0.1 ,0.3-0.1 ,0.5 ,0 ,0.6 ,0 ,0.4 ,0.1 ,0.5 ,0 ,0.7-0.1 ,0.6 ,0 ,0.3-0.1 ,0.4-0.2 ,0.3-0.2 ,0.5-0.2 ,0.6-0.2 ,0.4-0.2 ,0.3-0.1 ,0.3-0.1 ,0.1-0.2 ,0.1-0.1 ,0.2-0.2 ,0.3-0.4 ,0.2-0.3 ,0.1-0.1 ,0.3-0.3 ,0.2-0.2 ,0.3-0.3 ,0.2-0.1 ,0.3-0.1 ,0.7-0.3 ,0.1-0.1 ,0.1 ,0 ,0.3-0.3 ,0.2-0.2 ,0.1-0.2 ,0.3-0.1 ,0.2-0.1 ,0-0.2 ,0-0.2-0.1-0.2-0.1-0.2-0.4-0.4-0.2-0.3-0.2-0.3-0.1-0.3-0.2-0.2-0.1-0.2 ,0-0.2 ,0.2-0.4 ,0.1-0.2 ,0.1-0.4 ,0.2-0.6 ,0.2-0.3 ,0.2-0.3 ,0.4-0.4 ,0.4-0.1 ,0.2 ,0.1 ,0.5 ,0 ,0.3 ,0 ,0.2 ,0.2 ,0.3 ,0.4 ,0.3 ,0.1 ,1 ,0.3 ,0.4 ,0.1 ,0.3 ,0 ,0.4 ,0.1 ,0.1 ,0 ,0.2 ,0.1 ,0.2-0.1 ,0.3-0.2 ,0.4-0.3 ,0.2-0.1 ,0.3-0.1 ,0.1-0.1 ,0.2-0.3 ,0.3-0.2 ,0.4-0.4 ,0.2-0.3 ,0-0.2 ,0-0.2 ,0.1-0.1 ,0.2-0.1 ,0.3 ,0 ,0.5 ,0.2 ,0.7 ,0 ,0.2 ,0 ,0.6-0.1 ,0.3-0.1 ,0.4-0.1 ,0.3-0.3 ,0.4-0.4 ,0.3-0.2 ,0.2 ,0 ,0.2-0.2 ,0.1-0.2 ,0-0.2 ,0-0.2 ,0.1-0.3 ,0.3-0.5 ,0.2-0.3 ,0.2-0.2 ,0.1-0.3 ,0.2-0.1 ,0.2 ,0 ,0.3-0.2 ,0.2 ,0 ,0.3 ,0.1 ,0.5 ,0 ,0.3 ,0 ,0.2 ,0 ,0.1-0.1 ,0-0.2 ,0.1-0.4 ,0-0.1 ,0.1-0.1 ,0.3 ,0 ,0.2 ,0.1 ,0.1 ,0.1 ,0.2 ,0 ,0.2-0.1 ,0.3-0.3 ,0.5-0.2 ,0.2 ,0 ,0.4-0.2 ,0.3 ,0.1 ,0.5 ,0 ,0.2 ,0 ,0.2 ,0 ,0.2-0.2 ,0.2-0.1 ,0.3 ,0.1 ,0.2 ,0.2 ,0.4 ,0.2 ,0.5 ,0.1 ,0.4-0.1 ,0.4 ,0.1 ,0.2 ,0 ,0.1-0.1 ,0.3-0.2 ,0.1-0.2 ,0-0.2 ,0-0.3-0.1-0.2-0.2-0.3-0.1-0.2 ,0-0.3-0.1-0.2-0.3-0.3-0.2-0.1-0.4-0.5-0.1-0.1 ,0-0.1 ,0-0.2-0.2-0.1-0.2-0.1-0.1-0.1-0.1-0.2 ,0-0.2-0.2-0.1-0.2-0.1-0.2-0.1-0.3-0.1-0.2-0.3-0.3-0.5-0.2-0.2-0.7-0.1-0.3-0.1-0.3 ,0-0.2 ,0.1-0.4 ,0-0.2 ,0.1-0.3 ,0.3-0.3 ,0.4-0.3 ,0.3-0.2 ,0.3-0.1 ,0.1-0.2-0.1-0.2-0.3-0.4-0.3-0.3-0.1-0.1-0.1-0.4-0.1-0.3 ,0-0.4 ,0.1-0.4 ,0-0.2-0.1-0.2 ,0-0.4 ,0.3-0.2 ,0.3-0.3 ,0.1-0.2-0.2-0.3-0.3-0.3-0.3-0.2-0.3-0.1-0.8 ,0.3-0.2 ,0.4-0.3 ,0-0.4 ,0-0.5 ,0.1-0.5 ,0.4-0.5 ,0.2-0.4 ,0-0.2 ,0.2-0.4 ,0.2-0.4 ,0.2-0.6 ,0.4-1 ,0.5-1.2 ,0.3-0.6 ,0.6 ,0.4 ,0.4 ,0.2 ,0.6 ,0.3 ,0.6 ,0.1 ,0.6 ,0.3 ,0.3 ,0.1 ,0.2 ,0 ,0.9-0.8 ,0.7-0.7 ,0.9-0.5 ,0.6-0.1 ,0.5-0.1 ,0.3-0.2 ,0.2-0.4 ,0.1-0.5-0.1-0.3-0.3-0.1-0.1-0.1 ,0.1-0.1 ,0.1-0.2 ,0.1-0.3 ,0.2-0.3 ,0.3-0.3 ,0.2-0.3 ,0-0.4 ,0.2-0.4 ,0.3-0.4 ,0.2-0.3 ,0-0.3 ,0.2-0.4 ,0.4-0.7 ,0.3-0.8 ,0.5-0.6 ,0.8-0.6 ,0.5-0.6 ,0.2-0.6 ,0-0.5-0.2-0.4 ,0-0.4 ,0.1-0.4-0.1-0.3-0.4-0.2-0.5-0.1-0.5 ,0.1-0.3-0.1-0.1-0.4 ,0.1-0.3 ,0.3-0.2 ,0.6-0.6 ,0.8-0.9 ,0.8-0.5 ,1.2-0.2 ,1-0.3 ,1-0.3 ,0.7-0.2 ,0.1 ,0.1 ,0.4 ,0 ,0.6-0.1 ,0.6-0.1 ,0.6-0.2 ,0.4-0.1 ,0.3 ,0.1 ,0.2 ,0z" },
+    { id: "lu", name: "Luxembourg", d: "m492.1 ,300.7 ,0 ,0.1 ,0 ,0.3 ,0.1 ,0.3 ,0.2 ,0.3 ,0.1 ,0.2 ,0.2 ,0.1 ,0.3 ,0.1 ,0.1 ,0 ,0 ,0.2 ,0 ,0.2-0.1 ,0.1-0.1 ,0.2-0.1 ,0.2-0.1 ,0.4 ,0 ,0.3-0.2-0.1-0.1-0.1-0.2 ,0-0.2 ,0.1-0.1 ,0.1-0.2 ,0-0.1 ,0-0.1-0.1-0.1-0.1-0.2-0.1-0.1-0.1 ,0.1-0.1 ,0.1-0.1 ,0.1-0.1 ,0.1-0.1-0.2-0.4 ,0-0.1-0.2-0.2 ,0-0.1 ,0-0.1 ,0-0.1 ,0-0.2 ,0.1-0.2 ,0.1-0.2 ,0.1-0.3 ,0.3-0.4 ,0.2 ,0.1 ,0.1 ,0 ,0.1 ,0.1z" }
+  ];
+  // Label placed just under each country's mainland bounding box (computed from the traced paths above).
+  var MAPS_COUNTRY_LABELS = [
+    { text: "Italy", x: 50.5, y: 54.3 },
+    { text: "United States", x: 20.4, y: 60.6 },
+    { text: "China", x: 76.0, y: 62.9 }
+  ];
+  // Luxembourg's real coastline is only a couple of px at this scale (it genuinely is that small),
+  // so it gets a fixed-size visible patch instead of an invisible sliver.
+  var MAPS_TINY_COUNTRIES = [
+    { text: "Luxembourg", x: 47.03, y: 40.54 }
+  ];
+  // Pin coordinates are placed by hand within each country's real traced shape (not a global lon/lat
+  // formula — the source data isn't a plain equirectangular projection). Pavia (~35km from Milan) and
+  // Luxembourg (a small country a few hundred km away) both land within a couple of px of Milan's pin
+  // at this scale, so both are nudged for legibility and linked to Milan with a connector line.
+  var PLACES = [
+    {
+      id: "milano", city: "Milan", country: "Italy", category: "home",
+      x: 49.58, y: 48.02,
+      org: "Home base", dateLabel: "2021 – present",
+      summary: "Home address on file: Milan, Italy. MSc student in Computer Science & Engineering (AI) at Politecnico di Milano (2024 – present); robotics-certification trainer (Comau × Pearson 2022–2023, then Fanuc × Sanoma 2023 – present) and Science Museum guide (2023 – present) across the city."
+    },
+    {
+      id: "pavia", city: "Pavia", country: "Italy", category: "education-bsc",
+      x: 51.76, y: 51.02, connectTo: "milano",
+      org: "Università di Pavia", dateLabel: "Sep 2021 – Sep 2024",
+      summary: "Bachelor of Science in Artificial Intelligence — inter-university programme with Università di Pavia, Università degli Studi di Milano and Università degli Studi di Milano-Bicocca."
+    },
+    {
+      id: "cincinnati", city: "Cincinnati", country: "United States", category: "exchange",
+      x: 23.56, y: 51.00, connectTo: "milano",
+      org: "La Salle High School (year abroad)", dateLabel: "2019 – 2020",
+      summary: "High-school exchange year in the United States, at La Salle High School."
+    },
+    {
+      id: "shenzhen", city: "Shenzhen", country: "China", category: "exchange",
+      x: 78.68, y: 58.63, connectTo: "milano",
+      org: "CUHK-Shenzhen", dateLabel: "Sep 2025 – Jan 2026",
+      summary: "Exchange semester in Computer Science & Engineering at The Chinese University of Hong Kong, Shenzhen — AI research and advanced coursework in machine learning and engineering."
+    },
+    {
+      id: "luxembourg", city: "Luxembourg", country: "Luxembourg", category: "upcoming",
+      x: 47.03, y: 40.54, connectTo: "milano",
+      org: "European Court of Auditors (ECA) — DIWI", dateLabel: "Oct 2026 (incoming)",
+      summary: "Upcoming AI Traineeship (Profile 1: Local AI Model Architecture & Infrastructure) — building on-premises open-source AI under strict data-sovereignty and confidentiality constraints."
+    }
+  ];
+  var MAPS_CATEGORY_COLORS = Object.assign({ home: "#7c5cff", upcoming: "#f2b84b" }, CATEGORY_COLORS);
+  var MAPS_CATEGORY_LABEL_KEYS = Object.assign({ home: "maps.legend.home", upcoming: "maps.legend.upcoming" }, CATEGORY_LABEL_KEYS);
+  var MAPS_LEGEND_ORDER = ["home", "education-bsc", "exchange", "upcoming"];
+
+  var mapsApp = {
+    id: "maps", title: "Maps", titleKey: "app.maps", icon: ICONS.maps, desktopIcon: true, maximizeOnSmallViewport: true,
+    kind: "component", singleInstance: true,
+    window: { width: 700, height: 560, minWidth: 400, minHeight: 360, resizable: true, maximizable: true },
+    render: function(container){
+      var openDetailId = null;
+      var byId = {};
+      PLACES.forEach(function(p){ byId[p.id] = p; });
+
+      var countryShapesHtml = MAPS_COUNTRY_SHAPES.map(function(c){
+        return '<path class="maps-app__country" d="' + c.d + '"/>';
+      }).join("");
+      var countryLabelsHtml = MAPS_COUNTRY_LABELS.map(function(c){
+        return '<span class="maps-app__country-label" style="left:' + c.x + '%;top:' + c.y + '%">' + escapeHtml(c.text) + "</span>";
+      }).join("");
+      var tinyCountryHtml = MAPS_TINY_COUNTRIES.map(function(c){
+        return '<span class="maps-app__country-patch" style="left:' + c.x + '%;top:' + c.y + '%" title="' + escapeHtml(c.text) + '"></span>';
+      }).join("");
+
+      var gridHtml = "";
+      for (var gx = 1; gx < 10; gx++){ var vx = (gx * MAPS_VB_W / 10).toFixed(1); gridHtml += '<line class="maps-app__grid-line" x1="' + vx + '" y1="0" x2="' + vx + '" y2="' + MAPS_VB_H + '"/>'; }
+      for (var gy = 1; gy < 5; gy++){ var vy = (gy * MAPS_VB_H / 5).toFixed(1); gridHtml += '<line class="maps-app__grid-line" x1="0" y1="' + vy + '" x2="' + MAPS_VB_W + '" y2="' + vy + '"/>'; }
+
+      function toVX(pct){ return (pct / 100 * MAPS_VB_W).toFixed(1); }
+      function toVY(pct){ return (pct / 100 * MAPS_VB_H).toFixed(1); }
+
+      var routesHtml = PLACES.filter(function(p){ return p.connectTo && byId[p.connectTo]; }).map(function(p){
+        var from = byId[p.connectTo];
+        var midX = (from.x + p.x) / 2, midY = (from.y + p.y) / 2;
+        var lift = Math.min(10, Math.abs(from.x - p.x) * 0.3);
+        var d = "M" + toVX(from.x) + "," + toVY(from.y) + " Q" + toVX(midX) + "," + toVY(Math.max(1, midY - lift)) + " " + toVX(p.x) + "," + toVY(p.y);
+        var color = MAPS_CATEGORY_COLORS[p.category] || "#5b5b63";
+        var dash = p.category === "upcoming" ? "2 6" : "5 5";
+        return '<path class="maps-app__route' + (p.category === "upcoming" ? " maps-app__route--upcoming" : "") + '" style="stroke:' + color + ';stroke-dasharray:' + dash + '" d="' + d + '"/>';
+      }).join("");
+
+      var legendHtml = '<div class="maps-app__legend">' +
+        MAPS_LEGEND_ORDER.map(function(cat){
+          return '<span class="maps-app__legend-item"><i style="background:' + MAPS_CATEGORY_COLORS[cat] + '"></i>' + t(MAPS_CATEGORY_LABEL_KEYS[cat]) + "</span>";
+        }).join("") +
+      "</div>";
+
+      function pinsHtml(){
+        return PLACES.map(function(p){
+          var color = MAPS_CATEGORY_COLORS[p.category] || "#8a8a92";
+          return '<button type="button" class="maps-app__pin' + (p.id === openDetailId ? " is-active" : "") + '" style="left:' + p.x + '%;top:' + p.y + '%;--pin-color:' + color + '" data-place="' + p.id + '" title="' + escapeHtml(p.city) + '">' +
+            '<span class="maps-app__pin-dot"></span><span class="maps-app__pin-label">' + escapeHtml(p.city) + "</span>" +
+          "</button>";
+        }).join("");
+      }
+
+      function renderDetail(){
+        var detail = container.querySelector("#maps-detail");
+        if (!detail) return;
+        var p = byId[openDetailId];
+        if (!p){ detail.hidden = true; return; }
+        var color = MAPS_CATEGORY_COLORS[p.category] || "#8a8a92";
+        var bodyHtml = p.pending ?
+          '<p class="maps-app__pending">' + t("maps.pending") + "</p>" :
+          '<p class="maps-app__meta">' + escapeHtml(p.org || "") + (p.dateLabel ? " · " + escapeHtml(p.dateLabel) : "") + "</p>" +
+          "<p>" + escapeHtml(p.summary || "") + "</p>";
+        detail.innerHTML =
+          '<button type="button" class="maps-detail__close" aria-label="' + t("win.close") + '">&times;</button>' +
+          '<p class="maps-detail__badge" style="background:' + color + '">' + escapeHtml(p.city) + ", " + escapeHtml(p.country) + "</p>" +
+          bodyHtml;
+        detail.hidden = false;
+        detail.querySelector(".maps-detail__close").addEventListener("click", function(){ openDetailId = null; detail.hidden = true; syncPins(); });
+      }
+
+      function syncPins(){
+        container.querySelectorAll(".maps-app__pin").forEach(function(btn){
+          btn.classList.toggle("is-active", btn.dataset.place === openDetailId);
+        });
+      }
+
+      container.innerHTML =
+        '<div class="maps-app">' +
+          '<p class="maps-app__subtitle">' + t("maps.subtitle") + "</p>" +
+          legendHtml +
+          '<div class="maps-app__canvas">' +
+            '<div class="maps-app__ocean"></div>' +
+            '<svg class="maps-app__routes" viewBox="0 0 ' + MAPS_VB_W + ' ' + MAPS_VB_H + '" preserveAspectRatio="none" aria-hidden="true">' + gridHtml + countryShapesHtml + routesHtml + "</svg>" +
+            countryLabelsHtml +
+            tinyCountryHtml +
+            pinsHtml() +
+          "</div>" +
+          '<div class="maps-detail" id="maps-detail" hidden></div>' +
+        "</div>";
+
+      container.querySelectorAll(".maps-app__pin").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          openDetailId = openDetailId === btn.dataset.place ? null : btn.dataset.place;
+          syncPins();
+          renderDetail();
+        });
+      });
+    }
+  };
+  apps.push(mapsApp);
 
   /* ============================================================ VS Code (fake) */
   var VSCODE_FILES = [
