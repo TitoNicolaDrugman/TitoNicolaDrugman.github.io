@@ -53,7 +53,7 @@ export const experiences = [
     summary:
       "Delivers technical training and administers official industry certifications on industrial communication protocols, robot programming and Industry 4.0 to mixed audiences of engineers, educators and students.",
     highlights: [
-      "Produces structured course materials and assessment criteria, and leads 'Train the Trainer' sessions.",
+      "Produces structured course materials and assessment criteria and leads 'Train the Trainer' sessions.",
       "Translates dense technical content into reproducible curricula for audiences ranging from vocational students to practising engineers."
     ],
     tags: ["Teaching", "Industrial Robotics", "Industry 4.0"],
@@ -197,6 +197,7 @@ export const experiences = [
   {
     id: "transformer-npu-stm32n6",
     category: "project",
+    featured: true,
     title: "Demonstration of a Simple Transformer Running on the NPU of an STM32N6",
     organization:
       "Politecnico di Milano — 'Advanced Computer Architectures' course project",
@@ -245,6 +246,7 @@ export const experiences = [
   {
     id: "sen2fire",
     category: "project",
+    featured: true,
     title: "Sen2Fire Wildfire Detection — Reproducibility and Enhancement",
     organization: "Independent research collaboration",
     logo: null,
@@ -287,6 +289,7 @@ export const experiences = [
   {
     id: "webvoyager-cuhk-enhanced",
     category: "project",
+    featured: true,
     title: "Replicating and Enhancing WebVoyager",
     organization: "CUHK-Shenzhen — CIE6004: Image Processing and Computer Vision",
     logo: "assets/logos/cuhk.png",
@@ -299,7 +302,7 @@ export const experiences = [
     summary:
       "A two-person CUHK-Shenzhen coursework team replicated and extended the WebVoyager framework for end-to-end AI web agents, replacing proprietary GPT-4o with locally-hosted open-source Large Multimodal Models to test a scalable, cost-free path to self-hosted web agents.",
     highlights: [
-      "Deployed Qwen3-VL:8b and Qwen3-VL:30b locally via Ollama, and integrated DeepSeek-V3 (685B MoE) via OpenRouter as a third comparison point against GPT-4o.",
+      "Deployed Qwen3-VL:8b and Qwen3-VL:30b locally via Ollama and integrated DeepSeek-V3 (685B MoE) via OpenRouter as a third comparison point against GPT-4o.",
       "Built a fully-automated document/page-classification pipeline using locally-hosted Qwen3-VL:30b, producing a 1,101-image labelled dataset with zero manual annotation.",
       "Fine-tuned a ResNet-18 CNN for real-time page-state classification as a visual prior in the agent loop, cutting reasoning latency by 17%.",
       "Designed a novel grayscale + colour Set-of-Mark visual-grounding technique (52.4% vs. 51.1% baseline task success); replicated the GPT-4o reference at 62.7% task success, above the original paper's 59.1%."
@@ -311,6 +314,7 @@ export const experiences = [
   {
     id: "rag-code-generation",
     category: "project",
+    featured: true,
     title: "Retrieval-Augmented Generation (RAG) for LLM-Based Code Generation",
     organization: "Politecnico di Milano — 'Software Engineering 2' course project",
     logo: "assets/logos/polimi.png",
@@ -349,7 +353,7 @@ export const experiences = [
     highlights: [
       "Integrated four heterogeneous data sources — ERA5-Land, Sentinel-2 NDVI, ECA&D ground stations, JRC Global Surface Water — into a unified 3M+ row training dataset across Italy, Spain, France and Portugal.",
       "Trained and compared Random Forest vs. HistGradientBoosting regressors with a station-based split to prevent geographic leakage; engineered a land-cover segmentation step fusing Sentinel-2 NDVI with JRC water data to resolve urban/water spectral ambiguity.",
-      "Result: reduced ERA5 raw error from 3.01°C to 1.94°C RMSE (−35.5%), MAE by −45%, and corrected systematic urban bias by −93% on hold-out test stations."
+      "Result: reduced ERA5 raw error from 3.01°C to 1.94°C RMSE (−35.5%), MAE by −45% and corrected systematic urban bias by −93% on hold-out test stations."
     ],
     tags: ["Geospatial ML", "Random Forest", "Sentinel-2", "GeoPandas"],
     link: "https://github.com/TitoNicolaDrugman/GENHACK",

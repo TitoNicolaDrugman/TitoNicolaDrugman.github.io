@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>Tito Nicola Drugman — AI Engineer</title>
-<meta name="description" content="Tito Nicola Drugman — AI/ML engineer building on-premises, constrained AI systems: quantised transformers on microcontrollers, local LLM + RAG stacks, and vision-language web agents.">
+<meta name="description" content="Tito Nicola Drugman — AI/ML engineer building on-premises, constrained AI systems: quantised transformers on microcontrollers, local LLM + RAG stacks and vision-language web agents.">
 <meta name="theme-color" content="#12121a">
 <style>
 :root{
@@ -29,6 +29,14 @@ body{
 }
 a{ color: inherit; }
 button{ font: inherit; }
+
+/* ---------------------------------------------------------------- scrollbars (homemade, replaces OS default) */
+*{ scrollbar-width: thin; scrollbar-color: rgba(130,130,145,.55) transparent; }
+*::-webkit-scrollbar{ width: 10px; height: 10px; }
+*::-webkit-scrollbar-track{ background: transparent; }
+*::-webkit-scrollbar-thumb{ background-color: rgba(130,130,145,.5); border-radius: 999px; border: 2.5px solid transparent; background-clip: padding-box; }
+*::-webkit-scrollbar-thumb:hover{ background-color: rgba(130,130,145,.8); background-clip: padding-box; }
+*::-webkit-scrollbar-corner{ background: transparent; }
 
 /* ---------------------------------------------------------------- wallpaper */
 .wallpaper{
@@ -111,8 +119,11 @@ button{ font: inherit; }
 .icon:active{ background: rgba(255,255,255,0.22); }
 .icon.is-dragging{ opacity: 0.82; z-index: 5; }
 .icon.is-drop-target{ outline: 2px dashed var(--accent); background: rgba(76,194,255,0.18); border-radius: 8px; }
-.icon__glyph{ width: 38px; height: 38px; pointer-events: none; }
+.icon__glyph{ width: 38px; height: 38px; pointer-events: none; position: relative; }
 .icon__glyph svg{ width: 38px; height: 38px; display: block; filter: drop-shadow(0 1px 3px rgba(0,0,0,.55)); }
+.icon__star{ position: absolute; top: -4px; right: -7px; font-size: 14px; line-height: 1; color: #ffd93d; text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+.folder-list__star, .folder-table__star{ color: #e0a800; font-size: 12px; margin-left: 5px; }
+.project-doc__star{ color: #e0a800; }
 .icon__label{
   font-size: 11.5px;
   font-weight: 500;
@@ -321,6 +332,7 @@ button{ font: inherit; }
 .overleaf-app__log{ flex: 1; overflow: auto; background: #1e1e1e; color: #9fdc9f; padding: 0.75rem 1rem; line-height: 1.6; }
 .overleaf-app__log.is-error{ color: #ff8a80; }
 .overleaf-app__error{ flex: 1; overflow: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; background: #3c2426; color: #f2d4d2; padding: 1.5rem; text-align: center; }
+.overleaf-app__error[hidden]{ display: none; }
 .overleaf-app__error-icon{ font-size: 2rem; }
 .overleaf-app__error-title{ margin: 0; font-family: system-ui, sans-serif; font-weight: 700; font-size: 0.9rem; color: #ff8a80; }
 .overleaf-app__error-detail{ margin: 0; font-family: system-ui, sans-serif; font-size: 0.78rem; max-width: 32rem; color: #e0bcbb; }
@@ -438,6 +450,9 @@ button{ font: inherit; }
 .photos-app__lightbox-nav--prev{ left: 14px; }
 .photos-app__lightbox-nav--next{ right: 14px; }
 @media (pointer: coarse){ .photos-app__lightbox-nav{ width: 44px; height: 44px; } }
+.photos-app__lightbox-location{ display: flex; align-items: center; gap: 5px; border: none; border-radius: 999px; background: rgba(255,255,255,.14); color: #fff; font-size: 0.75rem; font-family: system-ui, sans-serif; padding: 5px 12px; cursor: pointer; }
+.photos-app__lightbox-location:hover{ background: rgba(255,255,255,.24); }
+.photos-app__lightbox-location svg{ flex-shrink: 0; color: #ff8a80; }
 
 /* ---------------------------------------------------------------- maps app */
 .maps-app{ height: 100%; overflow: auto; box-sizing: border-box; padding: 1rem 1.25rem 1.5rem; font-family: system-ui, sans-serif; }
@@ -459,7 +474,15 @@ button{ font: inherit; }
 .maps-app__pin-label{ position: absolute; bottom: 100%; left: 50%; margin-bottom: 2px; font-size: 0.68rem; font-weight: 700; color: #232326; background: rgba(255,255,255,.9); padding: 1px 6px; border-radius: 999px; opacity: 0; transform: translateX(-50%); transition: opacity 120ms ease; white-space: nowrap; pointer-events: none; }
 .maps-app__pin:hover .maps-app__pin-label, .maps-app__pin.is-active .maps-app__pin-label, .maps-app__pin:focus-visible .maps-app__pin-label{ opacity: 1; }
 .maps-app__pin.is-active .maps-app__pin-dot{ transform: rotate(-45deg) scale(1.3); }
-.maps-detail{ margin-top: 1rem; background: #fff; border: 1px solid #e3e3e8; border-radius: 10px; padding: 1rem 1.1rem; box-shadow: 0 -8px 20px rgba(0,0,0,.06); }
+.maps-detail{ margin-top: 1rem; background: #fff; border: 1px solid #e3e3e8; border-radius: 10px; padding: 1rem 1.1rem; box-shadow: 0 -8px 20px rgba(0,0,0,.06); scroll-margin: 14px; }
+@media (prefers-reduced-motion: no-preference){
+  .maps-detail.is-flash{ animation: mapsDetailIn 520ms cubic-bezier(.2,.8,.2,1); }
+  @keyframes mapsDetailIn{
+    0%{ transform: translateY(10px); box-shadow: 0 0 0 3px rgba(76,194,255,.6), 0 -8px 20px rgba(0,0,0,.06); }
+    55%{ transform: translateY(0); box-shadow: 0 0 0 3px rgba(76,194,255,.4), 0 -8px 20px rgba(0,0,0,.06); }
+    100%{ transform: translateY(0); box-shadow: 0 0 0 0 rgba(76,194,255,0), 0 -8px 20px rgba(0,0,0,.06); }
+  }
+}
 .maps-detail__close{ float: right; background: none; border: none; font-size: 16px; cursor: pointer; color: #8a8a92; }
 .maps-detail__badge{ display: inline-block; font-size: 0.75rem; font-weight: 700; color: #fff; padding: 0.2rem 0.6rem; border-radius: 999px; margin: 0 0 0.55rem; }
 .maps-app__meta{ font-size: 0.75rem; color: #6b6b72; margin: 0 0 0.5rem; }
@@ -514,10 +537,11 @@ button{ font: inherit; }
 .skills-market__legend-scale span{ flex: 1; }
 
 /* ---------------------------------------------------------------- tetris */
-.tetris-app{ display: flex; gap: 12px; padding: 12px; background: #0c0c10; height: 100%; box-sizing: border-box; font-family: system-ui, sans-serif; }
+.tetris-app{ display: flex; flex-direction: column; gap: 8px; padding: 12px; background: #0c0c10; height: 100%; box-sizing: border-box; font-family: system-ui, sans-serif; }
+.tetris-app__main{ display: flex; gap: 12px; flex: 1; min-height: 0; }
 .tetris-app__board-wrap{ position: relative; flex-shrink: 0; line-height: 0; }
 .tetris-app__board-wrap canvas{ display: block; border-radius: 4px; }
-.tetris-app__overlay{ position: absolute; inset: 0; background: rgba(12,12,16,.92); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #fff; text-align: center; border-radius: 4px; }
+.tetris-app__overlay{ position: absolute; inset: 0; background: rgba(12,12,16,.92); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #fff; text-align: center; border-radius: 4px; line-height: 1.4; }
 .tetris-app__overlay[hidden]{ display: none; }
 .tetris-app__overlay p{ margin: 0; font-size: 0.9rem; }
 .tetris-app__overlay-score{ font-size: 1.1rem; font-weight: 700; }
@@ -527,6 +551,106 @@ button{ font: inherit; }
 .tetris-app__label{ font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: #8a8a92; margin: 4px 0 0; }
 .tetris-app__score{ font-size: 1.2rem; font-weight: 700; margin: 0 0 4px; font-variant-numeric: tabular-nums; }
 .tetris-app__hint{ font-size: 0.62rem; color: #6b6b72; text-align: center; margin-top: auto; line-height: 1.5; }
+.tetris-app__touch-controls{ display: none; gap: 6px; flex-shrink: 0; }
+.tetris-app__touch-btn{ flex: 1; min-height: 46px; border-radius: 8px; border: none; background: rgba(255,255,255,.09); color: #fff; font-size: 1.05rem; display: flex; align-items: center; justify-content: center; touch-action: manipulation; -webkit-user-select: none; user-select: none; }
+.tetris-app__touch-btn:active{ background: rgba(255,255,255,.2); }
+.tetris-app__touch-btn svg{ width: 20px; height: 20px; pointer-events: none; }
+@media (pointer: coarse){ .tetris-app__touch-controls{ display: flex; } }
+
+/* ---------------------------------------------------------------- Slides */
+.slides-app{ height: 100%; display: flex; flex-direction: column; font-family: system-ui, sans-serif; background: #f4f4f7; position: relative; }
+.slides-app__toolbar{ display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: #fff; border-bottom: 1px solid #e3e3e8; flex-shrink: 0; }
+.slides-app__present-btn{ display: flex; align-items: center; gap: 6px; border: none; border-radius: 6px; background: var(--accent); color: #0c1420; font-weight: 700; font-size: 12.5px; padding: 7px 14px; cursor: pointer; }
+.slides-app__present-btn:hover{ filter: brightness(1.06); }
+.slides-app__pdf-btn{ border: 1px solid #d6d6dc; border-radius: 6px; background: #fff; color: #232326; font-size: 11.5px; font-weight: 600; padding: 6px 10px; cursor: pointer; }
+.slides-app__pdf-btn:hover{ background: #f4f4f7; }
+.slides-app__hint{ flex: 1; font-size: 11.5px; color: #8a8a92; }
+.slides-app__reset-all{ border: 1px solid #d6d6dc; border-radius: 6px; background: #fff; color: #54595d; font-size: 11.5px; padding: 6px 10px; cursor: pointer; }
+.slides-app__reset-all:hover{ background: #f4f4f7; }
+.slides-app__body{ flex: 1; min-height: 0; display: flex; }
+.slides-rail{ width: 150px; flex-shrink: 0; overflow: auto; border-right: 1px solid #e3e3e8; padding: 8px; display: flex; flex-direction: column; gap: 5px; background: #fff; }
+.slides-rail__item{ position: relative; display: flex; align-items: center; gap: 6px; padding: 5px 4px 5px 6px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; }
+.slides-rail__item:hover{ background: #f4f4f7; }
+.slides-rail__item.is-active{ background: #eaf3ff; border-color: #bcdcff; }
+.slides-rail__num{ font-size: 9.5px; color: #8a8a92; width: 13px; flex-shrink: 0; text-align: right; }
+.slides-rail__bar{ width: 4px; align-self: stretch; min-height: 26px; border-radius: 2px; flex-shrink: 0; }
+.slides-rail__title{ font-size: 11px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.slides-rail__move{ display: flex; flex-direction: column; gap: 1px; opacity: 0; flex-shrink: 0; }
+.slides-rail__item:hover .slides-rail__move, .slides-rail__item.is-active .slides-rail__move{ opacity: 1; }
+.slides-rail__move button{ width: 15px; height: 11px; border: none; background: none; font-size: 7px; line-height: 1; padding: 0; cursor: pointer; color: #8a8a92; }
+.slides-rail__move button:hover:not(:disabled){ color: #232326; }
+.slides-rail__move button:disabled{ opacity: .25; cursor: default; }
+.slides-app__canvas-wrap{ flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px; overflow: auto; }
+.slides-canvas{ width: 100%; max-width: 640px; aspect-ratio: 16/9; background: #fff; border-radius: 10px; border-top: 6px solid var(--slide-accent, #4cc2ff); box-shadow: 0 2px 16px rgba(0,0,0,.1); padding: 26px 30px; box-sizing: border-box; display: flex; flex-direction: column; overflow: auto; }
+.slides-canvas__badge{ align-self: flex-start; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #fff; padding: 3px 9px; border-radius: 999px; margin-bottom: 10px; }
+.slides-canvas__title{ font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; outline: none; color: #202122; }
+.slides-canvas__subtitle{ font-size: .82rem; color: #54595d; margin-bottom: 12px; outline: none; }
+.slides-canvas__body{ font-size: .82rem; line-height: 1.6; color: #232326; outline: none; }
+.slides-canvas__body ul{ margin: 6px 0 0; padding-left: 18px; }
+.slides-canvas__body p{ margin: 0 0 8px; }
+.slides-canvas [contenteditable]:hover{ background: rgba(76,194,255,.07); border-radius: 4px; }
+.slides-canvas [contenteditable]:focus{ background: rgba(76,194,255,.1); border-radius: 4px; box-shadow: 0 0 0 2px rgba(76,194,255,.35); }
+.slides-app__slide-actions button{ font-size: 11px; border: 1px solid #d6d6dc; background: #fff; border-radius: 6px; padding: 5px 10px; cursor: pointer; color: #54595d; }
+.slides-app__slide-actions button:hover{ background: #f4f4f7; }
+.slides-app__present{ position: absolute; inset: 0; background: #0c0c10; display: flex; flex-direction: column; z-index: 5; }
+.slides-app__present[hidden]{ display: none; }
+.present-topbar{ display: flex; align-items: center; gap: 10px; padding: 10px 14px; flex-shrink: 0; }
+.present-topbar__count{ flex: 1; color: #8a8a92; font-size: 12px; text-align: center; }
+.present-topbar button{ background: rgba(255,255,255,.08); border: none; color: #fff; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+.present-topbar button:hover{ background: rgba(255,255,255,.16); }
+.present-topbar button.is-active{ background: var(--accent); color: #0c1420; }
+.present-timeline{ padding: 2px 20px 12px; flex-shrink: 0; }
+.present-timeline__track{ position: relative; height: 3px; background: rgba(255,255,255,.14); border-radius: 999px; margin: 0 5px; }
+.present-timeline__fill{ position: absolute; left: 0; top: 0; bottom: 0; width: 0%; background: var(--accent); border-radius: 999px; transition: width 420ms cubic-bezier(.2,.8,.2,1); }
+.present-timeline__dots{ display: flex; justify-content: space-between; margin-top: -7px; }
+.present-timeline__dot{ width: 11px; height: 11px; border-radius: 50%; border: 2px solid rgba(255,255,255,.3); background: #0c0c10; cursor: pointer; padding: 0; flex-shrink: 0; transition: transform 200ms ease, background 200ms ease, border-color 200ms ease; }
+.present-timeline__dot:hover{ transform: scale(1.3); }
+.present-timeline__dot.is-done{ background: var(--dot-color, var(--accent)); border-color: var(--dot-color, var(--accent)); }
+.present-timeline__dot.is-active{ background: var(--dot-color, var(--accent)); border-color: #fff; transform: scale(1.45); box-shadow: 0 0 0 3px rgba(255,255,255,.18); }
+.present-stage-wrap{ flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 16px; gap: 12px; }
+.present-nav{ flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; border: none; background: rgba(255,255,255,.08); color: #fff; font-size: 18px; cursor: pointer; }
+.present-nav:hover{ background: rgba(255,255,255,.18); }
+.present-nav:disabled{ opacity: .25; cursor: default; }
+.present-slide{ width: 100%; max-width: 760px; aspect-ratio: 16/9; background: #101418; border-radius: 14px; border-top: 6px solid var(--slide-accent, #4cc2ff); padding: 5% 6%; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; color: #f2f2f5; overflow: auto; box-shadow: 0 30px 70px rgba(0,0,0,.5); }
+.present-slide__badge{ align-self: flex-start; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #fff; padding: 4px 12px; border-radius: 999px; margin: 0 0 16px; }
+.present-slide__title{ font-size: 2rem; font-weight: 800; margin: 0 0 10px; line-height: 1.15; }
+.present-slide__subtitle{ font-size: .95rem; color: #a2a9b1; margin: 0 0 16px; }
+.present-slide__body{ font-size: .9rem; line-height: 1.6; color: #d8d8de; }
+.present-slide__body p{ margin: 0 0 8px; }
+.present-slide__body ul{ margin: 8px 0 0; padding-left: 20px; }
+.present-slide__body li{ margin-bottom: 6px; }
+@media (prefers-reduced-motion: no-preference){
+  @keyframes slidesFadeUp{ from{ opacity: 0; transform: translateY(18px); } to{ opacity: 1; transform: translateY(0); } }
+  .present-slide__badge{ animation: slidesFadeUp .5s cubic-bezier(.2,.8,.2,1) both; }
+  .present-slide__title{ animation: slidesFadeUp .55s cubic-bezier(.2,.8,.2,1) .07s both; }
+  .present-slide__subtitle{ animation: slidesFadeUp .55s cubic-bezier(.2,.8,.2,1) .14s both; }
+  .present-slide__body{ animation: slidesFadeUp .55s cubic-bezier(.2,.8,.2,1) .21s both; }
+}
+@media (max-width: 560px){
+  .slides-app__body{ flex-direction: column; }
+  .slides-rail{ width: 100%; flex-direction: row; overflow-x: auto; overflow-y: hidden; border-right: none; border-bottom: 1px solid #e3e3e8; max-height: 62px; }
+  .slides-rail__item{ min-width: 76px; flex-shrink: 0; }
+  .slides-rail__move{ display: none; }
+  .slides-app__hint{ display: none; }
+  .present-stage-wrap{ padding: 8px; gap: 6px; }
+  .present-nav{ width: 32px; height: 32px; font-size: 14px; }
+  .present-slide__title{ font-size: 1.3rem; }
+  .present-slide__subtitle{ font-size: .78rem; }
+  .present-slide__body{ font-size: .78rem; }
+}
+#slides-print-root{ display: none; }
+@media print{
+  body > *:not(#slides-print-root){ display: none !important; }
+  #slides-print-root{ display: block !important; }
+  .print-slide{ width: 100%; min-height: 100vh; box-sizing: border-box; padding: 56px 64px; border-top: 10px solid #4cc2ff; display: flex; flex-direction: column; justify-content: center; break-after: page; page-break-after: always; font-family: system-ui, sans-serif; }
+  .print-slide:last-child{ break-after: auto; page-break-after: auto; }
+  .print-slide__badge{ align-self: flex-start; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 4px 14px; border-radius: 999px; margin: 0 0 20px; }
+  .print-slide__title{ font-size: 30px; font-weight: 800; margin: 0 0 10px; color: #000; }
+  .print-slide__subtitle{ font-size: 14px; color: #444; margin: 0 0 18px; }
+  .print-slide__body{ font-size: 13px; line-height: 1.6; color: #111; }
+  .print-slide__body ul{ margin: 10px 0 0; padding-left: 20px; }
+  .print-slide__body li{ margin-bottom: 6px; }
+}
 
 /* ---------------------------------------------------------------- boot splash */
 .boot-splash{ position: fixed; inset: 0; z-index: 3000; background: #0c0e1c; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; transition: opacity 400ms ease; }
@@ -915,6 +1039,7 @@ button{ font: inherit; }
 
 @media (prefers-reduced-motion: reduce){
   .start-menu, .toast, .taskbar__search{ transition: none; }
+  .present-timeline__fill, .present-timeline__dot{ transition: none; }
   .calendar-year{ transition: none; }
   .boot-splash{ transition: none; }
   .boot-splash__bar-fill{ animation: none; }
@@ -953,7 +1078,7 @@ button{ font: inherit; }
   <div class="desktop__tagline">
     <p class="desktop__eyebrow" data-i18n="hero.eyebrow">AI Engineer · On-Premises Systems</p>
     <h1 class="desktop__title" data-i18n="hero.title">Building on-premises intelligence.</h1>
-    <p class="desktop__lede" data-i18n="hero.lede">I build AI that runs where the data lives — quantised transformers on microcontrollers, self-hosted LLM and RAG stacks, and vision-language agents that never touch a third-party API.</p>
+    <p class="desktop__lede" data-i18n="hero.lede">I build AI that runs where the data lives — quantised transformers on microcontrollers, self-hosted LLM and RAG stacks and vision-language agents that never touch a third-party API.</p>
   </div>
   <div id="desktop-icons"></div>
 </main>
@@ -1187,7 +1312,7 @@ import { experiences } from './data/experiences.js';
 
     "hero.eyebrow": { en: "AI Engineer · On-Premises Systems", it: "AI Engineer · Sistemi On-Premises" },
     "hero.title": { en: "Building on-premises intelligence.", it: "Costruisco intelligenza on-premises." },
-    "hero.lede": { en: "I build AI that runs where the data lives — quantised transformers on microcontrollers, self-hosted LLM and RAG stacks, and vision-language agents that never touch a third-party API.", it: "Costruisco AI che gira dove vivono i dati — transformer quantizzati su microcontrollori, stack LLM e RAG self-hosted, e agenti vision-language che non toccano mai un'API di terze parti." },
+    "hero.lede": { en: "I build AI that runs where the data lives — quantised transformers on microcontrollers, self-hosted LLM and RAG stacks and vision-language agents that never touch a third-party API.", it: "Costruisco AI che gira dove vivono i dati — transformer quantizzati su microcontrollori, stack LLM e RAG self-hosted e agenti vision-language che non toccano mai un'API di terze parti." },
 
     "taskbar.search": { en: "Type here to search", it: "Digita qui per cercare" },
     "taskbar.searchAria": { en: "Search", it: "Cerca" },
@@ -1228,6 +1353,7 @@ import { experiences } from './data/experiences.js';
 
     "folder.sortName": { en: "Sort: Name", it: "Ordina: Nome" },
     "folder.sortDate": { en: "Sort: Date", it: "Ordina: Data" },
+    "folder.featured": { en: "Featured project", it: "Progetto in evidenza" },
     "folder.clearFilter": { en: "Clear filter", it: "Rimuovi filtro" },
     "folder.empty": { en: "No files match the current filter.", it: "Nessun file corrisponde al filtro attuale." },
 
@@ -1242,6 +1368,8 @@ import { experiences } from './data/experiences.js';
 
     "notif.title": { en: "New notification", it: "Nuova notifica" },
     "notif.body": { en: "Local model finished “thinking.” Recommended reading: the Wikipedia article about whoever trained it.", it: "Il modello locale ha finito di “pensare”. Lettura consigliata: la pagina Wikipedia di chi lo ha addestrato." },
+    "notif.cvTrashed.title": { en: "Bold move.", it: "Mossa audace." },
+    "notif.cvTrashed.body": { en: "You just trashed your résumé. The recruiter watching probably already downloaded it.", it: "Hai appena cestinato il tuo CV. Il recruiter che stava guardando probabilmente lo ha già scaricato." },
 
     "recycle.empty": { en: "Empty Recycle Bin", it: "Svuota cestino" },
     "recycle.emptyState": { en: "Nothing deleted yet — drag a desktop icon here.", it: "Ancora nulla di eliminato — trascina un'icona del desktop qui." },
@@ -1289,7 +1417,7 @@ import { experiences } from './data/experiences.js';
     "overleaf.download": { en: "Download PDF", it: "Scarica PDF" },
     "overleaf.unsaved": { en: "Edited", it: "Modificato" },
     "overleaf.errorTitle": { en: "Compilation failed — 1 error, 0 warnings.", it: "Compilazione fallita — 1 errore, 0 avvisi." },
-    "overleaf.errorDetail": { en: "Undefined control sequence on line 42. Fix the source and recompile, or grab the last version that actually built.", it: "Sequenza di controllo non definita alla riga 42. Correggi il sorgente e ricompila, oppure scarica l'ultima versione che ha effettivamente compilato." },
+    "overleaf.errorDetail": { en: "Undefined control sequence on line 42. Fix the source and recompile or grab the last version that actually built.", it: "Sequenza di controllo non definita alla riga 42. Correggi il sorgente e ricompila, oppure scarica l'ultima versione che ha effettivamente compilato." },
     "overleaf.errorDownload": { en: "Download last successful PDF", it: "Scarica l'ultimo PDF compilato con successo" },
     "overleaf.revert": { en: "Revert my changes", it: "Annulla le mie modifiche" },
     "photos.empty": { en: "No photos yet — check back soon.", it: "Ancora nessuna foto — torna a trovarmi presto." },
@@ -1302,7 +1430,17 @@ import { experiences } from './data/experiences.js';
     "maps.viewTimeline": { en: "View full timeline ↗", it: "Vedi la timeline completa ↗" },
     "app.vscode": { en: "VS Code", it: "VS Code" },
     "app.videoPlayer": { en: "Video Player", it: "Video Player" },
-    "vscode.noProblems": { en: "no problems (that I know of)", it: "nessun problema (che io sappia)" }
+    "vscode.noProblems": { en: "no problems (that I know of)", it: "nessun problema (che io sappia)" },
+    "app.slides": { en: "Slides", it: "Presentazione" },
+    "slides.present": { en: "Present", it: "Presenta" },
+    "slides.exit": { en: "Exit", it: "Esci" },
+    "slides.reset": { en: "Reset slide", it: "Ripristina slide" },
+    "slides.resetAll": { en: "Reset all", it: "Ripristina tutto" },
+    "slides.autoplay": { en: "Autoplay", it: "Riproduzione automatica" },
+    "slides.clickToEdit": { en: "Click any text to edit it.", it: "Clicca su un testo per modificarlo." },
+    "slides.moveUp": { en: "Move up", it: "Sposta su" },
+    "slides.moveDown": { en: "Move down", it: "Sposta giù" },
+    "slides.downloadPdf": { en: "Download PDF", it: "Scarica PDF" }
   };
   function getLang(){ return storeGet("lang", "en"); }
   function t(key){
@@ -1418,7 +1556,12 @@ import { experiences } from './data/experiences.js';
       '<path d="M8 33 18 22l7 7 5-5 10 11Z" fill="#4cc2ff"/></svg>',
     maps: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
       '<path d="M24 5c-7.9 0-14.3 6.3-14.3 14.1 0 10.6 14.3 24 14.3 24s14.3-13.4 14.3-24C38.3 11.3 31.9 5 24 5Z" fill="#ff5f5f" stroke="#c23f3f" stroke-width="2" stroke-linejoin="round"/>' +
-      '<circle cx="24" cy="19" r="6" fill="#fff"/></svg>'
+      '<circle cx="24" cy="19" r="6" fill="#fff"/></svg>',
+    slides: '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<rect x="5" y="9" width="38" height="26" rx="4" fill="#fff" stroke="#54595d" stroke-width="2"/>' +
+      '<path d="M19 15v14l12-7Z" fill="#ff8a1e"/>' +
+      '<rect x="12" y="39" width="24" height="3" rx="1.5" fill="#8a8a92"/>' +
+      '<rect x="17" y="43" width="14" height="2.6" rx="1.3" fill="#c8c8ce"/></svg>'
   };
 
   /* ============================================================ WindowManager */
@@ -1869,8 +2012,9 @@ import { experiences } from './data/experiences.js';
       } else if (state.view === "details"){
         bodyHtml = '<table class="folder-table"><thead><tr><th>Name</th><th>Tags</th><th>Date</th></tr></thead><tbody>' +
           sorted.map(function(it){
+            var starHtml = it.featured ? '<span class="folder-table__star" title="' + t("folder.featured") + '">&#9733;</span>' : "";
             return '<tr data-file-id="' + it.id + '">' +
-              '<td class="folder-table__name"><span class="folder-table__icon" aria-hidden="true">' + (it.icon || "") + "</span>" + escapeHtml(it.title) + "</td>" +
+              '<td class="folder-table__name"><span class="folder-table__icon" aria-hidden="true">' + (it.icon || "") + "</span>" + escapeHtml(it.title) + starHtml + "</td>" +
               "<td>" + (it.tags || []).map(function(t){ return '<span class="folder-tag-pill">' + escapeHtml(t) + "</span>"; }).join("") + "</td>" +
               "<td>" + escapeHtml(it.dateLabel || "") + "</td>" +
             "</tr>";
@@ -1879,17 +2023,19 @@ import { experiences } from './data/experiences.js';
       } else if (state.view === "list"){
         bodyHtml = '<div class="folder-list">' +
           sorted.map(function(it){
+            var starHtml = it.featured ? '<span class="folder-list__star" title="' + t("folder.featured") + '">&#9733;</span>' : "";
             return '<div class="folder-list__row" data-file-id="' + it.id + '" tabindex="0">' +
               '<span class="folder-list__icon" aria-hidden="true">' + (it.icon || "") + "</span>" +
-              '<span class="folder-list__name">' + escapeHtml(it.title) + "</span>" +
+              '<span class="folder-list__name">' + escapeHtml(it.title) + "</span>" + starHtml +
             "</div>";
           }).join("") +
         "</div>";
       } else {
         bodyHtml = '<div class="folder-grid">' +
           sorted.map(function(it){
+            var starHtml = it.featured ? '<span class="icon__star" title="' + t("folder.featured") + '">&#9733;</span>' : "";
             return '<button type="button" class="icon" data-file-id="' + it.id + '" title="' + escapeHtml(it.title) + '">' +
-              '<span class="icon__glyph" aria-hidden="true">' + (it.icon || "") + "</span>" +
+              '<span class="icon__glyph" aria-hidden="true">' + (it.icon || "") + starHtml + "</span>" +
               '<span class="icon__label">' + escapeHtml(it.title) + "</span>" +
             "</button>";
           }).join("") +
@@ -2056,6 +2202,9 @@ import { experiences } from './data/experiences.js';
     storeSet("deletedIcons", deleted);
     renderDesktopIcons();
     refreshComponentWindow("recycle-bin");
+    if (app.id === "cv-pdf"){
+      showToast(t("notif.cvTrashed.title"), t("notif.cvTrashed.body"), { duration: 6000 });
+    }
   }
 
   function defaultPositions(appIds, container){
@@ -2911,11 +3060,12 @@ import { experiences } from './data/experiences.js';
       dateLabel: proj.dateLabel || "",
       sortDate: proj.startDate || "",
       link: proj.link || null,
+      featured: Boolean(proj.featured),
       window: { width: 560, height: 520, minWidth: 340, minHeight: 320, resizable: true, maximizable: true },
       render: function(container){
         container.innerHTML =
           '<div class="project-doc">' +
-            "<h1>" + escapeHtml(proj.title) + "</h1>" +
+            "<h1>" + (proj.featured ? '<span class="project-doc__star" title="' + t("folder.featured") + '">&#9733;</span> ' : "") + escapeHtml(proj.title) + "</h1>" +
             '<p class="project-doc__meta">' + escapeHtml(proj.organization || "") + " · " + escapeHtml(proj.dateLabel || "") + "</p>" +
             tagsHtml +
             "<p>" + escapeHtml(proj.summary || "") + "</p>" +
@@ -3678,7 +3828,7 @@ import { experiences } from './data/experiences.js';
           });
           setTimeout(function(){
             result.hidden = false;
-            result.textContent = "✅ +16GB RAM installed. Performance improved by up to 300% (results may vary; RAM is not, in fact, downloadable).";
+            result.textContent = "✅ +16GB RAM installed. Performance improved by up to 300%.";
             btn.disabled = false;
           }, 1700);
         });
@@ -4257,20 +4407,20 @@ import { experiences } from './data/experiences.js';
 
   /* ============================================================ Photos */
   var PHOTOS = [
-    { src: "assets/pictures/degree_1.jpg", album: "Bachelor's thesis defense", caption: "Bachelor's thesis defense at Università degli Studi di Pavia." },
-    { src: "assets/pictures/degree_2.jpg", album: "Bachelor's thesis defense", caption: "Explaining ROM vs. RAM vs. MACC to a very patient room." },
-    { src: "assets/pictures/degree_3.jpg", album: "Bachelor's thesis defense", caption: "Somewhere in here, someone learned what a MACC is." },
-    { src: "assets/pictures/china_7.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Landing at CUHK-Shenzhen, Fall 2025." },
-    { src: "assets/pictures/china_8.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Campus at golden hour." },
-    { src: "assets/pictures/china_9.jpg", album: "Exchange — CUHK-Shenzhen", caption: "The crest. Still working out what the scroll underneath says." },
-    { src: "assets/pictures/china_6.jpg", album: "Exchange — CUHK-Shenzhen", caption: "The library looks more like a spaceship than a library." },
-    { src: "assets/pictures/china_10.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Where most of the semester's actual reading happened." },
-    { src: "assets/pictures/china_2.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Orientation week — somewhere in this crowd." },
-    { src: "assets/pictures/china_1.jpg", album: "Exchange — CUHK-Shenzhen", caption: "A calligraphy scroll, gifted, not self-made." },
-    { src: "assets/pictures/china_3.jpg", album: "Exchange — CUHK-Shenzhen", caption: "On my feet mid-talk, in a language I'm still learning." },
-    { src: "assets/pictures/china_4.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Presenting to a very patient, very round room." },
-    { src: "assets/pictures/china_5.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Mid-sentence, hoping it's still making sense." },
-    { src: "assets/pictures/china_11.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Shenzhen's old town — lanterns, crowds, better food than my dorm." }
+    { src: "assets/pictures/degree_1.jpg", album: "Bachelor's thesis defense", caption: "Bachelor's thesis defense at Università degli Studi di Pavia.", place: "pavia" },
+    { src: "assets/pictures/degree_2.jpg", album: "Bachelor's thesis defense", caption: "Explaining ROM vs. RAM vs. MACC to a very patient room.", place: "pavia" },
+    { src: "assets/pictures/degree_3.jpg", album: "Bachelor's thesis defense", caption: "Somewhere in here, someone learned what a MACC is.", place: "pavia" },
+    { src: "assets/pictures/china_7.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Landing at CUHK-Shenzhen, Fall 2025.", place: "shenzhen" },
+    { src: "assets/pictures/china_8.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Campus at golden hour.", place: "shenzhen" },
+    { src: "assets/pictures/china_9.jpg", album: "Exchange — CUHK-Shenzhen", caption: "The crest. Still working out what the scroll underneath says.", place: "shenzhen" },
+    { src: "assets/pictures/china_6.jpg", album: "Exchange — CUHK-Shenzhen", caption: "The library looks more like a spaceship than a library.", place: "shenzhen" },
+    { src: "assets/pictures/china_10.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Where most of the semester's actual reading happened.", place: "shenzhen" },
+    { src: "assets/pictures/china_2.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Orientation week — somewhere in this crowd.", place: "shenzhen" },
+    { src: "assets/pictures/china_1.jpg", album: "Exchange — CUHK-Shenzhen", caption: "A calligraphy scroll, gifted, not self-made.", place: "shenzhen" },
+    { src: "assets/pictures/china_3.jpg", album: "Exchange — CUHK-Shenzhen", caption: "On my feet mid-talk, in a language I'm still learning.", place: "shenzhen" },
+    { src: "assets/pictures/china_4.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Presenting to a very patient, very round room.", place: "shenzhen" },
+    { src: "assets/pictures/china_5.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Mid-sentence, hoping it's still making sense.", place: "shenzhen" },
+    { src: "assets/pictures/china_11.jpg", album: "Exchange — CUHK-Shenzhen", caption: "Shenzhen's old town — lanterns, crowds, better food than my dorm.", place: "shenzhen" }
   ];
   var photosApp = {
     id: "photos", title: "Photos", titleKey: "app.photos", icon: ICONS.photos, desktopIcon: true, maximizeOnSmallViewport: true,
@@ -4300,17 +4450,34 @@ import { experiences } from './data/experiences.js';
               '<img id="photos-lightbox-img" alt="" />' +
               '<button type="button" class="photos-app__lightbox-nav photos-app__lightbox-nav--next" data-lb-nav="1" aria-label="Next">&rarr;</button>' +
               '<p id="photos-lightbox-caption"></p>' +
+              '<button type="button" class="photos-app__lightbox-location" id="photos-lightbox-location" hidden>' +
+                '<svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M12 2c-4.1 0-7.4 3.3-7.4 7.3 0 5.5 7.4 12.7 7.4 12.7s7.4-7.2 7.4-12.7C19.4 5.3 16.1 2 12 2Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/></svg>' +
+                '<span id="photos-lightbox-location-text"></span>' +
+              "</button>" +
             "</div>" +
           "</div>";
         var lightbox = container.querySelector("#photos-lightbox");
         var lbImg = container.querySelector("#photos-lightbox-img");
         var lbCaption = container.querySelector("#photos-lightbox-caption");
+        var lbLocation = container.querySelector("#photos-lightbox-location");
+        var lbLocationText = container.querySelector("#photos-lightbox-location-text");
+        var placesById = {};
+        PLACES.forEach(function(pl){ placesById[pl.id] = pl; });
         var current = 0;
         function show(i){
           current = (i + PHOTOS.length) % PHOTOS.length;
           var p = PHOTOS[current];
           lbImg.src = p.src;
           lbCaption.textContent = p.caption || "";
+          var place = p.place && placesById[p.place];
+          if (place){
+            lbLocationText.textContent = place.city + ", " + place.country;
+            lbLocation.hidden = false;
+            lbLocation.dataset.place = p.place;
+          } else {
+            lbLocation.hidden = true;
+            delete lbLocation.dataset.place;
+          }
         }
         container.querySelectorAll("[data-photo]").forEach(function(btn){
           btn.addEventListener("click", function(){
@@ -4322,6 +4489,13 @@ import { experiences } from './data/experiences.js';
           btn.addEventListener("click", function(){ show(current + Number(btn.dataset.lbNav)); });
         });
         container.querySelector(".photos-app__lightbox-close").addEventListener("click", function(){ lightbox.hidden = true; });
+        lbLocation.addEventListener("click", function(){
+          var placeId = lbLocation.dataset.place;
+          if (!placeId) return;
+          var mapsAppEntry = appsById.get("maps");
+          if (mapsAppEntry) wm.openApp(mapsAppEntry);
+          if (mapsApp._focusPlace) mapsApp._focusPlace(placeId);
+        });
         container.addEventListener("keydown", function(e){
           if (lightbox.hidden) return;
           if (e.key === "Escape") lightbox.hidden = true;
@@ -4463,6 +4637,11 @@ import { experiences } from './data/experiences.js';
           bodyHtml;
         detail.hidden = false;
         detail.querySelector(".maps-detail__close").addEventListener("click", function(){ openDetailId = null; detail.hidden = true; syncPins(); });
+        var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        detail.classList.remove("is-flash");
+        void detail.offsetWidth;
+        detail.classList.add("is-flash");
+        if (detail.scrollIntoView) detail.scrollIntoView({ block: "nearest", behavior: reducedMotion ? "auto" : "smooth" });
       }
 
       function syncPins(){
@@ -4470,6 +4649,14 @@ import { experiences } from './data/experiences.js';
           btn.classList.toggle("is-active", btn.dataset.place === openDetailId);
         });
       }
+
+      function focusPlace(placeId){
+        if (!byId[placeId]) return;
+        openDetailId = placeId;
+        syncPins();
+        renderDetail();
+      }
+      mapsApp._focusPlace = focusPlace;
 
       container.innerHTML =
         '<div class="maps-app">' +
@@ -4643,18 +4830,27 @@ import { experiences } from './data/experiences.js';
       var COLS = 10, ROWS = 20, CELL = 20;
       container.innerHTML =
         '<div class="tetris-app">' +
-          '<div class="tetris-app__board-wrap">' +
-            '<canvas id="tetris-canvas" width="' + (COLS * CELL) + '" height="' + (ROWS * CELL) + '"></canvas>' +
-            '<div class="tetris-app__overlay" id="tetris-overlay" hidden></div>' +
+          '<div class="tetris-app__main">' +
+            '<div class="tetris-app__board-wrap">' +
+              '<canvas id="tetris-canvas" width="' + (COLS * CELL) + '" height="' + (ROWS * CELL) + '"></canvas>' +
+              '<div class="tetris-app__overlay" id="tetris-overlay" hidden></div>' +
+            "</div>" +
+            '<div class="tetris-app__side">' +
+              '<p class="tetris-app__label">Next</p>' +
+              '<canvas id="tetris-next" width="' + (CELL * 4) + '" height="' + (CELL * 4) + '"></canvas>' +
+              '<p class="tetris-app__label">Score</p>' +
+              '<p class="tetris-app__score" id="tetris-score">0</p>' +
+              '<p class="tetris-app__label">Lines</p>' +
+              '<p class="tetris-app__score" id="tetris-lines">0</p>' +
+              '<p class="tetris-app__hint">Arrows: move / rotate<br>Space: hard drop</p>' +
+            "</div>" +
           "</div>" +
-          '<div class="tetris-app__side">' +
-            '<p class="tetris-app__label">Next</p>' +
-            '<canvas id="tetris-next" width="' + (CELL * 4) + '" height="' + (CELL * 4) + '"></canvas>' +
-            '<p class="tetris-app__label">Score</p>' +
-            '<p class="tetris-app__score" id="tetris-score">0</p>' +
-            '<p class="tetris-app__label">Lines</p>' +
-            '<p class="tetris-app__score" id="tetris-lines">0</p>' +
-            '<p class="tetris-app__hint">Click to focus.<br>Arrows: move / rotate<br>Space: hard drop</p>' +
+          '<div class="tetris-app__touch-controls" id="tetris-touch">' +
+            '<button type="button" class="tetris-app__touch-btn" data-tetris-action="left" aria-label="Move left">&#8592;</button>' +
+            '<button type="button" class="tetris-app__touch-btn" data-tetris-action="rotate" aria-label="Rotate">&#8635;</button>' +
+            '<button type="button" class="tetris-app__touch-btn" data-tetris-action="right" aria-label="Move right">&#8594;</button>' +
+            '<button type="button" class="tetris-app__touch-btn" data-tetris-action="down" aria-label="Soft drop">&#8595;</button>' +
+            '<button type="button" class="tetris-app__touch-btn" data-tetris-action="drop" aria-label="Hard drop">&#8663;</button>' +
           "</div>" +
         "</div>";
 
@@ -4800,10 +4996,362 @@ import { experiences } from './data/experiences.js';
       }
       document.addEventListener("keydown", onKeyDown);
 
+      var TETRIS_ACTIONS = {
+        left: function(){ move(-1, 0); },
+        right: function(){ move(1, 0); },
+        down: function(){ if (!move(0, 1)) lockPiece(); },
+        rotate: function(){ rotate(); },
+        drop: function(){ hardDrop(); }
+      };
+      container.querySelectorAll("[data-tetris-action]").forEach(function(btn){
+        var action = TETRIS_ACTIONS[btn.dataset.tetrisAction];
+        var repeatable = btn.dataset.tetrisAction === "left" || btn.dataset.tetrisAction === "right" || btn.dataset.tetrisAction === "down";
+        var delayTimer = null, repeatTimer = null;
+        function fire(){ if (gameOver) return; action(); draw(); }
+        function stop(){ clearTimeout(delayTimer); clearInterval(repeatTimer); delayTimer = null; repeatTimer = null; }
+        btn.addEventListener("pointerdown", function(e){
+          e.preventDefault();
+          fire();
+          if (repeatable){
+            delayTimer = setTimeout(function(){ repeatTimer = setInterval(fire, 90); }, 260);
+          }
+        });
+        btn.addEventListener("pointerup", stop);
+        btn.addEventListener("pointerleave", stop);
+        btn.addEventListener("pointercancel", stop);
+      });
+
       resetGame();
     }
   };
   apps.push(tetrisApp);
+
+  /* ============================================================ Slides */
+  function slideDefaultTitle(slide){
+    if (slide.kind === "intro") return "Tito Nicola Drugman";
+    if (slide.kind === "outro") return "Thanks for watching";
+    return slide.entry.title;
+  }
+  function slideDefaultSubtitle(slide){
+    if (slide.kind === "intro") return "AI/ML Engineer — Full Timeline";
+    if (slide.kind === "outro") return "Let's talk";
+    var e = slide.entry;
+    return [e.organization, e.location, e.dateLabel].filter(Boolean).join(" · ");
+  }
+  function slideDefaultBodyHtml(slide){
+    if (slide.kind === "intro"){
+      return "<p>AI/ML engineer building on-premises, constrained AI systems: quantised transformers on microcontrollers, local LLM + RAG stacks and vision-language web agents.</p>";
+    }
+    if (slide.kind === "outro"){
+      return "<p>drugmantito@gmail.com</p><p>github.com/TitoNicolaDrugman</p>";
+    }
+    var e = slide.entry;
+    var html = "<p>" + escapeHtml(e.summary || "") + "</p>";
+    if (e.highlights && e.highlights.length){
+      html += "<ul>" + e.highlights.slice(0, 4).map(function(h){ return "<li>" + escapeHtml(h) + "</li>"; }).join("") + "</ul>";
+    }
+    return html;
+  }
+  function slideBadgeColor(slide){ return slide.kind === "entry" ? calendarColor(slide.entry) : "#7c5cff"; }
+  function readableTextColor(hex){
+    var c = String(hex).replace("#", "");
+    if (c.length === 3) c = c.split("").map(function(ch){ return ch + ch; }).join("");
+    var r = parseInt(c.substr(0, 2), 16), g = parseInt(c.substr(2, 2), 16), b = parseInt(c.substr(4, 2), 16);
+    var lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return lum > 0.62 ? "#1a1a1a" : "#fff";
+  }
+  function slideBadgeLabel(slide){
+    if (slide.kind === "intro") return "Intro";
+    if (slide.kind === "outro") return "Outro";
+    return calendarLabel(slide.entry);
+  }
+  function slideField(slide, field, defaultFn){
+    var o = slide.override && slide.override[field];
+    return o != null ? o : defaultFn(slide);
+  }
+  function stripHtmlToText(html){
+    var div = document.createElement("div");
+    div.innerHTML = html;
+    return (div.textContent || "").trim();
+  }
+  function getSlideDeck(){
+    var entries = getCalendarEntries().slice().sort(function(a, b){
+      return (a.startDate || "").localeCompare(b.startDate || "");
+    });
+    var overrides = storeGet("slidesOverrides", {});
+    var slides = [{ id: "intro", kind: "intro" }]
+      .concat(entries.map(function(e){ return { id: e.id, kind: "entry", entry: e }; }))
+      .concat([{ id: "outro", kind: "outro" }]);
+    var order = storeGet("slidesOrder", []);
+    if (order.length){
+      var byId = {};
+      slides.forEach(function(s){ byId[s.id] = s; });
+      var ordered = order.map(function(id){ return byId[id]; }).filter(Boolean);
+      slides.forEach(function(s){ if (order.indexOf(s.id) === -1) ordered.push(s); });
+      slides = ordered;
+    }
+    slides.forEach(function(s){ s.override = overrides[s.id] || null; });
+    return slides;
+  }
+
+  var slidesApp = {
+    id: "slides", title: "Slides", titleKey: "app.slides", icon: ICONS.slides, desktopIcon: true, maximizeOnSmallViewport: true,
+    kind: "component", singleInstance: true,
+    window: { width: 900, height: 620, minWidth: 480, minHeight: 400, resizable: true, maximizable: true },
+    render: function(container, windowApi){
+      var deck = [];
+      var activeId = null;
+      var presenting = false;
+      var presentIndex = 0;
+      var autoplayTimer = null;
+      var autoplayOn = false;
+
+      function titleHtml(s){ return slideField(s, "titleHTML", function(){ return escapeHtml(slideDefaultTitle(s)); }); }
+      function subtitleHtml(s){ return slideField(s, "subtitleHTML", function(){ return escapeHtml(slideDefaultSubtitle(s)); }); }
+      function bodyHtml(s){ return slideField(s, "bodyHTML", slideDefaultBodyHtml); }
+
+      function loadDeck(){
+        deck = getSlideDeck();
+        if (!activeId || !deck.some(function(s){ return s.id === activeId; })) activeId = deck[0].id;
+      }
+      function saveOverride(id, field, html){
+        var overrides = storeGet("slidesOverrides", {});
+        var entry = Object.assign({}, overrides[id]);
+        entry[field] = html;
+        overrides[id] = entry;
+        storeSet("slidesOverrides", overrides);
+      }
+      function resetSlide(id){
+        var overrides = storeGet("slidesOverrides", {});
+        delete overrides[id];
+        storeSet("slidesOverrides", overrides);
+      }
+      function resetAll(){
+        storeRemove("slidesOverrides");
+        storeRemove("slidesOrder");
+      }
+      function persistOrder(){ storeSet("slidesOrder", deck.map(function(s){ return s.id; })); }
+
+      function renderShell(){
+        container.innerHTML =
+          '<div class="slides-app">' +
+            '<div class="slides-app__toolbar">' +
+              '<button type="button" class="slides-app__present-btn" data-action="present">&#9654; ' + t("slides.present") + "</button>" +
+              '<button type="button" class="slides-app__pdf-btn" data-action="download-pdf">&#8595; ' + t("slides.downloadPdf") + "</button>" +
+              '<span class="slides-app__hint">' + t("slides.clickToEdit") + "</span>" +
+              '<button type="button" class="slides-app__reset-all" data-action="reset-all">' + t("slides.resetAll") + "</button>" +
+            "</div>" +
+            '<div class="slides-app__body">' +
+              '<div class="slides-rail" id="slides-rail"></div>' +
+              '<div class="slides-app__canvas-wrap">' +
+                '<div class="slides-canvas" id="slides-canvas"></div>' +
+                '<div class="slides-app__slide-actions">' +
+                  '<button type="button" data-action="reset-slide">' + t("slides.reset") + "</button>" +
+                "</div>" +
+              "</div>" +
+            "</div>" +
+            '<div class="slides-app__present" id="slides-present" hidden>' +
+              '<div class="present-topbar">' +
+                '<button type="button" data-action="exit">&#10005; ' + t("slides.exit") + "</button>" +
+                '<span class="present-topbar__count" id="present-count"></span>' +
+                '<button type="button" data-action="autoplay">&#9654; ' + t("slides.autoplay") + "</button>" +
+              "</div>" +
+              '<div class="present-timeline" id="present-timeline">' +
+                '<div class="present-timeline__track"><div class="present-timeline__fill" id="present-timeline-fill"></div></div>' +
+                '<div class="present-timeline__dots" id="present-timeline-dots"></div>' +
+              "</div>" +
+              '<div class="present-stage-wrap">' +
+                '<button type="button" class="present-nav present-nav--prev" data-action="prev" aria-label="Previous">&#8592;</button>' +
+                '<div class="present-slide" id="present-stage"></div>' +
+                '<button type="button" class="present-nav present-nav--next" data-action="next" aria-label="Next">&#8594;</button>' +
+              "</div>" +
+            "</div>" +
+          "</div>";
+
+        container.querySelector('[data-action="present"]').addEventListener("click", startPresent);
+        container.querySelector('[data-action="download-pdf"]').addEventListener("click", downloadPdf);
+        container.querySelector('[data-action="reset-all"]').addEventListener("click", function(){
+          resetAll(); loadDeck(); renderRail(); renderCanvas();
+        });
+        container.querySelector('[data-action="reset-slide"]').addEventListener("click", function(){
+          resetSlide(activeId); loadDeck(); renderRail(); renderCanvas();
+        });
+        container.querySelector('[data-action="exit"]').addEventListener("click", exitPresent);
+        container.querySelector('[data-action="prev"]').addEventListener("click", function(){ goTo(presentIndex - 1); });
+        container.querySelector('[data-action="next"]').addEventListener("click", function(){ goTo(presentIndex + 1); });
+        container.querySelector('[data-action="autoplay"]').addEventListener("click", toggleAutoplay);
+      }
+
+      function renderRail(){
+        var rail = container.querySelector("#slides-rail");
+        if (!rail) return;
+        rail.innerHTML = deck.map(function(s, i){
+          return '<div class="slides-rail__item' + (s.id === activeId ? " is-active" : "") + '" data-id="' + s.id + '">' +
+            '<span class="slides-rail__num">' + (i + 1) + "</span>" +
+            '<span class="slides-rail__bar" style="background:' + slideBadgeColor(s) + '"></span>' +
+            '<span class="slides-rail__title">' + escapeHtml(stripHtmlToText(titleHtml(s))) + "</span>" +
+            '<span class="slides-rail__move">' +
+              '<button type="button" data-move="up" data-id="' + s.id + '" aria-label="' + t("slides.moveUp") + '"' + (i === 0 ? " disabled" : "") + ">&#9650;</button>" +
+              '<button type="button" data-move="down" data-id="' + s.id + '" aria-label="' + t("slides.moveDown") + '"' + (i === deck.length - 1 ? " disabled" : "") + ">&#9660;</button>" +
+            "</span>" +
+          "</div>";
+        }).join("");
+        rail.querySelectorAll(".slides-rail__item").forEach(function(item){
+          item.addEventListener("click", function(e){
+            if (e.target.closest("[data-move]")) return;
+            activeId = item.dataset.id;
+            renderRail();
+            renderCanvas();
+          });
+        });
+        rail.querySelectorAll("[data-move]").forEach(function(btn){
+          btn.addEventListener("click", function(e){
+            e.stopPropagation();
+            var id = btn.dataset.id;
+            var dir = btn.dataset.move === "up" ? -1 : 1;
+            var idx = deck.findIndex(function(s){ return s.id === id; });
+            var swapIdx = idx + dir;
+            if (swapIdx < 0 || swapIdx >= deck.length) return;
+            var tmp = deck[idx]; deck[idx] = deck[swapIdx]; deck[swapIdx] = tmp;
+            persistOrder();
+            renderRail();
+          });
+        });
+        var activeItem = rail.querySelector(".is-active");
+        if (activeItem && activeItem.scrollIntoView) activeItem.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
+
+      function renderCanvas(){
+        var slide = deck.filter(function(s){ return s.id === activeId; })[0];
+        var canvas = container.querySelector("#slides-canvas");
+        if (!slide || !canvas) return;
+        canvas.style.setProperty("--slide-accent", slideBadgeColor(slide));
+        canvas.innerHTML =
+          '<span class="slides-canvas__badge" style="background:' + slideBadgeColor(slide) + ";color:" + readableTextColor(slideBadgeColor(slide)) + '">' + escapeHtml(slideBadgeLabel(slide)) + "</span>" +
+          '<div class="slides-canvas__title" contenteditable="true" spellcheck="false" data-field="titleHTML">' + titleHtml(slide) + "</div>" +
+          '<div class="slides-canvas__subtitle" contenteditable="true" spellcheck="false" data-field="subtitleHTML">' + subtitleHtml(slide) + "</div>" +
+          '<div class="slides-canvas__body" contenteditable="true" spellcheck="false" data-field="bodyHTML">' + bodyHtml(slide) + "</div>";
+        canvas.querySelectorAll("[contenteditable]").forEach(function(el){
+          el.addEventListener("input", function(){
+            saveOverride(slide.id, el.dataset.field, el.innerHTML);
+            if (el.dataset.field === "titleHTML"){
+              var railTitle = container.querySelector('.slides-rail__item[data-id="' + slide.id + '"] .slides-rail__title');
+              if (railTitle) railTitle.textContent = el.innerText.trim() || "Untitled";
+            }
+          });
+        });
+      }
+
+      function slideCountLabel(){ return (presentIndex + 1) + " / " + deck.length; }
+
+      function renderPresentSlide(){
+        var slide = deck[presentIndex];
+        var stage = container.querySelector("#present-stage");
+        if (!slide || !stage) return;
+        stage.style.setProperty("--slide-accent", slideBadgeColor(slide));
+        stage.innerHTML =
+          '<span class="present-slide__badge" style="background:' + slideBadgeColor(slide) + ";color:" + readableTextColor(slideBadgeColor(slide)) + '">' + escapeHtml(slideBadgeLabel(slide)) + "</span>" +
+          '<h1 class="present-slide__title">' + titleHtml(slide) + "</h1>" +
+          '<p class="present-slide__subtitle">' + subtitleHtml(slide) + "</p>" +
+          '<div class="present-slide__body">' + bodyHtml(slide) + "</div>";
+        container.querySelector("#present-count").textContent = slideCountLabel();
+        container.querySelector('[data-action="prev"]').disabled = presentIndex === 0;
+        container.querySelector('[data-action="next"]').disabled = presentIndex === deck.length - 1;
+        var fill = container.querySelector("#present-timeline-fill");
+        if (fill) fill.style.width = (deck.length > 1 ? (presentIndex / (deck.length - 1)) * 100 : 100) + "%";
+        container.querySelectorAll(".present-timeline__dot").forEach(function(dot, i){
+          dot.classList.toggle("is-active", i === presentIndex);
+          dot.classList.toggle("is-done", i < presentIndex);
+        });
+      }
+
+      function goTo(idx){
+        if (idx < 0 || idx >= deck.length) return;
+        presentIndex = idx;
+        renderPresentSlide();
+      }
+
+      function toggleAutoplay(){
+        autoplayOn = !autoplayOn;
+        var btn = container.querySelector('[data-action="autoplay"]');
+        if (btn) btn.classList.toggle("is-active", autoplayOn);
+        clearInterval(autoplayTimer);
+        if (autoplayOn){
+          autoplayTimer = setInterval(function(){
+            var nextIdx = presentIndex + 1 >= deck.length ? 0 : presentIndex + 1;
+            goTo(nextIdx);
+          }, 4500);
+        }
+      }
+
+      function buildTimelineDots(){
+        var dotsWrap = container.querySelector("#present-timeline-dots");
+        if (!dotsWrap) return;
+        dotsWrap.innerHTML = deck.map(function(s, i){
+          return '<button type="button" class="present-timeline__dot" data-idx="' + i + '" style="--dot-color:' + slideBadgeColor(s) + '" aria-label="' + escapeHtml(stripHtmlToText(titleHtml(s))) + '"></button>';
+        }).join("");
+        dotsWrap.querySelectorAll(".present-timeline__dot").forEach(function(dot){
+          dot.addEventListener("click", function(){ goTo(Number(dot.dataset.idx)); });
+        });
+      }
+
+      function downloadPdf(){
+        var root = document.getElementById("slides-print-root");
+        if (!root){
+          root = document.createElement("div");
+          root.id = "slides-print-root";
+          document.body.appendChild(root);
+        }
+        root.innerHTML = deck.map(function(s){
+          var color = slideBadgeColor(s);
+          var bodyHtmlStr = slideDefaultBodyHtml(s);
+          return '<section class="print-slide" style="border-top-color:' + color + '">' +
+            '<span class="print-slide__badge" style="background:' + color + ";color:" + readableTextColor(color) + '">' + escapeHtml(slideBadgeLabel(s)) + "</span>" +
+            '<h1 class="print-slide__title">' + escapeHtml(slideDefaultTitle(s)) + "</h1>" +
+            '<p class="print-slide__subtitle">' + escapeHtml(slideDefaultSubtitle(s)) + "</p>" +
+            '<div class="print-slide__body">' + bodyHtmlStr + "</div>" +
+          "</section>";
+        }).join("");
+        window.print();
+      }
+
+      function startPresent(){
+        presenting = true;
+        var idx = deck.findIndex(function(s){ return s.id === activeId; });
+        presentIndex = idx >= 0 ? idx : 0;
+        container.querySelector("#slides-present").hidden = false;
+        buildTimelineDots();
+        renderPresentSlide();
+      }
+      function exitPresent(){
+        presenting = false;
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+        autoplayOn = false;
+        var btn = container.querySelector('[data-action="autoplay"]');
+        if (btn) btn.classList.remove("is-active");
+        activeId = deck[presentIndex].id;
+        container.querySelector("#slides-present").hidden = true;
+        renderRail();
+        renderCanvas();
+      }
+
+      function onKeyDown(e){
+        if (!document.body.contains(container)){ document.removeEventListener("keydown", onKeyDown); clearInterval(autoplayTimer); return; }
+        if (wm.focusedId !== windowApi.windowId || !presenting) return;
+        if (e.key === "ArrowRight" || e.key === " "){ e.preventDefault(); goTo(presentIndex + 1); }
+        else if (e.key === "ArrowLeft"){ e.preventDefault(); goTo(presentIndex - 1); }
+        else if (e.key === "Escape"){ e.preventDefault(); exitPresent(); }
+      }
+      document.addEventListener("keydown", onKeyDown);
+
+      loadDeck();
+      renderShell();
+      renderRail();
+      renderCanvas();
+    }
+  };
+  apps.push(slidesApp);
 
   var appsById = new Map(apps.map(function(app){ return [app.id, app]; }));
 
