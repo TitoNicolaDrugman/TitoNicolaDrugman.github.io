@@ -234,13 +234,42 @@ button{ font: inherit; }
 .search-results__empty{ padding: 10px; font-size: 12px; color: var(--text-dim); margin: 0; }
 
 /* ---------------------------------------------------------------- cv-doc toolbar (editable) */
-.cv-doc-toolbar{ position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 6px; padding: 6px 10px; background: #f0f0f3; border-bottom: 1px solid #e3e3e8; font-family: system-ui, sans-serif; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
-.cv-doc-toolbar button{ flex-shrink: 0; min-width: 28px; height: 26px; padding: 0 8px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; font-size: 12px; white-space: nowrap; }
-.cv-doc-toolbar button:hover{ background: #f4f4f7; }
-.cv-doc-toolbar__select{ flex-shrink: 0; height: 26px; padding: 0 4px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; font-size: 12px; max-width: 108px; }
-.cv-doc-toolbar__color{ flex-shrink: 0; width: 26px; height: 26px; padding: 2px; border: 1px solid #d6d6dc; border-radius: 4px; background: #fff; cursor: pointer; }
-.cv-doc-toolbar__spacer{ flex: 0 0 12px; }
-.cv-doc-toolbar__reset{ color: #c0392b !important; }
+.cv-doc-toolbar{ position: sticky; top: 0; z-index: 2; flex-shrink: 0; display: flex; align-items: center; gap: 0; padding: 11px 16px; background: #fafafc; border-bottom: 1px solid #e3e3e8; box-shadow: 0 2px 6px rgba(20,20,30,.05); font-family: system-ui, sans-serif; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+.cv-doc-toolbar__standalone{ display: flex; align-items: center; flex-shrink: 0; padding-right: 16px; margin-right: 16px; border-right: 1px solid #e0e0e6; }
+.cv-doc-toolbar__group{ display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; padding: 0 16px; margin: 0; border-right: 1px solid #e0e0e6; }
+.cv-doc-toolbar__group:last-of-type{ border-right: none; padding-right: 0; }
+.cv-doc-toolbar__group-row{ display: flex; align-items: center; gap: 3px; background: #eef0f3; border-radius: 9px; padding: 3px; }
+.cv-doc-toolbar__group-row--plain{ background: none; padding: 0; gap: 8px; }
+.cv-doc-toolbar__group-label{ font-size: 10px; font-weight: 700; color: #9a9aa4; text-transform: uppercase; letter-spacing: .04em; }
+.cv-doc-toolbar button{ flex-shrink: 0; min-width: 38px; height: 36px; padding: 0 13px; border: none; border-radius: 7px; background: transparent; color: #3c3c43; cursor: pointer; font-size: 16px; white-space: nowrap; transition: background 120ms ease, box-shadow 120ms ease, color 120ms ease; }
+.cv-doc-toolbar button:hover{ background: rgba(20,20,30,.07); }
+.cv-doc-toolbar button:active{ background: rgba(20,20,30,.12); }
+.cv-doc-toolbar button.is-active{ background: #fff; color: #0855b3; box-shadow: 0 1px 3px rgba(20,20,30,.2); }
+.cv-doc-toolbar__group-row--plain button{ border: 1px solid #d6d6dc; background: #fff; }
+.cv-doc-toolbar__group-row--plain button:hover{ background: #f4f4f7; }
+.cv-doc-toolbar__select{ flex-shrink: 0; height: 36px; padding: 0 10px; border: 1px solid #d6d6dc; border-radius: 7px; background: #fff; cursor: pointer; font-size: 13.5px; }
+#cv-font-select.cv-doc-toolbar__select{ max-width: 152px; }
+#cv-size-select.cv-doc-toolbar__select{ max-width: 108px; }
+.cv-doc-toolbar__select:hover{ border-color: #bfbfc6; }
+.cv-doc-toolbar__colorwrap{ position: relative; flex-shrink: 0; width: 38px; height: 36px; border: 1px solid #d6d6dc; border-radius: 7px; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; }
+.cv-doc-toolbar__colorwrap:hover{ background: #f4f4f7; border-color: #bfbfc6; }
+.cv-doc-toolbar__color-label{ font-size: 14px; font-weight: 700; line-height: 1; color: #3c3c43; pointer-events: none; }
+.cv-doc-toolbar__color-bar{ width: 20px; height: 3px; border-radius: 2px; margin-top: 4px; background: #232326; pointer-events: none; }
+.cv-doc-toolbar__color-input{ position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: none; padding: 0; }
+.cv-doc-toolbar__spacer{ flex: 1 1 auto; min-width: 16px; }
+.cv-doc-toolbar__reset{ align-self: center; flex-shrink: 0; height: 38px; padding: 0 16px; border: 1px solid #f0c4bc !important; border-radius: 8px; background: #fdf3f1 !important; color: #c0392b !important; font-size: 13.5px !important; font-weight: 600; }
+.cv-doc-toolbar__reset:hover{ background: #fbe6e2 !important; }
+@media (max-width: 560px){
+  .cv-doc-toolbar{ padding: 9px 10px; }
+  .cv-doc-toolbar__standalone{ padding-right: 10px; margin-right: 10px; }
+  .cv-doc-toolbar__group{ padding: 0 10px; }
+  .cv-doc-toolbar button{ min-width: 40px; height: 38px; padding: 0 11px; font-size: 16.5px; }
+  .cv-doc-toolbar__select{ height: 38px; font-size: 13px; }
+  #cv-font-select.cv-doc-toolbar__select{ max-width: 118px; }
+  #cv-size-select.cv-doc-toolbar__select{ max-width: 92px; }
+  .cv-doc-toolbar__colorwrap{ width: 40px; height: 38px; }
+  .cv-doc-toolbar__reset{ height: 40px; }
+}
 .cv-doc__editable{ outline: none; }
 .cv-doc__editable:focus{ box-shadow: inset 0 0 0 2px rgba(76,194,255,.35); border-radius: 4px; }
 
@@ -2694,6 +2723,9 @@ import { experiences } from './data/experiences.js';
     document.body.appendChild(el);
     setTimeout(function(){
       sessionStorage.clear();
+      // The screen just shown already covers the "OS is starting up" beat — without this,
+      // the post-reload boot sequence would show its own splash right on top of it.
+      sessionStorage.setItem("bootSplashShown", "1");
       location.reload();
     }, 900);
   }
@@ -3009,25 +3041,46 @@ import { experiences } from './data/experiences.js';
         var saved = storeGet("cvDocContent", null);
         container.innerHTML =
           '<div class="cv-doc-toolbar">' +
-            '<button type="button" data-cmd="bold" title="Bold"><b>B</b></button>' +
-            '<button type="button" data-cmd="italic" title="Italic"><i>I</i></button>' +
-            '<button type="button" data-cmd="underline" title="Underline"><u>U</u></button>' +
-            '<select class="cv-doc-toolbar__select" id="cv-font-select" title="Font">' +
-              '<option value="Georgia, \'Times New Roman\', serif">Georgia</option>' +
-              '<option value="\'Times New Roman\', Times, serif">Times New Roman</option>' +
-              '<option value="Arial, Helvetica, sans-serif">Arial</option>' +
-              '<option value="\'Segoe UI\', system-ui, sans-serif">Calibri-ish</option>' +
-              '<option value="\'Courier New\', Courier, monospace">Courier New</option>' +
-            "</select>" +
-            '<select class="cv-doc-toolbar__select" id="cv-size-select" title="Size">' +
-              '<option value="2">Small</option>' +
-              '<option value="3" selected>Normal</option>' +
-              '<option value="4">Medium</option>' +
-              '<option value="5">Large</option>' +
-              '<option value="6">Huge</option>' +
-            "</select>" +
-            '<input type="color" class="cv-doc-toolbar__color" id="cv-color-input" title="Text color" value="#232326" />' +
-            '<button type="button" data-cmd="undo" title="Undo">↶</button>' +
+            '<span class="cv-doc-toolbar__standalone">' +
+              '<button type="button" data-cmd="undo" title="Undo">↶</button>' +
+            "</span>" +
+            '<span class="cv-doc-toolbar__group">' +
+              '<span class="cv-doc-toolbar__group-row">' +
+                '<button type="button" data-cmd="bold" title="Bold"><b>B</b></button>' +
+                '<button type="button" data-cmd="italic" title="Italic"><i>I</i></button>' +
+                '<button type="button" data-cmd="underline" title="Underline"><u>U</u></button>' +
+              "</span>" +
+              '<span class="cv-doc-toolbar__group-label">Format</span>' +
+            "</span>" +
+            '<span class="cv-doc-toolbar__group">' +
+              '<span class="cv-doc-toolbar__group-row cv-doc-toolbar__group-row--plain">' +
+                '<select class="cv-doc-toolbar__select" id="cv-font-select" title="Font">' +
+                  '<option value="Georgia, \'Times New Roman\', serif">Georgia</option>' +
+                  '<option value="\'Times New Roman\', Times, serif">Times New Roman</option>' +
+                  '<option value="Arial, Helvetica, sans-serif">Arial</option>' +
+                  '<option value="\'Segoe UI\', system-ui, sans-serif">Calibri-ish</option>' +
+                  '<option value="\'Courier New\', Courier, monospace">Courier New</option>' +
+                "</select>" +
+                '<select class="cv-doc-toolbar__select" id="cv-size-select" title="Size">' +
+                  '<option value="2">Small</option>' +
+                  '<option value="3" selected>Normal</option>' +
+                  '<option value="4">Medium</option>' +
+                  '<option value="5">Large</option>' +
+                  '<option value="6">Huge</option>' +
+                "</select>" +
+              "</span>" +
+              '<span class="cv-doc-toolbar__group-label">Font</span>' +
+            "</span>" +
+            '<span class="cv-doc-toolbar__group">' +
+              '<span class="cv-doc-toolbar__group-row cv-doc-toolbar__group-row--plain">' +
+                '<span class="cv-doc-toolbar__colorwrap" title="Text color">' +
+                  '<span class="cv-doc-toolbar__color-label">A</span>' +
+                  '<span class="cv-doc-toolbar__color-bar" id="cv-color-bar"></span>' +
+                  '<input type="color" class="cv-doc-toolbar__color-input" id="cv-color-input" value="#232326" />' +
+                "</span>" +
+              "</span>" +
+              '<span class="cv-doc-toolbar__group-label">Color</span>' +
+            "</span>" +
             '<span class="cv-doc-toolbar__spacer"></span>' +
             '<button type="button" class="cv-doc-toolbar__reset">Reset to original</button>' +
           "</div>" +
@@ -3039,12 +3092,24 @@ import { experiences } from './data/experiences.js';
         var editable = container.querySelector(".cv-doc__editable");
         editable.addEventListener("input", function(){ storeSet("cvDocContent", editable.innerHTML); });
 
+        var cmdButtons = container.querySelectorAll("[data-cmd]");
+        function refreshActiveStates(){
+          cmdButtons.forEach(function(btn){
+            var cmd = btn.dataset.cmd;
+            if (cmd === "undo") return;
+            var active = false;
+            try{ active = document.queryCommandState(cmd); }catch(e){}
+            btn.classList.toggle("is-active", active);
+          });
+        }
+
         var savedRange = null;
         editable.addEventListener("keyup", captureSelection);
         editable.addEventListener("mouseup", captureSelection);
         function captureSelection(){
           var sel = window.getSelection();
           if (sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange();
+          refreshActiveStates();
         }
         function restoreSelection(){
           if (!savedRange) return;
@@ -3053,12 +3118,13 @@ import { experiences } from './data/experiences.js';
           sel.addRange(savedRange);
         }
 
-        container.querySelectorAll("[data-cmd]").forEach(function(btn){
+        cmdButtons.forEach(function(btn){
           btn.addEventListener("mousedown", function(e){ e.preventDefault(); });
           btn.addEventListener("click", function(){
             editable.focus();
             document.execCommand(btn.dataset.cmd);
             storeSet("cvDocContent", editable.innerHTML);
+            refreshActiveStates();
           });
         });
         container.querySelector("#cv-font-select").addEventListener("change", function(){
@@ -3073,11 +3139,13 @@ import { experiences } from './data/experiences.js';
           document.execCommand("fontSize", false, this.value);
           storeSet("cvDocContent", editable.innerHTML);
         });
+        var colorBar = container.querySelector("#cv-color-bar");
         container.querySelector("#cv-color-input").addEventListener("input", function(){
           restoreSelection();
           editable.focus();
           document.execCommand("foreColor", false, this.value);
           storeSet("cvDocContent", editable.innerHTML);
+          colorBar.style.background = this.value;
         });
         container.querySelector(".cv-doc-toolbar__reset").addEventListener("click", function(){
           storeRemove("cvDocContent");
