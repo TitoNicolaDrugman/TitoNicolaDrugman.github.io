@@ -545,11 +545,14 @@ button{ font: inherit; }
 .tetris-app__overlay[hidden]{ display: none; }
 .tetris-app__overlay p{ margin: 0; font-size: 0.9rem; }
 .tetris-app__overlay-score{ font-size: 1.1rem; font-weight: 700; }
+.tetris-app__overlay-best{ font-size: 0.78rem; color: #a2a9b1; }
+.tetris-app__overlay-best.is-new{ color: #ffd93d; font-weight: 700; }
 .tetris-app__overlay button{ margin-top: 6px; padding: 6px 14px; border-radius: 6px; border: none; background: var(--accent); color: #0c1420; font-weight: 700; cursor: pointer; font-size: 0.8rem; }
 .tetris-app__side{ flex: 1; min-width: 0; color: #d8d8de; display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .tetris-app__side canvas{ background: #0c0c10; border-radius: 4px; margin-bottom: 6px; }
 .tetris-app__label{ font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: #8a8a92; margin: 4px 0 0; }
 .tetris-app__score{ font-size: 1.2rem; font-weight: 700; margin: 0 0 4px; font-variant-numeric: tabular-nums; }
+.tetris-app__score--best{ color: #ffd93d; font-size: 1rem; }
 .tetris-app__hint{ font-size: 0.62rem; color: #6b6b72; text-align: center; margin-top: auto; line-height: 1.5; }
 .tetris-app__touch-controls{ display: none; gap: 6px; flex-shrink: 0; }
 .tetris-app__touch-btn{ flex: 1; min-height: 46px; border-radius: 8px; border: none; background: rgba(255,255,255,.09); color: #fff; font-size: 1.05rem; display: flex; align-items: center; justify-content: center; touch-action: manipulation; -webkit-user-select: none; user-select: none; }
@@ -632,11 +635,20 @@ button{ font: inherit; }
   .slides-rail__item{ min-width: 76px; flex-shrink: 0; }
   .slides-rail__move{ display: none; }
   .slides-app__hint{ display: none; }
-  .present-stage-wrap{ padding: 8px; gap: 6px; }
-  .present-nav{ width: 32px; height: 32px; font-size: 14px; }
+  /* A strict 16:9 preview can't fill a narrow portrait window without either huge
+     dead space (width-driven) or sideways overflow (height-driven) — so on phones we
+     drop the fixed ratio and let the slide grow to a readable, content-sized card instead. */
+  .slides-app__canvas-wrap{ justify-content: flex-start; padding: 12px; }
+  .slides-canvas{ aspect-ratio: auto; min-height: 210px; padding: 18px 18px; }
+  .slides-canvas__title{ font-size: 1.15rem; }
+  .present-stage-wrap{ padding: 8px; gap: 6px; align-items: stretch; }
+  .present-nav{ width: 32px; height: 32px; font-size: 14px; align-self: center; }
+  .present-slide{ aspect-ratio: auto; max-width: 100%; padding: 7% 6%; }
   .present-slide__title{ font-size: 1.3rem; }
   .present-slide__subtitle{ font-size: .78rem; }
   .present-slide__body{ font-size: .78rem; }
+  .present-timeline__dots{ margin-top: -6px; }
+  .present-timeline__dot{ width: 8px; height: 8px; }
 }
 #slides-print-root{ display: none; }
 @media print{
@@ -663,7 +675,7 @@ button{ font: inherit; }
 .boot-splash__label{ font-size: 12px; color: rgba(255,255,255,.6); letter-spacing: 0.04em; }
 
 /* ---------------------------------------------------------------- windows */
-#window-host{ position: absolute; inset: 0; pointer-events: none; }
+#window-host{ position: fixed; inset: 0; pointer-events: none; }
 #window-host > .window{ pointer-events: auto; }
 
 .window{
@@ -1029,6 +1041,17 @@ button{ font: inherit; }
 .cv-doc li{ font-size: 0.88rem; line-height: 1.55; margin-bottom: 0.25rem; }
 .cv-doc .skills-row{ font-size: 0.85rem; margin-bottom: 0.4rem; }
 .cv-doc .skills-row b{ font-weight: 700; }
+@media (max-width: 560px){
+  /* Below 16px, iOS Safari auto-zooms the whole page in when a contenteditable field
+     is focused/tapped — since the entire résumé body is one editable region, keeping
+     everything under that threshold made the mobile editor feel tiny and jumpy. */
+  .cv-doc{ padding: 1.5rem 1.15rem 2.5rem; }
+  .cv-doc h1{ font-size: 1.4rem; }
+  .cv-doc__role{ font-size: 1rem; }
+  .cv-doc h2{ font-size: 1rem; }
+  .cv-doc p, .cv-doc li, .cv-doc .entry__head, .cv-doc .skills-row{ font-size: 1rem; }
+  .cv-doc .entry__meta{ font-size: 0.85rem; }
+}
 
 .recycle-bin{ padding: 1.25rem 1.4rem 1.5rem; font-size: 0.85rem; }
 .recycle-bin__count{ margin: 0 0 0.9rem; color: #6b6b72; font-size: 0.78rem; }
@@ -1218,6 +1241,13 @@ import { experiences } from './data/experiences.js';
   var STORE_PREFIX = "titoos:";
 
   function clampNum(v, min, max){ return Math.min(Math.max(v, min), Math.max(min, max)); }
+  // Prefer the visualViewport's height when available: on mobile, opening the on-screen
+  // keyboard shrinks it even in browsers where window.innerHeight (the layout viewport)
+  // stays put — using it keeps maximized windows sized to what's actually visible instead
+  // of stretching under the keyboard, which is what dragged window chrome out of reach.
+  function viewportHeight(){
+    return (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+  }
 
   function storeGet(key, fallback){
     try{
@@ -1230,6 +1260,17 @@ import { experiences } from './data/experiences.js';
   }
   function storeRemove(key){
     try{ sessionStorage.removeItem(STORE_PREFIX + key); }catch(e){}
+  }
+  // Same idea as storeGet/storeSet, but backed by localStorage — for the handful of
+  // things (like a Tetris high score) that should survive across visits, not just a tab.
+  function persistGet(key, fallback){
+    try{
+      var raw = localStorage.getItem(STORE_PREFIX + key);
+      return raw === null ? fallback : JSON.parse(raw);
+    }catch(e){ return fallback; }
+  }
+  function persistSet(key, value){
+    try{ localStorage.setItem(STORE_PREFIX + key, JSON.stringify(value)); }catch(e){}
   }
   function escapeHtml(s){
     return String(s).replace(/[&<>"']/g, function(c){
@@ -1592,6 +1633,10 @@ import { experiences } from './data/experiences.js';
     this.zCounter = 10;
     this.focusedId = null;
     this._subscribers = new Set();
+    // History-trap depth: one pushState per open window, so the browser back button
+    // closes the topmost window instead of navigating away from the whole site.
+    // Persisted across reloads so a refresh doesn't desync from leftover session-history entries.
+    this._historyDepth = storeGet("winHistoryDepth", 0);
   }
   WindowManager.prototype.subscribe = function(fn){
     this._subscribers.add(fn);
@@ -1632,17 +1677,20 @@ import { experiences } from './data/experiences.js';
       win.prevBounds = { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height };
       win.x = 0; win.y = 0;
       win.width = window.innerWidth;
-      win.height = window.innerHeight - TASKBAR_HEIGHT;
+      win.height = viewportHeight() - TASKBAR_HEIGHT;
       win.state = "maximized";
     }
     this.windows.set(id, win);
     this.focusedId = id;
+    this._historyDepth += 1;
+    storeSet("winHistoryDepth", this._historyDepth);
+    history.pushState({ titoDepth: this._historyDepth }, "", location.href);
     this._emit();
     return id;
   };
   WindowManager.prototype._computeSpawnBounds = function(app){
     var vw = window.innerWidth;
-    var vh = window.innerHeight - TASKBAR_HEIGHT;
+    var vh = viewportHeight() - TASKBAR_HEIGHT;
     var minW = (app.window && app.window.minWidth) || 260;
     var minH = (app.window && app.window.minHeight) || 180;
     var availW = Math.max(vw - SPAWN_MARGIN * 2, minW);
@@ -1659,10 +1707,19 @@ import { experiences } from './data/experiences.js';
     var y = clampNum(Math.round((vh - height) / 2) + cascade - 60, 0, Math.max(vh - height, 0));
     return { x: x, y: y, width: width, height: height };
   };
-  WindowManager.prototype.closeWindow = function(id){
+  WindowManager.prototype.closeWindow = function(id, _fromHistoryPop){
     if (!this.windows.has(id)) return;
     this.windows.delete(id);
     if (this.focusedId === id) this._focusTopmost();
+    if (this._historyDepth > 0){
+      this._historyDepth -= 1;
+      storeSet("winHistoryDepth", this._historyDepth);
+      // Normal close (X button, task manager, etc.): consume the matching history entry
+      // we pushed on open, so back/forward stay in sync. When the closure is a *result*
+      // of the popstate handler reacting to a real back press, the browser has already
+      // moved us back one step — calling history.back() again here would skip an extra entry.
+      if (!_fromHistoryPop) history.back();
+    }
     this._emit();
   };
   WindowManager.prototype.minimize = function(id){
@@ -1690,7 +1747,7 @@ import { experiences } from './data/experiences.js';
       win.prevBounds = { x: win.x, y: win.y, width: win.width, height: win.height };
       win.x = 0; win.y = 0;
       win.width = window.innerWidth;
-      win.height = window.innerHeight - TASKBAR_HEIGHT;
+      win.height = viewportHeight() - TASKBAR_HEIGHT;
       win.state = "maximized";
     }
     // Don't rely on focus() to broadcast this change — it now no-ops when the window
@@ -1707,7 +1764,7 @@ import { experiences } from './data/experiences.js';
       if (win.state !== "maximized") return;
       win.x = 0; win.y = 0;
       win.width = window.innerWidth;
-      win.height = window.innerHeight - TASKBAR_HEIGHT;
+      win.height = viewportHeight() - TASKBAR_HEIGHT;
       changed = true;
     });
     if (changed) this._emit();
@@ -1759,7 +1816,7 @@ import { experiences } from './data/experiences.js';
   /* ============================================================ drag / resize */
   function clampPosition(x, y, width, height){
     var vw = window.innerWidth;
-    var vh = window.innerHeight - TASKBAR_HEIGHT;
+    var vh = viewportHeight() - TASKBAR_HEIGHT;
     var minX = -(width - MIN_VISIBLE);
     var maxX = vw - MIN_VISIBLE;
     var minY = 0;
@@ -1806,7 +1863,7 @@ import { experiences } from './data/experiences.js';
       var dx = e.clientX - resizing.startX;
       var dy = e.clientY - resizing.startY;
       var maxWidth = window.innerWidth - resizing.left - 8;
-      var maxHeight = window.innerHeight - TASKBAR_HEIGHT - resizing.top - 8;
+      var maxHeight = viewportHeight() - TASKBAR_HEIGHT - resizing.top - 8;
       var width = clampNum(resizing.startWidth + dx, config.minWidth, Math.max(maxWidth, config.minWidth));
       var height = clampNum(resizing.startHeight + dy, config.minHeight, Math.max(maxHeight, config.minHeight));
       windowEl.style.width = width + "px";
@@ -1826,7 +1883,7 @@ import { experiences } from './data/experiences.js';
   function clampAllToViewport(wm){
     wm.reclampAll(function(win){
       var vw = window.innerWidth;
-      var vh = window.innerHeight - TASKBAR_HEIGHT;
+      var vh = viewportHeight() - TASKBAR_HEIGHT;
       var availW = Math.max(vw - SPAWN_MARGIN * 2, win.minWidth);
       var availH = Math.max(vh - SPAWN_MARGIN * 2, win.minHeight);
       var width = Math.min(win.width, availW);
@@ -1866,7 +1923,7 @@ import { experiences } from './data/experiences.js';
     document.body.appendChild(menu);
     var rect = menu.getBoundingClientRect();
     var left = Math.min(x, window.innerWidth - rect.width - 8);
-    var top = Math.min(y, window.innerHeight - TASKBAR_HEIGHT - rect.height - 8);
+    var top = Math.min(y, viewportHeight() - TASKBAR_HEIGHT - rect.height - 8);
     menu.style.left = Math.max(8, left) + "px";
     menu.style.top = Math.max(8, top) + "px";
     setTimeout(function(){
@@ -1926,7 +1983,7 @@ import { experiences } from './data/experiences.js';
     document.body.appendChild(panel);
     var rect = panel.getBoundingClientRect();
     var left = Math.min(x, window.innerWidth - rect.width - 8);
-    var top = Math.min(y, window.innerHeight - TASKBAR_HEIGHT - rect.height - 8);
+    var top = Math.min(y, viewportHeight() - TASKBAR_HEIGHT - rect.height - 8);
     panel.style.left = Math.max(8, left) + "px";
     panel.style.top = Math.max(8, top) + "px";
     panel.querySelectorAll(".personalize-swatch").forEach(function(btn){
@@ -2234,7 +2291,7 @@ import { experiences } from './data/experiences.js';
 
   function defaultPositions(appIds, container){
     var rowH = 92, colW = 92;
-    var h = container.clientHeight || (window.innerHeight - TASKBAR_HEIGHT - 190);
+    var h = container.clientHeight || (viewportHeight() - TASKBAR_HEIGHT - 190);
     var maxRows = Math.max(1, Math.floor(h / rowH));
     var positions = {};
     appIds.forEach(function(id, i){
@@ -2902,7 +2959,7 @@ import { experiences } from './data/experiences.js';
   var apps = [
     {
       id: "cv-pdf", title: "CV.pdf", icon: ICONS.pdf,
-      kind: "iframe", src: "assets/cv/cv_TitoNicolaDrugman.pdf", downloadable: true,
+      kind: "iframe", src: "assets/cv/cv_TitoNicolaDrugman.pdf#view=Fit", downloadable: true,
       singleInstance: true, desktopIcon: true, maximizeOnSmallViewport: true,
       window: { width: 760, height: 820, minWidth: 340, minHeight: 400, resizable: true, maximizable: true }
     },
@@ -3516,7 +3573,7 @@ import { experiences } from './data/experiences.js';
   var BOOKMARKS = [
     { title: "Wikipedia", icon: ICONS.wiki, kind: "internal", src: "wikipedia/index.html" },
     { title: "Timeline", icon: ICONS.timeline, kind: "internal", src: "timeline.html" },
-    { title: "CV (PDF)", icon: ICONS.pdf, kind: "internal", src: "assets/cv/cv_TitoNicolaDrugman.pdf" },
+    { title: "CV (PDF)", icon: ICONS.pdf, kind: "internal", src: "assets/cv/cv_TitoNicolaDrugman.pdf#view=Fit" },
     { title: "GitHub", icon: ICONS.github, kind: "external", src: "https://github.com/TitoNicolaDrugman" },
     { title: "LinkedIn", icon: ICONS.linkedin, kind: "external", src: "https://linkedin.com/in/titonicoladrugman" },
     { title: "Email", icon: null, kind: "external", src: "mailto:drugmantito@gmail.com" },
@@ -3887,7 +3944,7 @@ import { experiences } from './data/experiences.js';
                 '<a href="assets/cv/cv_TitoNicolaDrugman.pdf" download class="overleaf-app__error-cta">⬇ ' + t("overleaf.errorDownload") + "</a>" +
                 '<button type="button" id="ol-revert" class="overleaf-app__error-revert">' + t("overleaf.revert") + "</button>" +
               "</div>" +
-              '<iframe class="overleaf-app__pdf" id="ol-pdf" src="assets/cv/cv_TitoNicolaDrugman.pdf"></iframe>' +
+              '<iframe class="overleaf-app__pdf" id="ol-pdf" src="assets/cv/cv_TitoNicolaDrugman.pdf#view=Fit"></iframe>' +
             "</div>" +
           "</div>";
         var sourceEl = body.querySelector("#ol-source");
@@ -3929,7 +3986,7 @@ import { experiences } from './data/experiences.js';
                     errorEl.hidden = false;
                   } else {
                     pdfEl.hidden = false;
-                    pdfEl.src = "assets/cv/cv_TitoNicolaDrugman.pdf?_=" + Date.now();
+                    pdfEl.src = "assets/cv/cv_TitoNicolaDrugman.pdf?_=" + Date.now() + "#view=Fit";
                   }
                   btn.disabled = false;
                 }, 400);
@@ -4873,6 +4930,8 @@ import { experiences } from './data/experiences.js';
               '<canvas id="tetris-next" width="' + (CELL * 4) + '" height="' + (CELL * 4) + '"></canvas>' +
               '<p class="tetris-app__label">Score</p>' +
               '<p class="tetris-app__score" id="tetris-score">0</p>' +
+              '<p class="tetris-app__label">Best</p>' +
+              '<p class="tetris-app__score tetris-app__score--best" id="tetris-best">0</p>' +
               '<p class="tetris-app__label">Lines</p>' +
               '<p class="tetris-app__score" id="tetris-lines">0</p>' +
               '<p class="tetris-app__hint">Arrows: move / rotate<br>Space: hard drop</p>' +
@@ -4892,12 +4951,15 @@ import { experiences } from './data/experiences.js';
       var nextCanvas = container.querySelector("#tetris-next");
       var nextCtx = nextCanvas.getContext("2d");
       var scoreEl = container.querySelector("#tetris-score");
+      var bestEl = container.querySelector("#tetris-best");
       var linesEl = container.querySelector("#tetris-lines");
       var overlay = container.querySelector("#tetris-overlay");
 
       var board = [];
       for (var r0 = 0; r0 < ROWS; r0++) board.push(new Array(COLS).fill(null));
 
+      var best = persistGet("tetrisBest", 0);
+      bestEl.textContent = String(best);
       var score = 0, lines = 0, level = 1;
       var current = null, next = null;
       var dropTimer = null;
@@ -4918,6 +4980,11 @@ import { experiences } from './data/experiences.js';
       function updateStats(){
         scoreEl.textContent = String(score);
         linesEl.textContent = String(lines);
+        if (score > best){
+          best = score;
+          persistSet("tetrisBest", best);
+          bestEl.textContent = String(best);
+        }
       }
       function restartDropTimer(){
         clearInterval(dropTimer);
@@ -4946,8 +5013,8 @@ import { experiences } from './data/experiences.js';
         }
         current = next;
         next = spawnPiece(randomType());
-        if (collides(current.cells, current.x, current.y)) endGame();
         updateStats();
+        if (collides(current.cells, current.x, current.y)) endGame();
       }
       function move(dx, dy){
         if (gameOver || !current) return false;
@@ -4977,8 +5044,11 @@ import { experiences } from './data/experiences.js';
       function endGame(){
         gameOver = true;
         clearInterval(dropTimer);
+        var isNewBest = score > 0 && score >= best;
         overlay.hidden = false;
-        overlay.innerHTML = '<p>Game over</p><p class="tetris-app__overlay-score">Score: ' + score + '</p><button type="button" id="tetris-restart">Play again</button>';
+        overlay.innerHTML = '<p>Game over</p><p class="tetris-app__overlay-score">Score: ' + score + '</p>' +
+          '<p class="tetris-app__overlay-best' + (isNewBest ? " is-new" : "") + '">' + (isNewBest ? "New best!" : "Best to beat: " + best) + "</p>" +
+          '<button type="button" id="tetris-restart">Play again</button>';
         overlay.querySelector("#tetris-restart").addEventListener("click", function(){ resetGame(); });
       }
       function resetGame(){
@@ -5408,11 +5478,42 @@ import { experiences } from './data/experiences.js';
   showBootSplash();
 
   var resizeTimer = null;
-  window.addEventListener("resize", function(){
+  function onViewportResize(){
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function(){ clampAllToViewport(wm); wm.refreshMaximized(); }, 120);
-  });
+  }
+  window.addEventListener("resize", onViewportResize);
   window.addEventListener("orientationchange", function(){ clampAllToViewport(wm); wm.refreshMaximized(); });
+  // Some mobile browsers don't fire window "resize" when the on-screen keyboard opens —
+  // only visualViewport shrinks. Without this, a maximized window (Terminal, say) keeps
+  // its old full-screen height while the browser scrolls the focused input into view,
+  // dragging the whole window (titlebar included) up and out of easy reach.
+  if (window.visualViewport){
+    window.visualViewport.addEventListener("resize", onViewportResize);
+  }
+
+  // Back button closes the topmost open window instead of leaving the whole site —
+  // only when nothing is left open does back fall through to real browser navigation.
+  if (!history.state || typeof history.state.titoDepth !== "number"){
+    history.replaceState({ titoDepth: wm._historyDepth }, "", location.href);
+  }
+  window.addEventListener("popstate", function(e){
+    var newDepth = (e.state && typeof e.state.titoDepth === "number") ? e.state.titoDepth : 0;
+    if (newDepth < wm._historyDepth){
+      while (wm._historyDepth > newDepth && wm.windows.size > 0){
+        var topmost = null;
+        wm.windows.forEach(function(w){ if (!topmost || w.zIndex > topmost.zIndex) topmost = w; });
+        if (!topmost) break;
+        wm.closeWindow(topmost.id, true);
+      }
+      wm._historyDepth = newDepth;
+      storeSet("winHistoryDepth", newDepth);
+    } else if (newDepth > wm._historyDepth){
+      // Forward into a stale "window open" entry from an already-closed window — there's
+      // nothing to restore, so cancel the forward navigation rather than doing nothing.
+      history.back();
+    }
+  });
 })();
 </script>
 </body>

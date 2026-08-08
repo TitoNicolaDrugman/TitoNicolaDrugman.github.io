@@ -205,8 +205,8 @@ html.no-motion .flash-target{animation:none;background:#fff6c2;}
 .toc-inline{display:none;}
 
 .refs-list{font-size:.85em;list-style:none;margin:0;padding:0;counter-reset:refN;}
-.refs-list li{display:flex;gap:6px;margin:0 0 5px;padding:2px 4px;border-radius:3px;}
-.refs-list li::before{counter-increment:refN;content:counter(refN) ".";color:var(--muted);flex:none;}
+.refs-list li{margin:0 0 5px;padding:2px 4px 2px 2.1em;border-radius:3px;text-indent:-2.1em;}
+.refs-list li::before{counter-increment:refN;content:counter(refN) ".";color:var(--muted);margin-right:6px;}
 .refs-list a.back{margin-right:2px;}
 
 .catlinks{border:1px solid var(--border-light);background:var(--box-bg);padding:8px 12px;margin-top:26px;font-size:.82em;}
