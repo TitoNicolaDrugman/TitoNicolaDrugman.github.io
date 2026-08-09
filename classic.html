@@ -5,86 +5,709 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tito Nicola Drugman — AI Engineer</title>
 <meta name="description" content="Tito Nicola Drugman — AI/ML engineer building on-premises, constrained AI systems: quantised transformers on microcontrollers, local LLM + RAG stacks and vision-language web agents.">
-<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121214" media="(prefers-color-scheme: dark)">
-<link rel="stylesheet" href="styles/global.css">
-<noscript><style>.reveal{opacity:1 !important; translate:0 0 !important;}</style></noscript>
+<meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f4ef;
+    --paper-line:rgba(22,26,32,.08);
+    --paper-line-strong:rgba(22,26,32,.18);
+    --ink:#14181f;
+    --ink-soft:#454b54;
+    --muted:#6b7280;
+    --blue:#1d4ed8;
+    --blue-soft:#e7edfc;
+    --rust:#c2540e;
+    --rust-soft:#fbe9dd;
+    --teal:#0f766e;
+    --violet:#6d28d9;
+    --card:#fffdf9;
+    --border:rgba(22,26,32,.2);
+    --border-soft:rgba(22,26,32,.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#0b1220;
+      --paper-line:rgba(140,180,255,.075);
+      --paper-line-strong:rgba(140,180,255,.16);
+      --ink:#eef2f9;
+      --ink-soft:#c3cad6;
+      --muted:#8b93a3;
+      --blue:#6ea8fe;
+      --blue-soft:rgba(110,168,254,.13);
+      --rust:#f0955a;
+      --rust-soft:rgba(240,149,90,.13);
+      --teal:#4fd1c5;
+      --violet:#b794f6;
+      --card:#0f1726;
+      --border:rgba(140,180,255,.28);
+      --border-soft:rgba(140,180,255,.16);
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    background-image:
+      linear-gradient(var(--paper-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+    background-size:26px 26px;
+  }
+  a{color:var(--blue)}
+  .mono{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace}
+  .disp{font-family:'Space Grotesk',-apple-system,sans-serif}
+  ::selection{background:var(--blue);color:var(--paper)}
+
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);padding:10px 16px;z-index:200;font-family:'JetBrains Mono',monospace;font-size:13px}
+  .skip-link:focus{left:12px;top:12px}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i,0) * 70ms)}
+  .reveal.is-visible{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  }
+
+  /* ---------- registration marks / crosshairs ---------- */
+  .reg{position:absolute;width:14px;height:14px;pointer-events:none;opacity:.55}
+  .reg::before,.reg::after{content:"";position:absolute;background:var(--ink)}
+  .reg::before{left:50%;top:0;width:1px;height:100%;transform:translateX(-50%)}
+  .reg::after{top:50%;left:0;height:1px;width:100%;transform:translateY(-50%)}
+  .reg--tl{top:10px;left:10px}
+  .reg--tr{top:10px;right:10px}
+  .reg--bl{bottom:10px;left:10px}
+  .reg--br{bottom:10px;right:10px}
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;gap:18px;
+    padding:14px 28px;
+    background:var(--paper);
+    border-bottom:1px solid var(--border);
+    backdrop-filter:none;
+  }
+  .topbar__mark{
+    display:flex;align-items:center;gap:8px;white-space:nowrap;
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--ink);
+  }
+  .topbar__mark svg{flex:none}
+  .topbar__nav{display:flex;gap:22px;margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:.09em}
+  .topbar__nav a{color:var(--muted);text-decoration:none;padding:4px 0;border-bottom:1px solid transparent;transition:color .18s,border-color .18s;white-space:nowrap}
+  .topbar__nav a:hover{color:var(--ink);border-color:var(--ink)}
+  .topbar__nav a.ext{color:var(--blue)}
+  @media (max-width:760px){
+    .topbar{padding:12px 16px;gap:6px;flex-wrap:wrap;row-gap:8px}
+    .topbar__mark{font-size:11px}
+    .topbar__nav{flex-basis:100%;margin-left:0;gap:12px;font-size:10.5px;overflow-x:auto;-webkit-overflow-scrolling:touch;mask-image:linear-gradient(90deg,#000 88%,transparent)}
+  }
+
+  main{max-width:1180px;margin:0 auto;padding:0 28px}
+  @media (max-width:760px){ main{padding:0 16px} }
+
+  .fig-label{
+    display:flex;align-items:center;gap:12px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.14em;color:var(--muted);
+    margin-bottom:18px;
+  }
+  .fig-label::after{content:"";flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--border) 0 6px,transparent 6px 11px)}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:64px 0 70px;
+    border-bottom:1px solid var(--border);
+  }
+  .hero__frame{position:relative;padding:26px 26px 30px;border:1px solid var(--border-soft)}
+  .hero__eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .hero__eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px var(--blue-soft)}
+  .hero__title{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(34px,6vw,64px);line-height:1.04;letter-spacing:-.02em;
+    max-width:15ch;
+  }
+  .hero__title em{font-style:normal;color:var(--blue)}
+  .hero__rule{width:0;height:1px;background:var(--ink);margin:22px 0;transition:width .9s cubic-bezier(.2,.7,.2,1) .1s}
+  .reveal.is-visible .hero__rule{width:min(420px,100%)}
+  @media (prefers-reduced-motion:reduce){ .hero__rule{width:min(420px,100%)} }
+  .hero__lede{font-size:18px;line-height:1.6;color:var(--ink-soft);max-width:56ch;margin-bottom:10px}
+  .hero__grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:start;margin-top:34px}
+  @media (max-width:900px){ .hero__grid{grid-template-columns:1fr;gap:30px} }
+
+  .spec{border:1px solid var(--border);background:var(--card)}
+  .spec__head{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+  .spec dt{padding:11px 14px;border-bottom:1px solid var(--border-soft);border-right:1px solid var(--border-soft);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .spec dd{padding:11px 14px;border-bottom:1px solid var(--border-soft);font-size:14.5px;color:var(--ink)}
+  .spec dl > dt:last-of-type, .spec dl > dd:last-of-type{border-bottom:none}
+
+  .hero__cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .btn{
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    padding:11px 16px;border:1px solid var(--ink);color:var(--ink);text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;transition:background .16s,color .16s;
+  }
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  .btn--solid{background:var(--blue);border-color:var(--blue);color:#fff}
+  .btn--solid:hover{background:var(--ink);border-color:var(--ink)}
+
+  .hero__diagram{position:absolute;right:10px;top:18px;width:220px;height:150px;opacity:.85;pointer-events:none}
+  @media (max-width:1050px){ .hero__diagram{display:none} }
+  .hero__diagram path{fill:none;stroke:var(--blue);stroke-width:1.4;stroke-dasharray:340;stroke-dashoffset:340;transition:stroke-dashoffset 1.6s cubic-bezier(.2,.7,.2,1) .2s}
+  .hero__diagram circle{fill:var(--paper);stroke:var(--blue);stroke-width:1.4;opacity:0;transition:opacity .5s ease .9s}
+  .reveal.is-visible .hero__diagram path{stroke-dashoffset:0}
+  .reveal.is-visible .hero__diagram circle{opacity:1}
+  @media (prefers-reduced-motion:reduce){
+    .hero__diagram path{stroke-dashoffset:0}
+    .hero__diagram circle{opacity:1}
+  }
+
+  .coord-readout{
+    position:absolute;pointer-events:none;z-index:5;
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--blue);
+    background:var(--paper);border:1px solid var(--border);padding:2px 6px;
+    transform:translate(12px,-26px);opacity:0;transition:opacity .15s;white-space:nowrap;
+  }
+  .coord-readout.is-active{opacity:.9}
+
+  /* ---------- sections ---------- */
+  section{padding:64px 0;border-bottom:1px solid var(--border)}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:34px;flex-wrap:wrap}
+  h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;line-height:1.1}
+  h2 em{font-style:normal;color:var(--blue)}
+  .section-sub{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);max-width:34ch;line-height:1.6;text-align:right}
+  @media (max-width:760px){ .section-sub{text-align:left} }
+
+  /* ---------- about ---------- */
+  .about__grid{display:grid;grid-template-columns:1.5fr 1fr;gap:50px}
+  @media (max-width:860px){ .about__grid{grid-template-columns:1fr;gap:30px} }
+  .about__grid p{font-size:16.5px;color:var(--ink-soft);margin-bottom:16px;max-width:64ch}
+  .about__grid p .hi{background:var(--blue-soft);padding:0 5px;color:var(--ink)}
+  .stat-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
+  .stat{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:18px 2px;border-bottom:1px solid var(--border)}
+  .stat__num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;color:var(--rust);white-space:nowrap}
+  .stat__lbl{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);text-align:right;line-height:1.5}
+
+  /* ---------- skills ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--border);border-left:1px solid var(--border)}
+  @media (max-width:860px){ .skills-grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:560px){ .skills-grid{grid-template-columns:1fr} }
+  .skill-panel{border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 20px 22px;background:var(--card)}
+  .skill-panel__head{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+  .skill-panel__code{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--blue);border:1px solid var(--blue);padding:1px 6px}
+  .skill-panel__title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14.5px}
+  .chip-row{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:4px 8px;border:1px solid var(--border);color:var(--ink-soft);background:transparent}
+
+  /* ---------- work ---------- */
+  .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  @media (max-width:760px){ .work-grid{grid-template-columns:1fr} }
+  .wcard{border:1px solid var(--border);background:var(--card);padding:22px 24px 24px;display:flex;flex-direction:column;gap:12px;position:relative}
+  .wcard__num{position:absolute;top:-1px;right:-1px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);border:1px solid var(--border);border-top:none;border-right:none;padding:3px 8px}
+  .wcard__title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;line-height:1.25;max-width:88%}
+  .wcard__meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.02em}
+  .wcard__summary{font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+  .wcard__metric{
+    display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--rust);
+    background:var(--rust-soft);border:1px solid var(--rust);padding:5px 10px;
+  }
+  .wcard__metric::before{content:"↳"}
+  .wcard__tags{display:flex;flex-wrap:wrap;gap:6px}
+  .wcard__tags span{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);border:1px solid var(--border-soft);padding:2px 7px}
+  .wcard__link{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--blue);text-decoration:none;margin-top:auto;padding-top:4px}
+  .wcard__link:hover{text-decoration:underline}
+  .work-more{margin-top:26px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:13px}
+  .work-more a{color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px solid var(--blue)}
+
+  /* ---------- footer / title block ---------- */
+  footer{padding:50px 0 40px}
+  .foot-links{display:flex;flex-wrap:wrap;gap:26px;margin-bottom:40px;font-family:'JetBrains Mono',monospace;font-size:12.5px;text-transform:uppercase;letter-spacing:.06em}
+  .foot-links a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border-strong,var(--ink));padding-bottom:2px}
+  .foot-links a:hover{color:var(--blue);border-color:var(--blue)}
+  .title-block{border:1px solid var(--border);display:flex;flex-wrap:wrap}
+  .title-block__cell{flex:1 1 140px;padding:10px 14px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .title-block__cell:last-child{border-right:none}
+  .title-block__cell b{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:600}
+  .title-block__cell span{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--ink)}
+
+  /* ---------- desk props (draggable, float, throw) ---------- */
+  .desk-props{position:fixed;inset:0;pointer-events:none;z-index:40}
+  .desk-prop{position:absolute;pointer-events:auto;cursor:grab;touch-action:none;filter:drop-shadow(3px 5px 6px rgba(20,26,32,.28));transition:filter .2s ease}
+  .desk-prop:active,.desk-prop.is-dragging{cursor:grabbing;filter:drop-shadow(6px 10px 12px rgba(20,26,32,.4))}
+  .desk-prop svg{display:block}
+  .desk-prop__float{animation:prop-float 4.6s ease-in-out infinite}
+  .desk-prop--cpu .desk-prop__float{animation-duration:4.2s}
+  .desk-prop--gpu .desk-prop__float{animation-duration:5.4s;animation-delay:-1.1s}
+  .desk-prop--calc .desk-prop__float{animation-duration:4.9s;animation-delay:-2.3s}
+  @keyframes prop-float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+  .desk-prop.is-dragging .desk-prop__float, .desk-prop.is-throwing .desk-prop__float{animation-play-state:paused}
+  .gpu-fan{animation:gpu-spin 1s linear infinite}
+  @keyframes gpu-spin{ to{transform:rotate(360deg)} }
+  @media (prefers-reduced-motion:reduce){ .gpu-fan{animation:none} }
+  @media (prefers-color-scheme:dark){
+    .desk-prop{filter:drop-shadow(3px 5px 6px rgba(0,0,0,.55))}
+    .desk-prop:active,.desk-prop.is-dragging{filter:drop-shadow(6px 10px 14px rgba(0,0,0,.7))}
+  }
+  .desk-prop--cpu{left:20px;bottom:24px}
+  .desk-prop--gpu{right:20px;bottom:20px}
+  .desk-prop--calc{right:28px;top:92px}
+  @media (max-width:1000px), (pointer:coarse){ .desk-props{display:none} }
+  @media (prefers-reduced-motion:reduce){ .desk-prop{transition:none} .desk-prop__float{animation:none} }
+</style>
 </head>
 <body>
 
-<div class="mesh-bg" aria-hidden="true">
-  <span class="mesh-blob mesh-blob--1"></span>
-  <span class="mesh-blob mesh-blob--2"></span>
-  <span class="mesh-blob mesh-blob--3"></span>
-  <span class="mesh-blob mesh-blob--4"></span>
-</div>
-
 <a class="skip-link" href="#main">Skip to content</a>
 
-<nav class="nav material">
-  <a href="#top" class="nav__logo">Tito Nicola Drugman</a>
-  <div class="nav__links">
-    <a href="index.html">Desktop version ↗</a>
-    <a href="#career">Timeline</a>
-    <a href="timeline.html">Full record ↗</a>
-    <a href="mailto:drugmantito@gmail.com">Contact</a>
+<div class="desk-props" aria-hidden="true">
+  <div class="desk-prop desk-prop--cpu" data-id="cpu" data-tilt="-5deg" style="transform:rotate(-5deg)">
+    <div class="desk-prop__float"><svg viewBox="0 0 70 70" width="70" height="70" fill="none">
+      <g stroke="var(--ink)" stroke-width="2" stroke-linecap="round">
+        <line x1="8" y1="24" x2="14" y2="24"/><line x1="8" y1="35" x2="14" y2="35"/><line x1="8" y1="46" x2="14" y2="46"/>
+        <line x1="56" y1="24" x2="62" y2="24"/><line x1="56" y1="35" x2="62" y2="35"/><line x1="56" y1="46" x2="62" y2="46"/>
+        <line x1="24" y1="8" x2="24" y2="14"/><line x1="35" y1="8" x2="35" y2="14"/><line x1="46" y1="8" x2="46" y2="14"/>
+        <line x1="24" y1="56" x2="24" y2="62"/><line x1="35" y1="56" x2="35" y2="62"/><line x1="46" y1="56" x2="46" y2="62"/>
+      </g>
+      <rect x="14" y="14" width="42" height="42" rx="2" fill="var(--card)" stroke="var(--ink)" stroke-width="1.8"/>
+      <g fill="var(--blue)" fill-opacity=".18" stroke="var(--blue)" stroke-width="1.1">
+        <rect x="23" y="23" width="11" height="11" rx="1"/>
+        <rect x="36" y="23" width="11" height="11" rx="1"/>
+        <rect x="23" y="36" width="11" height="11" rx="1"/>
+        <rect x="36" y="36" width="11" height="11" rx="1"/>
+      </g>
+    </svg></div>
   </div>
-</nav>
+  <div class="desk-prop desk-prop--gpu" data-id="gpu" data-tilt="6deg" style="transform:rotate(6deg)">
+    <div class="desk-prop__float"><svg viewBox="0 0 120 44" width="120" height="44" fill="none">
+      <rect x="2" y="8" width="116" height="28" rx="4" fill="var(--card)" stroke="var(--ink)" stroke-width="1.6"/>
+      <rect x="4" y="9.5" width="112" height="4" rx="2" fill="var(--blue)"/>
+      <rect x="0" y="8" width="8" height="28" rx="2" fill="var(--ink)"/>
+      <g stroke="var(--ink)" stroke-width="1.5">
+        <circle cx="42" cy="26" r="13" fill="var(--paper)"/>
+        <g class="gpu-fan" style="transform-origin:42px 26px">
+          <line x1="42" y1="22" x2="42" y2="15" stroke-width="2.4" stroke-linecap="round"/>
+          <line x1="44.5" y1="27.5" x2="50" y2="32" stroke-width="2.4" stroke-linecap="round"/>
+          <line x1="39.5" y1="27.5" x2="34" y2="32" stroke-width="2.4" stroke-linecap="round"/>
+        </g>
+        <circle cx="42" cy="26" r="3" fill="var(--ink)" stroke="none"/>
+        <circle cx="80" cy="26" r="13" fill="var(--paper)"/>
+        <g class="gpu-fan" style="transform-origin:80px 26px;animation-direction:reverse">
+          <line x1="80" y1="22" x2="80" y2="15" stroke-width="2.4" stroke-linecap="round"/>
+          <line x1="82.5" y1="27.5" x2="88" y2="32" stroke-width="2.4" stroke-linecap="round"/>
+          <line x1="77.5" y1="27.5" x2="72" y2="32" stroke-width="2.4" stroke-linecap="round"/>
+        </g>
+        <circle cx="80" cy="26" r="3" fill="var(--ink)" stroke="none"/>
+      </g>
+    </svg></div>
+  </div>
+  <div class="desk-prop desk-prop--calc" data-id="calc" data-tilt="-8deg" style="transform:rotate(-8deg)">
+    <div class="desk-prop__float"><svg viewBox="0 0 64 92" width="64" height="92" fill="none">
+      <rect x="2" y="2" width="60" height="88" rx="6" fill="var(--card)" stroke="var(--ink)" stroke-width="1.3"/>
+      <rect x="8" y="8" width="48" height="16" rx="1.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1"/>
+      <g stroke="var(--ink)" stroke-width=".9">
+        <rect x="8" y="30" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="21" y="30" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="34" y="30" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="47" y="30" width="9" height="9" rx="1.5" fill="var(--blue)" fill-opacity=".22" stroke="var(--blue)"/>
+        <rect x="8" y="43" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="21" y="43" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="34" y="43" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="47" y="43" width="9" height="9" rx="1.5" fill="var(--blue)" fill-opacity=".22" stroke="var(--blue)"/>
+        <rect x="8" y="56" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="21" y="56" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="34" y="56" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="47" y="56" width="9" height="9" rx="1.5" fill="var(--blue)" fill-opacity=".22" stroke="var(--blue)"/>
+        <rect x="8" y="69" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="21" y="69" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="34" y="69" width="9" height="9" rx="1.5" fill="var(--card)"/><rect x="47" y="69" width="9" height="9" rx="1.5" fill="var(--rust)" fill-opacity=".25" stroke="var(--rust)"/>
+      </g>
+    </svg></div>
+  </div>
+</div>
+
+<header class="topbar">
+  <a class="topbar__mark" href="#top">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="1" width="14" height="14"/><path d="M1 5.5h14M5.5 1v14"/></svg>
+    Tito Nicola Drugman
+  </a>
+  <nav class="topbar__nav" aria-label="Section navigation">
+    <a href="#about">Profile</a>
+    <a href="#skills">Toolbox</a>
+    <a href="#work">Work</a>
+    <a href="timeline.html" class="ext">Full timeline ↗</a>
+    <a href="index.html" class="ext">Desktop OS ↗</a>
+    <a href="wikipedia/index.html" class="ext">Wikipedia ↗</a>
+  </nav>
+</header>
 
 <main id="main">
 
   <!-- ============ HERO ============ -->
-  <header class="hero" id="top">
-    <p class="eyebrow reveal">AI Engineer · On-Premises Systems</p>
-    <h1 class="hero__title type-display">
-      <span class="reveal" style="--i:1">Building</span>
-      <span class="reveal" style="--i:2">on-premises</span>
-      <span class="reveal" style="--i:3">intelligence.</span>
-    </h1>
-    <p class="hero__lede type-lede reveal" style="--i:4">
-      I build AI that runs where the data lives — quantised transformers on microcontrollers, self-hosted LLM and RAG stacks and vision-language agents that never touch a third-party API.
-    </p>
-    <div class="hero__meta reveal" style="--i:5">
-      <span class="live">Incoming — AI Traineeship, European Court of Auditors · Oct 2026</span>
-      <span>Milano ⇄ Luxembourg</span>
-    </div>
-  </header>
+  <section class="hero" id="top">
+    <div class="hero__frame">
+      <span class="reg reg--tl" aria-hidden="true"></span>
+      <span class="reg reg--tr" aria-hidden="true"></span>
 
-  <!-- ============ CAREER & EDUCATION ============ -->
-  <section class="section-timeline" id="career">
-    <div class="section-timeline__head">
-      <p class="eyebrow reveal">The record</p>
-      <h2 class="type-h2 reveal">Career &amp; education.</h2>
-      <p class="section-timeline__lede reveal">Seven stops in order — degrees, day jobs and the exchange semester in between.</p>
+      <svg class="hero__diagram" viewBox="0 0 220 150" aria-hidden="true">
+        <path d="M14 40 L78 22 M14 40 L78 78 M14 40 L78 120 M78 22 L150 55 M78 78 L150 55 M78 78 L150 110 M78 120 L150 110 M150 55 L206 40 M150 55 L206 75 M150 110 L206 95 M150 110 L206 120"/>
+        <circle cx="14" cy="40" r="4"/><circle cx="78" cy="22" r="4"/><circle cx="78" cy="78" r="4"/><circle cx="78" cy="120" r="4"/>
+        <circle cx="150" cy="55" r="4"/><circle cx="150" cy="110" r="4"/>
+        <circle cx="206" cy="40" r="4"/><circle cx="206" cy="75" r="4"/><circle cx="206" cy="95" r="4"/><circle cx="206" cy="120" r="4"/>
+      </svg>
+
+      <div class="hero__eyebrow reveal"><span class="dot"></span>AI Engineer · On-Premises Systems · Milan</div>
+
+      <h1 class="hero__title reveal" style="--i:1">Building on-premises <em>intelligence.</em></h1>
+
+      <div class="hero__rule reveal" style="--i:2"></div>
+
+      <p class="hero__lede reveal" style="--i:2">
+        I build AI that runs where the data lives — quantised transformers on microcontroller NPUs, self-hosted LLM and RAG stacks, and vision-language agents that never touch a third-party API.
+      </p>
+
+      <div class="hero__grid">
+        <div class="hero__cta reveal" style="--i:3">
+          <a class="btn btn--solid" href="assets/cv/cv_TitoNicolaDrugman.pdf" download>↓ Download CV (PDF)</a>
+          <a class="btn" href="timeline.html">View full timeline →</a>
+          <a class="btn" href="https://github.com/TitoNicolaDrugman" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn" href="mailto:drugmantito@gmail.com">Email</a>
+        </div>
+
+        <aside class="spec reveal" style="--i:3">
+          <div class="spec__head"><span>Spec sheet</span><span>001</span></div>
+          <dl>
+            <dt>Role</dt><dd>AI Engineer · MSc Candidate</dd>
+            <dt>Current</dt><dd>MSc Computer Science &amp; Engineering (AI) — Politecnico di Milano</dd>
+            <dt>Incoming</dt><dd>AI Traineeship, European Court of Auditors — Oct 2026, Luxembourg</dd>
+            <dt>Base</dt><dd>Milan, Italy ⇄ Luxembourg</dd>
+            <dt>Languages</dt><dd>Italian (native) · English (C2 listening / C1)</dd>
+            <dt>Stack</dt><dd>Python · PyTorch · Ollama · Linux</dd>
+          </dl>
+        </aside>
+      </div>
+
+      <span class="reg reg--bl" aria-hidden="true"></span>
+      <span class="reg reg--br" aria-hidden="true"></span>
     </div>
-    <ol class="timeline" id="career-list" role="list" aria-label="Chronological timeline of education, work and exchange experience"></ol>
   </section>
 
-  <!-- ============ PROJECTS & RESEARCH ============ -->
-  <section class="section-timeline" id="projects">
-    <div class="section-timeline__head">
-      <p class="eyebrow reveal">Selected work</p>
-      <h2 class="type-h2 reveal">Projects &amp; research.</h2>
-      <p class="section-timeline__lede reveal">Nine systems, benchmarked and shipped — from course research to hackathon wins.</p>
+  <!-- ============ ABOUT ============ -->
+  <section id="about">
+    <div class="section-head">
+      <div>
+        <p class="fig-label reveal">Fig. 01 — Profile</p>
+        <h2 class="reveal" style="--i:1">Reproducible AI, <em>on hardware you control.</em></h2>
+      </div>
+      <p class="section-sub reveal" style="--i:1">On-premises deployment, secure execution and documentation discipline — plus a decade of translating dense technical material for non-technical audiences.</p>
     </div>
-    <ol class="timeline timeline--projects" id="projects-list" role="list" aria-label="Chronological list of projects and research work"></ol>
+
+    <div class="about__grid">
+      <div>
+        <p class="reveal" style="--i:2">M.Sc. Computer Science &amp; Engineering student <span class="hi">(AI track)</span> at Politecnico di Milano, with hands-on experience deploying open-source AI on local Linux infrastructure under strict data-sovereignty and hardware constraints — from Transformers running locally on STM32 NPUs, to Retrieval-Augmented Generation pipelines over <span class="hi">7,600+ document</span> knowledge bases, to vision-language document-classification workflows. All on local hardware, minimising third-party API dependencies.</p>
+        <p class="reveal" style="--i:3">Focused on reproducible AI systems: secure execution, confidentiality, and systematic documentation of every experiment and configuration — version-controlled Conda environments, logged runs, nothing tribal-knowledge-only. Daily Ubuntu Linux user.</p>
+        <p class="reveal" style="--i:4">Alongside the engineering, several years spent making complex technical content land with mixed audiences: as a certified industrial-robotics trainer for FANUC and COMAU platforms, and as a guide at Milan's Leonardo da Vinci Science Museum. It's the same skill either way — knowing what to cut.</p>
+      </div>
+      <div class="stat-list">
+        <div class="stat reveal" style="--i:2"><span class="stat__num">7,600+</span><span class="stat__lbl">documents indexed in the on-prem RAG knowledge base</span></div>
+        <div class="stat reveal" style="--i:3"><span class="stat__num">4.56M</span><span class="stat__lbl">parameter transformer, trained from scratch and run on a microcontroller NPU</span></div>
+        <div class="stat reveal" style="--i:4"><span class="stat__num">2×</span><span class="stat__lbl">RTX 5060 Ti — the on-prem workstation everything above actually runs on</span></div>
+        <div class="stat reveal" style="--i:5"><span class="stat__num">0</span><span class="stat__lbl">external API calls in any of the projects below</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills">
+    <div class="section-head">
+      <div>
+        <p class="fig-label reveal">Fig. 02 — Toolbox</p>
+        <h2 class="reveal" style="--i:1">Parts list.</h2>
+      </div>
+      <p class="section-sub reveal" style="--i:1">Grouped the way I actually reach for them, not alphabetised for show.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-panel reveal">
+        <div class="skill-panel__head"><span class="skill-panel__code">§A</span><span class="skill-panel__title">Local AI &amp; On-Prem</span></div>
+        <div class="chip-row">
+          <span class="chip">Ollama</span><span class="chip">llama.cpp</span><span class="chip">HF Transformers</span><span class="chip">bitsandbytes (NF4)</span><span class="chip">Qwen3-VL</span><span class="chip">OpenRouter</span><span class="chip">API-free pipelines</span>
+        </div>
+      </div>
+      <div class="skill-panel reveal" style="--i:1">
+        <div class="skill-panel__head"><span class="skill-panel__code">§B</span><span class="skill-panel__title">Systems &amp; Infra</span></div>
+        <div class="chip-row">
+          <span class="chip">Ubuntu Linux</span><span class="chip">SSH</span><span class="chip">Bash</span><span class="chip">Docker</span><span class="chip">Podman</span><span class="chip">VPN workstations</span>
+        </div>
+      </div>
+      <div class="skill-panel reveal" style="--i:2">
+        <div class="skill-panel__head"><span class="skill-panel__code">§C</span><span class="skill-panel__title">LLMs &amp; RAG</span></div>
+        <div class="chip-row">
+          <span class="chip">BM25</span><span class="chip">CodeBERT</span><span class="chip">Reciprocal Rank Fusion</span><span class="chip">Query decomposition</span><span class="chip">CodeLlama</span><span class="chip">DeepSeek-V3</span><span class="chip">Llama-3</span>
+        </div>
+      </div>
+      <div class="skill-panel reveal">
+        <div class="skill-panel__head"><span class="skill-panel__code">§D</span><span class="skill-panel__title">AI / ML</span></div>
+        <div class="chip-row">
+          <span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">Keras</span><span class="chip">scikit-learn</span><span class="chip">Quantisation</span><span class="chip">Computer Vision</span>
+        </div>
+      </div>
+      <div class="skill-panel reveal" style="--i:1">
+        <div class="skill-panel__head"><span class="skill-panel__code">§E</span><span class="skill-panel__title">Programming</span></div>
+        <div class="chip-row">
+          <span class="chip">Python</span><span class="chip">Git / GitHub</span><span class="chip">SQL</span><span class="chip">LaTeX</span><span class="chip">C</span><span class="chip">Java</span>
+        </div>
+      </div>
+      <div class="skill-panel reveal" style="--i:2">
+        <div class="skill-panel__head"><span class="skill-panel__code">§F</span><span class="skill-panel__title">Data &amp; Tools</span></div>
+        <div class="chip-row">
+          <span class="chip">NumPy</span><span class="chip">Pandas</span><span class="chip">GeoPandas</span><span class="chip">Xarray</span><span class="chip">MongoDB</span><span class="chip">Selenium</span><span class="chip">Jupyter</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SELECTED WORK ============ -->
+  <section id="work">
+    <div class="section-head">
+      <div>
+        <p class="fig-label reveal">Fig. 03 — Selected work</p>
+        <h2 class="reveal" style="--i:1">Four systems, <em>benchmarked.</em></h2>
+      </div>
+      <p class="section-sub reveal" style="--i:1">Every number below is from the repo's own eval run — not a claim.</p>
+    </div>
+
+    <div class="work-grid">
+      <article class="wcard reveal">
+        <span class="wcard__num">P.01</span>
+        <h3 class="wcard__title">Transformer on the NPU of an STM32N6</h3>
+        <p class="wcard__meta">Advanced Computer Architectures, Polimi — Mar–Sep 2025</p>
+        <p class="wcard__summary">Designed, trained and INT8-quantised a 4.56M-parameter encoder-only transformer from scratch, then deployed it end-to-end on a microcontroller's Neural Processing Unit.</p>
+        <span class="wcard__metric">73.14 ms/token · 257/407 ops NPU-accelerated</span>
+        <div class="wcard__tags"><span>TinyML</span><span>INT8 Quantisation</span><span>STM32N6</span></div>
+        <a class="wcard__link" href="https://github.com/TitoNicolaDrugman/Transformer-NPU-STM32N6" target="_blank" rel="noopener">View on GitHub ↗</a>
+      </article>
+
+      <article class="wcard reveal" style="--i:1">
+        <span class="wcard__num">P.02</span>
+        <h3 class="wcard__title">Sen2Fire Wildfire Detection</h3>
+        <p class="wcard__meta">Independent research, CUHK-Shenzhen × HSE Moscow — 2025</p>
+        <p class="wcard__summary">Re-evaluated and extended the Sen2Fire benchmark with an nnU-Net baseline across the full Sentinel-2/5P spectral range, plus a test-time-augmentation cost/benefit study.</p>
+        <span class="wcard__metric">F1 0.3675 — new benchmark best (vs. 0.2810)</span>
+        <div class="wcard__tags"><span>Remote Sensing</span><span>Segmentation</span><span>nnU-Net</span></div>
+        <a class="wcard__link" href="https://github.com/TitoNicolaDrugman/Sen2Fire-Wildfire-Detection" target="_blank" rel="noopener">View on GitHub ↗</a>
+      </article>
+
+      <article class="wcard reveal" style="--i:2">
+        <span class="wcard__num">P.03</span>
+        <h3 class="wcard__title">Replicating &amp; Enhancing WebVoyager</h3>
+        <p class="wcard__meta">CUHK-Shenzhen, CIE6004 — Sep 2025–Jan 2026</p>
+        <p class="wcard__summary">Swapped GPT-4o for locally-hosted Qwen3-VL, built a zero-manual-annotation classifier for a 1,101-image dataset, and fine-tuned a ResNet-18 visual prior into the agent loop.</p>
+        <span class="wcard__metric">62.7% task success — above the original paper's 59.1%</span>
+        <div class="wcard__tags"><span>VLM Agents</span><span>Qwen3-VL</span><span>Ollama</span></div>
+        <a class="wcard__link" href="https://github.com/TitoNicolaDrugman/LLMsWebAgent" target="_blank" rel="noopener">View on GitHub ↗</a>
+      </article>
+
+      <article class="wcard reveal" style="--i:3">
+        <span class="wcard__num">P.04</span>
+        <h3 class="wcard__title">On-Prem RAG for Code Generation</h3>
+        <p class="wcard__meta">Software Engineering 2, Polimi — Sep 2025–Feb 2026</p>
+        <p class="wcard__summary">Benchmarked three single-hop retrievers and two LLM-driven multi-hop pipelines over a 7,600+ snippet knowledge base, served fully on-prem via 4-bit quantised CodeLlama-7B.</p>
+        <span class="wcard__metric">+38% relative CodeBLEU over the no-retrieval baseline</span>
+        <div class="wcard__tags"><span>RAG</span><span>CodeLlama-7B</span><span>bitsandbytes</span></div>
+        <a class="wcard__link" href="https://github.com/TitoNicolaDrugman/RAG-Code-Generation" target="_blank" rel="noopener">View on GitHub ↗</a>
+      </article>
+    </div>
+
+    <p class="work-more reveal"><a href="timeline.html#projects">→ See all 13 projects and the full career record</a></p>
   </section>
 
 </main>
 
-<footer class="site-footer">
-  <span>© 2026 Tito Nicola Drugman</span>
-  <div class="site-footer__links">
-    <a href="https://github.com/TitoNicolaDrugman" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://linkedin.com/in/titonicoladrugman" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="timeline.html">Full Timeline</a>
-    <a href="wikipedia/index.html">Wikipedia (allegedly)</a>
-    <a href="mailto:drugmantito@gmail.com">drugmantito@gmail.com</a>
+<footer>
+  <div style="padding:0 28px;max-width:1180px;margin:0 auto">
+    <div class="foot-links">
+      <a href="mailto:drugmantito@gmail.com">drugmantito@gmail.com</a>
+      <a href="https://github.com/TitoNicolaDrugman" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/titonicoladrugman" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="timeline.html">Full timeline</a>
+      <a href="index.html">Desktop OS</a>
+      <a href="wikipedia/index.html">Wikipedia (allegedly)</a>
+    </div>
+    <div class="title-block">
+      <div class="title-block__cell"><b>Dwg. no.</b><span>001 / 002</span></div>
+      <div class="title-block__cell"><b>Title</b><span>Portfolio</span></div>
+      <div class="title-block__cell"><b>Scale</b><span>1 : 1</span></div>
+      <div class="title-block__cell"><b>Rev.</b><span>2026.08</span></div>
+      <div class="title-block__cell"><b>Drawn</b><span>T.N.D.</span></div>
+      <div class="title-block__cell"><b>Sheet</b><span>1 of 2</span></div>
+    </div>
   </div>
 </footer>
 
-<script type="module" src="js/main.js"></script>
-<script type="module" src="js/interactions.js"></script>
-<script type="module" src="js/animations.js"></script>
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // reveal-on-scroll
+  var els = document.querySelectorAll(".reveal");
+  if (reduced || !("IntersectionObserver" in window)){
+    els.forEach(function(el){ el.classList.add("is-visible"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+    els.forEach(function(el){ io.observe(el); });
+  }
+
+  // CAD-style coordinate readout following the pointer inside the hero frame
+  var coarse = window.matchMedia("(pointer: coarse)").matches;
+  if (!reduced && !coarse){
+    var frame = document.querySelector(".hero__frame");
+    if (frame){
+      var tag = document.createElement("div");
+      tag.className = "coord-readout";
+      frame.appendChild(tag);
+      var raf = null;
+      frame.addEventListener("mousemove", function(e){
+        var rect = frame.getBoundingClientRect();
+        var x = Math.round(e.clientX - rect.left);
+        var y = Math.round(e.clientY - rect.top);
+        if (raf) return;
+        raf = requestAnimationFrame(function(){
+          tag.style.left = x + "px";
+          tag.style.top = y + "px";
+          tag.textContent = "X:" + String(x).padStart(4, "0") + " Y:" + String(y).padStart(4, "0");
+          tag.classList.add("is-active");
+          raf = null;
+        });
+      });
+      frame.addEventListener("mouseleave", function(){ tag.classList.remove("is-active"); });
+    }
+  }
+
+  // draggable desk props (ruler / GPU / calculator) — float idly, throw with inertia,
+  // position shared between classic.html and timeline.html via localStorage.
+  var PROPS_KEY = "titoProps:v1";
+  function loadPropPositions(){
+    try { return JSON.parse(localStorage.getItem(PROPS_KEY)) || {}; } catch (err) { return {}; }
+  }
+  function savePropPosition(id, x, y){
+    try {
+      var all = loadPropPositions();
+      all[id] = { x: x, y: y };
+      localStorage.setItem(PROPS_KEY, JSON.stringify(all));
+    } catch (err) {}
+  }
+  var storedPositions = loadPropPositions();
+  var topbarEl = document.querySelector(".topbar");
+  function topClear(){ return (topbarEl ? topbarEl.getBoundingClientRect().bottom : 0) + 8; }
+
+  document.querySelectorAll(".desk-prop").forEach(function(el){
+    var id = el.dataset.id;
+    var tilt = el.dataset.tilt || "0deg";
+    var curX = 0, curY = 0, startX = 0, startY = 0, baseLeft = 0, baseTop = 0, w = 0, h = 0;
+    var dragging = false, rafId = null, samples = [];
+
+    function apply(){ el.style.transform = "translate(" + curX + "px," + curY + "px) rotate(" + tilt + ")"; }
+    function bounds(){
+      return {
+        minX: -baseLeft, maxX: window.innerWidth - baseLeft - w,
+        minY: topClear() - baseTop, maxY: window.innerHeight - baseTop - h
+      };
+    }
+    function stopMomentum(){
+      if (rafId){ cancelAnimationFrame(rafId); rafId = null; }
+      el.classList.remove("is-throwing");
+    }
+
+    // restore a shared position from the other page, if any
+    var rect0 = el.getBoundingClientRect();
+    baseLeft = rect0.left; baseTop = rect0.top; w = rect0.width; h = rect0.height;
+    var stored = storedPositions[id];
+    if (stored){
+      var b0 = bounds();
+      curX = Math.min(Math.max(stored.x, b0.minX), b0.maxX);
+      curY = Math.min(Math.max(stored.y, b0.minY), b0.maxY);
+      apply();
+    }
+
+    el.addEventListener("pointerdown", function(e){
+      stopMomentum();
+      dragging = true;
+      samples = [{ x: e.clientX, y: e.clientY, t: performance.now() }];
+      el.setPointerCapture(e.pointerId);
+      el.classList.add("is-dragging");
+      var rect = el.getBoundingClientRect();
+      baseLeft = rect.left - curX;
+      baseTop = rect.top - curY;
+      w = rect.width; h = rect.height;
+      startX = e.clientX - curX;
+      startY = e.clientY - curY;
+    });
+    el.addEventListener("pointermove", function(e){
+      if (!dragging) return;
+      var nx = e.clientX - startX;
+      var ny = e.clientY - startY;
+      var b = bounds();
+      curX = Math.min(Math.max(nx, b.minX), b.maxX);
+      curY = Math.min(Math.max(ny, b.minY), b.maxY);
+      apply();
+      samples.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+      if (samples.length > 5) samples.shift();
+    });
+
+    function endDrag(e){
+      if (!dragging) return;
+      dragging = false;
+      el.classList.remove("is-dragging");
+      try { el.releasePointerCapture(e.pointerId); } catch (err) {}
+      savePropPosition(id, curX, curY);
+
+      if (reduced || samples.length < 2) return;
+      var first = samples[0], last = samples[samples.length - 1];
+      var dt = last.t - first.t;
+      if (dt <= 0) return;
+      var vx = (last.x - first.x) / dt, vy = (last.y - first.y) / dt;
+      var speed = Math.sqrt(vx * vx + vy * vy);
+      if (speed < 0.04) return;
+
+      var MAXV = 1.6;
+      var scale = Math.min(1, MAXV / speed);
+      vx *= scale; vy *= scale;
+
+      el.classList.add("is-throwing");
+      var lastT = performance.now();
+      function step(now){
+        var dt2 = Math.min(now - lastT, 40);
+        lastT = now;
+        curX += vx * dt2;
+        curY += vy * dt2;
+        var b = bounds();
+        if (curX < b.minX){ curX = b.minX; vx = -vx * 0.35; }
+        if (curX > b.maxX){ curX = b.maxX; vx = -vx * 0.35; }
+        if (curY < b.minY){ curY = b.minY; vy = -vy * 0.35; }
+        if (curY > b.maxY){ curY = b.maxY; vy = -vy * 0.35; }
+        var decay = Math.pow(0.92, dt2 / 16.67);
+        vx *= decay; vy *= decay;
+        apply();
+        if (Math.sqrt(vx * vx + vy * vy) > 0.02){
+          rafId = requestAnimationFrame(step);
+        } else {
+          rafId = null;
+          el.classList.remove("is-throwing");
+          savePropPosition(id, curX, curY);
+        }
+      }
+      rafId = requestAnimationFrame(step);
+    }
+    el.addEventListener("pointerup", endDrag);
+    el.addEventListener("pointercancel", endDrag);
+  });
+})();
+</script>
 </body>
 </html>
