@@ -566,8 +566,8 @@ button{ font: inherit; }
 .skills-market__legend-scale span{ flex: 1; }
 
 /* ---------------------------------------------------------------- tetris */
-.tetris-app{ display: flex; flex-direction: column; gap: 8px; padding: 12px; background: #0c0c10; height: 100%; box-sizing: border-box; font-family: system-ui, sans-serif; }
-.tetris-app__main{ display: flex; gap: 12px; flex: 1; min-height: 0; }
+.tetris-app{ display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 12px; background: #0c0c10; height: 100%; box-sizing: border-box; font-family: system-ui, sans-serif; }
+.tetris-app__main{ display: flex; gap: 12px; flex: 0 0 auto; min-height: 0; }
 .tetris-app__board-wrap{ position: relative; flex-shrink: 0; line-height: 0; }
 .tetris-app__board-wrap canvas{ display: block; border-radius: 4px; }
 .tetris-app__overlay{ position: absolute; inset: 0; background: rgba(12,12,16,.92); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #fff; text-align: center; border-radius: 4px; line-height: 1.4; }
@@ -583,7 +583,7 @@ button{ font: inherit; }
 .tetris-app__score{ font-size: 1.2rem; font-weight: 700; margin: 0 0 4px; font-variant-numeric: tabular-nums; }
 .tetris-app__score--best{ color: #ffd93d; font-size: 1rem; }
 .tetris-app__hint{ font-size: 0.62rem; color: #6b6b72; text-align: center; margin-top: auto; line-height: 1.5; }
-.tetris-app__touch-controls{ display: none; gap: 6px; flex-shrink: 0; }
+.tetris-app__touch-controls{ display: none; gap: 6px; flex-shrink: 0; width: 100%; max-width: 320px; }
 .tetris-app__touch-btn{ flex: 1; min-height: 46px; border-radius: 8px; border: none; background: rgba(255,255,255,.09); color: #fff; font-size: 1.05rem; display: flex; align-items: center; justify-content: center; touch-action: manipulation; -webkit-user-select: none; user-select: none; }
 .tetris-app__touch-btn:active{ background: rgba(255,255,255,.2); }
 .tetris-app__touch-btn svg{ width: 20px; height: 20px; pointer-events: none; }
@@ -1690,7 +1690,9 @@ import { experiences } from './data/experiences.js';
     var bounds = this._computeSpawnBounds(app);
     var id = nextId(app.id);
     var smallViewport = window.innerWidth < 700;
-    var startMaximized = Boolean(app.maximizeOnSmallViewport) && smallViewport;
+    var coarsePointer = Boolean(window.matchMedia) && window.matchMedia("(pointer: coarse)").matches;
+    var startMaximized = (Boolean(app.maximizeOnSmallViewport) && smallViewport) ||
+      (Boolean(app.maximizeOnCoarsePointer) && coarsePointer);
     var win = {
       id: id, appId: app.id, title: app.title,
       x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height,
@@ -4981,7 +4983,7 @@ import { experiences } from './data/experiences.js';
   function rotateCellsCW(cells){ return cells.map(function(c){ return [3 - c[1], c[0]]; }); }
 
   var tetrisApp = {
-    id: "tetris", title: "Tetris", titleKey: "app.tetris", icon: ICONS.tetris, desktopIcon: true, maximizeOnSmallViewport: true,
+    id: "tetris", title: "Tetris", titleKey: "app.tetris", icon: ICONS.tetris, desktopIcon: true, maximizeOnSmallViewport: true, maximizeOnCoarsePointer: true,
     kind: "component", singleInstance: true,
     window: { width: 340, height: 480, minWidth: 340, minHeight: 480, resizable: false, maximizable: false },
     render: function(container, windowApi){
